@@ -1,0 +1,10 @@
+<module rename-to='WebSA_WS12'>
+  <inherits name='playn.PlayN'/>
+
+  <source path='core'/>
+  <source path='html'/>
+
+  <public path="resources" />
+
+  <entry-point class='de.hofuniversity.iws.html.WebAppHtml'/>
+</module>
