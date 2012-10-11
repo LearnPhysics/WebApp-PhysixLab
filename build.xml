@@ -64,19 +64,6 @@
     </path>
   </target>
 
-  <target name="-prepare-android" depends="-prepare">
-    <artifact:dependencies pathId="android-extras.classpath">
-      <dependency groupId="com.googlecode.playn" artifactId="playn-android"
-                  version="${pom.properties.playn.version}"/>
-      <dependency groupId="com.google.android" artifactId="android"
-                  version="${pom.properties.android.version}"/>
-    </artifact:dependencies>
-    <path id="android.classpath">
-      <path refid="core.classpath"/>
-      <path refid="android-extras.classpath"/>
-    </path>
-  </target>
-
   <target name="-prep-webapp" depends="-prepare-html">
     <mkdir dir="${webapp.dir}"/>
     <copy todir="${webapp.dir}">
