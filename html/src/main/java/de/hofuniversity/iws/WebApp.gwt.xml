@@ -1,7 +1,9 @@
 <module rename-to='WebSA_WS12'>
   <inherits name='playn.PlayN'/>
+  <inherits name='com.google.gwt.inject.Inject'/>
 
   <source path='core'/>
+  <source path='client'/>
   <source path='html'/>
 
   <public path="resources" />

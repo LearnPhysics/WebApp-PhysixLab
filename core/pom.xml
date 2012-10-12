@@ -19,11 +19,6 @@
       <artifactId>playn-core</artifactId>
       <version>${playn.version}</version>
     </dependency>
-      <dependency>
-          <groupId>unknown.binary</groupId>
-          <artifactId>TwitterResponse</artifactId>
-          <version>SNAPSHOT</version>
-      </dependency>
   </dependencies>
 
   <build>

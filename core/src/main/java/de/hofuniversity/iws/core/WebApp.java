@@ -5,9 +5,6 @@ import playn.core.*;
 import static playn.core.PlayN.assets;
 import static playn.core.PlayN.graphics;
 
-import org.netbeans.saas.twitter.TwitterWhatAreYouDoingService;
-import org.netbeans.saas.RestResponse;
-
 public class WebApp implements Game {
 
     @Override
