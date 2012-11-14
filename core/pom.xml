@@ -1,45 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>de.hofuniversity.iws</groupId>
-    <artifactId>WebSA_WS12</artifactId>
-    <version>1.0-SNAPSHOT</version>
-  </parent>
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>de.hofuniversity.iws</groupId>
+        <artifactId>WebSA_WS12</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
 
-  <artifactId>WebSA_WS12-core</artifactId>
-  <packaging>jar</packaging>
-  <name>WebApp Core</name>
+    <artifactId>WebSA_WS12-core</artifactId>
+    <packaging>jar</packaging>
+    <name>WebApp Core</name>
 
-  <dependencies>
-    <dependency>
-      <groupId>com.googlecode.playn</groupId>
-      <artifactId>playn-core</artifactId>
-      <version>${playn.version}</version>
-    </dependency>
-  </dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>com.googlecode.playn</groupId>
+            <artifactId>playn-core</artifactId>
+            <version>${playn.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <version>2.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.threerings</groupId>
+            <artifactId>tripleplay</artifactId>
+            <version>1.3</version>
+            <!-- <version>${playn.version}</version> -->
+        </dependency>    
+        <dependency>
+            <groupId>com.googlecode.playn</groupId>
+            <artifactId>playn-jbox2d</artifactId>
+            <version>${playn.version}</version>
+        </dependency>
+    </dependencies>
 
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-      </plugin>
-    </plugins>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+        </plugins>
 
-    <resources>
-      <!-- include the source files in our main jar for use by GWT -->
-      <resource>
-        <directory>${project.build.sourceDirectory}</directory>
-      </resource>
-      <!-- and continue to include our standard resources -->
-      <resource>
-        <directory>${basedir}/src/main/resources</directory>
-      </resource>
-    </resources>
-  </build>
+        <resources>
+            <!-- include the source files in our main jar for use by GWT -->
+            <resource>
+                <directory>${project.build.sourceDirectory}</directory>
+            </resource>
+            <!-- and continue to include our standard resources -->
+            <resource>
+                <directory>${basedir}/src/main/resources</directory>
+            </resource>
+        </resources>
+    </build>
     <repositories>
         <repository>
             <id>unknown-jars-temp-repo</id>

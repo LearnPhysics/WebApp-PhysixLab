@@ -45,5 +45,6 @@
     <module>core</module>
     <module>java</module>
     <module>html</module>
+    <module>gwt-syncproxy</module>
   </modules>
 </project>

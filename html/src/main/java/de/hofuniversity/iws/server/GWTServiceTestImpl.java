@@ -4,9 +4,12 @@
  */
 package de.hofuniversity.iws.server;
 
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
-import de.hofuniversity.iws.client.GWTServiceTest;
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import de.hofuniversity.iws.core.services.GWTServiceTest;
+import de.hofuniversity.iws.core.services.RPCVector;
 
 /**
  *
@@ -14,8 +17,11 @@ import de.hofuniversity.iws.client.GWTServiceTest;
  */
 public class GWTServiceTestImpl extends RemoteServiceServlet implements GWTServiceTest {
 
-    public String myMethod(String s) {
-        // Do something interesting with 's' here on the server.
-        return "Server says: " + s;
+    @Override
+    public RPCVector randomVector() {
+        Random rnd = ThreadLocalRandom.current();
+        float x = rnd.nextFloat() * 10;
+        float y = rnd.nextFloat() * 10;
+        return new RPCVector(x, y);
     }
 }

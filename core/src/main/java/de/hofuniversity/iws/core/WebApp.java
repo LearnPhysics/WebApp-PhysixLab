@@ -1,5 +1,11 @@
 package de.hofuniversity.iws.core;
 
+import java.awt.Window;
+
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import de.hofuniversity.iws.core.game.entities.Ball;
+import de.hofuniversity.iws.core.services.GWTServiceTestAsync;
+import javax.inject.Inject;
 import playn.core.*;
 
 import static playn.core.PlayN.assets;
@@ -7,30 +13,43 @@ import static playn.core.PlayN.graphics;
 
 public class WebApp implements Game {
 
+    // scale difference between screen space (pixels) and world space (physics).
+    public static float physUnitPerScreenUnit = 1 / 26.666667f;
+//    @Inject
+//    private GWTServiceTestAsync service;
+    private TestWorld world;
+    private ImageLayer bgLayer;
+    // main layer that holds the world. note: this gets scaled to world space
+    private GroupLayer worldLayer;
+
     @Override
     public void init() {
         // create and add background image layer
-        GroupLayer group = graphics().createGroupLayer();
+        final GroupLayer group = graphics().createGroupLayer();
 
         Image bgImage = assets().getImage("images/bg.png");
-
-        ImageLayer bgLayer = graphics().createImageLayer(bgImage);
+        bgLayer = graphics().createImageLayer(bgImage);
         group.add(bgLayer);
 
-        CanvasImage img = graphics().createImage(128, 64);
-        img.canvas().fillCircle(64, 32, 32);
-        group.add(graphics().createImageLayer(img));
+        worldLayer = graphics().createGroupLayer();
+        worldLayer.setScale(1f / physUnitPerScreenUnit);
+        graphics().rootLayer().add(worldLayer);
 
-        graphics().rootLayer().add(group);
+        world = new TestWorld(worldLayer);
+
+        final Ball b = new Ball(world, world.world, 5, 10, Color.rgb(128, 128, 255));
+        
+        b.setLinearVelocity(3, 0);
     }
 
     @Override
     public void paint(float alpha) {
-        // the background automatically paints itself, so no need to do anything here!
+        world.paint(alpha);
     }
 
     @Override
     public void update(float delta) {
+        world.update(delta);
     }
 
     @Override

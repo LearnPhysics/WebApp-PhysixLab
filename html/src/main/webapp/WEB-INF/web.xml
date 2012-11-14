@@ -6,7 +6,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>GWTServiceTest</servlet-name>
-        <url-pattern>/org.yournamehere.Main/gwtservicetest</url-pattern>
+        <url-pattern>/WebSA_WS12/gwtservicetest</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>WebApp.html</welcome-file>
