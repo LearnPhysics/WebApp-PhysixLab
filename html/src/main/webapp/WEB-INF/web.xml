@@ -4,9 +4,17 @@
         <servlet-name>GWTServiceTest</servlet-name>
         <servlet-class>de.hofuniversity.iws.server.GWTServiceTestImpl</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TwitterLoginService</servlet-name>
+        <servlet-class>de.hofuniversity.iws.server.TwitterLoginServiceImpl</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GWTServiceTest</servlet-name>
         <url-pattern>/WebSA_WS12/gwtservicetest</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TwitterLoginService</servlet-name>
+        <url-pattern>/org.yournamehere.Main/twitterloginservice</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>WebApp.html</welcome-file>
