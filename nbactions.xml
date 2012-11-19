@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>CUSTOM-Hosted Mode</actionName>
+            <displayName>Hosted Mode</displayName>
+            <goals>
+                <goal>gwt:debug</goal>
+            </goals>
+            <properties>
+                <runTarget>PhysixLab.html</runTarget>
+            </properties>
+        </action>
+        <action>
+            <actionName>CUSTOM-Generate Async</actionName>
+            <displayName>Generate Async</displayName>
+            <goals>
+                <goal>gwt:generateAsync</goal>
+            </goals>
+        </action>
+        <action>
+            <actionName>CUSTOM-Generate Message Interaces</actionName>
+            <displayName>Generate Message Interaces</displayName>
+            <goals>
+                <goal>gwt:i18n</goal>
+            </goals>
+        </action>
+        <action>
+            <actionName>CUSTOM-Merge Servlet XMLs</actionName>
+            <displayName>Merge Servlet XMLs</displayName>
+            <goals>
+                <goal>gwt:mergewebxml</goal>
+            </goals>
+        </action>
+    </actions>

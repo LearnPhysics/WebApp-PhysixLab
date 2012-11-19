@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app
+    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+    "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+
+    <!-- Servlets -->
+    <servlet>
+        <servlet-name>loginServlet</servlet-name>
+        <servlet-class>de.hofuniversity.iws.server.LoginServiceImpl</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>loginServlet</servlet-name>
+        <url-pattern>/PhysixLab/login</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>oauthCallback</servlet-name>
+        <servlet-class>de.hofuniversity.iws.server.OAuthCallbackServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>oauthCallback</servlet-name>
+        <url-pattern>/PhysixLab/oauth_callback</url-pattern>
+    </servlet-mapping>
+    
+    <!-- Default page to serve -->
+    <welcome-file-list>
+        <welcome-file>PhysixLab.html</welcome-file>
+    </welcome-file-list>
+
+</web-app>

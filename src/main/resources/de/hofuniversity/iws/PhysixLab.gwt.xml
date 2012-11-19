@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='PhysixLab'>
+    <!-- Inherit the core Web Toolkit stuff.                        -->
+    <inherits name='com.google.gwt.user.User' />
+
+    <!-- We need the JUnit module in the main module,               -->
+    <!-- otherwise eclipse complains (Google plugin bug?)           -->
+    <!--<inherits name='com.google.gwt.junit.JUnit' />-->
+
+    <!-- Inherit the default GWT style sheet.  You can change       -->
+    <!-- the theme of your GWT application by uncommenting          -->
+    <!-- any one of the following lines.                            -->
+    <!--<inherits name='com.google.gwt.user.theme.standard.Standard' />-->
+    <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> 
+    <!--<inherits name='com.google.gwt.user.theme.dark.Dark'/>-->     
+
+    <!-- Other module inherits                                     -->  
+    <inherits name='playn.PlayN'/>
+    <inherits name="org.jbox2d.GwtBox2D" />
+     <!--for the menu UI--> 
+    <inherits name='tripleplay.TriplePlay'/>
+     <!--for enhanced logging--> 
+    <inherits name='com.google.gwt.inject.Inject'/>
+  
+    <!-- Specify the path to any remote services.                   -->
+    <servlet path="/login" class="de.hofuniversity.iws.server.LoginServiceImpl" />
+
+    <!-- Specify the app entry point class.                         -->
+    <entry-point class='de.hofuniversity.iws.client.Main' />
+
+    <!-- Specify the paths for translatable code                    -->
+    <source path='client' />
+    <source path='shared' />
+
+</module>
