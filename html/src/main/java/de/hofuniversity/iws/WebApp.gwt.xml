@@ -11,6 +11,5 @@
   <source path='html'/>
 
   <public path="resources" />
-
   <entry-point class='de.hofuniversity.iws.html.WebAppHtml'/>
 </module>
