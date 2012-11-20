@@ -24,7 +24,6 @@
   
     <!-- Specify the path to any remote services.                   -->
     <servlet path="/login" class="de.hofuniversity.iws.server.LoginServiceImpl" />
-    <servlet path="/oauth_callback" class="de.hofuniversity.iws.server.OAuthCallbackServlet" />
 
     <!-- Specify the app entry point class.                         -->
     <entry-point class='de.hofuniversity.iws.client.Main' />

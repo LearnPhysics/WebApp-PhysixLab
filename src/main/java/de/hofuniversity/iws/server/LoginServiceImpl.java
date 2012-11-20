@@ -17,6 +17,6 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 
     @Override
     public String SocialNetworkLogin(String s) {
-        return "Auth key";
+        return "Auth-Key";
     }
 }
