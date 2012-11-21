@@ -9,6 +9,7 @@
     <g:HorizontalPanel>
         <g:Button ui:field='googleLogin'>Login with Google</g:Button>
         <g:Button ui:field='facebookLogin'>Login with Facebook</g:Button>
-        <g:Button ui:field='twitterLogin'>Login with Twitter</g:Button>
+        <!--<g:Button ui:field='twitterLogin'></g:Button>-->
+        <g:Image ui:field='twitterLogin' url='twitter-bird-white-on-blue.png'/>
     </g:HorizontalPanel>
 </ui:UiBinder>

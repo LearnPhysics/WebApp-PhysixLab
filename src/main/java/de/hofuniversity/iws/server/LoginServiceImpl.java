@@ -6,7 +6,7 @@ package de.hofuniversity.iws.server;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import de.hofuniversity.iws.client.services.LoginService;
+import de.hofuniversity.iws.shared.services.LoginService;
 
 /**
  *

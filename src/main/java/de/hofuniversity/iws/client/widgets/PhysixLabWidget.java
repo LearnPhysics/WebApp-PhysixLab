@@ -21,8 +21,8 @@ public class PhysixLabWidget extends Composite {
     @Inject
     private LoginServiceAsync loginService;
     private PhysixLabWidgetUiBinder uiBinder = GWT.create(PhysixLabWidgetUiBinder.class);
-    @UiField
-    Button googleLogin, facebookLogin, twitterLogin;
+//    @UiField
+//    private Button googleLogin, facebookLogin, twitterLogin;
 
     interface PhysixLabWidgetUiBinder extends UiBinder<Widget, PhysixLabWidget> {
     }
