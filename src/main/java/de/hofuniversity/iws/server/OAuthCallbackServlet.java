@@ -30,6 +30,8 @@ public class OAuthCallbackServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+//        request.getSession().set
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
