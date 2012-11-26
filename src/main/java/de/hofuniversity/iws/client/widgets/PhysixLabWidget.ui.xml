@@ -2,7 +2,9 @@
 
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
              xmlns:g="urn:import:com.google.gwt.user.client.ui">
+    
     <ui:with field="res" type="de.hofuniversity.iws.client.widgets.Images"></ui:with>
+    
     <ui:style>
     
     </ui:style>
@@ -11,5 +13,5 @@
         <g:Image ui:field='googleLogin' url='images/google.jpg'/>
         <g:Image ui:field='facebookLogin' url='images/facebook.jpg'/>
         <g:Image ui:field='twitterLogin' url='images/twitter.jpg'/>
-     </g:HorizontalPanel>
+    </g:HorizontalPanel>
 </ui:UiBinder>

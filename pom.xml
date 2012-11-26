@@ -79,6 +79,11 @@
             <artifactId>tripleplay</artifactId>
             <version>1.3</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava-gwt</artifactId>
+            <version>13.0.1</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -95,11 +100,11 @@
                 <executions>
                     <execution>
                         <goals>
-                            <goal>i18n</goal>
-                            <goal>generateAsync</goal>
-                            <!--<goal>mergewebxml</goal>-->
                             <goal>compile</goal>
                             <goal>test</goal>
+                            <!--<goal>i18n</goal>-->
+                            <goal>generateAsync</goal>
+                            <!--<goal>mergewebxml</goal>-->
                         </goals>
                     </execution>
 <!--                    <execution>
@@ -116,7 +121,7 @@
                     <mergedWebXml>${webappDirectory}/WEB-INF/web.xml</mergedWebXml>
                     <runTarget>${runTarget}</runTarget>
                     <hostedWebapp>${webappDirectory}</hostedWebapp>
-                    <i18nMessagesBundle>de.hofuniversity.iws.client.Messages</i18nMessagesBundle>
+                    <!--<i18nMessagesBundle>de.hofuniversity.iws.client.Messages</i18nMessagesBundle>-->
                     <modul>de.hofuniversity.iws.PhysixLab</modul>
                     <packageNamePerModule>
                         <physixlab>de.hofuniversity.iws.server</physixlab>
