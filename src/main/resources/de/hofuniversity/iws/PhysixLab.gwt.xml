@@ -25,7 +25,7 @@
     <inherits name='com.google.common.base.Base'/>
   
     <!-- Specify the path to any remote services.                   -->
-    <servlet path="/login" class="de.hofuniversity.iws.server.LoginServiceImpl" />
+    <servlet path="/login" class="de.hofuniversity.iws.server.services.LoginServiceImpl" />
 
     <!-- Specify the app entry point class.                         -->
     <entry-point class='de.hofuniversity.iws.client.Main' />

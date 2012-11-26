@@ -16,18 +16,17 @@ import javax.inject.Inject;
  *
  * @author Daniel Heinrich <dannynullzwo@gmail.com>
  */
-public class PhysixLabWidget extends Composite {
+public class LoginPage extends Composite {
 
-    @Inject
-    private LoginServiceAsync loginService;
-    private PhysixLabWidgetUiBinder uiBinder = GWT.create(PhysixLabWidgetUiBinder.class);
-//    @UiField
-//    private Button googleLogin, facebookLogin, twitterLogin;
+    private final LoginServiceAsync loginService;
+    private LoginPageUiBinder uiBinder = GWT.create(LoginPageUiBinder.class);
 
-    interface PhysixLabWidgetUiBinder extends UiBinder<Widget, PhysixLabWidget> {
+    interface LoginPageUiBinder extends UiBinder<Widget, LoginPage> {
     }
 
-    public PhysixLabWidget() {
+    @Inject
+    public LoginPage(LoginServiceAsync loginService) {
+        this.loginService = loginService;
         initWidget(uiBinder.createAndBindUi(this));
     }
 

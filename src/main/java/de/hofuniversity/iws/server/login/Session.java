@@ -18,9 +18,10 @@ public class Session {
     private final UUID uuid;
     private Date expire;
     private final String createrAddress;
+    private final User user;
 
-    public Session(String createrAddress) {
-        this(UUID.randomUUID(), createExpireDate(), createrAddress);
+    public Session(String createrAddress, User user) {
+        this(UUID.randomUUID(), createExpireDate(), createrAddress, user);
     }
 
     public static Date createExpireDate() {
@@ -29,10 +30,11 @@ public class Session {
         return c.getTime();
     }
 
-    public Session(UUID uuid, Date expire, String createrAddress) {
+    public Session(UUID uuid, Date expire, String createrAddress, User user) {
         this.uuid = uuid;
         this.expire = expire;
         this.createrAddress = createrAddress;
+        this.user = user;
     }
 
     public String getCreaterAddress() {
@@ -56,8 +58,11 @@ public class Session {
     }
 
     public boolean isValid(String address) {
-        return createrAddress.equals(address)
-               && expire.after(Calendar.getInstance().getTime());
+        return createrAddress.equals(address) && !hasExpired();
+    }
+
+    public boolean hasExpired() {
+        return !expire.after(Calendar.getInstance().getTime());
     }
 
     public boolean isSame(String sessionID) {

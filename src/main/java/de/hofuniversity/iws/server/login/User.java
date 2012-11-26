@@ -9,5 +9,5 @@ package de.hofuniversity.iws.server.login;
  * @author some
  */
 public class User {
-    
+    public static final User NONE_USER = new User();
 }
