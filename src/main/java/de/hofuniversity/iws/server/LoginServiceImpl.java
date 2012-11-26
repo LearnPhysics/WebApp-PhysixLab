@@ -15,7 +15,6 @@ import de.hofuniversity.iws.client.services.LoginService;
 @RemoteServiceRelativePath("login")
 public class LoginServiceImpl extends RemoteServiceServlet implements LoginService {
 
-    @Override
     public String SocialNetworkLogin(String s) {
         return "Auth key";
     }

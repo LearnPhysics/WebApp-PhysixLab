@@ -59,7 +59,7 @@ public class PhysixLabWidget extends Composite {
         }
 
         public void onSuccess(String result) {
-            openNewWindow("Testing Window", result);
+            openNewWindow("Testing Window", url);
         }
     }
 
