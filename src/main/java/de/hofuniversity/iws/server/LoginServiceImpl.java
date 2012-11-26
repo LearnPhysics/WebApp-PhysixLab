@@ -15,8 +15,12 @@ import de.hofuniversity.iws.client.services.LoginService;
 @RemoteServiceRelativePath("login")
 public class LoginServiceImpl extends RemoteServiceServlet implements LoginService {
 
+    private OAuthLogin oauth = null;
+    
     @Override
-    public String SocialNetworkLogin(String s) {
-        return "Auth key";
+    public String SocialNetworkLogin(String NetworkName) {
+        oauth = new OAuthLogin();
+        getThreadLocalRequest().getSession().setAttribute("obj_OAuthClass", oauth);        
+        return oauth.Login(NetworkName);
     }
 }

@@ -31,4 +31,11 @@
                 <goal>gwt:mergewebxml</goal>
             </goals>
         </action>
+        <action>
+            <actionName>CUSTOM-Hosted Mode No Debug</actionName>
+            <displayName>Hosted Mode No Debug</displayName>
+            <goals>
+                <goal>gwt:run</goal>
+            </goals>
+        </action>
     </actions>

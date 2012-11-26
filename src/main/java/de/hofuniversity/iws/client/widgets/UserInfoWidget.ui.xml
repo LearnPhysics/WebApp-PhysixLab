@@ -8,8 +8,7 @@
     </ui:style>
     
     <g:HorizontalPanel>
-        <g:Image ui:field='googleLogin' url='images/google.jpg'/>
-        <g:Image ui:field='facebookLogin' url='images/facebook.jpg'/>
-        <g:Image ui:field='twitterLogin' url='images/twitter.jpg'/>
+            <g:Image ui:field='user_pic' url='images/noUserImage.jpg'/>
+            <g:Label ui:field='user_name' text='nicht angemeldet'/>
      </g:HorizontalPanel>
 </ui:UiBinder>

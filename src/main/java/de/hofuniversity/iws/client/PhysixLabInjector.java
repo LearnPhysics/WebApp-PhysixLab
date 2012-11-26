@@ -7,6 +7,7 @@ package de.hofuniversity.iws.client;
 import com.google.gwt.inject.client.GinModules;
 import com.google.gwt.inject.client.Ginjector;
 import de.hofuniversity.iws.client.widgets.PhysixLabWidget;
+import de.hofuniversity.iws.client.widgets.UserInfoWidget;
 
 /**
  *
@@ -16,4 +17,5 @@ import de.hofuniversity.iws.client.widgets.PhysixLabWidget;
 public interface PhysixLabInjector extends Ginjector {
 
     public PhysixLabWidget getPhysixLab();
+    public UserInfoWidget getUserInfoWidget();
 }
