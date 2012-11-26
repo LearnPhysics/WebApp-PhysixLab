@@ -4,6 +4,8 @@
  */
 package de.hofuniversity.iws.server;
 
+import de.hofuniversity.iws.server.login.Session;
+import de.hofuniversity.iws.server.login.User;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
