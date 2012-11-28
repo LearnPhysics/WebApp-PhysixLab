@@ -33,7 +33,7 @@ public class User implements Serializable, GenericEntity {
     @Column
     private String city;
     @Lob
-    private byte[] userPic;
+    private String userPic;
     @OneToMany(mappedBy = "user")
     private List<NetworkAccount> networkAccountList;
     @OneToMany(mappedBy = "user")
@@ -97,11 +97,11 @@ public class User implements Serializable, GenericEntity {
         this.city = city;
     }
 
-    public byte[] getUserPic() {
+    public String getUserPic() {
         return userPic;
     }
 
-    public void setUserPic(byte[] userPic) {
+    public void setUserPic(String userPic) {
         this.userPic = userPic;
     }
 

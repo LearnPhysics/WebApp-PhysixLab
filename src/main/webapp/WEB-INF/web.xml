@@ -7,11 +7,11 @@
 
     <!-- Servlets -->
     <servlet>
-        <servlet-name>loginServlet</servlet-name>
-        <servlet-class>de.hofuniversity.iws.server.LoginServiceImpl</servlet-class>
+        <servlet-name>loginServletImpl</servlet-name>
+        <servlet-class>de.hofuniversity.iws.server.services.LoginServiceImpl</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>loginServlet</servlet-name>
+        <servlet-name>loginServletImpl</servlet-name>
         <url-pattern>/PhysixLab/login</url-pattern>
     </servlet-mapping>
     

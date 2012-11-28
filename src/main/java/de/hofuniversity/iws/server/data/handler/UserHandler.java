@@ -1,8 +1,7 @@
 package de.hofuniversity.iws.server.data.handler;
 
-import javax.persistence.EntityManager;
-
 import de.hofuniversity.iws.server.data.entities.User;
+import javax.persistence.EntityManager;
 
 public class UserHandler {
 
@@ -75,7 +74,7 @@ public class UserHandler {
     }
 
     // Get user by Id
-    public static User getGameEntity(long id, boolean detach) {
+    public static User getUserEntity(long id, boolean detach) {
         return (User) GenericHandler.getEntity(User.class, id, detach);
     }
 }

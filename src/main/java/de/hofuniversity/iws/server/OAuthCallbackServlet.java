@@ -1,12 +1,12 @@
 package de.hofuniversity.iws.server;
 
+import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import de.hofuniversity.iws.server.data.handler.GameHandler;
+import de.hofuniversity.iws.server.login.Session;
+import de.hofuniversity.iws.server.login.User;
 import de.hofuniversity.iws.server.services.LoginServiceImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
-
-import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import de.hofuniversity.iws.server.login.Session;
-import de.hofuniversity.iws.server.login.User;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
@@ -61,7 +61,7 @@ public class OAuthCallbackServlet extends HttpServlet {
             out.println("</html>");
         }
 
-
+        
         //Somehow generate a coresponding user
         User user = new User();
 

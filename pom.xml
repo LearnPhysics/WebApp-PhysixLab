@@ -132,7 +132,7 @@
                 <executions>
                     <execution>
                         <goals>
-                            <goal>i18n</goal>
+<!--                            <goal>i18n</goal> -->
                             <goal>generateAsync</goal>
                             <!--<goal>mergewebxml</goal>-->
                             <goal>compile</goal>
