@@ -1,14 +1,16 @@
-package de.hofuniversity.iws.server;
+package de.hofuniversity.iws.server.oauth;
 
 import de.hofuniversity.iws.server.services.LoginServiceImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import de.hofuniversity.iws.server.login.Session;
 import de.hofuniversity.iws.server.login.User;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
+import org.scribe.model.Token;
 
 /**
  *
@@ -31,17 +33,25 @@ public class OAuthCallbackServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        OAuthLogin oauth = (OAuthLogin) request.getSession().getAttribute("obj_OAuthClass");
-
-        if (request.getQueryString().contains("oauth_verifier=")) {
-            // Parameter: oauth_verifier bei Twitter und Google 
-            oauth.set_OAUTH_VERIFIER(request.getParameter("oauth_verifier").toString());
-        }
-        if (request.getQueryString().contains("code=")) {
-            // Parameter: code bei Facebook             
-            oauth.set_OAUTH_VERIFIER(request.getParameter("code").toString());
-        }
+        Optional<OAuthRequest> r = LoginServiceImpl.getSessionAttribute(request, LoginServiceImpl.OAUTH_REQUEST);
+        
+        if(!r.isPresent())
+            ;
+               
+        
+//        OAuthLogin oauth = (OAuthLogin) request.getSession().getAttribute("obj_OAuthClass");
+//
+//        if (request.getQueryString().contains("oauth_verifier=")) {
+//            // Parameter: oauth_verifier bei Twitter und Google 
+//            oauth.set_OAUTH_VERIFIER(request.getParameter("oauth_verifier").toString());
+//        }
+//        if (request.getQueryString().contains("code=")) {
+//            // Parameter: code bei Facebook             
+//            oauth.set_OAUTH_VERIFIER(request.getParameter("code").toString());
+//        }
+//        
+//        
+        Token accessToken = r.get().generateAccessToken(null);
 
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {

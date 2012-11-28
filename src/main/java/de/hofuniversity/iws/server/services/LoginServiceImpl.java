@@ -4,6 +4,7 @@
  */
 package de.hofuniversity.iws.server.services;
 
+import de.hofuniversity.iws.server.oauth.provider.OAuthProvider;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -11,8 +12,9 @@ import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import de.hofuniversity.iws.client.PhysixLab;
-import de.hofuniversity.iws.server.OAuthCallbackServlet;
+import de.hofuniversity.iws.server.oauth.OAuthCallbackServlet;
 import de.hofuniversity.iws.server.login.Session;
+import de.hofuniversity.iws.server.oauth.*;
 import de.hofuniversity.iws.shared.dto.SessionDTO;
 import de.hofuniversity.iws.shared.services.LoginService;
 import de.hofuniversity.iws.shared.services.login.LoginException;
@@ -30,6 +32,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
     private static Map<String, Session> sessions = new ConcurrentHashMap<>();
     public static final String SESSION_ATTRIBUTE = "session";
     public static final int TIMEOUT_INTERVALL = 10_000;
+    public static final String OAUTH_REQUEST = "OAUTH_REQUEST";
 
     @Override
     public Optional<SessionDTO> getSessionFromId(String sessionId) {
@@ -75,9 +78,13 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
     }
 
     @Override
-    public String getOAuthLoginUrl(LoginProvider provider) {
-        invalidate();
-        throw new UnsupportedOperationException("Not supported yet.");
+    public String getOAuthLoginUrl(LoginProvider p) {
+        OAuthProvider provider = null;
+        OAuthRequest request = provider.createRequest();
+        
+        getThreadLocalRequest().getSession().setAttribute(OAUTH_REQUEST, request);
+        
+        return request.getAuthorizeUrl();
     }
 
     @Override
