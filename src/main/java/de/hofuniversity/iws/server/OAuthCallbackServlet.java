@@ -4,10 +4,13 @@
  */
 package de.hofuniversity.iws.server;
 
+import de.hofuniversity.iws.server.services.LoginServiceImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import de.hofuniversity.iws.server.login.Session;
+import de.hofuniversity.iws.server.login.User;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
@@ -17,6 +20,8 @@ import javax.servlet.http.*;
  */
 @RemoteServiceRelativePath("oauth_callback")
 public class OAuthCallbackServlet extends HttpServlet {
+
+    public static final String OAUTH_FAIL = "oauth_fail";
 
     /**
      * Processes requests for both HTTP
@@ -30,7 +35,7 @@ public class OAuthCallbackServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
 //        request.getSession().set
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
@@ -38,14 +43,26 @@ public class OAuthCallbackServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet OAuthCallbackServlet</title>");            
+            out.println("<title>Servlet OAuthCallbackServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet OAuthCallbackServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
-        } finally {            
+        } finally {
             out.close();
+        }
+
+
+        //Somehow generate a coresponding user
+        User user = new User();
+
+        //invalidate the session if the authetification failed
+        if (false) {
+            request.setAttribute(OAUTH_FAIL, true);
+        } else {
+            Session s = new Session(request.getRemoteAddr(), user);
+            request.setAttribute(LoginServiceImpl.SESSION_ATTRIBUTE, s);
         }
     }
 
