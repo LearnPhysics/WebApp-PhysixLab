@@ -1,14 +1,9 @@
 package de.hofuniversity.iws.server.data.handler;
 
-import javax.persistence.EntityManager;
-
 import de.hofuniversity.iws.server.data.entities.NetworkAccount;
 import de.hofuniversity.iws.server.data.entities.NetworkAccount_;
-import javax.persistence.NoResultException;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import javax.persistence.*;
+import javax.persistence.criteria.*;
 
 public class NetworkAccountHandler {
 

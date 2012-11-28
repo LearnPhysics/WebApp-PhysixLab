@@ -88,6 +88,10 @@
             <version>1.3</version>
         </dependency>
         <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava-gwt</artifactId>
+            <version>13.0.1</version>
+        </dependency><dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>4.1.8.Final</version>
@@ -107,6 +111,11 @@
             <artifactId>hibernate-jpamodelgen</artifactId>
             <version>1.2.0.Final</version>
         </dependency>
+        <dependency>
+            <groupId>org.scribe</groupId>
+            <artifactId>scribe</artifactId>
+            <version>1.3.2</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -114,6 +123,7 @@
         <outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory>
 
         <plugins>
+            
             <!-- GWT Maven Plugin -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -143,7 +153,7 @@
                     <mergedWebXml>${webappDirectory}/WEB-INF/web.xml</mergedWebXml>
                     <runTarget>${runTarget}</runTarget>
                     <hostedWebapp>${webappDirectory}</hostedWebapp>
-                    <i18nMessagesBundle>de.hofuniversity.iws.client.Messages</i18nMessagesBundle>
+                    <!--<i18nMessagesBundle>de.hofuniversity.iws.client.Messages</i18nMessagesBundle>-->
                     <modul>de.hofuniversity.iws.PhysixLab</modul>
                     <packageNamePerModule>
                         <physixlab>de.hofuniversity.iws.server</physixlab>
@@ -174,8 +184,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.2</version>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
                 </configuration>
             </plugin>
         </plugins>
