@@ -22,7 +22,11 @@ public class UserHandler {
         try {
             if (user.getId() == null) {
                 entityManager.getTransaction().begin();
-                entityManager.persist(user);
+                if (user.isDetached()) {
+                    entityManager.merge(user);
+                } else {
+                    entityManager.persist(user);
+                }
                 entityManager.getTransaction().commit();
             } else {
                 User tmpUser = entityManager.find(User.class,
@@ -32,7 +36,11 @@ public class UserHandler {
                 // database
                 {
                     entityManager.getTransaction().begin();
-                    entityManager.persist(user);
+                    if (user.isDetached()) {
+                        entityManager.merge(user);
+                    } else {
+                        entityManager.persist(user);
+                    }
                     entityManager.getTransaction().commit();
                 } else // phrase exists already in the Database - update the
                 // Attributes

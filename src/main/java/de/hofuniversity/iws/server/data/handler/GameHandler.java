@@ -22,7 +22,11 @@ public class GameHandler {
         try {
             if (game.getId() == null) {
                 entityManager.getTransaction().begin();
-                entityManager.persist(game);
+                if (game.isDetached()) {
+                    entityManager.merge(game);
+                } else {
+                    entityManager.persist(game);
+                }
                 entityManager.getTransaction().commit();
             } else {
                 Game tmpGame = entityManager.find(Game.class,
@@ -32,7 +36,11 @@ public class GameHandler {
                 // database
                 {
                     entityManager.getTransaction().begin();
-                    entityManager.persist(game);
+                    if (game.isDetached()) {
+                        entityManager.merge(game);
+                    } else {
+                        entityManager.persist(game);
+                    }
                     entityManager.getTransaction().commit();
                 } else // phrase exists already in the Database - update the
                 // Attributes
@@ -62,6 +70,6 @@ public class GameHandler {
 
     // Get game by Id
     public static Game getGameEntity(long id, boolean detach) {
-        return (Game)GenericHandler.getEntity(Game.class, id, detach);
+        return (Game) GenericHandler.getEntity(Game.class, id, detach);
     }
 }

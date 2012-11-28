@@ -22,7 +22,11 @@ public class LessonHandler {
         try {
             if (lesson.getId() == null) {
                 entityManager.getTransaction().begin();
-                entityManager.persist(lesson);
+                if (lesson.isDetached()) {
+                    entityManager.merge(lesson);
+                } else {
+                    entityManager.persist(lesson);
+                }
                 entityManager.getTransaction().commit();
             } else {
                 Lesson tmpLesson = entityManager.find(Lesson.class,
@@ -32,7 +36,11 @@ public class LessonHandler {
                 // database
                 {
                     entityManager.getTransaction().begin();
-                    entityManager.persist(lesson);
+                    if (lesson.isDetached()) {
+                        entityManager.merge(lesson);
+                    } else {
+                        entityManager.persist(lesson);
+                    }
                     entityManager.getTransaction().commit();
                 } else // phrase exists already in the Database - update the
                 // Attributes

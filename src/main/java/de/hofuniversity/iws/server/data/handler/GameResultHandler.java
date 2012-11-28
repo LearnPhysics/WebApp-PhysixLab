@@ -22,7 +22,11 @@ public class GameResultHandler {
         try {
             if (gameResult.getId() == null) {
                 entityManager.getTransaction().begin();
-                entityManager.persist(gameResult);
+                if (gameResult.isDetached()) {
+                    entityManager.merge(gameResult);
+                } else {
+                    entityManager.persist(gameResult);
+                }
                 entityManager.getTransaction().commit();
             } else {
                 GameResult tmpGameResult = entityManager.find(GameResult.class,
@@ -32,7 +36,11 @@ public class GameResultHandler {
                 // database
                 {
                     entityManager.getTransaction().begin();
-                    entityManager.persist(gameResult);
+                    if (gameResult.isDetached()) {
+                        entityManager.merge(gameResult);
+                    } else {
+                        entityManager.persist(gameResult);
+                    }
                     entityManager.getTransaction().commit();
                 } else // phrase exists already in the Database - update the
                 // Attributes

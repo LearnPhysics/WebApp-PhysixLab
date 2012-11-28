@@ -22,7 +22,11 @@ public class SubjectAreaHandler {
         try {
             if (subjectArea.getId() == null) {
                 entityManager.getTransaction().begin();
-                entityManager.persist(subjectArea);
+                if (subjectArea.isDetached()) {
+                    entityManager.merge(subjectArea);
+                } else {
+                    entityManager.persist(subjectArea);
+                }
                 entityManager.getTransaction().commit();
             } else {
                 SubjectArea tmpSubjectArea = entityManager.find(SubjectArea.class,
@@ -32,7 +36,11 @@ public class SubjectAreaHandler {
                 // database
                 {
                     entityManager.getTransaction().begin();
-                    entityManager.persist(subjectArea);
+                    if (subjectArea.isDetached()) {
+                        entityManager.merge(subjectArea);
+                    } else {
+                        entityManager.persist(subjectArea);
+                    }
                     entityManager.getTransaction().commit();
                 } else // phrase exists already in the Database - update the
                 // Attributes

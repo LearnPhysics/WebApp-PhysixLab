@@ -28,7 +28,11 @@ public class NetworkAccountHandler {
         try {
             if (networkAccount.getId() == null) {
                 entityManager.getTransaction().begin();
-                entityManager.persist(networkAccount);
+                if (networkAccount.isDetached()) {
+                    entityManager.merge(networkAccount);
+                } else {
+                    entityManager.persist(networkAccount);
+                }
                 entityManager.getTransaction().commit();
             } else {
                 NetworkAccount tmpNetworkAccount = entityManager.find(NetworkAccount.class,
@@ -38,7 +42,11 @@ public class NetworkAccountHandler {
                 // database
                 {
                     entityManager.getTransaction().begin();
-                    entityManager.persist(networkAccount);
+                    if (networkAccount.isDetached()) {
+                        entityManager.merge(networkAccount);
+                    } else {
+                        entityManager.persist(networkAccount);
+                    }
                     entityManager.getTransaction().commit();
                 } else // phrase exists already in the Database - update the
                 // Attributes
@@ -71,7 +79,7 @@ public class NetworkAccountHandler {
     public static NetworkAccount getNetworkAccountEntity(long id, boolean detach) {
         return (NetworkAccount) GenericHandler.getEntity(NetworkAccount.class, id, detach);
     }
-
+    
     public static NetworkAccount getNetworkAccountEntity(String networkName, String accountIdentificationString, boolean detach) {
         NetworkAccount retval = null;
 
@@ -97,7 +105,7 @@ public class NetworkAccountHandler {
                     .createQuery(queryPhraseEntity).setMaxResults(1);
             try {
                 retval = typedPhraseEntityQuery.getSingleResult();
-                if(detach) {
+                if (detach) {
                     entityManager.detach(retval);
                     retval.setDetached(true);
                 }

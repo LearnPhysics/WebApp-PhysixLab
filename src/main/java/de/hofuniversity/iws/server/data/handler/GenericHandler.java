@@ -9,7 +9,7 @@ public class GenericHandler {
             .getEntityManagerFactory().createEntityManager();
 
     public static GenericEntity store(Class c, GenericEntity entity) {
-        
+
         GenericEntity retval = entity;
 
         if (entityManager.isOpen()) {
@@ -21,7 +21,11 @@ public class GenericHandler {
         try {
             if (entity.getId() == null) { // Persisting a new entity
                 entityManager.getTransaction().begin();
-                entityManager.persist(entity);
+                if (entity.isDetached()) {
+                    entityManager.merge(entity);
+                } else {
+                    entityManager.persist(entity);
+                }
                 entityManager.getTransaction().commit();
             } else {
                 GenericEntity tmpEntity = (GenericEntity) entityManager.find(c,
@@ -31,7 +35,11 @@ public class GenericHandler {
                 // database
                 {
                     entityManager.getTransaction().begin();
-                    entityManager.persist(entity);
+                    if (entity.isDetached()) {
+                        entityManager.merge(entity);
+                    } else {
+                        entityManager.persist(entity);
+                    }
                     entityManager.getTransaction().commit();
                 } else // Update the already existing entity
                 {

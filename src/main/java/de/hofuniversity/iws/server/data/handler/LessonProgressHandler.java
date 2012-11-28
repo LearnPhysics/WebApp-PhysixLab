@@ -22,7 +22,11 @@ public class LessonProgressHandler {
         try {
             if (lessonProgress.getId() == null) {
                 entityManager.getTransaction().begin();
-                entityManager.persist(lessonProgress);
+                if (lessonProgress.isDetached()) {
+                    entityManager.merge(lessonProgress);
+                } else {
+                    entityManager.persist(lessonProgress);
+                }
                 entityManager.getTransaction().commit();
             } else {
                 LessonProgress tmpLessonProgress = entityManager.find(LessonProgress.class,
@@ -32,7 +36,11 @@ public class LessonProgressHandler {
                 // database
                 {
                     entityManager.getTransaction().begin();
-                    entityManager.persist(lessonProgress);
+                    if (lessonProgress.isDetached()) {
+                        entityManager.merge(lessonProgress);
+                    } else {
+                        entityManager.persist(lessonProgress);
+                    }
                     entityManager.getTransaction().commit();
                 } else // phrase exists already in the Database - update the
                 // Attributes
