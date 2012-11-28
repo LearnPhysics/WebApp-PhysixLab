@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.hofuniversity.iws.server;
 
 import de.hofuniversity.iws.server.services.LoginServiceImpl;
@@ -13,10 +9,9 @@ import de.hofuniversity.iws.server.login.Session;
 import de.hofuniversity.iws.server.login.User;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
-
 /**
  *
- * @author User
+ * @author Andreas Arndt <andreas.arndt@hof-university.de>
  */
 @RemoteServiceRelativePath("oauth_callback")
 public class OAuthCallbackServlet extends HttpServlet {
@@ -35,18 +30,34 @@ public class OAuthCallbackServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-//        request.getSession().set
-        response.setContentType("text/html;charset=UTF-8");
+        
+        OAuthLogin oauth = (OAuthLogin) request.getSession().getAttribute("obj_OAuthClass");
+        
+        if(request.getQueryString().contains("oauth_verifier="))
+        {
+            // Parameter: oauth_verifier bei Twitter und Google 
+            oauth.set_OAUTH_VERIFIER(request.getParameter("oauth_verifier").toString());
+        }
+        if(request.getQueryString().contains("code="))
+        {
+            // Parameter: code bei Facebook             
+            oauth.set_OAUTH_VERIFIER(request.getParameter("code").toString());
+        }    
+        
+       response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        try {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet OAuthCallbackServlet</title>");
+            out.println("<title>Servlet OAuthCallbackServlet</title></head><body>");
+            out.println("<script type=\"text/javascript\">");
+            out.println("function popupclose () {");
+            out.println(" fenster = window.close();");
+            out.println(" return false; }");
+            out.println("</script>");
             out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet OAuthCallbackServlet at " + request.getContextPath() + "</h1>");
+            out.println("<body onload=\"popupclose();\">");
+   /*         out.println("AuthorizeURL: " + oauth.get_AUTHORIZE_URL() + "");
+            out.println("Verifier: " + oauth.get_OAUTH_VERIFIER().getValue());*/
             out.println("</body>");
             out.println("</html>");
         } finally {
