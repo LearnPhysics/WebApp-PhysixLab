@@ -45,7 +45,7 @@ public class OAuthCallbackServlet extends HttpServlet {
         }    
         
        response.setContentType("text/html;charset=UTF-8");
-       try(PrintWriter out = response.getWriter()){
+        PrintWriter out = response.getWriter();
             out.println("<html>");
             out.println("<head>");
             out.println("<title>Servlet OAuthCallbackServlet</title></head><body>");
@@ -60,6 +60,8 @@ public class OAuthCallbackServlet extends HttpServlet {
             out.println("Verifier: " + oauth.get_OAUTH_VERIFIER().getValue());*/
             out.println("</body>");
             out.println("</html>");
+        } finally {
+            out.close();
         }
 
 
