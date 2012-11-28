@@ -12,11 +12,13 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table
 public class User implements Serializable, GenericEntity {
 
+    @Transient
     private boolean detached = false;
     
     @Id
