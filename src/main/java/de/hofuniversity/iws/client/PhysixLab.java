@@ -54,12 +54,12 @@ public class PhysixLab {
         RootPanel.get().add(page);
     }
 
-    private class SessionCallback implements AsyncCallback<Optional<SessionDTO>> {
+    private class SessionCallback implements AsyncCallback<Optional> {
 
         @Override
-        public void onSuccess(Optional<SessionDTO> result) {
+        public void onSuccess(Optional result) {
             if (result.isPresent()) {
-                SessionDTO session = result.get();
+                SessionDTO session = (SessionDTO) result.get();
                 
                 Cookies.setCookie(SESSION_ID_COOKIE, session.getSessionID());
                 Cookies.setCookie(SESSION_EXPIRE_COOKIE, Long.toString(session.getExpireDate().getTime()));
