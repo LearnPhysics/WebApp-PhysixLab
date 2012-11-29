@@ -110,6 +110,11 @@ public class OAuthLogin {
         return AUTHORIZE_URL;
     }
 
+    public OAuthService get_OAUTH_SERVICE()
+    {
+        return service;
+    }
+    
     public Token get_REQUEST_TOKEN()
     {
         return REQUEST_TOKEN;
