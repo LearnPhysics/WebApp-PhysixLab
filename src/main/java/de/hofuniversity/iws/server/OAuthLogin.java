@@ -1,11 +1,15 @@
 
 package de.hofuniversity.iws.server;
 
+import org.json.JSONObject;
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.builder.api.FacebookApi;
 import org.scribe.builder.api.GoogleApi;
 import org.scribe.builder.api.TwitterApi;
+import org.scribe.model.OAuthRequest;
+import org.scribe.model.Response;
 import org.scribe.model.Token;
+import org.scribe.model.Verb;
 import org.scribe.model.Verifier;
 import org.scribe.oauth.OAuthService;
 
@@ -35,6 +39,10 @@ public class OAuthLogin {
     private Verifier OAUTH_VERIFIER = null;
     private Token ACCESS_TOKEN = null;
     private final String CALLBACK_URL = "http://127.0.0.1:8888/PhysixLab/oauth_callback";
+    
+    //private OAuthService service = null;
+    private OAuthRequest request = null;
+    private Response response = null;
     
     
     private OAuthService service = null;
@@ -143,4 +151,14 @@ public class OAuthLogin {
     {
         return ACCESS_TOKEN;
     }
+    
+  /*  public JSONObject get_TwitterUser(){
+        
+        String PROTECTED_RECSOURCE_URL = "http://api.twitter.com/1.1/users/show.json";
+        request = new OAuthRequest(Verb.GET, PROTECTED_RECSOURCE_URL);
+        service.signRequest(ACCESS_TOKEN,request);
+        response = request.send();
+        System.out.println(response.getBody());
+        return null;
+    }*/
 }

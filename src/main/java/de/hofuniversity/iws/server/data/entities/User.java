@@ -32,7 +32,7 @@ public class User implements Serializable, GenericEntity {
     private Timestamp birthDate;
     @Column
     private String city;
-    @Lob
+    @Column
     private String userPic;
     @OneToMany(mappedBy = "user")
     private List<NetworkAccount> networkAccountList;

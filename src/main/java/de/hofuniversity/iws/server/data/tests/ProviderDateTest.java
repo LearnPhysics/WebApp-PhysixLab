@@ -6,12 +6,15 @@ package de.hofuniversity.iws.server.data.tests;
 
 import de.hofuniversity.iws.server.OAuthLogin;
 import de.hofuniversity.iws.server.ProviderDataHandler;
+import de.hofuniversity.iws.server.data.entities.NetworkAccount;
+import de.hofuniversity.iws.server.data.entities.User;
+import de.hofuniversity.iws.server.data.handler.NetworkAccountHandler;
+import de.hofuniversity.iws.server.data.handler.UserHandler;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Scanner;
-import org.scribe.model.Verifier;
 
 /**
  *
@@ -21,10 +24,11 @@ public class ProviderDateTest {
         public static void main(String[] args) throws IOException, URISyntaxException {
             
             Scanner in = new Scanner(System.in);
-
+            
+            String NetworkName = "Twitter";
+            
             OAuthLogin oauth = new OAuthLogin();
-            oauth.Login("Twitter");           
-            oauth.get_AUTHORIZE_URL();
+            oauth.Login(NetworkName);           
                         
             ProviderDataHandler pdh = new ProviderDataHandler(oauth.get_OAUTH_SERVICE());
             
@@ -35,6 +39,26 @@ public class ProviderDateTest {
                 oauth.set_OAUTH_VERIFIER(in.nextLine());     
                 
                 System.out.println(oauth.get_accessToken().getToken());
-                pdh.get_TwitterUser(oauth.get_accessToken());
+                
+                Object[] User_obj = pdh.get_TwitterUserData(oauth.get_accessToken());
+                
+                /* angemeldeten User in PhysixLab-Datenbank suchen */
+                NetworkAccount netACC = NetworkAccountHandler.getNetworkAccountEntity(NetworkName, User_obj[1].toString(), true);
+                User user = netACC.getUser();   
+                
+                 /* prüfe ob es den User schon in der PhysixLab-Datenbank gibt
+                 * wenn ja, dann nix tun
+                 * ansonsten User in Datenbank aufnehmen
+                 */
+                if(user==null)
+                {
+                    UserHandler.store((User)User_obj[0]);
+                    netACC = new NetworkAccount();
+                    netACC.setNetworkName(NetworkName);
+                    netACC.setAccountIdentificationString((String)User_obj[1]);
+                    netACC.setUser((User)User_obj[0]);
+                    netACC.setOauthAccessToken(oauth.get_accessToken().getToken());                
+                    NetworkAccountHandler.store(netACC);                  
+                }
         }
 }
