@@ -14,7 +14,6 @@ import de.hofuniversity.iws.server.oauth.*;
 import de.hofuniversity.iws.server.oauth.provider.OAuthProvider;
 import de.hofuniversity.iws.shared.services.LoginService;
 import de.hofuniversity.iws.shared.services.login.LoginException;
-import de.hofuniversity.iws.shared.services.login.LoginProvider;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -70,13 +69,9 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
     public String getOAuthLoginUrl(String provider) {
         try {
             OAuthProvider oauth = Providers.valueOf(provider).getProvider();
-//            OAuthRequest request = oauth.createRequest();
-//            storeSessionAttribute(OAuthCallbackServlet.OAUTH_LOGIN_ATTRIBUTE, new OAuthLogin(request));
-//            return request.getAuthorizeUrl();
-            OAuthLogin l = new OAuthLogin(null);
-            l.successfull = true;
-            storeSessionAttribute(OAuthCallbackServlet.OAUTH_LOGIN_ATTRIBUTE, l);
-            return "";
+            OAuthRequest request = oauth.createRequest();
+            storeSessionAttribute(OAuthCallbackServlet.OAUTH_LOGIN_ATTRIBUTE, new OAuthLogin(request));
+            return request.getAuthorizeUrl();
         } catch (IllegalArgumentException ex) {
             throw new UnsupportedOperationException("no support for provider: " + provider);
         }
