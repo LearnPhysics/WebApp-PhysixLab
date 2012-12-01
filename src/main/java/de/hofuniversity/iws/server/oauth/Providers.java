@@ -4,14 +4,10 @@
  */
 package de.hofuniversity.iws.server.oauth;
 
-import de.hofuniversity.iws.server.oauth.provider.GoogleProvider;
-import de.hofuniversity.iws.server.oauth.provider.FacebookProvider;
-import de.hofuniversity.iws.server.oauth.provider.OAuthProvider;
 import java.io.IOException;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.scribe.builder.api.GoogleApi;
+
+import de.hofuniversity.iws.server.oauth.provider.*;
 import org.scribe.builder.api.TwitterApi;
 
 /**

@@ -10,8 +10,8 @@ import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import de.hofuniversity.iws.server.oauth.OAuthCallbackServlet;
-import de.hofuniversity.iws.server.oauth.OAuthLogin;
+import de.hofuniversity.iws.server.oauth.*;
+import de.hofuniversity.iws.server.oauth.provider.OAuthProvider;
 import de.hofuniversity.iws.shared.services.LoginService;
 import de.hofuniversity.iws.shared.services.login.LoginException;
 import de.hofuniversity.iws.shared.services.login.LoginProvider;
@@ -29,7 +29,6 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
     public static final String SESSION_ATTRIBUTE = "session";
     public static final String TOKEN_ATTRIBUTE = "token";
     public static final String USER_ATTRIBUTE = "user";
-    
     public static final int TIMEOUT_INTERVALL = 10;
 
     @Override
@@ -68,10 +67,15 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
     }
 
     @Override
-    public String getOAuthLoginUrl(LoginProvider provider) {
-        storeSessionAttribute(OAuthCallbackServlet.OAUTH_LOGIN_ATTRIBUTE, new OAuthLogin());
-
-        throw new UnsupportedOperationException("Not supported yet.");
+    public String getOAuthLoginUrl(String provider) {
+        try {
+            OAuthProvider oauth = Providers.valueOf(provider).getProvider();
+            OAuthRequest request = oauth.createRequest();
+            storeSessionAttribute(OAuthCallbackServlet.OAUTH_LOGIN_ATTRIBUTE, new OAuthLogin(request));
+            return request.getAuthorizeUrl();
+        } catch (IllegalArgumentException ex) {
+            throw new UnsupportedOperationException("no support for provider: " + provider);
+        }
     }
 
     @Override
@@ -86,14 +90,12 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
     public <T> Optional<T> getSessionAttribute(String attributeName) {
         return getSessionAttribute(getThreadLocalRequest(), attributeName);
     }
-    
-    public void storeSessionAttribute(String attributeName, Object value)
-    {
+
+    public void storeSessionAttribute(String attributeName, Object value) {
         storeSessionAttribute(getThreadLocalRequest(), attributeName, value);
     }
-    
-    public static void storeSessionAttribute(HttpServletRequest request, String attributeName, Object value)
-    {
+
+    public static void storeSessionAttribute(HttpServletRequest request, String attributeName, Object value) {
         request.getSession().setAttribute(attributeName, value);
     }
 

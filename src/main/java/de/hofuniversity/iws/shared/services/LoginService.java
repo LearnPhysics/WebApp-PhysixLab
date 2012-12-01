@@ -37,7 +37,7 @@ public interface LoginService extends RemoteService {
      * @param provider
      * @return 
      */
-    public String getOAuthLoginUrl(LoginProvider provider);
+    public String getOAuthLoginUrl(String provider);
     
     /**
      * invalidates the active session
