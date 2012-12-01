@@ -5,8 +5,6 @@
 package de.hofuniversity.iws.client;
 
 import java.sql.Date;
-import java.text.DateFormat;
-import java.util.Locale;
 
 import com.google.common.base.Optional;
 import com.google.gwt.user.client.Cookies;

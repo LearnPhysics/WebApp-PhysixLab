@@ -9,6 +9,7 @@ import de.hofuniversity.iws.server.login.Session;
 import de.hofuniversity.iws.server.login.User;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
+
 /**
  *
  * @author Andreas Arndt <andreas.arndt@hof-university.de>
@@ -30,22 +31,20 @@ public class OAuthCallbackServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         OAuthLogin oauth = (OAuthLogin) request.getSession().getAttribute("obj_OAuthClass");
-        
-        if(request.getQueryString().contains("oauth_verifier="))
-        {
+
+        if (request.getQueryString().contains("oauth_verifier=")) {
             // Parameter: oauth_verifier bei Twitter und Google 
             oauth.set_OAUTH_VERIFIER(request.getParameter("oauth_verifier").toString());
         }
-        if(request.getQueryString().contains("code="))
-        {
+        if (request.getQueryString().contains("code=")) {
             // Parameter: code bei Facebook             
             oauth.set_OAUTH_VERIFIER(request.getParameter("code").toString());
-        }    
-        
-       response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
+        }
+
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
             out.println("<html>");
             out.println("<head>");
             out.println("<title>Servlet OAuthCallbackServlet</title></head><body>");
@@ -56,12 +55,10 @@ public class OAuthCallbackServlet extends HttpServlet {
             out.println("</script>");
             out.println("</head>");
             out.println("<body onload=\"popupclose();\">");
-   /*         out.println("AuthorizeURL: " + oauth.get_AUTHORIZE_URL() + "");
-            out.println("Verifier: " + oauth.get_OAUTH_VERIFIER().getValue());*/
+            /*         out.println("AuthorizeURL: " + oauth.get_AUTHORIZE_URL() + "");
+             out.println("Verifier: " + oauth.get_OAUTH_VERIFIER().getValue());*/
             out.println("</body>");
             out.println("</html>");
-        } finally {
-            out.close();
         }
 
 
