@@ -1,14 +1,17 @@
 package de.hofuniversity.iws.server;
 
-import de.hofuniversity.iws.server.services.LoginServiceImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import de.hofuniversity.iws.server.login.Session;
-import de.hofuniversity.iws.server.login.User;
+import de.hofuniversity.iws.server.data.entities.User;
+import de.hofuniversity.iws.server.services.LoginServiceImpl;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
+import org.hibernate.Session;
+
+import static de.hofuniversity.iws.server.services.LoginServiceImpl.*;
 
 /**
  *
@@ -17,7 +20,7 @@ import javax.servlet.http.*;
 @RemoteServiceRelativePath("oauth_callback")
 public class OAuthCallbackServlet extends HttpServlet {
 
-    public static final String OAUTH_FAIL = "oauth_fail";
+    public static final String OAUTH_LOGIN_ATTRIBUTE = "oauth-login";
 
     /**
      * Processes requests for both HTTP
@@ -32,45 +35,21 @@ public class OAuthCallbackServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        OAuthLogin oauth = (OAuthLogin) request.getSession().getAttribute("obj_OAuthClass");
+        response.encodeRedirectURL(request.getContextPath() + "/PopUpCloser.html");
 
-        if (request.getQueryString().contains("oauth_verifier=")) {
-            // Parameter: oauth_verifier bei Twitter und Google 
-            oauth.set_OAUTH_VERIFIER(request.getParameter("oauth_verifier").toString());
-        }
-        if (request.getQueryString().contains("code=")) {
-            // Parameter: code bei Facebook             
-            oauth.set_OAUTH_VERIFIER(request.getParameter("code").toString());
-        }
-
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet OAuthCallbackServlet</title></head><body>");
-            out.println("<script type=\"text/javascript\">");
-            out.println("function popupclose () {");
-            out.println(" fenster = window.close();");
-            out.println(" return false; }");
-            out.println("</script>");
-            out.println("</head>");
-            out.println("<body onload=\"popupclose();\">");
-            /*         out.println("AuthorizeURL: " + oauth.get_AUTHORIZE_URL() + "");
-             out.println("Verifier: " + oauth.get_OAUTH_VERIFIER().getValue());*/
-            out.println("</body>");
-            out.println("</html>");
-        }
-
-
-        //Somehow generate a coresponding user
-        User user = new User();
-
-        //invalidate the session if the authetification failed
-        if (false) {
-            request.setAttribute(OAUTH_FAIL, true);
-        } else {
-            Session s = new Session(request.getRemoteAddr(), user);
-            request.setAttribute(LoginServiceImpl.SESSION_ATTRIBUTE, s);
+        Optional<OAuthLogin> login = getSessionAttribute(request, OAUTH_LOGIN_ATTRIBUTE);
+        if (login.isPresent()) {
+            OAuthLogin l = login.get();
+            synchronized (l) {
+                if (false) {
+                } else {
+                    //Somehow generate a coresponding user
+                    User user = new User();
+                    l.successfull = true;
+                    storeSessionAttribute(request, USER_ATTRIBUTE, user);
+                }
+                l.notify();
+            }
         }
     }
 

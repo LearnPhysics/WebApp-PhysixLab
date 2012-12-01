@@ -4,132 +4,97 @@
  */
 package de.hofuniversity.iws.server.services;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.UUID;
 
+import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import de.hofuniversity.iws.client.PhysixLab;
 import de.hofuniversity.iws.server.OAuthCallbackServlet;
-import de.hofuniversity.iws.server.login.Session;
-import de.hofuniversity.iws.shared.dto.SessionDTO;
+import de.hofuniversity.iws.server.OAuthLogin;
 import de.hofuniversity.iws.shared.services.LoginService;
 import de.hofuniversity.iws.shared.services.login.LoginException;
 import de.hofuniversity.iws.shared.services.login.LoginProvider;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author User
  */
+//TODO nochmals überprüfen was getSession mit und ohne bool flag macht
 @RemoteServiceRelativePath("login")
 public class LoginServiceImpl extends RemoteServiceServlet implements LoginService {
 
-    private static Map<String, Session> sessions = new ConcurrentHashMap<>();
     public static final String SESSION_ATTRIBUTE = "session";
-    public static final int TIMEOUT_INTERVALL = 10_000;
+    public static final String TOKEN_ATTRIBUTE = "token";
+    public static final String USER_ATTRIBUTE = "user";
+    
+    public static final int TIMEOUT_INTERVALL = 10;
 
     @Override
-    public Optional<SessionDTO> getSessionFromId(String sessionId) {
-        if (checkSessionID(sessionId)) {
-            Session s = sessions.get(sessionId);
-            setStoredSession(s);
-
-            if (s.isValid(getThreadLocalRequest().getRemoteAddr())) {
-                s.updateExpireDate();
-                return Optional.of(s.createDTO());
-            } else {
-                logout(sessionId);
+    public Optional<String> getSessionToken() {
+        return getSession().transform(new Function<HttpSession, String>() {
+            @Override
+            public String apply(HttpSession session) {
+                return (String) session.getAttribute(TOKEN_ATTRIBUTE);
             }
-        }
-        return Optional.absent();
+        });
     }
 
     @Override
-    public SessionDTO waitForOAuthSession() throws LoginException {
-        Optional<Session> session = Optional.absent();
-        long time = System.currentTimeMillis();
-        do {
-            if (getSessionAttribute(OAuthCallbackServlet.OAUTH_FAIL).isPresent()) {
-                invalidate();
-                throw new LoginException("OAuth failed!");
+    public String waitForOAuthVerification() throws LoginException {
+        Optional<OAuthLogin> login = getSessionAttribute(OAuthCallbackServlet.OAUTH_LOGIN_ATTRIBUTE);
+        if (login.isPresent()) {
+            OAuthLogin l = login.get();
+            synchronized (l) {
+                if (!l.successfull) {
+                    try {
+                        l.wait(TIMEOUT_INTERVALL);
+                    } catch (InterruptedException ex) {
+                    }
+                }
+                if (l.successfull) {
+                    String token = UUID.randomUUID().toString();
+                    storeSessionAttribute(TOKEN_ATTRIBUTE, token);
+                    return token;
+                } else {
+                    throw new LoginException("Login Timeout eceeded or login wasn't succesfull!");
+                }
             }
-
-            if (System.currentTimeMillis() - time > TIMEOUT_INTERVALL) {
-                invalidate();
-                throw new LoginException("Login timed out!");
-            }
-
-            session = getSessionAttribute(SESSION_ATTRIBUTE);
-
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException ex) {
-            }
-        } while (!session.isPresent());
-
-        sessions.put(session.get().toString(), session.get());
-        return session.get().createDTO();
+        } else {
+            throw new LoginException("No OAuth login was initialized!");
+        }
     }
 
     @Override
     public String getOAuthLoginUrl(LoginProvider provider) {
-        invalidate();
+        storeSessionAttribute(OAuthCallbackServlet.OAUTH_LOGIN_ATTRIBUTE, new OAuthLogin());
+
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void logout(String sessionID) {
-        if (checkSessionID(sessionID)) {
-            sessions.remove(sessionID);
-
-            Optional<Session> session = getStoredSession();
-            if (session.isPresent()) {
-                sessions.remove(session.get().toString());
-            }
-
-            invalidate();
-        }
+    public void logout() {
+        getThreadLocalRequest().getSession(true).invalidate();
     }
 
-    private void invalidate() {
-        getThreadLocalRequest().getSession().invalidate();
-    }
-
-    private void setStoredSession(Session sess) {
-        getThreadLocalRequest().getSession().setAttribute(SESSION_ATTRIBUTE, sess);
-    }
-
-    private boolean checkSessionID(String sid) {
-        for (Cookie c : getThreadLocalRequest().getCookies()) {
-            if (PhysixLab.SESSION_ID_COOKIE.equals(c.getName())) {
-                return sid.equals(c.getValue());
-            }
-        }
-        return false;
-    }
-
-    private Optional<Session> getStoredSession() {
-        return getStoredSession(getThreadLocalRequest());
-    }
-
-    public static Optional<Session> getStoredSession(final HttpServletRequest request) {
-        Optional<Session> os = getSessionAttribute(request, SESSION_ATTRIBUTE);
-        if (os.isPresent()) {
-            if (!os.get().isValid(request.getRemoteAddr())) {
-                sessions.remove(os.get().toString());
-                request.getSession().invalidate();
-            } else {
-                return os;
-            }
-        }
-        return Optional.absent();
+    public Optional<HttpSession> getSession() {
+        return Optional.fromNullable(getThreadLocalRequest().getSession(false));
     }
 
     public <T> Optional<T> getSessionAttribute(String attributeName) {
         return getSessionAttribute(getThreadLocalRequest(), attributeName);
+    }
+    
+    public void storeSessionAttribute(String attributeName, Object value)
+    {
+        storeSessionAttribute(getThreadLocalRequest(), attributeName, value);
+    }
+    
+    public static void storeSessionAttribute(HttpServletRequest request, String attributeName, Object value)
+    {
+        request.getSession().setAttribute(attributeName, value);
     }
 
     public static <T> Optional<T> getSessionAttribute(HttpServletRequest request, String attributeName) {
