@@ -1,4 +1,4 @@
-package de.hofuniversity.iws.server;
+package de.hofuniversity.iws.server.oauth;
 
 
 import de.hofuniversity.iws.server.data.entities.User;

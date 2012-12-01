@@ -1,15 +1,12 @@
-package de.hofuniversity.iws.server;
+package de.hofuniversity.iws.server.oauth;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import de.hofuniversity.iws.server.data.entities.User;
-import de.hofuniversity.iws.server.services.LoginServiceImpl;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
-import org.hibernate.Session;
 
 import static de.hofuniversity.iws.server.services.LoginServiceImpl.*;
 

@@ -17,7 +17,7 @@
     
     <servlet>
         <servlet-name>oauthCallback</servlet-name>
-        <servlet-class>de.hofuniversity.iws.server.OAuthCallbackServlet</servlet-class>
+        <servlet-class>de.hofuniversity.iws.server.oauth.OAuthCallbackServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>oauthCallback</servlet-name>
