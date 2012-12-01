@@ -18,7 +18,7 @@ import de.hofuniversity.iws.shared.services.LoginServiceAsync;
  */
 public class LoginPage extends Composite {
 
-    private final LoginServiceAsync loginService = GWT.create(LoginServiceAsync.class);
+    private final LoginServiceAsync loginService = LoginServiceAsync.Util.getInstance();
     private LoginPageUiBinder uiBinder = GWT.create(LoginPageUiBinder.class);
 
     interface LoginPageUiBinder extends UiBinder<Widget, LoginPage> {

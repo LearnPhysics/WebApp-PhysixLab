@@ -21,7 +21,7 @@ public class SessionPage extends Composite {
 
     interface SessionPagetUiBinder extends UiBinder<Widget, SessionPage> {
     }
-    private final LoginServiceAsync loginService = GWT.create(LoginServiceAsync.class);
+    private final LoginServiceAsync loginService = LoginServiceAsync.Util.getInstance();
     private final String token;
     @UiField
     Label sessionLabel;
