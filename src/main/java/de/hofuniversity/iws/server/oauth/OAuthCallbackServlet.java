@@ -7,6 +7,8 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import de.hofuniversity.iws.server.data.entities.User;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
+import org.scribe.model.Token;
+import org.scribe.model.Verifier;
 
 import static de.hofuniversity.iws.server.services.LoginServiceImpl.*;
 
@@ -31,23 +33,42 @@ public class OAuthCallbackServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         response.encodeRedirectURL(request.getContextPath() + "/PopUpCloser.html");
+
+        Verifier verifier = null;
+        if (request.getQueryString().contains("oauth_verifier=")) {
+            // Parameter: oauth_verifier bei Twitter und Google 
+            verifier = new Verifier(request.getParameter("oauth_verifier"));
+        } else if (request.getQueryString().contains("code=")) {
+            // Parameter: code bei Facebook             
+            verifier = new Verifier(request.getParameter("code"));
+        }
 
         Optional<OAuthLogin> login = getSessionAttribute(request, OAUTH_LOGIN_ATTRIBUTE);
         if (login.isPresent()) {
             OAuthLogin l = login.get();
             synchronized (l) {
-                if (false) {
+                if (verifier == null) {
                 } else {
                     //Somehow generate a coresponding user
-                    User user = new User();
+                    Token accessToken = l.request.generateAccessToken(verifier);
+
+                    User user = getOrCreateUserForAccessToken(accessToken);
+
                     l.successfull = true;
                     storeSessionAttribute(request, USER_ATTRIBUTE, user);
                 }
                 l.notify();
             }
         }
+    }
+
+    private User getOrCreateUserForAccessToken(Token accessToken) {
+        //TODO DB access
+        User u = new User();
+        u.setFirstName("Daniel");
+        u.setLastName("Heinrich");
+        return u;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

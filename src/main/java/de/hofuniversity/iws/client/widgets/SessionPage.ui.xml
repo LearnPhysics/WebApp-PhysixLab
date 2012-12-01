@@ -8,7 +8,7 @@
     </ui:style>
     
     <g:HorizontalPanel>
-        <span ui:field='sessionLabel'></span>
+        <g:Label ui:field='sessionLabel'></g:Label>
         <g:Button ui:field='logout'>Logout</g:Button>
     </g:HorizontalPanel>
 </ui:UiBinder>

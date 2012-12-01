@@ -11,8 +11,6 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import de.hofuniversity.iws.shared.services.LoginServiceAsync;
-import de.hofuniversity.iws.shared.services.login.LoginProvider;
-import javax.inject.Inject;
 
 /**
  *
@@ -20,31 +18,29 @@ import javax.inject.Inject;
  */
 public class LoginPage extends Composite {
 
-    private final LoginServiceAsync loginService;
+    private final LoginServiceAsync loginService = GWT.create(LoginServiceAsync.class);
     private LoginPageUiBinder uiBinder = GWT.create(LoginPageUiBinder.class);
 
     interface LoginPageUiBinder extends UiBinder<Widget, LoginPage> {
     }
 
-    @Inject
-    public LoginPage(LoginServiceAsync loginService) {
-        this.loginService = loginService;
+    public LoginPage() {
         initWidget(uiBinder.createAndBindUi(this));
     }
 
     @UiHandler("googleLogin")
     public void loginWithGoogle(ClickEvent ev) {
-        loginService.getOAuthLoginUrl(LoginProvider.GOOGLE, new PopupCallback());
+        loginService.getOAuthLoginUrl("GOOGLE", new PopupCallback());
     }
 
     @UiHandler("twitterLogin")
     public void loginWithTwitter(ClickEvent ev) {
-        loginService.getOAuthLoginUrl(LoginProvider.TWITTER, new PopupCallback());
+        loginService.getOAuthLoginUrl("TWITTER", new PopupCallback());
     }
 
     @UiHandler("facebookLogin")
     public void loginWithFacebook(ClickEvent ev) {
-        loginService.getOAuthLoginUrl(LoginProvider.FACEBOOK, new PopupCallback());
+        loginService.getOAuthLoginUrl("FACEBOOK", new PopupCallback());
     }
 
     private class PopupCallback implements AsyncCallback<String> {
@@ -77,7 +73,7 @@ public class LoginPage extends Composite {
         @Override
         public void onSuccess(String result) {
             RootPanel.get().clear();
-            RootPanel.get().add(new SessionPage(loginService, result));
+            RootPanel.get().add(new SessionPage(result));
         }
     }
 }

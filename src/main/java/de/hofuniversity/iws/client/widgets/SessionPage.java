@@ -5,7 +5,7 @@
 package de.hofuniversity.iws.client.widgets;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.SpanElement;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
@@ -21,31 +21,32 @@ public class SessionPage extends Composite {
 
     interface SessionPagetUiBinder extends UiBinder<Widget, SessionPage> {
     }
-    private final LoginServiceAsync loginService;
+    private final LoginServiceAsync loginService = GWT.create(LoginServiceAsync.class);
     private final String token;
     @UiField
-    private SpanElement sessionLabel;
+    Label sessionLabel;
 
-    public SessionPage(LoginServiceAsync loginService, String token) {
-        this.loginService = loginService;
+    public SessionPage(String token) {
         this.token = token;
         initWidget(uiBinder.createAndBindUi(this));
-        sessionLabel.setInnerText("token: " + token);
+        
+        sessionLabel.setVisible(true);
+        sessionLabel.setText("token: " + token);
     }
 
     @UiHandler("logout")
-    public void logout() {
+    public void logout(ClickEvent ev) {        
         loginService.logout(new AsyncCallback<Void>() {
             @Override
             public void onFailure(Throwable caught) {
                 RootPanel.get().clear();
-                RootPanel.get().add(new LoginPage(loginService));
+                RootPanel.get().add(new LoginPage());
             }
 
             @Override
             public void onSuccess(Void result) {
                 RootPanel.get().clear();
-                RootPanel.get().add(new LoginPage(loginService));
+                RootPanel.get().add(new LoginPage());
             }
         });
     }

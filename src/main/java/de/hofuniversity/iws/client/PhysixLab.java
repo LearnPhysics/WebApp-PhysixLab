@@ -4,7 +4,6 @@
  */
 package de.hofuniversity.iws.client;
 
-
 import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
@@ -24,19 +23,19 @@ public class PhysixLab {
     private LoginServiceAsync loginService;
 
     public void init() {
-        loginService.getSessionToken(new AsyncCallback<Optional>() {
+        loginService.getSessionToken(new AsyncCallback<Optional<String>>() {
             @Override
             public void onFailure(Throwable caught) {
-                gotoPage(new LoginPage(loginService));
+                gotoPage(new LoginPage());
             }
 
             @Override
-            public void onSuccess(Optional result) {
+            public void onSuccess(Optional<String> result) {
                 if (result.isPresent()) {
-                    String token = (String) result.get();
-                    gotoPage(new SessionPage(loginService, token));
+                    String token = result.get();
+                    gotoPage(new SessionPage(token));
                 } else {
-                    gotoPage(new LoginPage(loginService));
+                    gotoPage(new LoginPage());
                 }
             }
         });

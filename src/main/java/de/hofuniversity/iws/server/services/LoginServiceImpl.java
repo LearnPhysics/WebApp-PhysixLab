@@ -70,9 +70,13 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
     public String getOAuthLoginUrl(String provider) {
         try {
             OAuthProvider oauth = Providers.valueOf(provider).getProvider();
-            OAuthRequest request = oauth.createRequest();
-            storeSessionAttribute(OAuthCallbackServlet.OAUTH_LOGIN_ATTRIBUTE, new OAuthLogin(request));
-            return request.getAuthorizeUrl();
+//            OAuthRequest request = oauth.createRequest();
+//            storeSessionAttribute(OAuthCallbackServlet.OAUTH_LOGIN_ATTRIBUTE, new OAuthLogin(request));
+//            return request.getAuthorizeUrl();
+            OAuthLogin l = new OAuthLogin(null);
+            l.successfull = true;
+            storeSessionAttribute(OAuthCallbackServlet.OAUTH_LOGIN_ATTRIBUTE, l);
+            return "";
         } catch (IllegalArgumentException ex) {
             throw new UnsupportedOperationException("no support for provider: " + provider);
         }
