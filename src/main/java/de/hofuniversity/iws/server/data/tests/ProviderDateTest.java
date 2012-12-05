@@ -25,7 +25,7 @@ public class ProviderDateTest {
             
             Scanner in = new Scanner(System.in);
             
-            String NetworkName = "Twitter";
+            String NetworkName = "Facebook";
             
             OAuthLogin oauth = new OAuthLogin();
             oauth.Login(NetworkName);           
@@ -38,19 +38,17 @@ public class ProviderDateTest {
                 System.out.print(">>");
                 oauth.set_OAUTH_VERIFIER(in.nextLine());     
                 
-                System.out.println(oauth.get_accessToken().getToken());
-                
-                Object[] User_obj = pdh.get_TwitterUserData(oauth.get_accessToken());
+                Object[] User_obj = pdh.get_UserData(oauth.get_accessToken(),NetworkName);
                 
                 /* angemeldeten User in PhysixLab-Datenbank suchen */
                 NetworkAccount netACC = NetworkAccountHandler.getNetworkAccountEntity(NetworkName, User_obj[1].toString(), true);
-                User user = netACC.getUser();   
+         //       User user = netACC.getUser();   
                 
                  /* prüfe ob es den User schon in der PhysixLab-Datenbank gibt
                  * wenn ja, dann nix tun
                  * ansonsten User in Datenbank aufnehmen
                  */
-                if(user==null)
+                if(netACC==null)
                 {
                     UserHandler.store((User)User_obj[0]);
                     netACC = new NetworkAccount();
