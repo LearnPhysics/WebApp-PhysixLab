@@ -3,6 +3,13 @@ package de.hofuniversity.iws.server.data.handler;
 import javax.persistence.EntityManager;
 
 import de.hofuniversity.iws.server.data.entities.User;
+import de.hofuniversity.iws.server.data.entities.User_;
+import java.util.List;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 public class UserHandler {
 
@@ -55,6 +62,8 @@ public class UserHandler {
                     tmpUser.setNetworkAccountList(user.getNetworkAccountList());
                     tmpUser.setGameResultList(user.getGameResultList());
                     tmpUser.setLessonProgressList(user.getLessonProgressList());
+                    tmpUser.setLessonProgressList(user.getLessonProgressList());
+                    tmpUser.setLessonProgressList(user.getLessonProgressList());
 
                     // write values
                     entityManager.getTransaction().begin();
@@ -77,5 +86,32 @@ public class UserHandler {
     // Get user by Id
     public static User getGameEntity(long id, boolean detach) {
         return (User) GenericHandler.getEntity(User.class, id, detach);
+    }
+
+    // Get list of all users
+    public static List<User> getAllUsers() {
+        List<User> userList = null;
+        try {
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            entityManager = HibernateUtil.getEntityManagerFactory()
+                    .createEntityManager();
+
+            CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<User> criteria = builder
+                    .createQuery(User.class);
+            Root<User> userEntityRoot = criteria.from(User.class);
+            criteria.select(userEntityRoot);
+            criteria.where(builder.greaterThan(
+                    userEntityRoot.get(User_.id), -1L));
+
+            TypedQuery query = entityManager.createQuery(criteria);
+            userList = query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return userList;
     }
 }

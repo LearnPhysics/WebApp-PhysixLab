@@ -2,14 +2,19 @@ package de.hofuniversity.iws.server.data.entities;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -20,7 +25,6 @@ public class User implements Serializable, GenericEntity {
 
     @Transient
     private boolean detached = false;
-    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -42,6 +46,15 @@ public class User implements Serializable, GenericEntity {
     private List<GameResult> gameResultList;
     @OneToMany(mappedBy = "user")
     private List<LessonProgress> lessonProgressList;
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name = "USER_FRIENDS",
+    joinColumns = {
+        @JoinColumn(name = "USER_ID")},
+    inverseJoinColumns = {
+        @JoinColumn(name = "FRIEND_ID")})
+    private List<User> friends = new ArrayList<User>();
+    @ManyToMany(mappedBy = "friends")
+    private List<User> users = new ArrayList<User>();
 
     public boolean isDetached() {
         return detached;
@@ -129,5 +142,21 @@ public class User implements Serializable, GenericEntity {
 
     public void setLessonProgressList(List<LessonProgress> lessonProgressList) {
         this.lessonProgressList = lessonProgressList;
+    }
+
+    public List<User> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<User> friends) {
+        this.friends = friends;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }

@@ -5,11 +5,12 @@
 package de.hofuniversity.iws.client.widgets;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.*;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.*;
-import de.hofuniversity.iws.client.services.LoginServiceAsync;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Widget;
+import de.hofuniversity.iws.shared.services.LoginServiceAsync;
 import javax.inject.Inject;
 
 /**
