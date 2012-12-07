@@ -26,8 +26,12 @@ public class Test {
         
         franz.getFriends().add(julia);
         franz.getFriends().add(kitenge);
+        franz.getFriends().add(joe);
         
         julia.getFriends().add(kitenge);
+        julia.getFriends().add(joe);
+        
+        kitenge.getFriends().add(julia);
         
         UserHandler.store(joe);
         UserHandler.store(franz);
@@ -36,19 +40,24 @@ public class Test {
         
         List<User> peopleILike;
         List<User> peopleWhoLikeMe;
+        List<User> bilateralFriends;
         
         List<User> allUsers = UserHandler.getAllUsers();
         
         for(User user : allUsers) {
             peopleILike = user.getFriends();
-            peopleWhoLikeMe = user.getUsers();
+            peopleWhoLikeMe = user.getDevotees();
+            bilateralFriends = user.getBilateralFriends();
             System.out.println(user.getFirstName());
             System.out.println("-----");
             for(User personILike : peopleILike) {
                 System.out.println(user.getFirstName() + " likes " + personILike.getFirstName());
             }
-            for(User personILike : peopleILike) {
-                System.out.println(user.getFirstName() + " likes " + personILike.getFirstName());
+            for(User personWhoLikeMe : peopleWhoLikeMe) {
+                System.out.println(user.getFirstName() + " is liked by " + personWhoLikeMe.getFirstName());
+            }
+            for(User bi : bilateralFriends) {
+                System.out.println(user.getFirstName() + " and " + bi.getFirstName() + " like each other");
             }
             System.out.println();
             System.out.println();

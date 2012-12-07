@@ -62,8 +62,8 @@ public class UserHandler {
                     tmpUser.setNetworkAccountList(user.getNetworkAccountList());
                     tmpUser.setGameResultList(user.getGameResultList());
                     tmpUser.setLessonProgressList(user.getLessonProgressList());
-                    tmpUser.setLessonProgressList(user.getLessonProgressList());
-                    tmpUser.setLessonProgressList(user.getLessonProgressList());
+                    tmpUser.setFriends(user.getFriends());
+                    tmpUser.setDevotees(user.getDevotees());
 
                     // write values
                     entityManager.getTransaction().begin();

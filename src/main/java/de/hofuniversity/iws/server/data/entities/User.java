@@ -3,6 +3,7 @@ package de.hofuniversity.iws.server.data.entities;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.CascadeType;
 
@@ -47,14 +48,14 @@ public class User implements Serializable, GenericEntity {
     @OneToMany(mappedBy = "user")
     private List<LessonProgress> lessonProgressList;
     @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(name = "USER_FRIENDS",
+    @JoinTable(name = "DEVOTEE_FRIENDS",
     joinColumns = {
-        @JoinColumn(name = "USER_ID")},
+        @JoinColumn(name = "DEVOTEE_ID")},
     inverseJoinColumns = {
         @JoinColumn(name = "FRIEND_ID")})
     private List<User> friends = new ArrayList<User>();
     @ManyToMany(mappedBy = "friends")
-    private List<User> users = new ArrayList<User>();
+    private List<User> devotees = new ArrayList<User>();
 
     public boolean isDetached() {
         return detached;
@@ -152,11 +153,24 @@ public class User implements Serializable, GenericEntity {
         this.friends = friends;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public List<User> getDevotees() {
+        return devotees;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setDevotees(List<User> devotees) {
+        this.devotees = devotees;
+    }
+    
+    public List<User> getBilateralFriends() {
+        List<User> retval = new LinkedList<User>();
+        for(User devotee : devotees) {
+            for(User friend : friends) {
+                if(friend.getId().longValue() == devotee.getId().longValue()) {
+                    retval.add(friend);
+                    break;
+                }
+            }
+        }
+        return retval;
     }
 }
