@@ -5,6 +5,8 @@
 package de.hofuniversity.iws.server;
 
 import de.hofuniversity.iws.server.data.entities.User;
+import de.hofuniversity.iws.server.oauth.Providers;
+import java.sql.Array;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.JSONException;
@@ -27,127 +29,118 @@ public class ProviderDataHandler {
     
     JSONObject json = null;
     User tmpUser = null;
-    
+   
     public ProviderDataHandler(OAuthService s)
     {
         this.service = s;
-    }
+    } 
     
-    private String parseJSON (User user,String responceBody,String Provider) 
+    private String parseJSON (User user,String responceBody,String Provider)  
     {
-         String id = null; 
-        // System.out.println(response.getBody());
-         try {
-            json = JSONUtility.convert_string_to_json(responceBody);
-        } catch (JSONException ex) {
-            Logger.getLogger(ProviderDataHandler.class.getName()).log(Level.SEVERE, null, ex);
-        }
-         
-        /* Ermittlung des Benutzernamens */   
-        try {           
-            user.setUserName(json.getString("screen_name"));
-        } catch (JSONException ex) {
-            Logger.getLogger(ProviderDataHandler.class.getName()).log(Level.SEVERE, null, ex);
-        }
-         try {           
-            user.setUserName(json.getString("displayName"));
-        } catch (JSONException ex) {
-            Logger.getLogger(ProviderDataHandler.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {           
-            user.setUserName(json.getString("name"));
-        } catch (JSONException ex) {
-            Logger.getLogger(ProviderDataHandler.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        String id = null; 
+       //     "location","profile_image_url","id"};
+        String[] name={"screen_name","displayName"};
+        String[] first_name={"givenName","first_name"};
+        String[] last_name={"familyName","last_name"};
+        
         try {
-            JSONObject name = json.getJSONObject("name");
-            user.setLastName(name.getString("familyName"));
-        } catch (JSONException ex)
+            // System.out.println(response.getBody());
+                json = new JSONObject(responceBody);
+        } catch (JSONException ex) {
+            Logger.getLogger(ProviderDataHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if(json.has("name"))
         {
-             Logger.getLogger(ProviderDataHandler.class.getName()).log(Level.SEVERE, null, ex);           
+              user.setUserName(json.optString("name"));                        
         }
-        try {           
-            user.setFirstName(json.getString("givenName"));
-        } catch (JSONException ex) {
-            Logger.getLogger(ProviderDataHandler.class.getName()).log(Level.SEVERE, null, ex);
+        
+        for (String item: name) {
+            if(json.has(item)){
+                    user.setUserName(json.optString(item));
+            }
         }
-        try {
-            JSONObject name = json.getJSONObject("name");
-            user.setFirstName(name.getString("givenName"));
-        } catch (JSONException ex)
+        for (String item: first_name) {
+            if(json.has(item)){
+                    user.setFirstName(json.optString(item));
+            }
+        }
+        for (String item: last_name) {
+            if(json.has(item)){
+                    user.setLastName(json.optString(item));
+            }
+        }           
+        JSONObject tmp = json.optJSONObject("hometown");
+        if(tmp != null)
         {
-             Logger.getLogger(ProviderDataHandler.class.getName()).log(Level.SEVERE, null, ex);           
-        }
-        try {           
-            user.setLastName(json.getString("familyName"));
-        } catch (JSONException ex) {
-            Logger.getLogger(ProviderDataHandler.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {           
-            user.setFirstName(json.getString("first_name"));
-        } catch (JSONException ex) {
-            Logger.getLogger(ProviderDataHandler.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {           
-            user.setLastName(json.getString("last_name"));
-        } catch (JSONException ex) {
-            Logger.getLogger(ProviderDataHandler.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        /* Ende Benutzername */
-        /* Standort bzw. Wohnort ermitteln */
-        try {           
-            user.setCity(json.getString("location"));
-        } catch (JSONException ex) {
-            Logger.getLogger(ProviderDataHandler.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            JSONObject hometown = json.getJSONObject("hometown");
-            user.setCity(hometown.getString("name"));
-        } catch (JSONException ex)
+            if(tmp.has("name"))
+            {       
+                    user.setCity(tmp.optString("name"));
+            }
+        }  
+        tmp = json.optJSONObject("image");
+        if(tmp != null)
         {
-             Logger.getLogger(ProviderDataHandler.class.getName()).log(Level.SEVERE, null, ex);           
+            if(tmp.has("url"))
+            {
+                    user.setUserPic(tmp.optString("url")); 
+            }
         }
-        /* Ende Wohnort, Standort */
-        /* Benutzer-ID beim Provider ermitteln */
-        try {
-            id = json.getString("id");
-        } catch (JSONException ex) {
-            Logger.getLogger(ProviderDataHandler.class.getName()).log(Level.SEVERE, null, ex);
+        
+        tmp = json.optJSONObject("name");
+        if(tmp != null)
+        {
+            for (String item: last_name) {
+                if(tmp.has(item)){
+                    user.setLastName(tmp.optString(item));
+                }
+            } 
+            for (String item: first_name) {
+                if(tmp.has(item)){
+                    user.setFirstName(tmp.optString(item));
+                }
+            }            
         }
-        /* Möglichkeiten das Profilbild zu erhalten */
-        try {
-            user.setUserPic(json.getString("profile_image_url"));
-        } catch (JSONException ex) {
-            Logger.getLogger(ProviderDataHandler.class.getName()).log(Level.SEVERE, null, ex);
+        
+        if(json.has("id"))
+        {
+           id = json.optString("id"); 
         }
-        if(Provider.equals("Facebook"))
+        
+        if(json.has("location"))
+        {
+           user.setCity(json.optString("location")); 
+        }
+        
+        if(json.has("profile_image_url"))
+        {
+           user.setUserPic(json.optString("profile_image_url")); 
+        }
+
+        
+        if(Providers.FACEBOOK.name().equals(Provider))
         {
             user.setUserPic("https://graph.facebook.com/"+id+"/picture&type=normal");
         }
-        try {
-            JSONObject name = json.getJSONObject("image");
-            user.setUserPic(name.getString("url"));
-        } catch (JSONException ex)
-        {
-             Logger.getLogger(ProviderDataHandler.class.getName()).log(Level.SEVERE, null, ex);           
-        }
-        /* Ende Profilbild */
         return id;
     }
     
+ 
+    
     public Object[] get_UserData(Token accessToken,String Provider){
+     //   String s = Providers.getProp("GOOGLE_USER_URL");
         
         String PROTECTED_RECSOURCE_URL_Google = "https://www.googleapis.com/plus/v1/people/me";
         String PROTECTED_RECSOURCE_URL_Twitter = "https://api.twitter.com/1/account/verify_credentials.json";
         String PROTECTED_RECSOURCE_URL_Facebook = "https://graph.facebook.com/me";
                   
-        if(Provider.equals("Google"))
+        if(Providers.GOOGLE.name().equals(Provider))
         {
             request = new OAuthRequest(Verb.GET, PROTECTED_RECSOURCE_URL_Google);
-        } else if(Provider.equals("Twitter"))
+        } else if(Providers.TWITTER.name().equals(Provider))
         {
             request = new OAuthRequest(Verb.GET, PROTECTED_RECSOURCE_URL_Twitter);
-        } else if(Provider.equals("Facebook"))
+        } else if(Providers.FACEBOOK.name().equals(Provider))
         {
             request = new OAuthRequest(Verb.GET, PROTECTED_RECSOURCE_URL_Facebook
                                        +"?access_token="+accessToken.getToken());          
@@ -157,71 +150,8 @@ public class ProviderDataHandler {
         response = request.send();
         tmpUser = new User();
         String id = parseJSON(tmpUser,response.getBody(),Provider);
-        
- /*      // System.out.println(response.getBody());
-         try {
-            json = JSONUtility.convert_string_to_json(response.getBody());
-        } catch (JSONException ex) {
-            Logger.getLogger(ProviderDataHandler.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {           
-            tmpUser.setUserName(json.getString("name"));
-            id = json.getString("id");
-            tmpUser.setUserPic(json.getString("profile_image_url"));
-        } catch (JSONException ex) {
-            Logger.getLogger(ProviderDataHandler.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
-            return new Object[] {tmpUser, id};
+        return new Object[] {tmpUser,id};
+   //     return new Object[] {tmpUser, id};
     }
- /*   public Object[] get_FacebookUserData(Token accessToken){
-        
-        String PROTECTED_RECSOURCE_URL = "https://graph.facebook.com/me";
-        String id = null;
-        request = new OAuthRequest(Verb.GET, PROTECTED_RECSOURCE_URL
-                                                +"?access_token="+accessToken.getToken());
-        service.signRequest(accessToken,request);
-        response = request.send();
-        tmpUser = new User();
-        
-        // System.out.println(response.getBody());
-        try {
-            json = JSONUtility.convert_string_to_json(response.getBody());
-        } catch (JSONException ex) {
-            Logger.getLogger(ProviderDataHandler.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try { 
-            tmpUser.setUserName(json.getString("name"));
-            id = json.getString("id");
-            tmpUser.setUserPic("https://graph.facebook.com/"+json.get("id")+"/picture&type=normal");
-        } catch (JSONException ex) {
-            Logger.getLogger(ProviderDataHandler.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return new Object[] {tmpUser, id};
-    }
-    public Object[] get_TwitterUserData(Token accessToken) {
-        
-        String PROTECTED_RECSOURCE_URL = "https://api.twitter.com/1/account/verify_credentials.json";
-        String id = null;
-      //  String PROTECTED_RECSOURCE_URL = "http://api.twitter.com/1.1/users/show.json";
-        request = new OAuthRequest(Verb.GET, PROTECTED_RECSOURCE_URL);
-        service.signRequest(accessToken,request);
-        response = request.send();
-        tmpUser = new User();
-        
-        // System.out.println(response.getBody());
-        try {
-            json = JSONUtility.convert_string_to_json(response.getBody());
-        } catch (JSONException ex) {
-            Logger.getLogger(ProviderDataHandler.class.getName()).log(Level.SEVERE, null, ex);
-        }
-                    tmpUser = new User();
-        try {         
-            tmpUser.setUserName(json.getString("name"));
-            id = json.getString("id");
-            tmpUser.setUserPic(json.getString("profile_image_url"));
-        } catch (JSONException ex) {
-            Logger.getLogger(ProviderDataHandler.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return new Object[] {tmpUser, id};
-    }*/
+
 }

@@ -14,7 +14,6 @@ public class HibernateUtil {
     private static EntityManagerFactory init() {
         try {
             return Persistence.createEntityManagerFactory("physixLab");
-
         } catch (Throwable e) {
             throw new ExceptionInInitializerError(e);
         }

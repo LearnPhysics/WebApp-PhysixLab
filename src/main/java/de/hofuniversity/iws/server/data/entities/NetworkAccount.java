@@ -25,6 +25,8 @@ public class NetworkAccount implements Serializable, GenericEntity {
     private String accountIdentificationString;
     @Column
     private String oauthAccessToken;
+    @Column
+    private String oauthAccessSecret;
     @ManyToOne
     private User user;
 
@@ -75,4 +77,13 @@ public class NetworkAccount implements Serializable, GenericEntity {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public String getOauthAccessSecret() {
+        return oauthAccessSecret;
+    }
+
+    public void setOauthAccessSecret(String oauthAccessSecret) {
+        this.oauthAccessSecret = oauthAccessSecret;
+    }
+    
 }
