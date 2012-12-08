@@ -6,18 +6,18 @@
 <web-app>
 
     <!-- Servlets -->
-    <servlet>
-        <servlet-name>loginServletImpl</servlet-name>
-        <servlet-class>de.hofuniversity.iws.server.services.LoginServiceImpl</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>loginServletImpl</servlet-name>
-        <url-pattern>/PhysixLab/login</url-pattern>
+    <servlet> 
+        <servlet-name>loginServiceImpl</servlet-name> 
+        <servlet-class>de.hofuniversity.iws.server.services.LoginServiceImpl</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>loginServiceImpl</servlet-name> 
+        <url-pattern>/PhysixLab/login</url-pattern> 
     </servlet-mapping>
     
     <servlet>
         <servlet-name>oauthCallback</servlet-name>
-        <servlet-class>de.hofuniversity.iws.server.OAuthCallbackServlet</servlet-class>
+        <servlet-class>de.hofuniversity.iws.server.oauth.OAuthCallbackServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>oauthCallback</servlet-name>

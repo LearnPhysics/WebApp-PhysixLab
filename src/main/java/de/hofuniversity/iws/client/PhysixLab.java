@@ -4,18 +4,12 @@
  */
 package de.hofuniversity.iws.client;
 
-import java.sql.Date;
-import java.text.DateFormat;
-import java.util.Locale;
-
 import com.google.common.base.Optional;
-import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.RootPanel;
 import de.hofuniversity.iws.client.widgets.LoginPage;
 import de.hofuniversity.iws.client.widgets.SessionPage;
-import de.hofuniversity.iws.shared.dto.SessionDTO;
 import de.hofuniversity.iws.shared.services.LoginServiceAsync;
 import javax.inject.Inject;
 
@@ -25,54 +19,30 @@ import javax.inject.Inject;
  */
 public class PhysixLab {
 
-    public static final String SESSION_ID_COOKIE = "session_id";
-    public static final String SESSION_EXPIRE_COOKIE = "session_expire_date";
     @Inject
     private LoginServiceAsync loginService;
 
     public void init() {
-        String sessionId = Cookies.getCookie(SESSION_ID_COOKIE);
+        loginService.getSessionToken(new AsyncCallback<Optional<String>>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                gotoPage(new LoginPage());
+            }
 
-        if (sessionId == null) {
-            gotoPage(new LoginPage(loginService));
-        } else {
-            String expire = Cookies.getCookie(SESSION_EXPIRE_COOKIE);
-            if (expire != null) {
-                try {
-                    Date ex = new Date(Long.parseLong(expire));
-                    if (new Date(System.currentTimeMillis()).before(ex)) {
-                        loginService.getSessionFromId(sessionId, new SessionCallback());
-                    }
-                } catch (NumberFormatException ex) {
+            @Override
+            public void onSuccess(Optional<String> result) {
+                if (result.isPresent()) {
+                    String token = result.get();
+                    gotoPage(new SessionPage(token));
+                } else {
+                    gotoPage(new LoginPage());
                 }
             }
-        }
+        });
     }
 
     private void gotoPage(Composite page) {
         RootPanel.get().clear();
         RootPanel.get().add(page);
-    }
-
-    private class SessionCallback implements AsyncCallback<Optional> {
-
-        @Override
-        public void onSuccess(Optional result) {
-            if (result.isPresent()) {
-                SessionDTO session = (SessionDTO) result.get();
-                
-                Cookies.setCookie(SESSION_ID_COOKIE, session.getSessionID());
-                Cookies.setCookie(SESSION_EXPIRE_COOKIE, Long.toString(session.getExpireDate().getTime()));
-                
-                gotoPage(new SessionPage(loginService, session));
-            } else {
-                gotoPage(new LoginPage(loginService));
-            }
-        }
-
-        @Override
-        public void onFailure(Throwable caught) {
-            gotoPage(new LoginPage(loginService));
-        }
     }
 }

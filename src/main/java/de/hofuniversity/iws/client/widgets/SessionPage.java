@@ -5,13 +5,10 @@
 package de.hofuniversity.iws.client.widgets;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.SpanElement;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
-import de.hofuniversity.iws.shared.dto.SessionDTO;
 import de.hofuniversity.iws.shared.services.LoginServiceAsync;
 
 /**
@@ -24,31 +21,32 @@ public class SessionPage extends Composite {
 
     interface SessionPagetUiBinder extends UiBinder<Widget, SessionPage> {
     }
-    private final LoginServiceAsync loginService;
-    private final SessionDTO session;
+    private final LoginServiceAsync loginService = LoginServiceAsync.Util.getInstance();
+    private final String token;
     @UiField
-    private SpanElement sessionLabel;
+    Label sessionLabel;
 
-    public SessionPage(LoginServiceAsync loginService, SessionDTO session) {
-        this.loginService = loginService;
-        this.session = session;
+    public SessionPage(String token) {
+        this.token = token;
         initWidget(uiBinder.createAndBindUi(this));
-        sessionLabel.setInnerText("id: " + session.getSessionID() + " expires: " + session.getExpireDate().toString());
+        
+        sessionLabel.setVisible(true);
+        sessionLabel.setText("token: " + token);
     }
 
     @UiHandler("logout")
-    public void logout() {
-        loginService.logout(session.getSessionID(), new AsyncCallback<Void>() {
+    public void logout(ClickEvent ev) {        
+        loginService.logout(new AsyncCallback<Void>() {
             @Override
             public void onFailure(Throwable caught) {
                 RootPanel.get().clear();
-                RootPanel.get().add(new LoginPage(loginService));
+                RootPanel.get().add(new LoginPage());
             }
 
             @Override
             public void onSuccess(Void result) {
                 RootPanel.get().clear();
-                RootPanel.get().add(new LoginPage(loginService));
+                RootPanel.get().add(new LoginPage());
             }
         });
     }
