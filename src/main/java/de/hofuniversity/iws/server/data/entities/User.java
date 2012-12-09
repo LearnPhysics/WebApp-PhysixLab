@@ -32,8 +32,10 @@ public class User implements Serializable, GenericEntity {
     private Timestamp birthDate;
     @Column
     private String city;
-    @Lob
-    private byte[] userPic;
+    @Column
+    private String userPic;
+    @Column
+    private String accountIdentificationString;
     @OneToMany(mappedBy = "user")
     private List<NetworkAccount> networkAccountList;
     @OneToMany(mappedBy = "user")
@@ -97,11 +99,11 @@ public class User implements Serializable, GenericEntity {
         this.city = city;
     }
 
-    public byte[] getUserPic() {
+    public String getUserPic() {
         return userPic;
     }
 
-    public void setUserPic(byte[] userPic) {
+    public void setUserPic(String userPic) {
         this.userPic = userPic;
     }
 
@@ -127,5 +129,12 @@ public class User implements Serializable, GenericEntity {
 
     public void setLessonProgressList(List<LessonProgress> lessonProgressList) {
         this.lessonProgressList = lessonProgressList;
+    }
+    public String getAccountIdentificationString() {
+        return accountIdentificationString;
+    }
+
+    public void setAccountIdentificationString(String accountIdentificationString) {
+        this.accountIdentificationString = accountIdentificationString;
     }
 }

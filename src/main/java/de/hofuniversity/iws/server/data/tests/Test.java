@@ -9,7 +9,9 @@ public class Test {
     public static void main(String[] args) {
 
         HibernateUtil.isConnectedToDB();
-
+        Game game = new Game();
+        game.setName("Testgame");
+        GameHandler.store(game);
         Game ret2 = GameHandler.getGameEntity(1, true);
         System.out.println(ret2.getName() + " is detached(" + ret2.isDetached() + ") from context.");
     }

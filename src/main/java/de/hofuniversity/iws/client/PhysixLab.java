@@ -36,7 +36,7 @@ public class PhysixLab {
             }
 
             @Override
-            public void onSuccess(Optional<String> result) {
+            public void onSuccess(Optional result) {
                 if (result.isPresent()) {
                     sessionToken = result.get();
                     if (History.getToken().isEmpty()) {

@@ -1,7 +1,7 @@
 package de.hofuniversity.iws.server.data.handler;
 
-import de.hofuniversity.iws.server.data.entities.NetworkAccount;
-import de.hofuniversity.iws.server.data.entities.NetworkAccount_;
+import de.hofuniversity.iws.server.data.entities.*;
+
 import javax.persistence.*;
 import javax.persistence.criteria.*;
 

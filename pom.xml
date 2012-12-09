@@ -42,7 +42,7 @@
             <version>4.7</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
+   <!--     <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>1.0.0.GA</version>
@@ -52,7 +52,7 @@
             <artifactId>validation-api</artifactId>
             <version>1.0.0.GA</version>
             <classifier>sources</classifier>
-        </dependency>
+        </dependency>  -->
         <dependency>
             <groupId>com.googlecode.playn</groupId>
             <artifactId>playn-html</artifactId>
@@ -107,7 +107,18 @@
             <groupId>org.scribe</groupId>
             <artifactId>scribe</artifactId>
             <version>1.3.2</version>
-        </dependency>           
+        </dependency>        
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20090211</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.darwinsbox</groupId>
+            <artifactId>AnnotationsProcessing</artifactId>
+            <version>1.1</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -170,6 +181,24 @@
                 <configuration>
                     <webappDirectory>${webappDirectory}</webappDirectory>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.bsc.maven</groupId>
+                <artifactId>maven-processor-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>process</id>
+                        <goals>
+                            <goal>process</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <processors>
+                                <processor>darwin.annotations.ServiceProcessor</processor>
+                            </processors>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
