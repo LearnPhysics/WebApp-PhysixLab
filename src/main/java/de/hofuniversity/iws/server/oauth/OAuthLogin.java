@@ -10,9 +10,9 @@ public class OAuthLogin {
 
     public User user;
     public boolean successfull;
-    public final OAuthRequest request;
+    public final OAuthAccessRequest request;
 
-    public OAuthLogin(OAuthRequest request) {
+    public OAuthLogin(OAuthAccessRequest request) {
         this.request = request;
     }
 }

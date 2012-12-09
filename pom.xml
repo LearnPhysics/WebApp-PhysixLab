@@ -114,6 +114,11 @@
             <version>20090211</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.darwinsbox</groupId>
+            <artifactId>AnnotationsProcessing</artifactId>
+            <version>1.1</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -176,6 +181,24 @@
                 <configuration>
                     <webappDirectory>${webappDirectory}</webappDirectory>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.bsc.maven</groupId>
+                <artifactId>maven-processor-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>process</id>
+                        <goals>
+                            <goal>process</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <processors>
+                                <processor>darwin.annotations.ServiceProcessor</processor>
+                            </processors>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

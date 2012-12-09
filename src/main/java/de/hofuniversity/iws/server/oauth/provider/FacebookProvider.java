@@ -4,7 +4,6 @@
  */
 package de.hofuniversity.iws.server.oauth.provider;
 
-import de.hofuniversity.iws.server.oauth.Providers;
 import org.scribe.builder.api.FacebookApi;
 import org.scribe.model.Token;
 import org.scribe.oauth.OAuthService;

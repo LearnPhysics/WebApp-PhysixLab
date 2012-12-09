@@ -23,16 +23,16 @@ public class PhysixLab {
     private LoginServiceAsync loginService;
 
     public void init() {
-        loginService.getSessionToken(new AsyncCallback<Optional<String>>() {
+        loginService.getSessionToken(new AsyncCallback<Optional>() {
             @Override
             public void onFailure(Throwable caught) {
                 gotoPage(new LoginPage());
             }
 
             @Override
-            public void onSuccess(Optional<String> result) {
+            public void onSuccess(Optional result) {
                 if (result.isPresent()) {
-                    String token = result.get();
+                    String token = (String) result.get();
                     gotoPage(new SessionPage(token));
                 } else {
                     gotoPage(new LoginPage());
