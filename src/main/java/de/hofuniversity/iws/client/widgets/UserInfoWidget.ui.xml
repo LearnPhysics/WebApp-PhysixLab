@@ -8,7 +8,8 @@
     </ui:style>
     
     <g:HorizontalPanel>
-            <g:Image ui:field='user_pic' url='images/noUserImage.jpg'/>
-            <g:Label ui:field='user_name' text='nicht angemeldet'/>
-     </g:HorizontalPanel>
+        <g:HyperLink text='Back to the Session screen' targetHistoryToken='{tokens.sessionpage}'/>
+        <g:Image ui:field='user_pic' url='images/noUserImage.jpg'/>
+        <g:Label ui:field='user_name' text='nicht angemeldet'/>
+    </g:HorizontalPanel>
 </ui:UiBinder>

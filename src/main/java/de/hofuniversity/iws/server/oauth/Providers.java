@@ -36,6 +36,9 @@ public enum Providers {
     private Providers() {
         String key = getProp(name() + ".Key");
         String secret = getProp(name() + ".Secret");
+        if (key == null || secret == null) {
+            throw new RuntimeException("Configuration for OAuth provider " + name() + " is missing!");
+        }
         this.provider = createProvider(key, secret);
     }
 
@@ -45,11 +48,10 @@ public enum Providers {
 
     protected abstract OAuthProvider createProvider(String key, String secret);
 
-    public static String getProp(String name)
-    {
+    public static String getProp(String name) {
         return Static.properties.getProperty(name);
     }
-    
+
     private static class Static {
 
         private static final String PROPERTIE_FILE = "/META-INF/oauth.properties";

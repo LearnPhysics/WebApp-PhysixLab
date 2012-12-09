@@ -21,23 +21,17 @@ import javax.servlet.http.HttpSession;
  *
  * @author User
  */
-//TODO nochmals überprüfen was getSession mit und ohne bool flag macht
 @RemoteServiceRelativePath("login")
 public class LoginServiceImpl extends RemoteServiceServlet implements LoginService {
 
     public static final String SESSION_ATTRIBUTE = "session";
     public static final String TOKEN_ATTRIBUTE = "token";
     public static final String USER_ATTRIBUTE = "user";
-    public static final int TIMEOUT_INTERVALL = 10;
+    public static final int TIMEOUT_INTERVALL = 30_000;
 
     @Override
     public Optional<String> getSessionToken() {
-        return getSession().transform(new Function<HttpSession, String>() {
-            @Override
-            public String apply(HttpSession session) {
-                return (String) session.getAttribute(TOKEN_ATTRIBUTE);
-            }
-        });
+        return getSessionAttribute(TOKEN_ATTRIBUTE);
     }
 
     @Override
@@ -79,15 +73,28 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 
     @Override
     public void logout() {
-        getThreadLocalRequest().getSession(true).invalidate();
+        getThreadLocalRequest().getSession().invalidate();
     }
 
     public Optional<HttpSession> getSession() {
-        return Optional.fromNullable(getThreadLocalRequest().getSession(false));
+        return getSession(getThreadLocalRequest());
+    }
+
+    public static Optional<HttpSession> getSession(HttpServletRequest req) {
+        return Optional.fromNullable(req.getSession(false));
     }
 
     public <T> Optional<T> getSessionAttribute(String attributeName) {
         return getSessionAttribute(getThreadLocalRequest(), attributeName);
+    }
+
+    public static <T> Optional<T> getSessionAttribute(HttpServletRequest request, final String attributeName) {
+        return getSession(request).transform(new Function<HttpSession, T>() {
+            @Override
+            public T apply(HttpSession session) {
+                return (T) session.getAttribute(attributeName);
+            }
+        });
     }
 
     public void storeSessionAttribute(String attributeName, Object value) {
@@ -96,14 +103,5 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 
     public static void storeSessionAttribute(HttpServletRequest request, String attributeName, Object value) {
         request.getSession().setAttribute(attributeName, value);
-    }
-
-    public static <T> Optional<T> getSessionAttribute(HttpServletRequest request, String attributeName) {
-        Object o = request.getSession().getAttribute(attributeName);
-        try {
-            return Optional.fromNullable((T) o);
-        } catch (ClassCastException ex) {
-            return Optional.absent();
-        }
     }
 }

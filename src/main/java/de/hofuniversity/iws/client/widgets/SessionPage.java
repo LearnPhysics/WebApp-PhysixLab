@@ -7,8 +7,11 @@ package de.hofuniversity.iws.client.widgets;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.*;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
+import de.hofuniversity.iws.client.PhysixLab;
+import de.hofuniversity.iws.shared.services.LoginService;
 import de.hofuniversity.iws.shared.services.LoginServiceAsync;
 
 /**
@@ -17,21 +20,20 @@ import de.hofuniversity.iws.shared.services.LoginServiceAsync;
  */
 public class SessionPage extends Composite {
 
+    public final static String NAME = "session";
     private SessionPagetUiBinder uiBinder = GWT.create(SessionPagetUiBinder.class);
 
     interface SessionPagetUiBinder extends UiBinder<Widget, SessionPage> {
     }
-    private final LoginServiceAsync loginService = LoginServiceAsync.Util.getInstance();
-    private final String token;
+    private final LoginServiceAsync loginService = (LoginServiceAsync)GWT.create(LoginService.class);
     @UiField
     Label sessionLabel;
 
-    public SessionPage(String token) {
-        this.token = token;
+    public SessionPage() {
         initWidget(uiBinder.createAndBindUi(this));
-        
         sessionLabel.setVisible(true);
-        sessionLabel.setText("token: " + token);
+        sessionLabel.setText("token: " + PhysixLab.getSessionToken());
+        History.newItem(NAME);
     }
 
     @UiHandler("logout")

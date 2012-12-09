@@ -5,6 +5,7 @@
 package de.hofuniversity.iws.client;
 
 import com.google.common.base.Optional;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -19,30 +20,39 @@ import javax.inject.Inject;
  */
 public class PhysixLab {
 
+    public static final HistoryPageController PAGE_CONTROLLER = new HistoryPageController();
+    private static String sessionToken;
     @Inject
     private LoginServiceAsync loginService;
 
     public void init() {
+        History.addValueChangeHandler(PAGE_CONTROLLER);
+
+
         loginService.getSessionToken(new AsyncCallback<Optional<String>>() {
             @Override
             public void onFailure(Throwable caught) {
-                gotoPage(new LoginPage());
+                PAGE_CONTROLLER.changePage(LoginPage.NAME);
             }
 
             @Override
             public void onSuccess(Optional<String> result) {
                 if (result.isPresent()) {
-                    String token = result.get();
-                    gotoPage(new SessionPage(token));
+                    sessionToken = result.get();
+                    if (History.getToken().isEmpty()) {
+                        PAGE_CONTROLLER.changePage(SessionPage.NAME);
+                    } else {
+                        PAGE_CONTROLLER.changePage(History.getToken());
+                    }
+
                 } else {
-                    gotoPage(new LoginPage());
+                    PAGE_CONTROLLER.changePage(LoginPage.NAME);
                 }
             }
         });
     }
 
-    private void gotoPage(Composite page) {
-        RootPanel.get().clear();
-        RootPanel.get().add(page);
+    public static String getSessionToken() {
+        return sessionToken;
     }
 }

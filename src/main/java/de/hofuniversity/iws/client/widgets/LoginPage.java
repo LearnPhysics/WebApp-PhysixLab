@@ -8,8 +8,12 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Widget;
+import de.hofuniversity.iws.client.PhysixLab;
+import de.hofuniversity.iws.shared.services.LoginService;
 import de.hofuniversity.iws.shared.services.LoginServiceAsync;
 
 /**
@@ -17,8 +21,8 @@ import de.hofuniversity.iws.shared.services.LoginServiceAsync;
  * @author Daniel Heinrich <dannynullzwo@gmail.com>
  */
 public class LoginPage extends Composite {
-
-    private final LoginServiceAsync loginService = LoginServiceAsync.Util.getInstance();
+    public final static String NAME = "login";
+    private final LoginServiceAsync loginService = (LoginServiceAsync)GWT.create(LoginService.class);
     private LoginPageUiBinder uiBinder = GWT.create(LoginPageUiBinder.class);
 
     interface LoginPageUiBinder extends UiBinder<Widget, LoginPage> {
@@ -26,6 +30,7 @@ public class LoginPage extends Composite {
 
     public LoginPage() {
         initWidget(uiBinder.createAndBindUi(this));
+        History.newItem(NAME);
     }
 
     @UiHandler("googleLogin")
@@ -47,7 +52,7 @@ public class LoginPage extends Composite {
 
         @Override
         public void onFailure(Throwable caught) {
-            throw new UnsupportedOperationException("Not supported yet.");
+            throw new UnsupportedOperationException(caught.getLocalizedMessage());
         }
 
         @Override
@@ -67,13 +72,12 @@ public class LoginPage extends Composite {
 
         @Override
         public void onFailure(Throwable caught) {
-            throw new UnsupportedOperationException("Not supported yet.");
+            throw new UnsupportedOperationException(caught.getLocalizedMessage());
         }
 
         @Override
         public void onSuccess(String result) {
-            RootPanel.get().clear();
-            RootPanel.get().add(new SessionPage(result));
+            PhysixLab.PAGE_CONTROLLER.changePage(SessionPage.NAME);
         }
     }
 }

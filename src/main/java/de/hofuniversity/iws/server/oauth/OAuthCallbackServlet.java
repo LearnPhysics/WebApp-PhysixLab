@@ -20,6 +20,12 @@ import static de.hofuniversity.iws.server.services.LoginServiceImpl.*;
 public class OAuthCallbackServlet extends HttpServlet {
 
     public static final String OAUTH_LOGIN_ATTRIBUTE = "oauth-login";
+    public static final String[] VERIFICATION_PROPERTIES = new String[]{
+        // Parameter: oauth_verifier bei Twitter und Google 
+        "oauth_verifier",
+        // Parameter: code bei Facebook             
+        "code"
+    };
 
     /**
      * Processes requests for both HTTP
@@ -33,15 +39,14 @@ public class OAuthCallbackServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.encodeRedirectURL(request.getContextPath() + "/PopUpCloser.html");
-
+        response.sendRedirect(response.encodeURL("PopUpCloser.html")) ;
+                
         Verifier verifier = null;
-        if (request.getQueryString().contains("oauth_verifier=")) {
-            // Parameter: oauth_verifier bei Twitter und Google 
-            verifier = new Verifier(request.getParameter("oauth_verifier"));
-        } else if (request.getQueryString().contains("code=")) {
-            // Parameter: code bei Facebook             
-            verifier = new Verifier(request.getParameter("code"));
+        for (String p : VERIFICATION_PROPERTIES) {
+            if (request.getQueryString().contains(p + '=')) {
+                verifier = new Verifier(request.getParameter(p));
+                break;
+            }
         }
 
         Optional<OAuthLogin> login = getSessionAttribute(request, OAUTH_LOGIN_ATTRIBUTE);

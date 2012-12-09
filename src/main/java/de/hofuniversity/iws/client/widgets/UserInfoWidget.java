@@ -5,19 +5,17 @@
 package de.hofuniversity.iws.client.widgets;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.uibinder.client.*;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.*;
-import de.hofuniversity.iws.shared.services.LoginServiceAsync;
-import javax.inject.Inject;
 
 /**
  *
  * @author Daniel Heinrich <dannynullzwo@gmail.com>
  */
 public class UserInfoWidget extends Composite {
-
-    @Inject
-    private LoginServiceAsync loginService;
+    public final static String NAME = "user";
     private UserInfoWidgetUiBinder uiBinder = GWT.create(UserInfoWidgetUiBinder.class);
 
     interface UserInfoWidgetUiBinder extends UiBinder<Widget, UserInfoWidget> {
@@ -25,8 +23,8 @@ public class UserInfoWidget extends Composite {
 
     public UserInfoWidget() {
         initWidget(uiBinder.createAndBindUi(this));
+        History.newItem(NAME);
     }
-    
     @UiField
     Image user_pic;
 
