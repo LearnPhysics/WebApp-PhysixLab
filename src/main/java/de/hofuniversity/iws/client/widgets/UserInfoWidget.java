@@ -4,9 +4,11 @@
  */
 package de.hofuniversity.iws.client.widgets;
 
+import de.hofuniversity.iws.client.widgets.PhotoBooth.Listener;
+
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.*;
 
@@ -15,18 +17,31 @@ import com.google.gwt.user.client.ui.*;
  * @author Daniel Heinrich <dannynullzwo@gmail.com>
  */
 public class UserInfoWidget extends Composite {
+
     public final static String NAME = "user";
     private UserInfoWidgetUiBinder uiBinder = GWT.create(UserInfoWidgetUiBinder.class);
 
     interface UserInfoWidgetUiBinder extends UiBinder<Widget, UserInfoWidget> {
     }
+    @UiField
+    Image user_pic;
+    @UiField
+    PhotoBoothWidget photobooth;
 
     public UserInfoWidget() {
         initWidget(uiBinder.createAndBindUi(this));
         History.newItem(NAME);
+        photobooth.addListener(new Listener() {
+            @Override
+            public void onImage(String url) {
+                user_pic.setUrl(url);
+            }
+        });
     }
-    @UiField
-    Image user_pic;
+
+    @UiHandler("boothButton")
+    public void createBooth(ClickEvent e) {
+    }
 
     public void setImageUrl(String url) {
         user_pic.setUrl(url);

@@ -3,8 +3,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
              xmlns:g="urn:import:com.google.gwt.user.client.ui">
     
-    <ui:with field="res" type="de.hofuniversity.iws.client.widgets.Images"></ui:with>
-    <ui:with type="de.hofuniversity.iws.client.HistoryPageController.Tokens" field="tokens" />
+    <ui:with field="tokens" type="de.hofuniversity.iws.client.HistoryPageController.Tokens"/>
   
     <ui:style>
     
@@ -12,7 +11,7 @@
     
     <g:ScrollPanel>
         <g:HTMLPanel >
-            <g:HyperLink text="Go to User Info" targetHistoryToken="{tokens.userinfopage}"/>
+            <g:Hyperlink text="Go to User Info" targetHistoryToken="{tokens.userinfopage}"/>
             <g:Label ui:field='sessionLabel'></g:Label>
             <g:Button ui:field='logout'>Logout</g:Button>
         </g:HTMLPanel>

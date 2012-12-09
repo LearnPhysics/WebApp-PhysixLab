@@ -4,14 +4,13 @@
  */
 package de.hofuniversity.iws.client.widgets;
 
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.resources.client.*;
 
 /**
  *
  * @author User
  */
 public interface Images extends ClientBundle {
-   @Source("images/Koala.jpg")
-   ImageResource Koala();
+   @Source("images/noUserImage.jpg")
+   ImageResource NoUserImage();
 }

@@ -9,8 +9,7 @@ import java.io.IOException;
 import java.net.*;
 import java.util.Scanner;
 
-import de.hofuniversity.iws.server.data.entities.*;
-import de.hofuniversity.iws.server.data.handler.NetworkAccountHandler;
+import de.hofuniversity.iws.server.data.entities.User;
 import de.hofuniversity.iws.server.oauth.*;
 import de.hofuniversity.iws.server.oauth.accessors.*;
 import de.hofuniversity.iws.server.oauth.provider.OAuthProvider;

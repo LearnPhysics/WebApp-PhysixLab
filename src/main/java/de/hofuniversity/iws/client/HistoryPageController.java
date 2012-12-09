@@ -4,13 +4,11 @@
  */
 package de.hofuniversity.iws.client;
 
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.RootPanel;
 import de.hofuniversity.iws.client.widgets.*;
+
+import com.google.gwt.event.logical.shared.*;
+import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.ui.*;
 
 /**
  *
