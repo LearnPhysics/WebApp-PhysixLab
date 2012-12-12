@@ -16,36 +16,51 @@ import de.hofuniversity.iws.client.PhysixLab;
 import de.hofuniversity.iws.shared.services.LoginService;
 import de.hofuniversity.iws.shared.services.LoginServiceAsync;
 
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.*;
+
 /**
  *
  * @author Daniel Heinrich <dannynullzwo@gmail.com>
  */
 public class LoginPage extends Composite {
+
     public final static String NAME = "login";
-    private final LoginServiceAsync loginService = (LoginServiceAsync)GWT.create(LoginService.class);
+    private final LoginServiceAsync loginService = (LoginServiceAsync) GWT.create(LoginService.class);
     private LoginPageUiBinder uiBinder = GWT.create(LoginPageUiBinder.class);
 
     interface LoginPageUiBinder extends UiBinder<Widget, LoginPage> {
     }
+    
+    @UiField
+    HorizontalPanel providerPanel;
 
     public LoginPage() {
         initWidget(uiBinder.createAndBindUi(this));
         History.newItem(NAME);
+        
+        String[] provider = new String[]{"GOOGLE","FACEBOOK","TWITTER"};
+        for(String name: provider)
+        {
+            Image img = new Image("images/"+name.toLowerCase()+".jpg");
+            img.addClickHandler(new LoginButtonHandler(name));
+            providerPanel.add(img);
+        }
     }
+    
+    private class LoginButtonHandler implements ClickHandler{
+        private final String providerName;
 
-    @UiHandler("googleLogin")
-    public void loginWithGoogle(ClickEvent ev) {
-        loginService.getOAuthLoginUrl("GOOGLE", new PopupCallback());
-    }
-
-    @UiHandler("twitterLogin")
-    public void loginWithTwitter(ClickEvent ev) {
-        loginService.getOAuthLoginUrl("TWITTER", new PopupCallback());
-    }
-
-    @UiHandler("facebookLogin")
-    public void loginWithFacebook(ClickEvent ev) {
-        loginService.getOAuthLoginUrl("FACEBOOK", new PopupCallback());
+        public LoginButtonHandler(String providerName) {
+            this.providerName = providerName;
+        }
+        
+        @Override
+        public void onClick(ClickEvent event) {
+            loginService.getOAuthLoginUrl(providerName, new PopupCallback());
+        }
+        
     }
 
     private class PopupCallback implements AsyncCallback<String> {

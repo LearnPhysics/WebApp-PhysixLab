@@ -4,18 +4,16 @@
  */
 package de.hofuniversity.iws.server.oauth;
 
-import java.io.IOException;
 import java.util.*;
 
-import de.hofuniversity.iws.server.oauth.accessors.Accessor;
-import de.hofuniversity.iws.server.oauth.accessors.FriendListAccessor;
-import de.hofuniversity.iws.server.oauth.accessors.UserDataAccessor;
+import de.hofuniversity.iws.server.oauth.accessors.*;
 import de.hofuniversity.iws.server.oauth.provider.*;
 
 import com.google.common.base.Optional;
 import org.scribe.builder.api.TwitterApi;
 import org.scribe.model.*;
-import static de.hofuniversity.iws.server.oauth.OAuthProperties.*;
+
+import static de.hofuniversity.iws.server.oauth.OAuthProperties.APP;
 
 /**
  *
@@ -38,18 +36,7 @@ public enum Providers {
             return new FacebookProvider(key, secret);
         }
     };
-    private static final Class<? extends Accessor>[] ACCESSOR_TYPES = new Class[]{
-        UserDataAccessor.class, FriendListAccessor.class
-    };
-
-    static {
-        for (Class<? extends Accessor> ac : ACCESSOR_TYPES) {
-            for (Accessor a : ServiceLoader.load(ac)) {
-                a.supportedProvider().accessors.put(ac, a);
-            }
-        }
-    }
-    
+    private final static Set<Class<? extends Accessor>> discoverd = new HashSet<>();
     private final Map<Class<? extends Accessor>, Accessor> accessors = new IdentityHashMap<>();
     private final OAuthProvider provider;
 
@@ -62,10 +49,19 @@ public enum Providers {
     public OAuthProvider getProvider() {
         return provider;
     }
-    
-    public <T extends Accessor> Optional<T> getAccessor(Class<T> c)
-    {
+
+    public <T extends Accessor> Optional<T> getAccessor(Class<T> c) {
+        if (!discoverd.contains(c)) {
+            discover(c);
+        }
         return (Optional<T>) Optional.fromNullable(accessors.get(c));
+    }
+
+    private static <T extends Accessor> void discover(Class<T> c) {
+        for (Accessor a : ServiceLoader.load(c)) {
+            a.supportedProvider().accessors.put(c, a);
+        }
+        discoverd.add(c);
     }
 
     protected abstract OAuthProvider createProvider(String key, String secret);

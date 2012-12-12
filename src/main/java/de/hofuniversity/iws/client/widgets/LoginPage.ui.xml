@@ -9,9 +9,6 @@
     
     </ui:style>
     
-    <g:HorizontalPanel>
-        <g:Image ui:field='googleLogin' url='images/google.jpg'/>
-        <g:Image ui:field='facebookLogin' url='images/facebook.jpg'/>
-        <g:Image ui:field='twitterLogin' url='images/twitter.jpg'/>
+    <g:HorizontalPanel ui:field='providerPanel'>
     </g:HorizontalPanel>
 </ui:UiBinder>
