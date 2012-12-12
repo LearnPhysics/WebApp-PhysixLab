@@ -87,19 +87,19 @@ public class NetworkAccountHandler {
 
             CriteriaBuilder criteriaBuilder = entityManager
                     .getCriteriaBuilder();
-            CriteriaQuery<NetworkAccount> queryPhraseEntity = criteriaBuilder
+            CriteriaQuery<NetworkAccount> queryNA = criteriaBuilder
                     .createQuery(NetworkAccount.class);
-            Root<NetworkAccount> rootPhraseEntity = queryPhraseEntity
+            Root<NetworkAccount> rootNA = queryNA
                     .from(NetworkAccount.class);
-            queryPhraseEntity.where(
+            queryNA.where(
                     criteriaBuilder.equal(
-                    rootPhraseEntity.get(NetworkAccount_.networkName), networkName),
+                    rootNA.get(NetworkAccount_.networkName), networkName),
                     criteriaBuilder.equal(
-                    rootPhraseEntity.get(NetworkAccount_.accountIdentificationString), accountIdentificationString));
-            TypedQuery<NetworkAccount> typedPhraseEntityQuery = entityManager
-                    .createQuery(queryPhraseEntity).setMaxResults(1);
+                    rootNA.get(NetworkAccount_.accountIdentificationString), accountIdentificationString));
+            TypedQuery<NetworkAccount> typedNAQuery = entityManager
+                    .createQuery(queryNA).setMaxResults(1);
             try {
-                retval = typedPhraseEntityQuery.getSingleResult();
+                retval = typedNAQuery.getSingleResult();
                 if (detach) {
                     entityManager.detach(retval);
                     retval.setDetached(true);

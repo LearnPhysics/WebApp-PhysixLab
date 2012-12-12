@@ -10,11 +10,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table
 public class SubjectArea implements Serializable, GenericEntity {
 
+    @Transient
     private boolean detached = false;
     
     @Id

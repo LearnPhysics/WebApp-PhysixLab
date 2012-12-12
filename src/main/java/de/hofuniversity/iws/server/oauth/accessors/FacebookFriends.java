@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import darwin.annotations.ServiceProvider;
 
-import de.hofuniversity.iws.server.data.entities.User;
+import de.hofuniversity.iws.server.data.entities.*;
 import de.hofuniversity.iws.server.oauth.Providers;
 
 import org.json.*;
@@ -44,7 +44,12 @@ public class FacebookFriends implements FriendListAccessor {
             User tmpUser = new User();
             JSONObject objectInArray = getArray.optJSONObject(i);
             tmpUser.setUserName(objectInArray.optString("name"));
-            tmpUser.setAccountIdentificationString(objectInArray.optString("id"));
+            
+            NetworkAccount a = new NetworkAccount();
+            a.setAccountIdentificationString(objectInArray.optString("id"));
+            a.setNetworkName(Providers.FACEBOOK.name());
+            tmpUser.getNetworkAccountList().add(a);
+            
             tmpUser.setUserPic("https://graph.facebook.com/" + objectInArray.optString("id") + "/picture&type=normal");
             friends.add(tmpUser);
         }

@@ -1,7 +1,11 @@
 package de.hofuniversity.iws.server.data.handler;
 
-import de.hofuniversity.iws.server.data.entities.User;
-import javax.persistence.EntityManager;
+import java.util.*;
+
+import de.hofuniversity.iws.server.data.entities.*;
+
+import javax.persistence.*;
+import javax.persistence.criteria.*;
 
 public class UserHandler {
 
@@ -11,6 +15,11 @@ public class UserHandler {
     // Store user
     public static User store(User user) {
         User retval = user;
+        
+        if(hasDuplicateProvider(user))
+        {
+            //TODO log warning
+        }
 
         if (entityManager.isOpen()) {
             entityManager.close();
@@ -54,6 +63,8 @@ public class UserHandler {
                     tmpUser.setNetworkAccountList(user.getNetworkAccountList());
                     tmpUser.setGameResultList(user.getGameResultList());
                     tmpUser.setLessonProgressList(user.getLessonProgressList());
+                    tmpUser.setFriends(user.getFriends());
+                    tmpUser.setDevotees(user.getDevotees());
 
                     // write values
                     entityManager.getTransaction().begin();
@@ -76,5 +87,44 @@ public class UserHandler {
     // Get user by Id
     public static User getUserEntity(long id, boolean detach) {
         return (User) GenericHandler.getEntity(User.class, id, detach);
+    }
+
+    // Get list of all users
+    public static List<User> getAllUsers() {
+        List<User> userList = null;
+        try {
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            entityManager = HibernateUtil.getEntityManagerFactory()
+                    .createEntityManager();
+
+            CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<User> criteria = builder
+                    .createQuery(User.class);
+            Root<User> userEntityRoot = criteria.from(User.class);
+            criteria.select(userEntityRoot);
+            criteria.where(builder.greaterThan(
+                    userEntityRoot.get(User_.id), -1L));
+
+            TypedQuery query = entityManager.createQuery(criteria);
+            userList = query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return userList;
+    }
+
+    private static boolean hasDuplicateProvider(User user) {
+        HashSet<String> s = new HashSet<>();
+        for(NetworkAccount na: user.getNetworkAccountList())
+        {
+            if(!s.add(na.getNetworkName()))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

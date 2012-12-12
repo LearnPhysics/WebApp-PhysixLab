@@ -7,10 +7,11 @@ package de.hofuniversity.iws.server.oauth.accessors;
 import java.util.*;
 
 import darwin.annotations.MultiServiceProvider;
-import darwin.annotations.ServiceProvider;
-import de.hofuniversity.iws.server.data.entities.User;
+
+import de.hofuniversity.iws.server.data.entities.*;
 import de.hofuniversity.iws.server.oauth.Providers;
 
+import com.google.common.base.Optional;
 import org.json.*;
 import org.scribe.model.Token;
 
@@ -40,7 +41,7 @@ public class TwitterAccessor implements UserDataAccessor, FriendListAccessor {
     @Override
     public Iterable<User> getFriends(Token accessToken, User currentUser) throws AccessException {
 
-        String requestUrl = FRIENDS_ACCESS_URL + currentUser.getAccountIdentificationString();
+        String requestUrl = FRIENDS_ACCESS_URL + currentUser.getNetworkAccount(Providers.TWITTER).get().getAccountIdentificationString();
 
         String response = Providers.TWITTER.invokeGetRequest(accessToken, requestUrl);
         try {
@@ -54,21 +55,25 @@ public class TwitterAccessor implements UserDataAccessor, FriendListAccessor {
         JSONObject json = new JSONObject(responceBody);
         User user = new User();
         if (json.has("id")) {
-            user.setAccountIdentificationString(json.optString("id"));
+            Optional<NetworkAccount> na = user.getNetworkAccount(Providers.TWITTER);
+            if(na.isPresent())
+            {
+                na.get().setAccountIdentificationString(json.getString("id"));
+            }
         }
 
         if (json.has("location")) {
-            user.setCity(json.optString("location"));
+            user.setCity(json.getString("location"));
         }
 
         if (json.has("profile_image_url")) {
-            user.setUserPic(json.optString("profile_image_url"));
+            user.setUserPic(json.getString("profile_image_url"));
         }
         if (json.has("screen_name")) {
-            user.setUserName(json.optString("screen_name"));
+            user.setUserName(json.getString("screen_name"));
         }
         if (json.has("name")) {
-            user.setUserName(json.optString("name"));
+            user.setUserName(json.getString("name"));
         }
         return user;
     }

@@ -39,10 +39,6 @@ public class UserInfoWidget extends Composite {
         });
     }
 
-    @UiHandler("boothButton")
-    public void createBooth(ClickEvent e) {
-    }
-
     public void setImageUrl(String url) {
         user_pic.setUrl(url);
     }

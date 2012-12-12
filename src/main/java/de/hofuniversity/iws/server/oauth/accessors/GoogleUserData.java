@@ -6,9 +6,10 @@ package de.hofuniversity.iws.server.oauth.accessors;
 
 import darwin.annotations.ServiceProvider;
 
-import de.hofuniversity.iws.server.data.entities.User;
+import de.hofuniversity.iws.server.data.entities.*;
 import de.hofuniversity.iws.server.oauth.Providers;
 
+import com.google.common.base.Optional;
 import org.json.*;
 import org.scribe.model.Token;
 
@@ -37,27 +38,31 @@ public class GoogleUserData implements UserDataAccessor {
         JSONObject json = new JSONObject(responceBody);
         User user = new User();
         if (json.has("id")) {
-            user.setAccountIdentificationString(json.optString("id"));
+            Optional<NetworkAccount> na = user.getNetworkAccount(Providers.GOOGLE);
+            if(na.isPresent())
+            {
+                na.get().setAccountIdentificationString(json.getString("id"));
+            }
         }
 
         if (json.has("displayName")) {
-            user.setUserName(json.optString("displayName"));
+            user.setUserName(json.getString("displayName"));
         }
 
         JSONObject tmp = json.optJSONObject("image");
         if (tmp != null) {
             if (tmp.has("url")) {
-                user.setUserPic(tmp.optString("url"));
+                user.setUserPic(tmp.getString("url"));
             }
         }
 
         tmp = json.optJSONObject("name");
         if (tmp != null) {
             if (tmp.has("familyName")) {
-                user.setLastName(tmp.optString("familyName"));
+                user.setLastName(tmp.getString("familyName"));
             }
             if (tmp.has("givenName")) {
-                user.setFirstName(tmp.optString("givenName"));
+                user.setFirstName(tmp.getString("givenName"));
             }
         }
 
