@@ -8,7 +8,9 @@
     <ui:style>
     
     </ui:style>
-    
-    <g:HorizontalPanel ui:field='providerPanel'>
-    </g:HorizontalPanel>
+    <g:HTMLPanel>
+        <div ui:field='div'>tessst</div>
+        <g:HorizontalPanel ui:field='providerPanel'>
+        </g:HorizontalPanel>
+    </g:HTMLPanel>
 </ui:UiBinder>

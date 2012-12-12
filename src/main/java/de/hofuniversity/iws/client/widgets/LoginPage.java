@@ -16,6 +16,7 @@ import de.hofuniversity.iws.client.PhysixLab;
 import de.hofuniversity.iws.shared.services.LoginService;
 import de.hofuniversity.iws.shared.services.LoginServiceAsync;
 
+import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.*;
@@ -35,10 +36,15 @@ public class LoginPage extends Composite {
     
     @UiField
     HorizontalPanel providerPanel;
+    @UiField
+    DivElement div;
 
     public LoginPage() {
+        
         initWidget(uiBinder.createAndBindUi(this));
         History.newItem(NAME);
+        
+        div.setInnerHTML("test test");
         
         String[] provider = new String[]{"GOOGLE","FACEBOOK","TWITTER"};
         for(String name: provider)
