@@ -4,17 +4,15 @@
  */
 package de.hofuniversity.iws.server.data.tests;
 
-import java.awt.Desktop;
-import java.io.IOException;
-import java.net.*;
-import java.util.Scanner;
-
+import com.google.common.base.Optional;
 import de.hofuniversity.iws.server.data.entities.User;
 import de.hofuniversity.iws.server.oauth.*;
 import de.hofuniversity.iws.server.oauth.accessors.*;
 import de.hofuniversity.iws.server.oauth.provider.OAuthProvider;
-
-import com.google.common.base.Optional;
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.*;
+import java.util.Scanner;
 import org.scribe.model.*;
 
 /**
@@ -45,6 +43,7 @@ public class ProviderDateTest {
                 User user = ac.getUserData(access);
                 System.out.println(user.getUserName() + "(" + user.getFirstName() + " " + user.getLastName() + ")");
                 System.out.println("\t" + user.getBirthDate() + " - " + user.getCity());
+                System.out.println("\t"+user.getUserPic());
 
                 Optional<FriendListAccessor> friends = provider.getAccessor(FriendListAccessor.class);
                 if (friends.isPresent()) {

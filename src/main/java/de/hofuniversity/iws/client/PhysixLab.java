@@ -4,12 +4,11 @@
  */
 package de.hofuniversity.iws.client;
 
-import de.hofuniversity.iws.client.widgets.*;
-import de.hofuniversity.iws.shared.services.LoginServiceAsync;
-
 import com.google.common.base.Optional;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import de.hofuniversity.iws.client.widgets.*;
+import de.hofuniversity.iws.shared.services.LoginServiceAsync;
 import javax.inject.Inject;
 
 /**
@@ -27,7 +26,7 @@ public class PhysixLab {
         History.addValueChangeHandler(PAGE_CONTROLLER);
 
 
-        loginService.getSessionToken(new AsyncCallback<Optional>() {
+        loginService.getSessionToken(new AsyncCallback<Optional<String>>() {
             @Override
             public void onFailure(Throwable caught) {
                 PAGE_CONTROLLER.changePage(LoginPage.NAME);

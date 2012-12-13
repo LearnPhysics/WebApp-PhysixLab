@@ -28,13 +28,13 @@ public class FacebookUserData implements UserDataAccessor {
         String requestUrl = USER_URL + "?access_token=" + accessToken.getToken();
         String respons = Providers.FACEBOOK.invokeGetRequest(accessToken, requestUrl);
         try {
-            return parseUserJSON(respons);
+            return parseUserJSON(respons, accessToken);
         } catch (JSONException ex) {
             throw new AccessException(ex);
         }
     }
 
-    private User parseUserJSON(String responceBody) throws JSONException {
+    private User parseUserJSON(String responceBody, Token accessToken) throws JSONException {
         JSONObject json = new JSONObject(responceBody);
 
         User user = new User();
@@ -61,7 +61,7 @@ public class FacebookUserData implements UserDataAccessor {
         if (json.has("id")) {
             String id = json.optString("id");
             user.setAccountIdentificationString(id);
-            user.setUserPic("https://graph.facebook.com/" + id + "/picture&type=normal");
+            user.setUserPic("https://graph.facebook.com/" + id + "/picture?type=normal");
         }
 
         return user;

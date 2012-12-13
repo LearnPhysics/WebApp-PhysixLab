@@ -10,6 +10,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import de.hofuniversity.iws.server.data.entities.User;
 import de.hofuniversity.iws.server.oauth.*;
 import de.hofuniversity.iws.server.oauth.provider.OAuthProvider;
 import de.hofuniversity.iws.shared.services.LoginService;
@@ -103,5 +104,10 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 
     public static void storeSessionAttribute(HttpServletRequest request, String attributeName, Object value) {
         request.getSession().setAttribute(attributeName, value);
+    }
+
+    @Override
+    public User getUser() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

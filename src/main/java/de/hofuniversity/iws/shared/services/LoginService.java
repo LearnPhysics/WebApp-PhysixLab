@@ -7,8 +7,8 @@ package de.hofuniversity.iws.shared.services;
 import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import de.hofuniversity.iws.server.data.entities.User;
 import de.hofuniversity.iws.shared.services.login.LoginException;
-import de.hofuniversity.iws.shared.services.login.LoginProvider;
 import org.scribe.exceptions.OAuthException;
 
 /**
@@ -43,4 +43,8 @@ public interface LoginService extends RemoteService {
      * invalidates the active session
      */
     public void logout();
+    /*
+     * Get the actual User from this Session
+     */
+    public User getUser();
 }
