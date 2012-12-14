@@ -13,6 +13,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import de.hofuniversity.iws.client.PhysixLab;
+import de.hofuniversity.iws.client.widgets.UserHome.UserHome;
 import de.hofuniversity.iws.shared.services.LoginService;
 import de.hofuniversity.iws.shared.services.LoginServiceAsync;
 
@@ -77,7 +78,7 @@ public class LoginPage extends Composite {
 
         @Override
         public void onSuccess(String result) {
-            PhysixLab.PAGE_CONTROLLER.changePage(SessionPage.NAME);
+            PhysixLab.PAGE_CONTROLLER.changePage(UserHome.NAME);
         }
     }
 }
