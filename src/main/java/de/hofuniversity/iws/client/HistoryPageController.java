@@ -16,6 +16,10 @@ import com.google.gwt.user.client.ui.*;
  */
 public class HistoryPageController implements ValueChangeHandler<String> {
 
+    private LoginPage loginPage = null;
+    private SessionPage sessionPage = null;
+    private static UserInfoWidget userInfoWidget = null;
+    
     public static final class Tokens {
 
         public static String loginpage() {
@@ -39,11 +43,14 @@ public class HistoryPageController implements ValueChangeHandler<String> {
     public void changePage(String pageName) {
 
         if (Tokens.loginpage().equals(pageName)) {
-            changePage(new LoginPage());
+            loginPage = new LoginPage();
+            changePage(loginPage);
         } else if (Tokens.sessionpage().equals(pageName)) {
-            changePage(new SessionPage());
+            sessionPage = new SessionPage();
+            changePage(sessionPage);
         } else if (Tokens.userinfopage().equals(pageName)) {
-            changePage(new UserInfoWidget());
+            userInfoWidget = new UserInfoWidget();
+            changePage(userInfoWidget);
         } else {
             //TODO
         }
@@ -52,5 +59,17 @@ public class HistoryPageController implements ValueChangeHandler<String> {
     public void changePage(Composite c) {
         RootPanel.get().clear();
         RootPanel.get().add(c);
+    }
+    public LoginPage getLoginPage()
+    {
+        return loginPage;
+    }
+    public SessionPage getSessionPage()
+    {
+        return sessionPage;
+    }
+    public UserInfoWidget getUserInfoWidget()
+    {
+        return userInfoWidget;
     }
 }

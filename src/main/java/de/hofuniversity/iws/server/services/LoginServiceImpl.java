@@ -10,7 +10,6 @@ import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import de.hofuniversity.iws.server.data.entities.User;
 import de.hofuniversity.iws.server.oauth.*;
 import de.hofuniversity.iws.server.oauth.provider.OAuthProvider;
 import de.hofuniversity.iws.shared.services.LoginService;
@@ -28,7 +27,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
     public static final String SESSION_ATTRIBUTE = "session";
     public static final String TOKEN_ATTRIBUTE = "token";
     public static final String USER_ATTRIBUTE = "user";
-    public static final int TIMEOUT_INTERVALL = 30_000;
+    public static final int TIMEOUT_INTERVALL = 60_000;
 
     @Override
     public Optional<String> getSessionToken() {
@@ -42,7 +41,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
             OAuthLogin l = login.get();
             synchronized (l) {
                 if (!l.successfull) {
-                    try {
+                   try {
                         l.wait(TIMEOUT_INTERVALL);
                     } catch (InterruptedException ex) {
                     }
@@ -107,7 +106,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
     }
 
     @Override
-    public User getUser() {
+    public String getUser() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

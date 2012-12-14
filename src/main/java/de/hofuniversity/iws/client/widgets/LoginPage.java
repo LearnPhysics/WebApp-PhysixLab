@@ -13,8 +13,12 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import de.hofuniversity.iws.client.PhysixLab;
+import de.hofuniversity.iws.dto.UserDTO;
 import de.hofuniversity.iws.shared.services.LoginService;
 import de.hofuniversity.iws.shared.services.LoginServiceAsync;
+import de.hofuniversity.iws.shared.services.UserFriendService;
+import de.hofuniversity.iws.shared.services.UserFriendServiceAsync;
+import javax.inject.Inject;
 
 /**
  *
@@ -24,6 +28,8 @@ public class LoginPage extends Composite {
     public final static String NAME = "login";
     private final LoginServiceAsync loginService = (LoginServiceAsync)GWT.create(LoginService.class);
     private LoginPageUiBinder uiBinder = GWT.create(LoginPageUiBinder.class);
+    @Inject
+    private UserFriendServiceAsync userfriend = (UserFriendServiceAsync)GWT.create(UserFriendService.class);
 
     interface LoginPageUiBinder extends UiBinder<Widget, LoginPage> {
     }
@@ -78,6 +84,21 @@ public class LoginPage extends Composite {
         @Override
         public void onSuccess(String result) {
             PhysixLab.PAGE_CONTROLLER.changePage(SessionPage.NAME);
+            userfriend.getactualUser(new UserFriendCallback());
         }
+    }
+    private class UserFriendCallback implements AsyncCallback<UserDTO> {
+
+        @Override
+        public void onFailure(Throwable caught) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public void onSuccess(UserDTO result) {
+           UserInfoWidget lp = PhysixLab.PAGE_CONTROLLER.getUserInfoWidget();
+           lp.setUserName(result.getUserName());
+        }
+        
     }
 }

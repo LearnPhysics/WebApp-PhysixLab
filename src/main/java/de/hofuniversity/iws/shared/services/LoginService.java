@@ -46,5 +46,5 @@ public interface LoginService extends RemoteService {
     /*
      * Get the actual User from this Session
      */
-    public User getUser();
+    public String getUser();
 }
