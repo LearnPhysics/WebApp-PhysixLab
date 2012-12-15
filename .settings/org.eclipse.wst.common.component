@@ -4,6 +4,7 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-sources/gwt"/>
+        <wb-resource deploy-path="/" source-path="/"/>
         <property name="context-root" value="WebApp-GWT"/>
         <property name="java-output-path" value="/WebApp-GWT/target/WebApp-GWT-1.0-SNAPSHOT/WEB-INF/classes"/>
     </wb-module>
