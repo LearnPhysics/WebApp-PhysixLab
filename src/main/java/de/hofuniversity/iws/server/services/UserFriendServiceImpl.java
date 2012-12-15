@@ -20,12 +20,22 @@ import javax.servlet.http.HttpSession;
  */
 @RemoteServiceRelativePath("userfriend")
 public class UserFriendServiceImpl extends RemoteServiceServlet implements UserFriendService {
+    
     public static final String USER_ATTRIBUTE = "user";
-
+    UserDTO actualUser = new UserDTO() ;
+    
     @Override
     public UserDTO getactualUser() {
         Optional<User> loggedinuser = getSessionAttribute(USER_ATTRIBUTE);
-        return null;
+        User u = loggedinuser.get();
+            actualUser.setAccountIdentificationString(u.getAccountIdentificationString());
+            actualUser.setBirthDate(u.getBirthDate());
+            actualUser.setCity(u.getCity());
+            actualUser.setFirstName(u.getFirstName());
+            actualUser.setLastName(u.getLastName());
+            actualUser.setUserName(u.getUserName());
+            actualUser.setUserPic(u.getUserPic());
+        return actualUser;
     }
     public <T> Optional<T> getSessionAttribute(String attributeName) {
         return getSessionAttribute(getThreadLocalRequest(), attributeName);
