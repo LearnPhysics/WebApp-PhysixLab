@@ -52,6 +52,7 @@ public enum Providers {
     
     private final Map<Class<? extends Accessor>, Accessor> accessors = new IdentityHashMap<>();
     private final OAuthProvider provider;
+    public static final String PROVIDER_NAME_ATTRIBUTE = "provider-name";  
 
     private Providers() {
         String key = APP.getPropertie(name() + ".Key");

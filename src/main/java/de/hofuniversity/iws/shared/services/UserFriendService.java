@@ -14,6 +14,7 @@ import de.hofuniversity.iws.dto.UserDTO;
  */
 @RemoteServiceRelativePath("userfriend")
 public interface UserFriendService extends RemoteService {
-    public UserDTO getactualUser();       
+    public UserDTO getactualUser();  
+    public Iterable<UserDTO> getFriends();
     
 }

@@ -6,6 +6,7 @@ import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import de.hofuniversity.iws.server.data.entities.User;
 import de.hofuniversity.iws.server.oauth.accessors.AccessException;
+import de.hofuniversity.iws.server.oauth.accessors.FriendListAccessor;
 import de.hofuniversity.iws.server.oauth.accessors.UserDataAccessor;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
@@ -52,6 +53,8 @@ public class OAuthCallbackServlet extends HttpServlet {
         }
 
         Optional<OAuthLogin> login = getSessionAttribute(request, OAUTH_LOGIN_ATTRIBUTE);
+        Optional<String> provider = getSessionAttribute(request, Providers.PROVIDER_NAME_ATTRIBUTE);
+        String ProviderName = provider.get();
         if (login.isPresent()) {
             OAuthLogin l = login.get();
             synchronized (l) {
@@ -60,21 +63,22 @@ public class OAuthCallbackServlet extends HttpServlet {
                     //Somehow generate a coresponding user
                     Token accessToken = l.request.generateAccessToken(verifier);
 
-                    User user = getOrCreateUserForAccessToken(accessToken);
-
+                    User user = getOrCreateUserForAccessToken(accessToken,ProviderName);
+                    Iterable<User> friendsList = getUsersFriendsForAccessToken(accessToken,user,ProviderName);
                     l.successfull = true;
                     storeSessionAttribute(request, USER_ATTRIBUTE, user);
+                    storeSessionAttribute(request, FRIENDS_ATTRIBUTE, friendsList);
                 }
                 l.notify();
             }
         }
     }
 
-    private User getOrCreateUserForAccessToken(Token accessToken) {
+    private User getOrCreateUserForAccessToken(Token accessToken, String providername) {
         //TODO DB access
-     /*   User u = new User();
-        u.setFirstName("Daniel");*/
-        Providers provider = Providers.TWITTER;
+
+      //  Optional<OAuthLogin> login = getSessionAttribute();
+        Providers provider = Providers.valueOf(providername);
         Optional<UserDataAccessor> userData = provider.getAccessor(UserDataAccessor.class);
         if(userData.isPresent())
         {
@@ -90,6 +94,24 @@ public class OAuthCallbackServlet extends HttpServlet {
         }
         return null;
     }
+    private Iterable<User> getUsersFriendsForAccessToken(Token accessToken, User u, String providername){
+        Providers provider = Providers.valueOf(providername);
+        Optional<FriendListAccessor> friends = provider.getAccessor(FriendListAccessor.class);
+        if(friends.isPresent())
+        {
+            try
+            {
+                FriendListAccessor acc = friends.get();
+                Iterable<User> friendsList = acc.getFriends(accessToken,u);
+                return friendsList;
+            } catch (AccessException ex)
+            {
+                ex.printStackTrace();
+            }
+        }
+        return null;
+    }
+            
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

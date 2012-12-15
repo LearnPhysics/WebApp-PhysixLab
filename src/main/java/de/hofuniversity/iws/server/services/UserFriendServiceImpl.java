@@ -11,6 +11,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import de.hofuniversity.iws.dto.UserDTO;
 import de.hofuniversity.iws.server.data.entities.User;
 import de.hofuniversity.iws.shared.services.UserFriendService;
+import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -22,11 +23,15 @@ import javax.servlet.http.HttpSession;
 public class UserFriendServiceImpl extends RemoteServiceServlet implements UserFriendService {
     
     public static final String USER_ATTRIBUTE = "user";
+    public static final String FRIENDS_ATTRIBUTE = "friends";
+    
     UserDTO actualUser = new UserDTO() ;
     
     @Override
     public UserDTO getactualUser() {
         Optional<User> loggedinuser = getSessionAttribute(USER_ATTRIBUTE);
+        if(loggedinuser.isPresent())
+        {
         User u = loggedinuser.get();
             actualUser.setAccountIdentificationString(u.getAccountIdentificationString());
             actualUser.setBirthDate(u.getBirthDate());
@@ -34,13 +39,39 @@ public class UserFriendServiceImpl extends RemoteServiceServlet implements UserF
             actualUser.setFirstName(u.getFirstName());
             actualUser.setLastName(u.getLastName());
             actualUser.setUserName(u.getUserName());
-            actualUser.setUserPic(u.getUserPic());
-            
-        return actualUser;
+            actualUser.setUserPic(u.getUserPic());            
+            return actualUser;
+        }
+        return null;
     }
+    @Override
+    public Iterable<UserDTO> getFriends(){
+        Optional<Iterable<User>> friends = getSessionAttribute(FRIENDS_ATTRIBUTE);
+        if(friends.isPresent())
+        {
+        Iterable<User> f = friends.get();
+            ArrayList<UserDTO> retfriends = new ArrayList<>();
+            for(User x : f)
+            {
+                UserDTO dtoUser = new UserDTO();
+                    dtoUser.setAccountIdentificationString(x.getAccountIdentificationString());
+                    dtoUser.setBirthDate(x.getBirthDate());
+                    dtoUser.setCity(x.getCity());
+                    dtoUser.setFirstName(x.getFirstName());
+                    dtoUser.setLastName(x.getLastName());
+                    dtoUser.setUserName(x.getUserName());
+                    dtoUser.setUserPic(x.getUserPic());  
+                retfriends.add(dtoUser);
+            }
+            return retfriends;
+        }
+        return null;
+    }
+    
     public <T> Optional<T> getSessionAttribute(String attributeName) {
         return getSessionAttribute(getThreadLocalRequest(), attributeName);
     }
+    
     public static <T> Optional<T> getSessionAttribute(HttpServletRequest request, final String attributeName) {
         return getSession(request).transform(new Function<HttpSession, T>() {
             @Override

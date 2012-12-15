@@ -27,6 +27,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
     public static final String SESSION_ATTRIBUTE = "session";
     public static final String TOKEN_ATTRIBUTE = "token";
     public static final String USER_ATTRIBUTE = "user";
+    public static final String FRIENDS_ATTRIBUTE = "friends";
     public static final int TIMEOUT_INTERVALL = 60_000;
 
     @Override
@@ -65,6 +66,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
             OAuthProvider oauth = Providers.valueOf(provider).getProvider();
             OAuthAccessRequest request = oauth.createRequest();
             storeSessionAttribute(OAuthCallbackServlet.OAUTH_LOGIN_ATTRIBUTE, new OAuthLogin(request));
+            storeSessionAttribute(Providers.PROVIDER_NAME_ATTRIBUTE, Providers.valueOf(provider).name());
             return request.getAuthorizeUrl();
         } catch (IllegalArgumentException ex) {
             throw new UnsupportedOperationException("no support for provider: " + provider);

@@ -97,7 +97,7 @@ public class LoginPage extends Composite {
         @Override
         public void onSuccess(UserDTO result) {
            UserInfoWidget lp = PhysixLab.PAGE_CONTROLLER.getUserInfoWidget();
-           lp.setUserName(result.getUserName());
+           lp.setUserName(result.getUserName());           
         }
         
     }

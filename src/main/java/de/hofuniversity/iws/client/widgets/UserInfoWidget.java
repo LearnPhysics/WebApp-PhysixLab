@@ -52,5 +52,6 @@ public class UserInfoWidget extends Composite {
 
     public void setUserName(String name) {
         user_name.setText(name);
+        initWidget(uiBinder.createAndBindUi(this));
     }
 }
