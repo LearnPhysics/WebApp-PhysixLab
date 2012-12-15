@@ -35,6 +35,7 @@ public class UserFriendServiceImpl extends RemoteServiceServlet implements UserF
             actualUser.setLastName(u.getLastName());
             actualUser.setUserName(u.getUserName());
             actualUser.setUserPic(u.getUserPic());
+            
         return actualUser;
     }
     public <T> Optional<T> getSessionAttribute(String attributeName) {
