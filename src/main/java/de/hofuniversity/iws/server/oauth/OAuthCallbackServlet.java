@@ -5,6 +5,8 @@ import java.io.IOException;
 import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import de.hofuniversity.iws.server.data.entities.User;
+import de.hofuniversity.iws.server.oauth.accessors.AccessException;
+import de.hofuniversity.iws.server.oauth.accessors.UserDataAccessor;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import org.scribe.model.Token;
@@ -70,10 +72,23 @@ public class OAuthCallbackServlet extends HttpServlet {
 
     private User getOrCreateUserForAccessToken(Token accessToken) {
         //TODO DB access
-        User u = new User();
-        u.setFirstName("Daniel");
-        u.setLastName("Heinrich");
-        return u;
+     /*   User u = new User();
+        u.setFirstName("Daniel");*/
+        Providers provider = Providers.TWITTER;
+        Optional<UserDataAccessor> userData = provider.getAccessor(UserDataAccessor.class);
+        if(userData.isPresent())
+        {
+            try
+            {
+                UserDataAccessor ac = userData.get();
+                User user = ac.getUserData(accessToken);
+                return user;
+            } catch (AccessException ex)
+            {
+                ex.printStackTrace();
+            }
+        }
+        return null;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

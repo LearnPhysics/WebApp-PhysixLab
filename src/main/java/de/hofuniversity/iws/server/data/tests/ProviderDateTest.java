@@ -25,17 +25,13 @@ public class ProviderDateTest {
 
         Scanner in = new Scanner(System.in);
         Providers provider = Providers.FACEBOOK;
-
         OAuthProvider prov = provider.getProvider();
         OAuthAccessRequest req = prov.createRequest();
-
         Desktop.getDesktop().browse(new URI(req.getAuthorizeUrl()));
-
         System.out.println("And paste the verifier here");
         System.out.print(">>");
         Verifier v = new Verifier(in.nextLine());
         Token access = req.generateAccessToken(v);
-
         Optional<UserDataAccessor> userData = provider.getAccessor(UserDataAccessor.class);
         if (userData.isPresent()) {
             try {
@@ -59,9 +55,6 @@ public class ProviderDateTest {
                 ex.printStackTrace();
             }
         }
-
-
-
         /* angemeldeten User in PhysixLab-Datenbank suchen */
 //        NetworkAccount netACC = NetworkAccountHandler.getNetworkAccountEntity(Providers.TWITTER.name(), CurrentUser.getAccountIdentificationString(), true);
 //       User user = netACC.getUser();   

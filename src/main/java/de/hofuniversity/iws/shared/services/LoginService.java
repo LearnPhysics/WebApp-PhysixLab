@@ -43,8 +43,4 @@ public interface LoginService extends RemoteService {
      * invalidates the active session
      */
     public void logout();
-    /*
-     * Get the actual User from this Session
-     */
-    public String getUser();
 }

@@ -104,9 +104,4 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
     public static void storeSessionAttribute(HttpServletRequest request, String attributeName, Object value) {
         request.getSession().setAttribute(attributeName, value);
     }
-
-    @Override
-    public String getUser() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 }
