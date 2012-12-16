@@ -7,7 +7,6 @@ package de.hofuniversity.iws.client.playn.entitys;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
-import org.jbox2d.dynamics.Body;
 import playn.core.*;
 
 /**

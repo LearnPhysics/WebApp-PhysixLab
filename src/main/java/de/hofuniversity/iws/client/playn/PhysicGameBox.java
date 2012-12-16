@@ -13,6 +13,7 @@ import static playn.core.PlayN.graphics;
  * @author Daniel Heinrich <dannynullzwo@gmail.com>
  */
 public class PhysicGameBox implements Game {
+
     private final PhysicGame game;
     private final int width;
 
@@ -24,7 +25,7 @@ public class PhysicGameBox implements Game {
     @Override
     public void init() {
         float ratio = game.getWidth() / game.getHeight();
-        int height = (int) (ratio * width);
+        int height = (int) (width / ratio);
 
         graphics().setSize(width, height);
 
