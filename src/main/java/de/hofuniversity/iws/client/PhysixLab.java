@@ -27,7 +27,7 @@ public class PhysixLab {
         History.addValueChangeHandler(PAGE_CONTROLLER);
 
 
-        loginService.getSessionToken(new AsyncCallback<Optional>() {
+        loginService.getSessionToken(new AsyncCallback<Optional<String>>() {
             @Override
             public void onFailure(Throwable caught) {
                 PAGE_CONTROLLER.changePage(LoginPage.NAME);

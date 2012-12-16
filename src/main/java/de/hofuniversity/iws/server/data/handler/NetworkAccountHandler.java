@@ -1,9 +1,8 @@
 package de.hofuniversity.iws.server.data.handler;
 
-
-
 import de.hofuniversity.iws.server.data.entities.NetworkAccount;
-//import de.hofuniversity.iws.server.data.entities.NetworkAccount_;
+import de.hofuniversity.iws.server.data.entities.NetworkAccount_;
+import de.hofuniversity.iws.server.data.entities.*;
 import javax.persistence.*;
 import javax.persistence.criteria.*;
 
@@ -76,7 +75,7 @@ public class NetworkAccountHandler {
     public static NetworkAccount getNetworkAccountEntity(long id, boolean detach) {
         return (NetworkAccount) GenericHandler.getEntity(NetworkAccount.class, id, detach);
     }
-/*    
+
     public static NetworkAccount getNetworkAccountEntity(String networkName, String accountIdentificationString, boolean detach) {
         NetworkAccount retval = null;
 
@@ -114,5 +113,4 @@ public class NetworkAccountHandler {
         }
         return retval;
     }
-    */
 }

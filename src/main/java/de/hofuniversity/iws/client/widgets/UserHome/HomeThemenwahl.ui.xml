@@ -5,8 +5,136 @@ Uncomment this for XHTML entities
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
              xmlns:g="urn:import:com.google.gwt.user.client.ui">
     <ui:style>
+        @font-face {
+        font-family: geosans;
+        src: url('GeosansLight.ttf');
+        }
 
+        #contentAreaThemenwahl {
+        font-family: geosans;
+        font-size: 16px;
+        background: rgba(109,232,150,0.7);
+        height: 1080px;
+        }
+
+        #content {
+        position: relative; 
+        width: 960px;
+        margin: 0px auto;
+        }
+
+        #content h1 {
+        position: absolute;
+        top: 75px; 
+        left: 40px;
+        color: rgb(65,150,255);
+        margin: 0 0 0 0;
+        font-size: 60px;
+        }
+
+        #content h2 {
+        color: rgb(65,150,255);
+        margin: 0 0 0 0;
+        }
+
+        .element {
+        background: rgb(255,255,255);
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        border-radius: 5px;
+        box-shadow: 3px 3px 5px rgb(0,0,0);
+        }
+
+        #news {
+        position: absolute; 
+        top: 75px; 
+        left: 680px;
+        width: 240px;
+        height: 800px;
+        }
+
+        .outerImage {
+        position: absolute;
+        background: rgb(255,255,255);
+        width: 200px;
+        height: 200px;
+        border-radius: 200px;
+        box-shadow: 3px 3px 5px rgb(0,0,0);
+        }
+
+        .innerImage {
+        padding: 5px;
+        }
+
+        .subject {
+        position: absolute;
+        width: 320px;
+        height: 200px;
+        }
+
+        #img1 {
+        top: 195px; 
+        left: 40px;
+        }
+
+        #subj1 {
+        top: 195px; 
+        left: 280px;
+        }
+
+        #img2 {
+        top: 435px; 
+        left: 40px;
+        }
+
+        #subj2 {
+        top: 435px; 
+        left: 280px;
+        }
+
+        #img3 {
+        top: 675px; 
+        left: 40px;
+        }
+
+        #subj3 {
+        top: 675px; 
+        left: 280px;
+        }
     </ui:style>
+    
     <g:HTMLPanel>
+        <div id="contentAreaThemenwahl">
+            <div id="content">
+                <h1>Themenwahl</h1>
+                <div class="{style.outerImage}" id="img1">
+                    <img class="{style.innerImage}" src="images/UserHome/Thema_Kinetik.png" />
+                </div>
+                <div class="{style.outerImage}" id="img2">
+                    <img class="{style.innerImage}" src="images/UserHome/Thema_Elekt.png" />
+                </div>
+                <div class="{style.outerImage}" id="img3">
+                    <img class="{style.innerImage}" src="images/UserHome/Thema_Thermo.png" />
+                </div>
+                <div class="{style.element} {style.subject}" id="subj1">
+                    <h2>Kinetik</h2>
+                    <p></p>
+                </div>
+                <div class="{style.element} {style.subject}" id="subj2">
+                    <h2>Elektrizitaet</h2>
+                    <p></p>
+                </div>
+                <div class="{style.element} {style.subject}" id="subj3">
+                    <h2>Thermodynamik</h2>
+                    <p></p>
+                </div>
+                <div class="{style.element} {style.subject}" id="news">
+                    <h2>News</h2>
+                    <p></p>
+                </div>
+            </div>
+        </div>
     </g:HTMLPanel>
 </ui:UiBinder>

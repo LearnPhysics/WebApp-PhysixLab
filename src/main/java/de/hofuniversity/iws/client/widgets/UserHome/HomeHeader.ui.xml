@@ -7,7 +7,7 @@ Uncomment this for XHTML entities
     <ui:style>
         @font-face {
         font-family: geosans;
-        src: url('../GeosansLight.ttf');
+        src: url('GeosansLight.ttf');
         }
 
         html {
@@ -16,7 +16,7 @@ Uncomment this for XHTML entities
         }
 
         body { 
-        background-image: url('../Circle02.png');
+        background-image: url('images/Startseite/Circle02.png');
         margin: 0px auto;
         }
 
@@ -43,7 +43,17 @@ Uncomment this for XHTML entities
         .tab {
         position: absolute;
         width: 120px;
-        bottom: 5px;	
+        height: 20px;
+        bottom: 9px;
+        -webkit-transition:0.2s;
+        -o-transition:0.2s;
+        -moz-transition:0.2s;
+        -ms-transition:0.2s;
+        transition:0.2s;
+        }
+        
+        .tab:hover {
+            font-size: 18px;
         }
 
         #tab1 {
@@ -69,17 +79,17 @@ Uncomment this for XHTML entities
     <g:HTMLPanel>
         <div id="headerArea">
             <div id="header">
-                <img src="../PhysixLab_WebLogo.png" />
-                <div class="tab" id="tab1">
+                <img src="images/Startseite/PhysixLab_WebLogo.png" />
+                <div class="{style.tab}" id="tab1">
                     Statistik
                 </div>
-                <div class="tab" id="tab2">
+                <div class="{style.tab}" id="tab2">
                     Themenwahl
                 </div>
-                <div class="tab" id="tab3">
+                <div class="{style.tab}" id="tab3">
                     Freunde
                 </div>
-                <div class="tab" id="tab4">
+                <div class="{style.tab}" id="tab4">
                     Profile
                 </div>
             </div>

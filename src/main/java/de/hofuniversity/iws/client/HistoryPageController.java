@@ -9,6 +9,7 @@ import de.hofuniversity.iws.client.widgets.*;
 import com.google.gwt.event.logical.shared.*;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.*;
+import de.hofuniversity.iws.client.widgets.UserHome.UserHome;
 
 /**
  *
@@ -29,6 +30,10 @@ public class HistoryPageController implements ValueChangeHandler<String> {
         public static String userinfopage() {
             return UserInfoWidget.NAME;
         }
+        
+        public static String userhomepage() {
+            return UserHome.NAME;
+        }
     }
 
     @Override
@@ -44,6 +49,8 @@ public class HistoryPageController implements ValueChangeHandler<String> {
             changePage(new SessionPage());
         } else if (Tokens.userinfopage().equals(pageName)) {
             changePage(new UserInfoWidget());
+        } else if (Tokens.userhomepage().equals(pageName)) {
+            changePage(new UserHome());
         } else {
             //TODO
         }

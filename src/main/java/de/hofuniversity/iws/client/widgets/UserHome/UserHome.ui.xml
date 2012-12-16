@@ -4,12 +4,112 @@ Uncomment this for XHTML entities
 -->
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
              xmlns:g="urn:import:com.google.gwt.user.client.ui"
-             xmlns:my='urn:import:de.hofuniversity.iws.client.widgets.UserHome' >
-    <ui:style>
+             xmlns:my='urn:import:de.hofuniversity.iws.client.widgets.UserHome' 
+             xmlns:header='urn:import:de.hofuniversity.iws.client.widgets'>
+             
+    <ui:style type='de.hofuniversity.iws.client.widgets.UserHome.UserHome.UserHomeStyle'>
+        span {
+        position: fixed;
+        left: 50%;
+        -webkit-transition:1.0s ease;
+        -o-transition:1.0s ease;
+        -moz-transition:1.0s ease;
+        -ms-transition:1.0s ease;
+        transition:1.0s ease;
+        }
+        
+        .posStatistik {
+        margin-left: -480px;
+        }
+        
+        .posThemenwahl {
+        margin-left: -1440px;
+        }
+        
+        .posFreunde {
+        margin-left: -2400px;
+        }
+        
+        .posProfile {
+        margin-left: -3360px;
+        }
+        
+        .tab {
+        position: fixed;
+        left: 50%;
+        width: 120px;
+        height: 22px;
+        top: 133px;
+        -webkit-transition:0.2s;
+        -o-transition:0.2s;
+        -moz-transition:0.2s;
+        -ms-transition:0.2s;
+        transition:0.2s;
+        }
+        
+        .tab:hover {
+        font-size: 18px;
+        }
 
+        .tab1 {
+        margin-left: 0px;
+        background: rgb(255,141,108);
+        }
+
+        .tab2 {
+        margin-left: 120px;
+        background: rgb(109,232,150);
+        }
+
+        .tab3 {
+        margin-left: 240px;
+        background: rgb(209,141,232);
+        }
+
+        .tab4 {
+        margin-left: 360px;
+        background: rgb(255,249,108);
+        }
+        
+        .selected {
+        height: 32px;
+        top: 123px;
+        }
+        
+        b {
+        padding-left: 5px;
+        }
     </ui:style>
+    
     <g:HTMLPanel>
-        <my:HomeHeader>
-        <my:HomeThemenwahl>
+        <header:Header></header:Header>
+        <g:FocusPanel ui:field='tab1' styleName="{style.tab} {style.tab1}">
+            <g:HTMLPanel>
+                <b>Statistik</b>
+            </g:HTMLPanel>
+        </g:FocusPanel>
+        <g:FocusPanel ui:field='tab2' styleName="{style.tab} {style.tab2} {style.selected}">
+            <g:HTMLPanel>
+                <b>Themenwahl</b>
+            </g:HTMLPanel>
+        </g:FocusPanel>
+        <g:FocusPanel ui:field='tab3' styleName="{style.tab} {style.tab3}">
+            <g:HTMLPanel>
+                <b>Freunde</b>
+            </g:HTMLPanel>
+        </g:FocusPanel>
+        <g:FocusPanel ui:field='tab4' styleName="{style.tab} {style.tab4}">
+            <g:HTMLPanel>
+                <b>Profil</b>
+            </g:HTMLPanel>
+        </g:FocusPanel> 
+        <span ui:field='rail' class="{style.posThemenwahl}">
+            <g:HorizontalPanel>
+                <my:HomeStatistik></my:HomeStatistik>
+                <my:HomeThemenwahl></my:HomeThemenwahl>
+                <my:HomeFreunde></my:HomeFreunde>
+                <my:HomeProfile></my:HomeProfile>
+            </g:HorizontalPanel>
+        </span>
     </g:HTMLPanel>
 </ui:UiBinder>
