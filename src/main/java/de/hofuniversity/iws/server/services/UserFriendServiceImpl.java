@@ -33,15 +33,16 @@ public class UserFriendServiceImpl extends RemoteServiceServlet implements UserF
         if(loggedinuser.isPresent())
         {
         User u = loggedinuser.get();
-            actualUser.setAccountIdentificationString(u.getAccountIdentificationString());
+     /*       actualUser.setAccountIdentificationString(u.getAccountIdentificationString());
             actualUser.setBirthDate(u.getBirthDate());
             actualUser.setCity(u.getCity());
             actualUser.setFirstName(u.getFirstName());
             actualUser.setLastName(u.getLastName());
             actualUser.setUserName(u.getUserName());
             actualUser.setUserPic(u.getUserPic());            
-            return actualUser;
+            return actualUser;*/
         }
+
         return null;
     }
     @Override

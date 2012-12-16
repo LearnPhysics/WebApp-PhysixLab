@@ -53,5 +53,5 @@ public class GameDTO implements Serializable {
 
     public void setLessonList(List<LessonDTO> lessonList) {
         this.lessonList = lessonList;
-    }
+    }    
 }
