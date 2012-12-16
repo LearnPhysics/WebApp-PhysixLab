@@ -14,7 +14,7 @@
 
     <properties>
         <!-- Convenience property to set the GWT version -->
-        <gwtVersion>2.5.0-rc1</gwtVersion>
+        <gwtVersion>2.5.0</gwtVersion>
         <!-- GWT needs at least java 1.5 -->
         <runTarget>PhysixLab.html</runTarget>
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
@@ -131,7 +131,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>
-                <version>2.5.0-rc1</version>
+                <version>${gwtVersion}</version>
                 <executions>
                     <execution>
                         <goals>
@@ -185,6 +185,7 @@
             <plugin>
                 <groupId>org.bsc.maven</groupId>
                 <artifactId>maven-processor-plugin</artifactId>
+                <version>2.1.0</version>
                 <executions>
                     <execution>
                         <id>process</id>

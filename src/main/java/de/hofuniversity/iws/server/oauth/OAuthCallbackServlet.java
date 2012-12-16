@@ -1,10 +1,13 @@
 package de.hofuniversity.iws.server.oauth;
 
 import java.io.IOException;
+import java.util.logging.*;
 
+import de.hofuniversity.iws.server.data.entities.*;
+import de.hofuniversity.iws.server.data.handler.*;
 import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import de.hofuniversity.iws.server.data.entities.User;
+import de.hofuniversity.iws.server.oauth.accessors.*;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import org.scribe.model.Token;
@@ -58,7 +61,7 @@ public class OAuthCallbackServlet extends HttpServlet {
                     //Somehow generate a coresponding user
                     Token accessToken = l.request.generateAccessToken(verifier);
 
-                    User user = getOrCreateUserForAccessToken(accessToken);
+                    User user = getOrCreateUserForAccessToken(l.provider, accessToken);
 
                     l.successfull = true;
                     storeSessionAttribute(request, USER_ATTRIBUTE, user);
@@ -68,12 +71,19 @@ public class OAuthCallbackServlet extends HttpServlet {
         }
     }
 
-    private User getOrCreateUserForAccessToken(Token accessToken) {
-        //TODO DB access
-        User u = new User();
-        u.setFirstName("Daniel");
-        u.setLastName("Heinrich");
-        return u;
+    private User getOrCreateUserForAccessToken(Providers prov, Token accessToken) {
+//        Optional<UserDataAccessor> accessor = prov.getAccessor(UserDataAccessor.class);
+//        if(accessor.isPresent())
+//        {
+//            try {
+//                User user = accessor.get().getUserData(accessToken);
+//                Optional<NetworkAccount> networkAccount = user.getNetworkAccount(prov);
+//                NetworkAccount na = NetworkAccountHandler.getNetworkAccountEntity(prov.name(), networkAccount.get().getAccountIdentificationString(), false);
+//                return na.getUser();
+//            } catch (AccessException ex) {
+//            }
+//        }
+        return null;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

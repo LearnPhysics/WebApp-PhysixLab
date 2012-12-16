@@ -1,18 +1,16 @@
 package de.hofuniversity.iws.server.oauth;
 
-import de.hofuniversity.iws.server.data.entities.User;
-
 /**
  *
  * @author Andreas Arndt <andreas.arndt@hof-university.de>
  */
 public class OAuthLogin {
-
-    public User user;
     public boolean successfull;
+    public final Providers provider;
     public final OAuthAccessRequest request;
 
-    public OAuthLogin(OAuthAccessRequest request) {
+    public OAuthLogin(Providers provider, OAuthAccessRequest request) {
+        this.provider = provider;
         this.request = request;
     }
 }

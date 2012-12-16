@@ -26,28 +26,29 @@ public class PhysixLab {
     public void init() {
         History.addValueChangeHandler(PAGE_CONTROLLER);
 
-
-        loginService.getSessionToken(new AsyncCallback<Optional>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                PAGE_CONTROLLER.changePage(LoginPage.NAME);
-            }
-
-            @Override
-            public void onSuccess(Optional result) {
-                if (result.isPresent()) {
-                    sessionToken = (String) result.get();
-                    if (History.getToken().isEmpty()) {
                         PAGE_CONTROLLER.changePage(SessionPage.NAME);
-                    } else {
-                        PAGE_CONTROLLER.changePage(History.getToken());
-                    }
 
-                } else {
-                    PAGE_CONTROLLER.changePage(LoginPage.NAME);
-                }
-            }
-        });
+//        loginService.getSessionToken(new AsyncCallback<Optional>() {
+//            @Override
+//            public void onFailure(Throwable caught) {
+//                PAGE_CONTROLLER.changePage(LoginPage.NAME);
+//            }
+//
+//            @Override
+//            public void onSuccess(Optional result) {
+//                if (result.isPresent()) {
+//                    sessionToken = (String) result.get();
+//                    if (History.getToken().isEmpty()) {
+//                        PAGE_CONTROLLER.changePage(SessionPage.NAME);
+//                    } else {
+//                        PAGE_CONTROLLER.changePage(History.getToken());
+//                    }
+//
+//                } else {
+//                    PAGE_CONTROLLER.changePage(LoginPage.NAME);
+//                }
+//            }
+//        });
     }
 
     public static String getSessionToken() {

@@ -38,11 +38,11 @@ public class HistoryPageController implements ValueChangeHandler<String> {
 
     public void changePage(String pageName) {
 
-        if (Tokens.loginpage().equals(pageName)) {
+        if (LoginPage.NAME.equals(pageName)) {
             changePage(new LoginPage());
-        } else if (Tokens.sessionpage().equals(pageName)) {
+        } else if (SessionPage.NAME.equals(pageName)) {
             changePage(new SessionPage());
-        } else if (Tokens.userinfopage().equals(pageName)) {
+        } else if (UserInfoWidget.NAME.equals(pageName)) {
             changePage(new UserInfoWidget());
         } else {
             //TODO

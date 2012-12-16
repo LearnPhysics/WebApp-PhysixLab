@@ -6,16 +6,15 @@ package de.hofuniversity.iws.server.services;
 
 import java.util.UUID;
 
-import com.google.common.base.Function;
-import com.google.common.base.Optional;
-import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import de.hofuniversity.iws.server.oauth.*;
 import de.hofuniversity.iws.server.oauth.provider.OAuthProvider;
 import de.hofuniversity.iws.shared.services.LoginService;
 import de.hofuniversity.iws.shared.services.login.LoginException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+
+import com.google.common.base.*;
+import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import javax.servlet.http.*;
 
 /**
  *
@@ -62,9 +61,10 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
     @Override
     public String getOAuthLoginUrl(String provider) {
         try {
-            OAuthProvider oauth = Providers.valueOf(provider).getProvider();
+            Providers prov = Providers.valueOf(provider);
+            OAuthProvider oauth = prov.getProvider();
             OAuthAccessRequest request = oauth.createRequest();
-            storeSessionAttribute(OAuthCallbackServlet.OAUTH_LOGIN_ATTRIBUTE, new OAuthLogin(request));
+            storeSessionAttribute(OAuthCallbackServlet.OAUTH_LOGIN_ATTRIBUTE, new OAuthLogin(prov, request));
             return request.getAuthorizeUrl();
         } catch (IllegalArgumentException ex) {
             throw new UnsupportedOperationException("no support for provider: " + provider);

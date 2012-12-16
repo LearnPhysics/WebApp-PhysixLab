@@ -4,7 +4,6 @@
  */
 package de.hofuniversity.iws.server.oauth;
 
-import java.io.IOException;
 import java.util.*;
 
 import de.hofuniversity.iws.server.oauth.accessors.Accessor;

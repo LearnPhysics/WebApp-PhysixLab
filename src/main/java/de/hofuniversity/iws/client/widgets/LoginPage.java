@@ -4,33 +4,35 @@
  */
 package de.hofuniversity.iws.client.widgets;
 
+import de.hofuniversity.iws.client.PhysixLab;
+import de.hofuniversity.iws.shared.services.*;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.History;
+import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
-import de.hofuniversity.iws.client.PhysixLab;
-import de.hofuniversity.iws.shared.services.LoginService;
-import de.hofuniversity.iws.shared.services.LoginServiceAsync;
 
 /**
  *
  * @author Daniel Heinrich <dannynullzwo@gmail.com>
  */
-public class LoginPage extends Composite {
-    public final static String NAME = "login";
-    private final LoginServiceAsync loginService = (LoginServiceAsync)GWT.create(LoginService.class);
+public class LoginPage extends HistoryPage {
+
     private LoginPageUiBinder uiBinder = GWT.create(LoginPageUiBinder.class);
 
     interface LoginPageUiBinder extends UiBinder<Widget, LoginPage> {
     }
+    public static final String NAME = "login";
+    private final LoginServiceAsync loginService = (LoginServiceAsync) GWT.create(LoginService.class);
 
     public LoginPage() {
         initWidget(uiBinder.createAndBindUi(this));
-        History.newItem(NAME);
+    }
+
+    @Override
+    public String getName() {
+        return NAME;
     }
 
     @UiHandler("googleLogin")
