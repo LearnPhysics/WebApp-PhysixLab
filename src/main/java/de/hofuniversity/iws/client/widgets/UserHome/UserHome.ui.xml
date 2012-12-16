@@ -74,14 +74,20 @@ Uncomment this for XHTML entities
         .selected {
         height: 32px;
         top: 123px;
+        font-size: 18px;
         }
         
         b {
         padding-left: 5px;
         }
+        
+        .scrollable {
+        min-height:1280px;
+        overflow: auto;
+        }
     </ui:style>
     
-    <g:HTMLPanel>
+    <g:HTMLPanel styleName="{style.scrollable}">
         <header:Header></header:Header>
         <g:FocusPanel ui:field='tab1' styleName="{style.tab} {style.tab1}">
             <g:HTMLPanel>

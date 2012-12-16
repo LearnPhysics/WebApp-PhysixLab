@@ -23,6 +23,8 @@
     <inherits name='com.google.gwt.inject.Inject'/>
     
     <inherits name='com.google.common.base.Base'/>
+    
+    <inherits name="com.reveregroup.gwt.imagepreloader.ImagePreloader" />
   
     <!-- Specify the path to any remote services.                   -->
     <servlet path="/login" class="de.hofuniversity.iws.server.services.LoginServiceImpl" />
