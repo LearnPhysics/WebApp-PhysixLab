@@ -31,33 +31,42 @@ public class UserMapper {
         udto.setCity(u.getCity());
         udto.setUserPic(u.getUserPic());
         udto.setAccountIdentificationString(u.getAccountIdentificationString());
-        
-        List<NetworkAccount> lna = new ArrayList<>(u.getNetworkAccountList());
-        List<NetworkAccountDTO> lnadto = new ArrayList<>();
-        for(NetworkAccount x:lna)
+        List<NetworkAccount> n = u.getNetworkAccountList();
+        if(n!=null)
         {
-          NetworkAccountMapper networkmapper = new NetworkAccountMapper();
-          lnadto.add(networkmapper.mapNetworkAccounttoDTO(x));
+            List<NetworkAccount> lna = new ArrayList<>(n);
+            List<NetworkAccountDTO> lnadto = new ArrayList<>();
+            for(NetworkAccount x:lna)
+            {
+              NetworkAccountMapper networkmapper = new NetworkAccountMapper();
+              lnadto.add(networkmapper.mapNetworkAccounttoDTO(x));
+            }
+            udto.setNetworkAccountList(lnadto);
         }
-        udto.setNetworkAccountList(lnadto);
-        
-        List<GameResult> lgr = new ArrayList<>(u.getGameResultList());
-        List<GameResultDTO> lgrdto = new ArrayList<>();
-        for(GameResult x: lgr)
+        List<GameResult> g = u.getGameResultList();
+        if(g!=null)
         {
-            GameResultMapper gameresultmapper = new GameResultMapper();
-            lgrdto.add(gameresultmapper.mapGameResulttoDTO(x));
+            List<GameResult> lgr = new ArrayList<>(g);
+            List<GameResultDTO> lgrdto = new ArrayList<>();
+            for(GameResult x: lgr)
+            {
+                GameResultMapper gameresultmapper = new GameResultMapper();
+                lgrdto.add(gameresultmapper.mapGameResulttoDTO(x));
+            }
+            udto.setGameResultList(lgrdto);
         }
-        udto.setGameResultList(lgrdto);
-        
-        List<LessonProgress> llp = new ArrayList<>(u.getLessonProgressList());
-        List<LessonProgressDTO> llpdto = new ArrayList<>();
-        for(LessonProgress x: llp)
+        List<LessonProgress> p = u.getLessonProgressList();
+        if(p!=null)
         {
-            LessonProgressMapper lessonprogressmapper = new LessonProgressMapper();
-            llpdto.add(lessonprogressmapper.mapLessonProgresstoDTO(x));
+            List<LessonProgress> llp = new ArrayList<>(p);
+            List<LessonProgressDTO> llpdto = new ArrayList<>();
+            for(LessonProgress x: llp)
+            {
+                LessonProgressMapper lessonprogressmapper = new LessonProgressMapper();
+                llpdto.add(lessonprogressmapper.mapLessonProgresstoDTO(x));
+            }
+            udto.setLessonProgressList(llpdto);
         }
-        udto.setLessonProgressList(llpdto);
         return udto;
     }
 }

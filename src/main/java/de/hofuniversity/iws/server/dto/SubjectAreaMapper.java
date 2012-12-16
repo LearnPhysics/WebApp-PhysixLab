@@ -22,7 +22,10 @@ public class SubjectAreaMapper {
            SubjectAreaDTO sadto = new SubjectAreaDTO();
            sadto.setName(u.getName());
            
-            List<Lesson> ll = new ArrayList<>(u.getLessonList());
+           List<Lesson> l = u.getLessonList();
+           if(l!=null)
+           {
+            List<Lesson> ll = new ArrayList<>(l);
             List<LessonDTO> lldto = new ArrayList<>();
             for(Lesson x: ll)
             {
@@ -30,6 +33,7 @@ public class SubjectAreaMapper {
                 lldto.add(lessonmapper.mapLessontoDTO(x));
             }
             sadto.setLessonList(lldto);
+           }
            return sadto;
         }
               

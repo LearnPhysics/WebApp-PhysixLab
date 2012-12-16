@@ -10,6 +10,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import de.hofuniversity.iws.dto.UserDTO;
 import de.hofuniversity.iws.server.data.entities.User;
+import de.hofuniversity.iws.server.dto.UserMapper;
 import de.hofuniversity.iws.shared.services.UserFriendService;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +26,7 @@ public class UserFriendServiceImpl extends RemoteServiceServlet implements UserF
     public static final String USER_ATTRIBUTE = "user";
     public static final String FRIENDS_ATTRIBUTE = "friends";
     
-    UserDTO actualUser = new UserDTO() ;
+    UserDTO actualUser ;
     
     @Override
     public UserDTO getactualUser() {
@@ -33,14 +34,9 @@ public class UserFriendServiceImpl extends RemoteServiceServlet implements UserF
         if(loggedinuser.isPresent())
         {
         User u = loggedinuser.get();
-     /*       actualUser.setAccountIdentificationString(u.getAccountIdentificationString());
-            actualUser.setBirthDate(u.getBirthDate());
-            actualUser.setCity(u.getCity());
-            actualUser.setFirstName(u.getFirstName());
-            actualUser.setLastName(u.getLastName());
-            actualUser.setUserName(u.getUserName());
-            actualUser.setUserPic(u.getUserPic());            
-            return actualUser;*/
+         UserMapper usermapper = new UserMapper();
+         actualUser =  usermapper.mapUsertoDTO(u);
+         return actualUser;
         }
 
         return null;

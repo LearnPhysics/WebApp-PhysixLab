@@ -28,14 +28,18 @@ public class LessonMapper {
             SubjectAreaDTO sadto = subjectareamapper.mapSubjectAreatoDTO(subjectarea);
             ldto.setSubjectArea(sadto);
             
-        List<Game> lg = new ArrayList<>(u.getGameList());
-        List<GameDTO> lgdto = new ArrayList<>();
-        for(Game x: lg)
+        List<Game> l = u.getGameList();
+        if(l!=null)
         {
-            GameMapper gamemapper = new GameMapper();
-            lgdto.add(gamemapper.mapGametoDTO(x));
+            List<Game> lg = new ArrayList<>(l);
+            List<GameDTO> lgdto = new ArrayList<>();
+            for(Game x: lg)
+            {
+                GameMapper gamemapper = new GameMapper();
+                lgdto.add(gamemapper.mapGametoDTO(x));
+            }
+            ldto.setGameList(lgdto);
         }
-        ldto.setGameList(lgdto);
         
         LessonMapper lessonmapper = new LessonMapper();
         LessonDTO lpdto = lessonmapper.mapLessontoDTO(u.getParentLesson());

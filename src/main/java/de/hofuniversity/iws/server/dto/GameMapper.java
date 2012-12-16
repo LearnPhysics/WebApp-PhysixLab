@@ -24,23 +24,31 @@ public class GameMapper {
          GameDTO gdto = new GameDTO();
          gdto.setName(u.getName());
          
-            List<GameResult> lgr = new ArrayList<>(u.getGameResultList());
-            List<GameResultDTO> lgrdto = new ArrayList<>();
-            for(GameResult x: lgr)
+            List<GameResult> lg = u.getGameResultList();
+            if(lg!=null)
             {
-                GameResultMapper gameresultmapper = new GameResultMapper();
-                lgrdto.add(gameresultmapper.mapGameResulttoDTO(x));
+                List<GameResult> lgr = new ArrayList<>(u.getGameResultList());
+                List<GameResultDTO> lgrdto = new ArrayList<>();
+                for(GameResult x: lgr)
+                {
+                    GameResultMapper gameresultmapper = new GameResultMapper();
+                    lgrdto.add(gameresultmapper.mapGameResulttoDTO(x));
+                }
+                gdto.setGameResultList(lgrdto);
             }
-         gdto.setGameResultList(lgrdto);
-         
-            List<Lesson> ll = new ArrayList<>(u.getLessonList());
-            List<LessonDTO> lldto = new ArrayList<>();
-            for(Lesson x: ll)
+            
+            List<Lesson> lt = u.getLessonList();
+            if(lt!=null)
             {
-                LessonMapper lessonmapper = new LessonMapper();
-                lldto.add(lessonmapper.mapLessontoDTO(x));
+                List<Lesson> ll = new ArrayList<>(u.getLessonList());
+                List<LessonDTO> lldto = new ArrayList<>();
+                for(Lesson x: ll)
+                {
+                    LessonMapper lessonmapper = new LessonMapper();
+                    lldto.add(lessonmapper.mapLessontoDTO(x));
+                }
+                gdto.setLessonList(lldto);
             }
-          gdto.setLessonList(lldto);
          
          return gdto;
      }   
