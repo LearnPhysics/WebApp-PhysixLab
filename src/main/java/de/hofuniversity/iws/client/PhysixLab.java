@@ -21,6 +21,7 @@ public class PhysixLab {
     private static String sessionToken;
     @Inject
     private LoginServiceAsync loginService;
+    private LessonXMLReader lessonreader = LessonXMLReader.getInstance();
 
     public void init() {
         History.addValueChangeHandler(PAGE_CONTROLLER);
