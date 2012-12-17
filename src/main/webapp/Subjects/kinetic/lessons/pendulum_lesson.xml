@@ -1,10 +1,9 @@
-<?xml version="1.0"? encoding="UTF-8">
-<lesson>
-    <title></title>
-    <description></description>
-    <parentlesson></parentlesson>
-    <pictogram></pictogram>
-    <widget></widget>
-    <math></math>
+<?xml version="1.0" encoding="UTF-8"?>
+<lesson xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="dtd.xsd">
+	<title/>
+	<description/>
+	<parentlesson/>
+	<pictogram/>
+	<widget/>
+	<math/>
 </lesson>
-    

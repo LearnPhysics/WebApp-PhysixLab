@@ -1,9 +1,9 @@
-<?xml version="1.0"? encoding="UTF-8">
-<test>
-    <problem>
+<?xml version="1.0" encoding="UTF-8"?>
+<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="dtd.xsd">
+	<problem>
     </problem>
-    <solution>
+	<solution>
     </solution>
-    <widget>
+	<widget>
     </widget>
 </test>

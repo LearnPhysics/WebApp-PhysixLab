@@ -1,9 +1,9 @@
-<?xml version="1.0"? encoding="UTF-8">
-<theme>
-    <headline>
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<theme xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="dtd.xsd">
+	<headline>
         Kinetik (Technische Mechanik)
     </headline>
-    <text>
+	<text>
         Die Kinetik (gr. kinesis Bewegung) ist ein Teilgebiet der Mechanik und beschreibt 
         die Änderung der Bewegungsgrößen (Weg, Zeit, Geschwindigkeit und Beschleunigung) 
         unter Einwirkung von Kräften im Raum. Die Kinetik steht im Gegensatz zur Statik,

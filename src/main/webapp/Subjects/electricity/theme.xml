@@ -1,9 +1,9 @@
-<?xml version="1.0"? encoding="UTF-8">
-<theme>
-    <headline>
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<theme xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="dtd.xsd">
+	<headline>
         Elektrizität
     </headline>
-    <text>
+	<text>
         Der Siegeszug des elektrischen Stroms begann um die Wende zum 
         20. Jahrhundert. Mit der Erfindung des elektrischen Lichts und der 
         flächendeckenden Stromversorgung setzte ein unaufhaltsamer Stromboom ein. 
