@@ -57,12 +57,12 @@ public class HomeFreunde extends Composite {
         user2.setCity("TestTown02");
 
         user0.setBirthDate(new Timestamp(100));
-        user0.setBirthDate(new Timestamp(133876800));
-        user0.setBirthDate(new Timestamp(1038768000));
+        user1.setBirthDate(new Timestamp(133876800));
+        user2.setBirthDate(new Timestamp(1038768000));
 
-        String url2 = "https://si0.twimg.com/profile_images/2641434457/369709d0d9861e4a7298c8606023e42b.png";
+        String url0 = "https://si0.twimg.com/profile_images/2641434457/369709d0d9861e4a7298c8606023e42b.png";
         String url1 = "https://si0.twimg.com/profile_images/1765911582/image1326962316_reasonably_small.png";
-        String url0 = "http://www.msc.org/publikationen/images-DE/logonutzung/missuse.jpg/image_preview";
+        String url2 = "http://www.msc.org/publikationen/images-DE/logonutzung/missuse.jpg/image_preview";
 
         addFriend(user0, url0);
         addFriend(user1, url1);
