@@ -16,5 +16,19 @@ public class Utilities {
         Timestamp current = new Timestamp(System.currentTimeMillis());
         int difference = current.compareTo(time);
         return (int)(difference/(60*60*24*365.25));
-    }  
+    }
+    
+    // If pressionInPercent = 100 then given can be between 0 and solution x 2
+    public static boolean isSimilar(double solution, double given, double precissionInPercent) {
+        double diff = solution*(precissionInPercent/100);
+        if(given < solution-diff) {
+            return false;
+        }
+        else if(given > solution+diff) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
 }
