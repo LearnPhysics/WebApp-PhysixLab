@@ -37,34 +37,42 @@ public enum Providers {
             return new FacebookProvider(key, secret);
         }
     };
-    private static final Class<? extends Accessor>[] ACCESSOR_TYPES = new Class[]{
-        UserDataAccessor.class, FriendListAccessor.class
-    };
-
-    static {
-        for (Class<? extends Accessor> ac : ACCESSOR_TYPES) {
-            for (Accessor a : ServiceLoader.load(ac)) {
-                a.supportedProvider().accessors.put(ac, a);
-            }
-        }
-    }
-    
-    private final Map<Class<? extends Accessor>, Accessor> accessors = new IdentityHashMap<>();
+    private final static Set<Class> initializedAccessors = new HashSet<Class>();
+    private final Map<Class<? extends Accessor>, Accessor> accessors = new IdentityHashMap<Class<? extends Accessor>, Accessor>();
     private final OAuthProvider provider;
 
     private Providers() {
         String key = APP.getPropertie(name() + ".Key");
         String secret = APP.getPropertie(name() + ".Secret");
         this.provider = createProvider(key, secret);
+        
+        if(!getAccessor(UserDataAccessor.class).isPresent())
+        {
+            throw new RuntimeException("The provider "+name()+" does not provide a UserDataAccessor!");
+        }
     }
 
     public OAuthProvider getProvider() {
         return provider;
     }
     
-    public <T extends Accessor> Optional<T> getAccessor(Class<T> c)
+    public UserDataAccessor getUserDataAccessor()
     {
+        return getAccessor(UserDataAccessor.class).get();
+    }
+
+    public <T extends Accessor> Optional<T> getAccessor(Class<T> c) {
+        if (!initializedAccessors.contains(c)) {
+            initializeAccessor(c);
+            initializedAccessors.add(c);
+        }
         return (Optional<T>) Optional.fromNullable(accessors.get(c));
+    }
+
+    private static void initializeAccessor(Class<? extends Accessor> ac) {
+        for (Accessor a : ServiceLoader.load(ac)) {
+            a.supportedProvider().accessors.put(ac, a);
+        }
     }
 
     protected abstract OAuthProvider createProvider(String key, String secret);

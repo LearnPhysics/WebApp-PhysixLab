@@ -3,18 +3,13 @@ package de.hofuniversity.iws.server.data.entities;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import de.hofuniversity.iws.shared.entitys.*;
+
+import javax.persistence.*;
 
 @Entity
 @Table
-public class SubjectArea implements Serializable, GenericEntity {
+public class GameDBO implements Serializable, GenericEntity, Game {
 
     @Transient
     private boolean detached = false;
@@ -24,21 +19,27 @@ public class SubjectArea implements Serializable, GenericEntity {
     private Long id;
     @Column
     private String name;
-    @OneToMany(mappedBy = "subjectArea")
-    private List<Lesson> lessonList;
+    @OneToMany(mappedBy = "game")
+    private List<GameResultDBO> gameResultList;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<LessonDBO> lessonList;
 
+    @Override
     public boolean isDetached() {
         return detached;
     }
-
+    
+    @Override
     public void setDetached(boolean detached) {
         this.detached = detached;
     }
-
+    
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
@@ -51,11 +52,19 @@ public class SubjectArea implements Serializable, GenericEntity {
         this.name = name;
     }
 
-    public List<Lesson> getLessonList() {
+    public List<? extends GameResult> getGameResultList() {
+        return gameResultList;
+    }
+
+    public void setGameResultList(List<GameResultDBO> gameResultList) {
+        this.gameResultList = gameResultList;
+    }
+
+    public List<? extends Lesson> getLessonList() {
         return lessonList;
     }
 
-    public void setLessonList(List<Lesson> lessonList) {
+    public void setLessonList(List<LessonDBO> lessonList) {
         this.lessonList = lessonList;
     }
 }

@@ -1,8 +1,8 @@
 package de.hofuniversity.iws.server.data.handler;
 
-import javax.persistence.EntityManager;
+import de.hofuniversity.iws.server.data.entities.GameDBO;
 
-import de.hofuniversity.iws.server.data.entities.Game;
+import javax.persistence.EntityManager;
 
 public class GameHandler {
 
@@ -10,8 +10,8 @@ public class GameHandler {
             .getEntityManagerFactory().createEntityManager();
 
     // Store game
-    public static Game store(Game game) {
-        Game retval = game;
+    public static GameDBO store(GameDBO game) {
+        GameDBO retval = game;
 
         if (entityManager.isOpen()) {
             entityManager.close();
@@ -29,7 +29,7 @@ public class GameHandler {
                 }
                 entityManager.getTransaction().commit();
             } else {
-                Game tmpGame = entityManager.find(Game.class,
+                GameDBO tmpGame = entityManager.find(GameDBO.class,
                         game.getId());
 
                 if (tmpGame == null) // Phrase does not exist in the
@@ -69,7 +69,7 @@ public class GameHandler {
     }
 
     // Get game by Id
-    public static Game getGameEntity(long id, boolean detach) {
-        return (Game) GenericHandler.getEntity(Game.class, id, detach);
+    public static GameDBO getGameEntity(long id, boolean detach) {
+        return (GameDBO) GenericHandler.getEntity(GameDBO.class, id, detach);
     }
 }

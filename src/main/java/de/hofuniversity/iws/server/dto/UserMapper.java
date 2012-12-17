@@ -8,19 +8,19 @@ import de.hofuniversity.iws.shared.dto.GameResultDTO;
 import de.hofuniversity.iws.shared.dto.LessonProgressDTO;
 import de.hofuniversity.iws.shared.dto.NetworkAccountDTO;
 import de.hofuniversity.iws.shared.dto.UserDTO;
-import de.hofuniversity.iws.server.data.entities.GameResult;
-import de.hofuniversity.iws.server.data.entities.LessonProgress;
-import de.hofuniversity.iws.server.data.entities.NetworkAccount;
-import de.hofuniversity.iws.server.data.entities.User;
+import de.hofuniversity.iws.server.data.entities.GameResultDBO;
+import de.hofuniversity.iws.server.data.entities.LessonProgressDBO;
+import de.hofuniversity.iws.server.data.entities.NetworkAccountDBO;
+import de.hofuniversity.iws.server.data.entities.UserDBO;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
- * @author User
+ * @author UserDBO
  */
 public class UserMapper {
-    public UserDTO mapUsertoDTO(User u)
+    public UserDTO mapUsertoDTO(UserDBO u)
     {
         UserDTO udto = new UserDTO();
         
@@ -31,36 +31,36 @@ public class UserMapper {
         udto.setCity(u.getCity());
         udto.setUserPic(u.getUserPic());
 //        udto.setAccountIdentificationString(u.getAccountIdentificationString());
-        List<NetworkAccount> n = u.getNetworkAccountList();
+        List<NetworkAccountDBO> n = u.getNetworkAccountList();
         if(n!=null)
         {
-            List<NetworkAccount> lna = new ArrayList<>(n);
-            List<NetworkAccountDTO> lnadto = new ArrayList<>();
-            for(NetworkAccount x:lna)
+            List<NetworkAccountDBO> lna = new ArrayList<NetworkAccountDBO>(n);
+            List<NetworkAccountDTO> lnadto = new ArrayList<NetworkAccountDTO>();
+            for(NetworkAccountDBO x:lna)
             {
               NetworkAccountMapper networkmapper = new NetworkAccountMapper();
               lnadto.add(networkmapper.mapNetworkAccounttoDTO(x));
             }
             udto.setNetworkAccountList(lnadto);
         }
-        List<GameResult> g = u.getGameResultList();
+        List<GameResultDBO> g = u.getGameResultList();
         if(g!=null)
         {
-            List<GameResult> lgr = new ArrayList<>(g);
-            List<GameResultDTO> lgrdto = new ArrayList<>();
-            for(GameResult x: lgr)
+            List<GameResultDBO> lgr = new ArrayList<GameResultDBO>(g);
+            List<GameResultDTO> lgrdto = new ArrayList<GameResultDTO>();
+            for(GameResultDBO x: lgr)
             {
                 GameResultMapper gameresultmapper = new GameResultMapper();
                 lgrdto.add(gameresultmapper.mapGameResulttoDTO(x));
             }
             udto.setGameResultList(lgrdto);
         }
-        List<LessonProgress> p = u.getLessonProgressList();
+        List<LessonProgressDBO> p = u.getLessonProgressList();
         if(p!=null)
         {
-            List<LessonProgress> llp = new ArrayList<>(p);
-            List<LessonProgressDTO> llpdto = new ArrayList<>();
-            for(LessonProgress x: llp)
+            List<LessonProgressDBO> llp = new ArrayList<LessonProgressDBO>(p);
+            List<LessonProgressDTO> llpdto = new ArrayList<LessonProgressDTO>();
+            for(LessonProgressDBO x: llp)
             {
                 LessonProgressMapper lessonprogressmapper = new LessonProgressMapper();
                 llpdto.add(lessonprogressmapper.mapLessonProgresstoDTO(x));

@@ -5,7 +5,7 @@
 package de.hofuniversity.iws.server.oauth.accessors;
 
 
-import de.hofuniversity.iws.server.data.entities.User;
+import de.hofuniversity.iws.server.data.entities.UserDBO;
 
 import org.scribe.model.Token;
 
@@ -15,5 +15,5 @@ import org.scribe.model.Token;
  */
 public interface UserDataAccessor extends Accessor{
 
-    public User getUserData(Token accessToken) throws AccessException;
+    public UserDBO getUserData(Token accessToken) throws AccessException;
 }

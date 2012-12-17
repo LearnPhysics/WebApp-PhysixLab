@@ -2,30 +2,14 @@ package de.hofuniversity.iws.server.data.entities;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
-import de.hofuniversity.iws.server.oauth.Providers;
-import com.google.common.base.Optional;
-import javax.persistence.CascadeType;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import de.hofuniversity.iws.shared.entitys.User;
+import javax.persistence.*;
 
 @Entity
 @Table
-public class User implements Serializable, GenericEntity {
+public class UserDBO implements Serializable, GenericEntity, User {
 
     @Transient
     private boolean detached = false;
@@ -47,20 +31,20 @@ public class User implements Serializable, GenericEntity {
     @Column
     private String accountIdentificationString;
     @OneToMany(mappedBy = "user")
-    private List<NetworkAccount> networkAccountList;
+    private List<NetworkAccountDBO> networkAccountList;
     @OneToMany(mappedBy = "user")
-    private List<GameResult> gameResultList;
+    private List<GameResultDBO> gameResultList;
     @OneToMany(mappedBy = "user")
-    private List<LessonProgress> lessonProgressList;
+    private List<LessonProgressDBO> lessonProgressList;
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "DEVOTEE_FRIENDS",
     joinColumns = {
         @JoinColumn(name = "DEVOTEE_ID")},
     inverseJoinColumns = {
         @JoinColumn(name = "FRIEND_ID")})
-    private List<User> friends = new ArrayList<User>();
+    private List<UserDBO> friends = new ArrayList<UserDBO>();
     @ManyToMany(mappedBy = "friends")
-    private List<User> devotees = new ArrayList<User>();
+    private List<UserDBO> devotees = new ArrayList<UserDBO>();
 
     public boolean isDetached() {
         return detached;
@@ -126,61 +110,50 @@ public class User implements Serializable, GenericEntity {
         this.userPic = userPic;
     }
 
-    public List<NetworkAccount> getNetworkAccountList() {
+    public List<NetworkAccountDBO> getNetworkAccountList() {
         return networkAccountList;
     }
-    
-    public Optional<NetworkAccount> getNetworkAccount(Providers prov){
-        for(NetworkAccount na : getNetworkAccountList())
-        {
-            if(prov.name().equals(na.getNetworkName()))
-            {
-                return Optional.of(na);
-            }
-        }
-        return Optional.absent();
-    }
 
-    public void setNetworkAccountList(List<NetworkAccount> networkAccountList) {
+    public void setNetworkAccountList(List<NetworkAccountDBO> networkAccountList) {
         this.networkAccountList = networkAccountList;
     }
 
-    public List<GameResult> getGameResultList() {
+    public List<GameResultDBO> getGameResultList() {
         return gameResultList;
     }
 
-    public void setGameResultList(List<GameResult> gameResultList) {
+    public void setGameResultList(List<GameResultDBO> gameResultList) {
         this.gameResultList = gameResultList;
     }
 
-    public List<LessonProgress> getLessonProgressList() {
+    public List<LessonProgressDBO> getLessonProgressList() {
         return lessonProgressList;
     }
 
-    public void setLessonProgressList(List<LessonProgress> lessonProgressList) {
+    public void setLessonProgressList(List<LessonProgressDBO> lessonProgressList) {
         this.lessonProgressList = lessonProgressList;
     }
 
-    public List<User> getFriends() {
+    public List<UserDBO> getFriends() {
         return friends;
     }
 
-    public void setFriends(List<User> friends) {
+    public void setFriends(List<UserDBO> friends) {
         this.friends = friends;
     }
 
-    public List<User> getDevotees() {
+    public List<UserDBO> getDevotees() {
         return devotees;
     }
 
-    public void setDevotees(List<User> devotees) {
+    public void setDevotees(List<UserDBO> devotees) {
         this.devotees = devotees;
     }
     
-    public List<User> getBilateralFriends() {
-        List<User> retval = new LinkedList<>();
-        for(User devotee : devotees) {
-            for(User friend : friends) {
+    public List<UserDBO> getBilateralFriends() {
+        List<UserDBO> retval = new LinkedList<UserDBO>();
+        for(UserDBO devotee : devotees) {
+            for(UserDBO friend : friends) {
                 if(friend.getId().longValue() == devotee.getId().longValue()) {
                     retval.add(friend);
                     break;

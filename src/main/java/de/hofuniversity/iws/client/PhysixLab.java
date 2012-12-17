@@ -5,8 +5,8 @@
 package de.hofuniversity.iws.client;
 
 import de.hofuniversity.iws.client.widgets.*;
-import de.hofuniversity.iws.server.data.entities.User;
-import de.hofuniversity.iws.server.services.LoginDTO;
+import de.hofuniversity.iws.shared.dto.LoginDTO;
+import de.hofuniversity.iws.shared.entitys.User;
 import de.hofuniversity.iws.shared.services.LoginServiceAsync;
 
 import com.google.common.base.Optional;
@@ -28,7 +28,7 @@ public class PhysixLab {
     public void init() {
         History.addValueChangeHandler(PAGE_CONTROLLER);
 
-        loginService.getLoginData(new AsyncCallback<Optional>() {
+        loginService.getLoginData(new AsyncCallback<Optional<LoginDTO>>() {
             @Override
             public void onFailure(Throwable caught) {
                 PAGE_CONTROLLER.changePage(LoginPage.NAME);
@@ -55,14 +55,14 @@ public class PhysixLab {
         if (loginData == null) {
             throw new RuntimeException("PhysixLab is uninitialized!");
         }
-        return loginData.token;
+        return loginData.getToken();
     }
 
     public static User getSessionUser() {
         if (loginData == null) {
             throw new RuntimeException("PhysixLab is uninitialized!");
         }
-        return loginData.user;
+        return loginData.getUser();
     }
 
     public static void setLoginData(LoginDTO ld) {

@@ -8,10 +8,10 @@ import de.hofuniversity.iws.shared.dto.GameDTO;
 import de.hofuniversity.iws.shared.dto.GameResultDTO;
 import de.hofuniversity.iws.shared.dto.LessonDTO;
 import de.hofuniversity.iws.shared.dto.LessonProgressDTO;
-import de.hofuniversity.iws.server.data.entities.Game;
-import de.hofuniversity.iws.server.data.entities.GameResult;
-import de.hofuniversity.iws.server.data.entities.Lesson;
-import de.hofuniversity.iws.server.data.entities.LessonProgress;
+import de.hofuniversity.iws.server.data.entities.GameDBO;
+import de.hofuniversity.iws.server.data.entities.GameResultDBO;
+import de.hofuniversity.iws.server.data.entities.LessonDBO;
+import de.hofuniversity.iws.server.data.entities.LessonProgressDBO;
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -19,17 +19,17 @@ import java.util.List;
  * @author User
  */
 public class GameMapper {
-     public GameDTO mapGametoDTO(Game u)
+     public GameDTO mapGametoDTO(GameDBO u)
      {
          GameDTO gdto = new GameDTO();
          gdto.setName(u.getName());
          
-            List<GameResult> lg = u.getGameResultList();
+            List<GameResultDBO> lg = u.getGameResultList();
             if(lg!=null)
             {
-                List<GameResult> lgr = new ArrayList<>(u.getGameResultList());
-                List<GameResultDTO> lgrdto = new ArrayList<>();
-                for(GameResult x: lgr)
+                List<GameResultDBO> lgr = new ArrayList<GameResultDBO>(u.getGameResultList());
+                List<GameResultDTO> lgrdto = new ArrayList<GameResultDTO>();
+                for(GameResultDBO x: lgr)
                 {
                     GameResultMapper gameresultmapper = new GameResultMapper();
                     lgrdto.add(gameresultmapper.mapGameResulttoDTO(x));
@@ -37,12 +37,12 @@ public class GameMapper {
                 gdto.setGameResultList(lgrdto);
             }
             
-            List<Lesson> lt = u.getLessonList();
+            List<LessonDBO> lt = u.getLessonList();
             if(lt!=null)
             {
-                List<Lesson> ll = new ArrayList<>(u.getLessonList());
-                List<LessonDTO> lldto = new ArrayList<>();
-                for(Lesson x: ll)
+                List<LessonDBO> ll = new ArrayList<LessonDBO>(u.getLessonList());
+                List<LessonDTO> lldto = new ArrayList<LessonDTO>();
+                for(LessonDBO x: ll)
                 {
                     LessonMapper lessonmapper = new LessonMapper();
                     lldto.add(lessonmapper.mapLessontoDTO(x));

@@ -6,7 +6,7 @@ import java.util.logging.*;
 
 import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import de.hofuniversity.iws.server.data.entities.User;
+import de.hofuniversity.iws.server.data.entities.UserDBO;
 import de.hofuniversity.iws.server.oauth.accessors.AccessException;
 import de.hofuniversity.iws.server.oauth.accessors.FriendListAccessor;
 import de.hofuniversity.iws.server.oauth.accessors.UserDataAccessor;
@@ -63,10 +63,10 @@ public class OAuthCallbackServlet extends HttpServlet {
                     //Somehow generate a coresponding user
                     Token accessToken = l.request.generateAccessToken(verifier);
 
-                    User user;
+                    UserDBO user;
                     try {
                         user = getOrCreateUserForAccessToken(accessToken, l.provider);
-                        Iterable<User> friendsList = getUsersFriendsForAccessToken(accessToken, user, l.provider);
+                        Iterable<UserDBO> friendsList = getUsersFriendsForAccessToken(accessToken, user, l.provider);
                         l.successfull = true;
                         storeSessionAttribute(request, USER_ATTRIBUTE, user);
                         storeSessionAttribute(request, FRIENDS_ATTRIBUTE, friendsList);
@@ -80,31 +80,26 @@ public class OAuthCallbackServlet extends HttpServlet {
         }
     }
 
-    private User getOrCreateUserForAccessToken(Token accessToken, Providers provider) throws AccessException {
+    private UserDBO getOrCreateUserForAccessToken(Token accessToken, Providers provider) throws AccessException {
         //TODO DB access
-
-        Optional<UserDataAccessor> userData = provider.getAccessor(UserDataAccessor.class);
-        if (userData.isPresent()) {
-            UserDataAccessor ac = userData.get();
-            User user = ac.getUserData(accessToken);
-            return user;
-        }
-        throw new RuntimeException("unreachable");
+        UserDataAccessor userData = provider.getUserDataAccessor();
+        UserDBO user = userData.getUserData(accessToken);
+        return user;
     }
 
-    private Iterable<User> getUsersFriendsForAccessToken(Token accessToken, User u, Providers provider) {
+    private Iterable<UserDBO> getUsersFriendsForAccessToken(Token accessToken, UserDBO u, Providers provider) {
         Optional<FriendListAccessor> friends = provider.getAccessor(FriendListAccessor.class);
         if (friends.isPresent()) {
             try {
                 FriendListAccessor acc = friends.get();
-                Iterable<User> friendsList = acc.getFriends(accessToken, u);
+                Iterable<UserDBO> friendsList = acc.getFriends(accessToken, u);
                 return friendsList;
             } catch (AccessException ex) {
                 ex.printStackTrace();
-                        //TODO token löschen
+                //TODO token löschen
             }
         }
-        return new LinkedList<>();
+        return new LinkedList<UserDBO>();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

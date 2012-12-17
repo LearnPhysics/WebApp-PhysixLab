@@ -4,9 +4,11 @@
  */
 package de.hofuniversity.iws.server.oauth.accessors;
 
+import de.hofuniversity.iws.server.data.entities.UserDBO;
+import de.hofuniversity.iws.server.data.entities.NetworkAccountDBO;
 import darwin.annotations.ServiceProvider;
 
-import de.hofuniversity.iws.server.data.entities.*;
+import de.hofuniversity.iws.server.data.handler.UserHandler;
 import de.hofuniversity.iws.server.oauth.Providers;
 
 import com.google.common.base.Optional;
@@ -25,7 +27,7 @@ public class FacebookUserData implements UserDataAccessor {
     private static final String USER_URL = ACCESSORS.getPropertie("FACEBOOK_USER_URL");
 
     @Override
-    public User getUserData(Token accessToken) throws AccessException {
+    public UserDBO getUserData(Token accessToken) throws AccessException {
         String requestUrl = USER_URL + "?access_token=" + accessToken.getToken();
         String respons = Providers.FACEBOOK.invokeGetRequest(accessToken, requestUrl);
         try {
@@ -35,10 +37,10 @@ public class FacebookUserData implements UserDataAccessor {
         }
     }
 
-    private User parseUserJSON(String responceBody, Token accessToken) throws JSONException {
+    private UserDBO parseUserJSON(String responceBody, Token accessToken) throws JSONException {
         JSONObject json = new JSONObject(responceBody);
 
-        User user = new User();
+        UserDBO user = new UserDBO();
 
         if (json.has("name")) {
             user.setUserName(json.getString("name"));
@@ -61,7 +63,7 @@ public class FacebookUserData implements UserDataAccessor {
 
         if (json.has("id")) {
             String id = json.getString("id");
-            Optional<NetworkAccount> na = user.getNetworkAccount(Providers.FACEBOOK);
+            Optional<NetworkAccountDBO> na = UserHandler.getNetworkAccount(user, Providers.FACEBOOK);
             if(na.isPresent())
             {
                 na.get().setAccountIdentificationString(id);

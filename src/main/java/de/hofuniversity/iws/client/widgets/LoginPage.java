@@ -5,15 +5,15 @@
 package de.hofuniversity.iws.client.widgets;
 
 
+import de.hofuniversity.iws.client.PhysixLab;
+import de.hofuniversity.iws.shared.dto.LoginDTO;
+import de.hofuniversity.iws.shared.services.*;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Widget;
-import de.hofuniversity.iws.client.PhysixLab;
-import de.hofuniversity.iws.server.services.LoginDTO;
-import de.hofuniversity.iws.shared.services.LoginService;
-import de.hofuniversity.iws.shared.services.LoginServiceAsync;
 
 /**
  *

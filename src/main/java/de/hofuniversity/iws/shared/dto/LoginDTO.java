@@ -2,11 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.hofuniversity.iws.server.services;
+package de.hofuniversity.iws.shared.dto;
 
 import java.io.Serializable;
 
-import de.hofuniversity.iws.server.data.entities.User;
+import de.hofuniversity.iws.shared.entitys.User;
 
 /**
  *
@@ -14,11 +14,22 @@ import de.hofuniversity.iws.server.data.entities.User;
  */
 public class LoginDTO implements Serializable {
 
-    public final User user;
-    public final String token;
+    private User user;
+    private String token;
+
+    public LoginDTO() {
+    }
 
     public LoginDTO(User user, String token) {
         this.user = user;
         this.token = token;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public User getUser() {
+        return user;
     }
 }

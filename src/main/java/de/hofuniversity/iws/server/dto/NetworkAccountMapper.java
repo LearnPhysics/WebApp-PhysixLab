@@ -6,15 +6,15 @@ package de.hofuniversity.iws.server.dto;
 
 import de.hofuniversity.iws.shared.dto.NetworkAccountDTO;
 import de.hofuniversity.iws.shared.dto.UserDTO;
-import de.hofuniversity.iws.server.data.entities.NetworkAccount;
-import de.hofuniversity.iws.server.data.entities.User;
+import de.hofuniversity.iws.server.data.entities.NetworkAccountDBO;
+import de.hofuniversity.iws.server.data.entities.UserDBO;
 
 /**
  *
- * @author User
+ * @author UserDBO
  */
 public class NetworkAccountMapper {
-        public NetworkAccountDTO mapNetworkAccounttoDTO(NetworkAccount u)
+        public NetworkAccountDTO mapNetworkAccounttoDTO(NetworkAccountDBO u)
         {
             NetworkAccountDTO nadto = new NetworkAccountDTO();
             
@@ -23,7 +23,7 @@ public class NetworkAccountMapper {
             nadto.setOauthAccessSecret(u.getOauthAccessSecret());
             nadto.setOauthAccessToken(u.getOauthAccessToken());
             
-            User user = u.getUser();
+            UserDBO user = u.getUser();
             UserMapper usermapper = new UserMapper();
             UserDTO udto = usermapper.mapUsertoDTO(user);
             nadto.setUser(udto);

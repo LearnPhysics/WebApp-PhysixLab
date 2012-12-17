@@ -4,9 +4,11 @@
  */
 package de.hofuniversity.iws.server.oauth.accessors;
 
+import de.hofuniversity.iws.server.data.entities.UserDBO;
+import de.hofuniversity.iws.server.data.entities.NetworkAccountDBO;
 import darwin.annotations.ServiceProvider;
 
-import de.hofuniversity.iws.server.data.entities.*;
+import de.hofuniversity.iws.server.data.handler.UserHandler;
 import de.hofuniversity.iws.server.oauth.Providers;
 
 import com.google.common.base.Optional;
@@ -25,7 +27,7 @@ public class GoogleUserData implements UserDataAccessor {
     private static final String USER_URL = ACCESSORS.getPropertie("GOOGLE_USER_URL");
 
     @Override
-    public User getUserData(Token accessToken) throws AccessException {
+    public UserDBO getUserData(Token accessToken) throws AccessException {
         String response = Providers.GOOGLE.invokeGetRequest(accessToken, USER_URL);
         try {
             return parseUserJSON(response);
@@ -34,11 +36,11 @@ public class GoogleUserData implements UserDataAccessor {
         }
     }
 
-    private User parseUserJSON(String responceBody) throws JSONException {
+    private UserDBO parseUserJSON(String responceBody) throws JSONException {
         JSONObject json = new JSONObject(responceBody);
-        User user = new User();
+        UserDBO user = new UserDBO();
         if (json.has("id")) {
-            Optional<NetworkAccount> na = user.getNetworkAccount(Providers.GOOGLE);
+            Optional<NetworkAccountDBO> na = UserHandler.getNetworkAccount(user, Providers.GOOGLE);
             if(na.isPresent())
             {
                 na.get().setAccountIdentificationString(json.getString("id"));

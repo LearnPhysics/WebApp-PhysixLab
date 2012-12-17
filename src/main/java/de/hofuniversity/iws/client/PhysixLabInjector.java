@@ -4,8 +4,7 @@
  */
 package de.hofuniversity.iws.client;
 
-import com.google.gwt.inject.client.GinModules;
-import com.google.gwt.inject.client.Ginjector;
+import com.google.gwt.inject.client.*;
 
 /**
  *

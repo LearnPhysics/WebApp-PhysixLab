@@ -2,7 +2,7 @@ package de.hofuniversity.iws.server.data.handler;
 
 import javax.persistence.EntityManager;
 
-import de.hofuniversity.iws.server.data.entities.LessonProgress;
+import de.hofuniversity.iws.server.data.entities.LessonProgressDBO;
 
 public class LessonProgressHandler {
 
@@ -10,8 +10,8 @@ public class LessonProgressHandler {
             .getEntityManagerFactory().createEntityManager();
 
     // Store lesson progress
-    public static LessonProgress store(LessonProgress lessonProgress) {
-        LessonProgress retval = lessonProgress;
+    public static LessonProgressDBO store(LessonProgressDBO lessonProgress) {
+        LessonProgressDBO retval = lessonProgress;
 
         if (entityManager.isOpen()) {
             entityManager.close();
@@ -29,7 +29,7 @@ public class LessonProgressHandler {
                 }
                 entityManager.getTransaction().commit();
             } else {
-                LessonProgress tmpLessonProgress = entityManager.find(LessonProgress.class,
+                LessonProgressDBO tmpLessonProgress = entityManager.find(LessonProgressDBO.class,
                         lessonProgress.getId());
 
                 if (tmpLessonProgress == null) // Phrase does not exist in the
@@ -70,7 +70,7 @@ public class LessonProgressHandler {
     }
 
     // Get lesson progress by Id
-    public static LessonProgress getGameEntity(long id, boolean detach) {
-        return (LessonProgress) GenericHandler.getEntity(LessonProgress.class, id, detach);
+    public static LessonProgressDBO getGameEntity(long id, boolean detach) {
+        return (LessonProgressDBO) GenericHandler.getEntity(LessonProgressDBO.class, id, detach);
     }
 }

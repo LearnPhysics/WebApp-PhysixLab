@@ -2,11 +2,12 @@ package de.hofuniversity.iws.server.data.entities;
 
 import java.io.Serializable;
 
+import de.hofuniversity.iws.shared.entitys.NetworkAccount;
 import javax.persistence.*;
 
 @Entity
 @Table
-public class NetworkAccount implements Serializable, GenericEntity {
+public class NetworkAccountDBO implements Serializable, GenericEntity, NetworkAccount {
 
     @Transient
     private boolean detached = false;
@@ -23,7 +24,7 @@ public class NetworkAccount implements Serializable, GenericEntity {
     @Column
     private String oauthAccessSecret;
     @ManyToOne
-    private User user;
+    private UserDBO user;
 
     public boolean isDetached() {
         return detached;
@@ -65,11 +66,11 @@ public class NetworkAccount implements Serializable, GenericEntity {
         this.oauthAccessToken = oauthAccessToken;
     }
 
-    public User getUser() {
+    public UserDBO getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserDBO user) {
         this.user = user;
     }
 

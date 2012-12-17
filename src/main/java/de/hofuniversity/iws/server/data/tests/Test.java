@@ -1,6 +1,6 @@
 package de.hofuniversity.iws.server.data.tests;
 
-import de.hofuniversity.iws.server.data.entities.User;
+import de.hofuniversity.iws.server.data.entities.UserDBO;
 import de.hofuniversity.iws.server.data.handler.HibernateUtil;
 import de.hofuniversity.iws.server.data.handler.UserHandler;
 import java.util.List;
@@ -11,13 +11,13 @@ public class Test {
 
         HibernateUtil.isConnectedToDB();
         
-        User joe = new User();
+        UserDBO joe = new UserDBO();
         joe.setFirstName("Joe");
-        User franz = new User();
+        UserDBO franz = new UserDBO();
         franz.setFirstName("Franz");
-        User julia = new User();
+        UserDBO julia = new UserDBO();
         julia.setFirstName("Julia");
-        User kitenge = new User();
+        UserDBO kitenge = new UserDBO();
         kitenge.setFirstName("Kitenge");
         
         joe.getFriends().add(franz);
@@ -38,25 +38,25 @@ public class Test {
         UserHandler.store(julia);
         UserHandler.store(kitenge);
         
-        List<User> peopleILike;
-        List<User> peopleWhoLikeMe;
-        List<User> bilateralFriends;
+        List<UserDBO> peopleILike;
+        List<UserDBO> peopleWhoLikeMe;
+        List<UserDBO> bilateralFriends;
         
-        List<User> allUsers = UserHandler.getAllUsers();
+        List<UserDBO> allUsers = UserHandler.getAllUsers();
         
-        for(User user : allUsers) {
+        for(UserDBO user : allUsers) {
             peopleILike = user.getFriends();
             peopleWhoLikeMe = user.getDevotees();
             bilateralFriends = user.getBilateralFriends();
             System.out.println(user.getFirstName());
             System.out.println("-----");
-            for(User personILike : peopleILike) {
+            for(UserDBO personILike : peopleILike) {
                 System.out.println(user.getFirstName() + " likes " + personILike.getFirstName());
             }
-            for(User personWhoLikeMe : peopleWhoLikeMe) {
+            for(UserDBO personWhoLikeMe : peopleWhoLikeMe) {
                 System.out.println(user.getFirstName() + " is liked by " + personWhoLikeMe.getFirstName());
             }
-            for(User bi : bilateralFriends) {
+            for(UserDBO bi : bilateralFriends) {
                 System.out.println(user.getFirstName() + " and " + bi.getFirstName() + " like each other");
             }
             System.out.println();

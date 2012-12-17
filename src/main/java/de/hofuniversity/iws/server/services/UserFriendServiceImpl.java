@@ -5,7 +5,7 @@
 package de.hofuniversity.iws.server.services;
 
 import java.util.ArrayList;
-import de.hofuniversity.iws.server.data.entities.User;
+import de.hofuniversity.iws.server.data.entities.UserDBO;
 import de.hofuniversity.iws.shared.dto.UserDTO;
 import de.hofuniversity.iws.shared.services.UserFriendService;
 
@@ -16,7 +16,7 @@ import javax.servlet.http.*;
 
 /**
  *
- * @author User
+ * @author UserDBO
  */
 @RemoteServiceRelativePath("userfriend")
 public class UserFriendServiceImpl extends RemoteServiceServlet implements UserFriendService {
@@ -26,12 +26,12 @@ public class UserFriendServiceImpl extends RemoteServiceServlet implements UserF
     
     @Override
     public Iterable<UserDTO> getFriends(){
-        Optional<Iterable<User>> friends = getSessionAttribute(FRIENDS_ATTRIBUTE);
+        Optional<Iterable<UserDBO>> friends = getSessionAttribute(FRIENDS_ATTRIBUTE);
         if(friends.isPresent())
         {
-        Iterable<User> f = friends.get();
-            ArrayList<UserDTO> retfriends = new ArrayList<>();
-            for(User x : f)
+        Iterable<UserDBO> f = friends.get();
+            ArrayList<UserDTO> retfriends = new ArrayList<UserDTO>();
+            for(UserDBO x : f)
             {
 //                UserDTO dtoUser = new UserDTO();
 //                    dtoUser.setAccountIdentificationString(x.getAccountIdentificationString());

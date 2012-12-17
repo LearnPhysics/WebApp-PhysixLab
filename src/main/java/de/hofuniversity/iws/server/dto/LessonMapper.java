@@ -7,9 +7,9 @@ package de.hofuniversity.iws.server.dto;
 import de.hofuniversity.iws.shared.dto.GameDTO;
 import de.hofuniversity.iws.shared.dto.LessonDTO;
 import de.hofuniversity.iws.shared.dto.SubjectAreaDTO;
-import de.hofuniversity.iws.server.data.entities.Game;
-import de.hofuniversity.iws.server.data.entities.Lesson;
-import de.hofuniversity.iws.server.data.entities.SubjectArea;
+import de.hofuniversity.iws.server.data.entities.GameDBO;
+import de.hofuniversity.iws.server.data.entities.LessonDBO;
+import de.hofuniversity.iws.server.data.entities.SubjectAreaDBO;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,22 +18,22 @@ import java.util.List;
  * @author User
  */
 public class LessonMapper {
-     public LessonDTO mapLessontoDTO(Lesson u)
+     public LessonDTO mapLessontoDTO(LessonDBO u)
      {
          LessonDTO ldto = new LessonDTO();
          ldto.setName(u.getName());
          
-            SubjectArea subjectarea = u.getSubjectArea();
+            SubjectAreaDBO subjectarea = u.getSubjectArea();
             SubjectAreaMapper subjectareamapper = new SubjectAreaMapper();
             SubjectAreaDTO sadto = subjectareamapper.mapSubjectAreatoDTO(subjectarea);
             ldto.setSubjectArea(sadto);
             
-        List<Game> l = u.getGameList();
+        List<GameDBO> l = u.getGameList();
         if(l!=null)
         {
-            List<Game> lg = new ArrayList<>(l);
-            List<GameDTO> lgdto = new ArrayList<>();
-            for(Game x: lg)
+            List<GameDBO> lg = new ArrayList<GameDBO>(l);
+            List<GameDTO> lgdto = new ArrayList<GameDTO>();
+            for(GameDBO x: lg)
             {
                 GameMapper gamemapper = new GameMapper();
                 lgdto.add(gamemapper.mapGametoDTO(x));

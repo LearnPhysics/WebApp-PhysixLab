@@ -4,12 +4,10 @@
  */
 package de.hofuniversity.iws.shared.services;
 
+import de.hofuniversity.iws.shared.dto.LoginDTO;
+
 import com.google.common.base.Optional;
-import com.google.gwt.user.client.rpc.RemoteService;
-import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import de.hofuniversity.iws.server.data.entities.User;
-import de.hofuniversity.iws.server.services.LoginDTO;
-import de.hofuniversity.iws.shared.services.login.LoginException;
+import com.google.gwt.user.client.rpc.*;
 import org.scribe.exceptions.OAuthException;
 
 /**

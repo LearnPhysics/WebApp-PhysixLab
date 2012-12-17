@@ -6,21 +6,21 @@ package de.hofuniversity.iws.server.services;
 
 import java.util.UUID;
 
-import de.hofuniversity.iws.server.data.entities.User;
-import com.google.common.base.Function;
-import com.google.common.base.Optional;
-import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import de.hofuniversity.iws.server.oauth.*;
 import de.hofuniversity.iws.server.oauth.provider.OAuthProvider;
+import de.hofuniversity.iws.shared.dto.LoginDTO;
+import de.hofuniversity.iws.server.data.entities.UserDBO;
 import de.hofuniversity.iws.shared.services.LoginService;
-import de.hofuniversity.iws.shared.services.login.LoginException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import de.hofuniversity.iws.shared.services.LoginException;
+
+import com.google.common.base.*;
+import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import javax.servlet.http.*;
 
 /**
  *
- * @author User
+ * @author UserDBO
  */
 @RemoteServiceRelativePath("login")
 public class LoginServiceImpl extends RemoteServiceServlet implements LoginService {
@@ -29,12 +29,12 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
     public static final String TOKEN_ATTRIBUTE = "token";
     public static final String USER_ATTRIBUTE = "user";
     public static final String FRIENDS_ATTRIBUTE = "friends";
-    public static final int TIMEOUT_INTERVALL = 60_000;
+    public static final int TIMEOUT_INTERVALL = 60000;
 
     @Override
     public Optional<LoginDTO> getLoginData() {
         Optional<String> token = getSessionAttribute(TOKEN_ATTRIBUTE);
-        Optional<User> user = getSessionAttribute(USER_ATTRIBUTE);
+        Optional<UserDBO> user = getSessionAttribute(USER_ATTRIBUTE);
         if (token.isPresent() && user.isPresent()) {
             return Optional.of(new LoginDTO(user.get(), token.get()));
         }

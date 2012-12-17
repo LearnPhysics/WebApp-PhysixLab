@@ -3,6 +3,8 @@ package de.hofuniversity.iws.server.data.entities;
 import java.io.Serializable;
 import java.util.List;
 
+import de.hofuniversity.iws.shared.entitys.*;
+import de.hofuniversity.iws.shared.entitys.Lesson;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,24 +18,23 @@ import javax.persistence.Transient;
 
 @Entity
 @Table
-public class Lesson implements Serializable, GenericEntity {
+public class LessonDBO implements Serializable, GenericEntity, Lesson {
 
     @Transient
     private boolean detached = false;
-    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column
     private String name;
     @OneToMany(mappedBy = "lesson")
-    private List<LessonProgress> lessonProgressList;
+    private List<LessonProgressDBO> lessonProgressList;
     @ManyToOne
-    private SubjectArea subjectArea;
+    private SubjectAreaDBO subjectArea;
     @ManyToMany(mappedBy = "lessonList")
-    private List<Game> gameList;
+    private List<GameDBO> gameList;
     @ManyToOne
-    private Lesson parentLesson;
+    private LessonDBO parentLesson;
 
     public boolean isDetached() {
         return detached;
@@ -59,11 +60,11 @@ public class Lesson implements Serializable, GenericEntity {
         this.name = name;
     }
 
-    public List<LessonProgress> getLessonProgressList() {
+    public List<? extends LessonProgress> getLessonProgressList() {
         return lessonProgressList;
     }
 
-    public void setLessonProgressList(List<LessonProgress> lessonProgressList) {
+    public void setLessonProgressList(List<LessonProgressDBO> lessonProgressList) {
         this.lessonProgressList = lessonProgressList;
     }
 
@@ -71,23 +72,23 @@ public class Lesson implements Serializable, GenericEntity {
         return subjectArea;
     }
 
-    public void setSubjectArea(SubjectArea subjectArea) {
+    public void setSubjectArea(SubjectAreaDBO subjectArea) {
         this.subjectArea = subjectArea;
     }
 
-    public List<Game> getGameList() {
+    public List<? extends Game> getGameList() {
         return gameList;
     }
 
-    public void setGameList(List<Game> gameList) {
+    public void setGameList(List<GameDBO> gameList) {
         this.gameList = gameList;
     }
 
-    public Lesson getParentLesson() {
+    public LessonDBO getParentLesson() {
         return parentLesson;
     }
 
-    public void setParentLesson(Lesson parentLesson) {
+    public void setParentLesson(LessonDBO parentLesson) {
         this.parentLesson = parentLesson;
     }
 }
