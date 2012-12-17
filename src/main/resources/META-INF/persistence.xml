@@ -2,13 +2,13 @@
 <persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
   <persistence-unit name="physixLab">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
-    <class>de.hofuniversity.iws.server.data.entities.GameDBO</class>
-    <class>de.hofuniversity.iws.server.data.entities.GameResultDBO</class>
-    <class>de.hofuniversity.iws.server.data.entities.LessonDBO</class>
-    <class>de.hofuniversity.iws.server.data.entities.LessonProgressDBO</class>
-    <class>de.hofuniversity.iws.server.data.entities.NetworkAccountDBO</class>
-    <class>de.hofuniversity.iws.server.data.entities.SubjectAreaDBO</class>
-    <class>de.hofuniversity.iws.server.data.entities.UserDBO</class>
+    <class>de.hofuniversity.iws.shared.entityimpl.GameDBO</class>
+    <class>de.hofuniversity.iws.shared.entityimpl.LessonDBO</class>
+    <class>de.hofuniversity.iws.shared.entityimpl.UserDBO</class>
+    <class>de.hofuniversity.iws.shared.entityimpl.LessonProgressDBO</class>
+    <class>de.hofuniversity.iws.shared.entityimpl.GameResultDBO</class>
+    <class>de.hofuniversity.iws.shared.entityimpl.SubjectAreaDBO</class>
+    <class>de.hofuniversity.iws.shared.entityimpl.NetworkAccountDBO</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>

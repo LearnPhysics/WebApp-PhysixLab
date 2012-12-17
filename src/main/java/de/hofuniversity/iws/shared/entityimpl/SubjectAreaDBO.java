@@ -1,4 +1,4 @@
-package de.hofuniversity.iws.server.data.entities;
+package de.hofuniversity.iws.shared.entityimpl;
 
 import java.io.Serializable;
 import java.util.List;
@@ -52,7 +52,7 @@ public class SubjectAreaDBO implements Serializable, GenericEntity, SubjectArea 
         this.name = name;
     }
 
-    public List<? extends Lesson> getLessonList() {
+    public List<LessonDBO> getLessonList() {
         return lessonList;
     }
 

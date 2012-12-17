@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
-import de.hofuniversity.iws.server.data.entities.*;
 
 /**
  *

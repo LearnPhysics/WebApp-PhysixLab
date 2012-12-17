@@ -1,9 +1,9 @@
-package de.hofuniversity.iws.server.data.entities;
+package de.hofuniversity.iws.shared.entityimpl;
 
 import java.io.Serializable;
 import java.util.List;
 
-import de.hofuniversity.iws.shared.entitys.*;
+import de.hofuniversity.iws.shared.entitys.Game;
 
 import javax.persistence.*;
 
@@ -52,7 +52,7 @@ public class GameDBO implements Serializable, GenericEntity, Game {
         this.name = name;
     }
 
-    public List<? extends GameResult> getGameResultList() {
+    public List<GameResultDBO> getGameResultList() {
         return gameResultList;
     }
 
@@ -60,7 +60,7 @@ public class GameDBO implements Serializable, GenericEntity, Game {
         this.gameResultList = gameResultList;
     }
 
-    public List<? extends Lesson> getLessonList() {
+    public List<LessonDBO> getLessonList() {
         return lessonList;
     }
 

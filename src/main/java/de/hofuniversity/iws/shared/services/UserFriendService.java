@@ -4,7 +4,7 @@
  */
 package de.hofuniversity.iws.shared.services;
 
-import de.hofuniversity.iws.shared.dto.UserDTO;
+import de.hofuniversity.iws.shared.entitys.User;
 
 import com.google.gwt.user.client.rpc.*;
 
@@ -15,5 +15,5 @@ import com.google.gwt.user.client.rpc.*;
 @RemoteServiceRelativePath("userfriend")
 public interface UserFriendService extends RemoteService {
 
-    public Iterable<UserDTO> getFriends();
+    public Iterable<User> getFriends();
 }

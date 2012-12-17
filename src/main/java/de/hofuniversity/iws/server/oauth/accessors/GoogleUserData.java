@@ -4,8 +4,8 @@
  */
 package de.hofuniversity.iws.server.oauth.accessors;
 
-import de.hofuniversity.iws.server.data.entities.UserDBO;
-import de.hofuniversity.iws.server.data.entities.NetworkAccountDBO;
+import de.hofuniversity.iws.shared.entityimpl.UserDBO;
+import de.hofuniversity.iws.shared.entityimpl.NetworkAccountDBO;
 import darwin.annotations.ServiceProvider;
 
 import de.hofuniversity.iws.server.data.handler.UserHandler;

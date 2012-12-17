@@ -1,4 +1,4 @@
-package de.hofuniversity.iws.server.data.entities;
+package de.hofuniversity.iws.shared.entityimpl;
 
 import java.io.Serializable;
 import java.util.List;
@@ -60,7 +60,7 @@ public class LessonDBO implements Serializable, GenericEntity, Lesson {
         this.name = name;
     }
 
-    public List<? extends LessonProgress> getLessonProgressList() {
+    public List<LessonProgressDBO> getLessonProgressList() {
         return lessonProgressList;
     }
 
@@ -68,7 +68,7 @@ public class LessonDBO implements Serializable, GenericEntity, Lesson {
         this.lessonProgressList = lessonProgressList;
     }
 
-    public SubjectArea getSubjectArea() {
+    public SubjectAreaDBO getSubjectArea() {
         return subjectArea;
     }
 
@@ -76,7 +76,7 @@ public class LessonDBO implements Serializable, GenericEntity, Lesson {
         this.subjectArea = subjectArea;
     }
 
-    public List<? extends Game> getGameList() {
+    public List<GameDBO> getGameList() {
         return gameList;
     }
 

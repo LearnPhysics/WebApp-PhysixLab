@@ -1,6 +1,6 @@
 package de.hofuniversity.iws.server.data.handler;
 
-import de.hofuniversity.iws.server.data.entities.NetworkAccountDBO;
+import de.hofuniversity.iws.shared.entityimpl.*;
 
 import javax.persistence.*;
 import javax.persistence.criteria.*;
@@ -93,9 +93,9 @@ public class NetworkAccountHandler {
                     .from(NetworkAccountDBO.class);
             queryNA.where(
                     criteriaBuilder.equal(
-                    rootNA.get(NetworkAccount_.networkName), networkName),
+                    rootNA.get(NetworkAccountDBO_.networkName), networkName),
                     criteriaBuilder.equal(
-                    rootNA.get(NetworkAccount_.accountIdentificationString), accountIdentificationString));
+                    rootNA.get(NetworkAccountDBO_.accountIdentificationString), accountIdentificationString));
             TypedQuery<NetworkAccountDBO> typedNAQuery = entityManager
                     .createQuery(queryNA).setMaxResults(1);
             try {

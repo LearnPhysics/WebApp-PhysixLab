@@ -1,9 +1,10 @@
-package de.hofuniversity.iws.server.data.entities;
+package de.hofuniversity.iws.shared.entityimpl;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
 
 import de.hofuniversity.iws.shared.entitys.*;
+import de.hofuniversity.iws.shared.entitys.GameResult;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +16,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table
-public class LessonProgressDBO implements Serializable, GenericEntity, LessonProgress {
+public class GameResultDBO implements Serializable, GenericEntity, GameResult {
 
     @Transient
     private boolean detached = false;
@@ -30,7 +31,7 @@ public class LessonProgressDBO implements Serializable, GenericEntity, LessonPro
     @ManyToOne
     private UserDBO user;
     @ManyToOne
-    private LessonDBO lesson;
+    private GameDBO game;
 
     public boolean isDetached() {
         return detached;
@@ -64,7 +65,7 @@ public class LessonProgressDBO implements Serializable, GenericEntity, LessonPro
         this.points = points;
     }
 
-    public User getUser() {
+    public UserDBO getUser() {
         return user;
     }
 
@@ -72,11 +73,11 @@ public class LessonProgressDBO implements Serializable, GenericEntity, LessonPro
         this.user = user;
     }
 
-    public LessonDBO getLesson() {
-        return lesson;
+    public GameDBO getGame() {
+        return game;
     }
 
-    public void setLesson(LessonDBO lesson) {
-        this.lesson = lesson;
+    public void setGame(GameDBO game) {
+        this.game = game;
     }
 }

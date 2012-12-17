@@ -1,6 +1,6 @@
 package de.hofuniversity.iws.server.data.tests;
 
-import de.hofuniversity.iws.server.data.entities.UserDBO;
+import de.hofuniversity.iws.shared.entityimpl.UserDBO;
 import de.hofuniversity.iws.server.data.handler.HibernateUtil;
 import de.hofuniversity.iws.server.data.handler.UserHandler;
 import java.util.List;

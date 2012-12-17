@@ -2,7 +2,7 @@ package de.hofuniversity.iws.server.data.handler;
 
 import javax.persistence.EntityManager;
 
-import de.hofuniversity.iws.server.data.entities.LessonDBO;
+import de.hofuniversity.iws.shared.entityimpl.LessonDBO;
 
 public class LessonHandler {
 

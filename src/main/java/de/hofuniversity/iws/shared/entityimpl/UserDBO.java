@@ -1,4 +1,4 @@
-package de.hofuniversity.iws.server.data.entities;
+package de.hofuniversity.iws.shared.entityimpl;
 
 import java.io.Serializable;
 import java.sql.Timestamp;

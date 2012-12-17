@@ -5,7 +5,7 @@
 package de.hofuniversity.iws.server.data.tests;
 
 import com.google.common.base.Optional;
-import de.hofuniversity.iws.server.data.entities.UserDBO;
+import de.hofuniversity.iws.shared.entityimpl.UserDBO;
 import de.hofuniversity.iws.server.oauth.*;
 import de.hofuniversity.iws.server.oauth.accessors.*;
 import de.hofuniversity.iws.server.oauth.provider.OAuthProvider;

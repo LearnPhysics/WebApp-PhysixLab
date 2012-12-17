@@ -1,10 +1,11 @@
 package de.hofuniversity.iws.server.data.handler;
 
-import de.hofuniversity.iws.server.data.entities.UserDBO;
-import de.hofuniversity.iws.server.data.entities.NetworkAccountDBO;
+import de.hofuniversity.iws.shared.entityimpl.UserDBO;
+import de.hofuniversity.iws.shared.entityimpl.NetworkAccountDBO;
 import java.util.*;
 
 import de.hofuniversity.iws.server.oauth.Providers;
+import de.hofuniversity.iws.shared.entityimpl.*;
 
 import com.google.common.base.Optional;
 import javax.persistence.*;
@@ -116,7 +117,7 @@ public class UserHandler {
             Root<UserDBO> userEntityRoot = criteria.from(UserDBO.class);
             criteria.select(userEntityRoot);
             criteria.where(builder.greaterThan(
-                    userEntityRoot.get(User_.id), -1L));
+                    userEntityRoot.get(UserDBO_.id), -1L));
 
             TypedQuery query = entityManager.createQuery(criteria);
             userList = query.getResultList();

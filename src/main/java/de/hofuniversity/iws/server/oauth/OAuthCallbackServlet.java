@@ -6,7 +6,7 @@ import java.util.logging.*;
 
 import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import de.hofuniversity.iws.server.data.entities.UserDBO;
+import de.hofuniversity.iws.shared.entityimpl.UserDBO;
 import de.hofuniversity.iws.server.oauth.accessors.AccessException;
 import de.hofuniversity.iws.server.oauth.accessors.FriendListAccessor;
 import de.hofuniversity.iws.server.oauth.accessors.UserDataAccessor;

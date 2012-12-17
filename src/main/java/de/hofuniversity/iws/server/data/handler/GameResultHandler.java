@@ -2,7 +2,7 @@ package de.hofuniversity.iws.server.data.handler;
 
 import javax.persistence.EntityManager;
 
-import de.hofuniversity.iws.server.data.entities.GameResultDBO;
+import de.hofuniversity.iws.shared.entityimpl.GameResultDBO;
 
 public class GameResultHandler {
 

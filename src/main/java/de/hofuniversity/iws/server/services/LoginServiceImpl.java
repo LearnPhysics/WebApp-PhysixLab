@@ -9,7 +9,7 @@ import java.util.UUID;
 import de.hofuniversity.iws.server.oauth.*;
 import de.hofuniversity.iws.server.oauth.provider.OAuthProvider;
 import de.hofuniversity.iws.shared.dto.LoginDTO;
-import de.hofuniversity.iws.server.data.entities.UserDBO;
+import de.hofuniversity.iws.shared.entityimpl.UserDBO;
 import de.hofuniversity.iws.shared.services.LoginService;
 import de.hofuniversity.iws.shared.services.LoginException;
 

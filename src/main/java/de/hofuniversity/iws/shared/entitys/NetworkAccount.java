@@ -6,7 +6,6 @@ package de.hofuniversity.iws.shared.entitys;
 
 import java.io.Serializable;
 
-import de.hofuniversity.iws.server.data.entities.UserDBO;
 
 /**
  *
@@ -26,9 +25,7 @@ public interface NetworkAccount extends Serializable {
 
     public void setOauthAccessToken(String oauthAccessToken);
 
-    public UserDBO getUser();
-
-    public void setUser(UserDBO user);
+    public User getUser();
 
     public String getOauthAccessSecret();
 
