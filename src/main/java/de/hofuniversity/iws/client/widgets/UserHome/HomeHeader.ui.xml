@@ -1,0 +1,101 @@
+<!--
+Uncomment this for XHTML entities
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+-->
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui">
+    <ui:style>
+        @font-face {
+        font-family: geosans;
+        src: url('GeosansLight.ttf');
+        }
+
+        html {
+        font-family: geosans;
+        font-size: 16px;
+        }
+
+        body { 
+        background-image: url('images/Startseite/Circle02.png');
+        margin: 0px auto;
+        }
+
+        #headerArea {
+        background: rgba(65,150,255,0.7);
+        height: 155px;
+        }
+
+        #horizon {
+        background: rgba(255,255,255,0.7);
+        height: 10px;
+        }
+
+        #header {
+        position: relative;
+        width: 960px;
+        margin: 0px auto;
+        }
+
+        #header img {
+        margin: 25px 40px;
+        }
+
+        .tab {
+        position: absolute;
+        width: 120px;
+        height: 20px;
+        bottom: 9px;
+        -webkit-transition:0.2s;
+        -o-transition:0.2s;
+        -moz-transition:0.2s;
+        -ms-transition:0.2s;
+        transition:0.2s;
+        }
+        
+        .tab:hover {
+            font-size: 18px;
+        }
+
+        #tab1 {
+        right: 400px;
+        background: rgb(255,141,108);
+        }
+
+        #tab2 {
+        right: 280px;
+        background: rgb(109,232,150);
+        }
+
+        #tab3 {
+        right: 160px;
+        background: rgb(209,141,232);
+        }
+
+        #tab4 {
+        right: 40px;
+        background: rgb(255,249,108);
+        }
+    </ui:style>
+    <g:HTMLPanel>
+        <div id="headerArea">
+            <div id="header">
+                <img src="images/Startseite/PhysixLab_WebLogo.png" />
+                <div class="{style.tab}" id="tab1">
+                    Statistik
+                </div>
+                <div class="{style.tab}" id="tab2">
+                    Themenwahl
+                </div>
+                <div class="{style.tab}" id="tab3">
+                    Freunde
+                </div>
+                <div class="{style.tab}" id="tab4">
+                    Profile
+                </div>
+            </div>
+        </div>
+        <div id="horizon">
+            <!-- Just a line -->
+        </div>
+    </g:HTMLPanel>
+</ui:UiBinder>
