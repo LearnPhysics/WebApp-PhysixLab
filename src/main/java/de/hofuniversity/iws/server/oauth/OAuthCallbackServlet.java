@@ -6,6 +6,7 @@ import java.util.logging.*;
 
 import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import de.hofuniversity.iws.server.data.handler.HibernateUtil;
 import de.hofuniversity.iws.shared.entityimpl.UserDBO;
 import de.hofuniversity.iws.server.oauth.accessors.AccessException;
 import de.hofuniversity.iws.server.oauth.accessors.FriendListAccessor;
@@ -23,7 +24,7 @@ import static de.hofuniversity.iws.server.services.LoginServiceImpl.*;
  */
 @RemoteServiceRelativePath("oauth_callback")
 public class OAuthCallbackServlet extends HttpServlet {
-
+static boolean a = HibernateUtil.isConnectedToDB();
     public static final String OAUTH_LOGIN_ATTRIBUTE = "oauth-login";
     public static final String[] VERIFICATION_PROPERTIES = new String[]{
         // Parameter: oauth_verifier bei Twitter und Google 
@@ -58,22 +59,26 @@ public class OAuthCallbackServlet extends HttpServlet {
         if (login.isPresent()) {
             OAuthLogin l = login.get();
             synchronized (l) {
-                if (verifier == null) {
-                } else {
-                    //Somehow generate a coresponding user
-                    Token accessToken = l.request.generateAccessToken(verifier);
-
-                    UserDBO user;
-                    try {
-                        user = getOrCreateUserForAccessToken(accessToken, l.provider);
-                        Iterable<UserDBO> friendsList = getUsersFriendsForAccessToken(accessToken, user, l.provider);
-                        l.successfull = true;
-                        storeSessionAttribute(request, USER_ATTRIBUTE, user);
-                        storeSessionAttribute(request, FRIENDS_ATTRIBUTE, friendsList);
-                    } catch (AccessException ex) {
-                        l.successfull = false;
-                        //TODO logging
+                try {
+                    if (verifier == null) {
+                    } else {
+                        //Somehow generate a coresponding user
+                        Token accessToken = l.request.generateAccessToken(verifier);
+                        
+                        UserDBO user;
+                        try {
+                            user = getOrCreateUserForAccessToken(accessToken, l.provider);
+                            Iterable<UserDBO> friendsList = getUsersFriendsForAccessToken(accessToken, user, l.provider);
+                            l.successfull = true;
+                            storeSessionAttribute(request, USER_ATTRIBUTE, user);
+                            storeSessionAttribute(request, FRIENDS_ATTRIBUTE, friendsList);
+                        } catch (AccessException ex) {
+                            l.successfull = false;
+                            //TODO logging
+                        }
                     }
+                } catch (Throwable e) {
+                    e.printStackTrace();
                 }
                 l.notify();
             }

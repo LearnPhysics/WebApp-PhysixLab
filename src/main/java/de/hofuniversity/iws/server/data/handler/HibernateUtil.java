@@ -1,8 +1,6 @@
 package de.hofuniversity.iws.server.data.handler;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 
 // entityManager.detach(entity);
 // later
@@ -25,10 +23,10 @@ public class HibernateUtil {
 
     public static boolean isConnectedToDB() {
         boolean successfully = false;
-        EntityManager entityManager = getEntityManagerFactory()
-                .createEntityManager();
 
         try {
+            EntityManager entityManager = getEntityManagerFactory()
+                    .createEntityManager();
             entityManager.getTransaction().begin();
             entityManager.getTransaction().commit();
             entityManager.close();

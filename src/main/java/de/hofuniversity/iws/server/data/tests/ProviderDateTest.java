@@ -32,10 +32,8 @@ public class ProviderDateTest {
         System.out.print(">>");
         Verifier v = new Verifier(in.nextLine());
         Token access = req.generateAccessToken(v);
-        Optional<UserDataAccessor> userData = provider.getAccessor(UserDataAccessor.class);
-        if (userData.isPresent()) {
             try {
-                UserDataAccessor ac = userData.get();
+                UserDataAccessor ac = provider.getUserDataAccessor();
                 UserDBO user = ac.getUserData(access);
                 System.out.println(user.getUserName() + "(" + user.getFirstName() + " " + user.getLastName() + ")");
                 System.out.println("\t" + user.getBirthDate() + " - " + user.getCity());
@@ -54,7 +52,7 @@ public class ProviderDateTest {
             } catch (AccessException ex) {
                 ex.printStackTrace();
             }
-        }
+        
         /* angemeldeten UserDBO in PhysixLab-Datenbank suchen */
 //        NetworkAccount netACC = NetworkAccountHandler.getNetworkAccountEntity(Providers.TWITTER.name(), CurrentUser.getAccountIdentificationString(), true);
 //       UserDBO user = netACC.getUser();   

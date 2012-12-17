@@ -8,13 +8,9 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.resources.client.CssResource;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FocusPanel;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.*;
 
 /**
  *
@@ -24,14 +20,18 @@ public class UserHome extends Composite {
 
     public final static String NAME = "userHome";
     private static UserHomeUiBinder uiBinder = GWT.create(UserHomeUiBinder.class);
-    
-    @UiField UserHomeStyle style;
-    @UiField SpanElement rail;
-    
-    @UiField FocusPanel tab1;
-    @UiField FocusPanel tab2;
-    @UiField FocusPanel tab3;
-    @UiField FocusPanel tab4;
+    @UiField
+    UserHomeStyle style;
+    @UiField
+    SpanElement rail;
+    @UiField
+    FocusPanel tab1;
+    @UiField
+    FocusPanel tab2;
+    @UiField
+    FocusPanel tab3;
+    @UiField
+    FocusPanel tab4;
 
     interface UserHomeUiBinder extends UiBinder<Widget, UserHome> {
     }
@@ -39,16 +39,23 @@ public class UserHome extends Composite {
     interface UserHomeStyle extends CssResource {
 
         String posStatistik();
+
         String posThemenwahl();
+
         String posFreunde();
+
         String posProfile();
-        
+
         String selected();
-        
+
         String tab();
+
         String tab1();
+
         String tab2();
+
         String tab3();
+
         String tab4();
     }
 
@@ -56,44 +63,44 @@ public class UserHome extends Composite {
         initWidget(uiBinder.createAndBindUi(this));
         History.newItem(NAME);
     }
-    
+
     @UiHandler("tab1")
     public void changeToTab1(ClickEvent ev) {
         setPosition(1);
     }
+
     @UiHandler("tab2")
     public void changeToTab2(ClickEvent ev) {
         setPosition(2);
     }
+
     @UiHandler("tab3")
     public void changeToTab3(ClickEvent ev) {
         setPosition(3);
     }
+
     @UiHandler("tab4")
     public void changeToTab4(ClickEvent ev) {
         setPosition(4);
     }
-    
+
     public void setPosition(int pos) {
         unselectAllTabs();
-        switch(pos) {
+        rail.removeClassName(rail.getClassName());
+        switch (pos) {
             case 1:
-                rail.removeClassName(rail.getClassName());
                 rail.setClassName(style.posStatistik());
                 tab1.addStyleName(style.selected());
                 break;
             case 2:
-                rail.removeClassName(rail.getClassName());
                 rail.setClassName(style.posThemenwahl());
                 tab2.addStyleName(style.selected());
                 break;
             case 3:
-                rail.removeClassName(rail.getClassName());
                 rail.setClassName(style.posFreunde());
                 tab3.addStyleName(style.selected());
                 break;
             case 4:
-                rail.removeClassName(rail.getClassName());
                 rail.setClassName(style.posProfile());
                 tab4.addStyleName(style.selected());
                 break;
@@ -101,7 +108,7 @@ public class UserHome extends Composite {
                 System.err.println("Wrong parameter! Only 1 to 4 allowed. Given was: " + pos);
         }
     }
-    
+
     private void unselectAllTabs() {
         tab1.removeStyleName(style.selected());
         tab2.removeStyleName(style.selected());

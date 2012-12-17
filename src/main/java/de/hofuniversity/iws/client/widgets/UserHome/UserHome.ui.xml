@@ -105,10 +105,10 @@ Uncomment this for XHTML entities
         </g:FocusPanel> 
         <span ui:field='rail' class="{style.posThemenwahl}">
             <g:HorizontalPanel>
-                <my:HomeStatistik></my:HomeStatistik>
-                <my:HomeThemenwahl></my:HomeThemenwahl>
-                <my:HomeFreunde></my:HomeFreunde>
-                <my:HomeProfile></my:HomeProfile>
+                <my:HomeStatistik/>
+                <my:HomeThemenwahl/>
+                <my:HomeFreunde/>
+                <my:HomeProfile/>
             </g:HorizontalPanel>
         </span>
     </g:HTMLPanel>

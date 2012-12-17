@@ -31,11 +31,11 @@ public class UserDBO implements Serializable, GenericEntity, User {
     @Column
     private String accountIdentificationString;
     @OneToMany(mappedBy = "user")
-    private List<NetworkAccountDBO> networkAccountList;
+    private List<NetworkAccountDBO> networkAccountList = new ArrayList<NetworkAccountDBO>();
     @OneToMany(mappedBy = "user")
-    private List<GameResultDBO> gameResultList;
+    private List<GameResultDBO> gameResultList = new ArrayList<GameResultDBO>();
     @OneToMany(mappedBy = "user")
-    private List<LessonProgressDBO> lessonProgressList;
+    private List<LessonProgressDBO> lessonProgressList = new ArrayList<LessonProgressDBO>();
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "DEVOTEE_FRIENDS",
     joinColumns = {
