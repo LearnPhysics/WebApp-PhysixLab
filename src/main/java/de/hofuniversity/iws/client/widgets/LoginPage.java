@@ -4,8 +4,6 @@
  */
 package de.hofuniversity.iws.client.widgets;
 
-import de.hofuniversity.iws.client.PhysixLab;
-import de.hofuniversity.iws.shared.services.*;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -13,7 +11,7 @@ import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Widget;
 import de.hofuniversity.iws.client.PhysixLab;
-import de.hofuniversity.iws.client.widgets.UserHome.UserHome;
+import de.hofuniversity.iws.server.services.LoginDTO;
 import de.hofuniversity.iws.shared.services.LoginService;
 import de.hofuniversity.iws.shared.services.LoginServiceAsync;
 
@@ -74,7 +72,7 @@ public class LoginPage extends HistoryPage {
         }
     }
 
-    private class VerificationCallback implements AsyncCallback<String> {
+    private class VerificationCallback implements AsyncCallback<LoginDTO> {
 
         @Override
         public void onFailure(Throwable caught) {
@@ -82,8 +80,9 @@ public class LoginPage extends HistoryPage {
         }
 
         @Override
-        public void onSuccess(String result) {
-            PhysixLab.PAGE_CONTROLLER.changePage(UserHome.NAME);
+        public void onSuccess(LoginDTO result) {
+            PhysixLab.setLoginData(result);
+            PhysixLab.PAGE_CONTROLLER.changePage(SessionPage.NAME);
         }
     }
 }

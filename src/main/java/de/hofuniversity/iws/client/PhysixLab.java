@@ -5,6 +5,8 @@
 package de.hofuniversity.iws.client;
 
 import de.hofuniversity.iws.client.widgets.*;
+import de.hofuniversity.iws.server.data.entities.User;
+import de.hofuniversity.iws.server.services.LoginDTO;
 import de.hofuniversity.iws.shared.services.LoginServiceAsync;
 
 import com.google.common.base.Optional;
@@ -19,14 +21,14 @@ import javax.inject.Inject;
 public class PhysixLab {
 
     public static final HistoryPageController PAGE_CONTROLLER = new HistoryPageController();
-    private static String sessionToken;
+    private static LoginDTO loginData;
     @Inject
     private LoginServiceAsync loginService;
 
     public void init() {
         History.addValueChangeHandler(PAGE_CONTROLLER);
 
-        loginService.getSessionToken(new AsyncCallback<Optional>() {
+        loginService.getLoginData(new AsyncCallback<Optional>() {
             @Override
             public void onFailure(Throwable caught) {
                 PAGE_CONTROLLER.changePage(LoginPage.NAME);
@@ -35,7 +37,7 @@ public class PhysixLab {
             @Override
             public void onSuccess(Optional result) {
                 if (result.isPresent()) {
-                    sessionToken = (String) result.get();
+                    loginData = (LoginDTO) result.get();
                     if (History.getToken().isEmpty()) {
                         PAGE_CONTROLLER.changePage(SessionPage.NAME);
                     } else {
@@ -50,6 +52,20 @@ public class PhysixLab {
     }
 
     public static String getSessionToken() {
-        return sessionToken;
+        if (loginData == null) {
+            throw new RuntimeException("PhysixLab is uninitialized!");
+        }
+        return loginData.token;
+    }
+
+    public static User getSessionUser() {
+        if (loginData == null) {
+            throw new RuntimeException("PhysixLab is uninitialized!");
+        }
+        return loginData.user;
+    }
+
+    public static void setLoginData(LoginDTO ld) {
+        loginData = ld;
     }
 }

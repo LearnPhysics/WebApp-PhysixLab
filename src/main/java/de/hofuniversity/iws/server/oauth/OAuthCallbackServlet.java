@@ -1,13 +1,15 @@
 package de.hofuniversity.iws.server.oauth;
 
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.logging.*;
 
-import de.hofuniversity.iws.server.data.entities.*;
-import de.hofuniversity.iws.server.data.handler.*;
 import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import de.hofuniversity.iws.server.oauth.accessors.*;
+import de.hofuniversity.iws.server.data.entities.User;
+import de.hofuniversity.iws.server.oauth.accessors.AccessException;
+import de.hofuniversity.iws.server.oauth.accessors.FriendListAccessor;
+import de.hofuniversity.iws.server.oauth.accessors.UserDataAccessor;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import org.scribe.model.Token;
@@ -42,8 +44,8 @@ public class OAuthCallbackServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect(response.encodeURL("PopUpCloser.html")) ;
-                
+        response.sendRedirect(response.encodeURL("PopUpCloser.html"));
+
         Verifier verifier = null;
         for (String p : VERIFICATION_PROPERTIES) {
             if (request.getQueryString().contains(p + '=')) {
@@ -61,29 +63,48 @@ public class OAuthCallbackServlet extends HttpServlet {
                     //Somehow generate a coresponding user
                     Token accessToken = l.request.generateAccessToken(verifier);
 
-                    User user = getOrCreateUserForAccessToken(l.provider, accessToken);
-
-                    l.successfull = true;
-                    storeSessionAttribute(request, USER_ATTRIBUTE, user);
+                    User user;
+                    try {
+                        user = getOrCreateUserForAccessToken(accessToken, l.provider);
+                        Iterable<User> friendsList = getUsersFriendsForAccessToken(accessToken, user, l.provider);
+                        l.successfull = true;
+                        storeSessionAttribute(request, USER_ATTRIBUTE, user);
+                        storeSessionAttribute(request, FRIENDS_ATTRIBUTE, friendsList);
+                    } catch (AccessException ex) {
+                        l.successfull = false;
+                        //TODO logging
+                    }
                 }
                 l.notify();
             }
         }
     }
 
-    private User getOrCreateUserForAccessToken(Providers prov, Token accessToken) {
-//        Optional<UserDataAccessor> accessor = prov.getAccessor(UserDataAccessor.class);
-//        if(accessor.isPresent())
-//        {
-//            try {
-//                User user = accessor.get().getUserData(accessToken);
-//                Optional<NetworkAccount> networkAccount = user.getNetworkAccount(prov);
-//                NetworkAccount na = NetworkAccountHandler.getNetworkAccountEntity(prov.name(), networkAccount.get().getAccountIdentificationString(), false);
-//                return na.getUser();
-//            } catch (AccessException ex) {
-//            }
-//        }
-        return new User();
+    private User getOrCreateUserForAccessToken(Token accessToken, Providers provider) throws AccessException {
+        //TODO DB access
+
+        Optional<UserDataAccessor> userData = provider.getAccessor(UserDataAccessor.class);
+        if (userData.isPresent()) {
+            UserDataAccessor ac = userData.get();
+            User user = ac.getUserData(accessToken);
+            return user;
+        }
+        throw new RuntimeException("unreachable");
+    }
+
+    private Iterable<User> getUsersFriendsForAccessToken(Token accessToken, User u, Providers provider) {
+        Optional<FriendListAccessor> friends = provider.getAccessor(FriendListAccessor.class);
+        if (friends.isPresent()) {
+            try {
+                FriendListAccessor acc = friends.get();
+                Iterable<User> friendsList = acc.getFriends(accessToken, u);
+                return friendsList;
+            } catch (AccessException ex) {
+                ex.printStackTrace();
+                        //TODO token löschen
+            }
+        }
+        return new LinkedList<>();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

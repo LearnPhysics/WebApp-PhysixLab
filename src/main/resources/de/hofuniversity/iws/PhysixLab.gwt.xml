@@ -17,15 +17,16 @@
     <!-- Other module inherits                                     -->  
     <inherits name='playn.PlayN'/>
     <inherits name="org.jbox2d.GwtBox2D" />
-    <!--for the menu UI--> 
+     <!--for the menu UI--> 
     <inherits name='tripleplay.TriplePlay'/>
-    <!--for enhanced logging--> 
+     <!--for enhanced logging--> 
     <inherits name='com.google.gwt.inject.Inject'/>
     
     <inherits name='com.google.common.base.Base'/>
   
     <!-- Specify the path to any remote services.                   -->
     <servlet path="/login" class="de.hofuniversity.iws.server.services.LoginServiceImpl" />
+    <servlet path="/userfriend" class="de.hofuniversity.iws.server.services.UserFriendServiceImpl" />
 
     <!-- Specify the app entry point class.                         -->
     <entry-point class='de.hofuniversity.iws.client.Main' />
@@ -33,4 +34,6 @@
     <!-- Specify the paths for translatable code                    -->
     <source path='client' />
     <source path='shared' />
+    <source path='dto' />
+
 </module>

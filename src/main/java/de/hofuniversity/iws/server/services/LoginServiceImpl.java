@@ -6,15 +6,17 @@ package de.hofuniversity.iws.server.services;
 
 import java.util.UUID;
 
+import de.hofuniversity.iws.server.data.entities.User;
+import com.google.common.base.Function;
+import com.google.common.base.Optional;
+import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import de.hofuniversity.iws.server.oauth.*;
 import de.hofuniversity.iws.server.oauth.provider.OAuthProvider;
 import de.hofuniversity.iws.shared.services.LoginService;
 import de.hofuniversity.iws.shared.services.login.LoginException;
-
-import com.google.common.base.*;
-import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -26,15 +28,21 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
     public static final String SESSION_ATTRIBUTE = "session";
     public static final String TOKEN_ATTRIBUTE = "token";
     public static final String USER_ATTRIBUTE = "user";
-    public static final int TIMEOUT_INTERVALL = 30_000;
+    public static final String FRIENDS_ATTRIBUTE = "friends";
+    public static final int TIMEOUT_INTERVALL = 60_000;
 
     @Override
-    public Optional<String> getSessionToken() {
-        return getSessionAttribute(TOKEN_ATTRIBUTE);
+    public Optional<LoginDTO> getLoginData() {
+        Optional<String> token = getSessionAttribute(TOKEN_ATTRIBUTE);
+        Optional<User> user = getSessionAttribute(USER_ATTRIBUTE);
+        if (token.isPresent() && user.isPresent()) {
+            return Optional.of(new LoginDTO(user.get(), token.get()));
+        }
+        return Optional.absent();
     }
 
     @Override
-    public String waitForOAuthVerification() throws LoginException {
+    public LoginDTO waitForOAuthVerification() throws LoginException {
         Optional<OAuthLogin> login = getSessionAttribute(OAuthCallbackServlet.OAUTH_LOGIN_ATTRIBUTE);
         if (login.isPresent()) {
             OAuthLogin l = login.get();
@@ -48,7 +56,12 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
                 if (l.successfull) {
                     String token = UUID.randomUUID().toString();
                     storeSessionAttribute(TOKEN_ATTRIBUTE, token);
-                    return token;
+                    Optional<LoginDTO> data = getLoginData();
+                    if (data.isPresent()) {
+                        return data.get();
+                    } else {
+                        throw new LoginException("Uncomplete login data");
+                    }
                 } else {
                     throw new LoginException("Login Timeout eceeded or login wasn't succesfull!");
                 }
