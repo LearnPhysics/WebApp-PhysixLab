@@ -83,7 +83,7 @@ public class OAuthCallbackServlet extends HttpServlet {
 //            } catch (AccessException ex) {
 //            }
 //        }
-        return null;
+        return new User();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
