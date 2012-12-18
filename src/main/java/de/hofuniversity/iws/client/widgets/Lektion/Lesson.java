@@ -51,7 +51,7 @@ public class Lesson extends Composite {
             theme.setInnerText(thema.getTitle());
         }
         else {
-            theme.setInnerText("Test");
+            theme.setInnerText("Empty");
         }
         title.setInnerText(lesson.getTitle());
         text.setInnerText(lesson.getLessonText());
