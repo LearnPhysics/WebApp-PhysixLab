@@ -35,27 +35,27 @@ public class PhysixLab {
         PlayNWidget w = new PlayNWidget(new KineticWars());
         w.setWidth(800 + "px");
         RootPanel.get().add(w);
-//        loginService.getLoginData(new AsyncCallback<Optional<LoginDTO>>() {
-//            @Override
-//            public void onFailure(Throwable caught) {
-//                PAGE_CONTROLLER.changePage(LoginPage.NAME);
-//            }
-//
-//            @Override
-//            public void onSuccess(Optional result) {
-//                if (result.isPresent()) {
-//                    loginData = (LoginDTO) result.get();
-//                    if (History.getToken().isEmpty()) {
-//                        PAGE_CONTROLLER.changePage(SessionPage.NAME);
-//                    } else {
-//                        PAGE_CONTROLLER.changePage(History.getToken());
-//                    }
-//
-//                } else {
-//                    PAGE_CONTROLLER.changePage(LoginPage.NAME);
-//                }
-//            }
-//        });
+        loginService.getLoginData(new AsyncCallback<Optional<LoginDTO>>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                PAGE_CONTROLLER.changePage(LoginPage.NAME);
+            }
+
+            @Override
+            public void onSuccess(Optional result) {
+                if (result.isPresent()) {
+                    loginData = (LoginDTO) result.get();
+                    if (History.getToken().isEmpty()) {
+                        PAGE_CONTROLLER.changePage(SessionPage.NAME);
+                    } else {
+                        PAGE_CONTROLLER.changePage(History.getToken());
+                    }
+
+                } else {
+                    PAGE_CONTROLLER.changePage(LoginPage.NAME);
+                }
+            }
+        });
     }
 
     public static String getSessionToken() {

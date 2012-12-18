@@ -107,7 +107,7 @@
         top: 635px; 
         left: 360px;
         width: 240px;
-        height: 240px;
+        min-height: 240px;
         }
 
     </ui:style>
@@ -189,6 +189,4 @@
             </div>
         </div>
     </g:HTMLPanel>
-    
-    
 </ui:UiBinder>

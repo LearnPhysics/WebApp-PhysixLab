@@ -65,6 +65,15 @@ Uncomment this for XHTML entities
         height: 200px;
         border-radius: 200px;
         box-shadow: 3px 3px 5px rgb(0,0,0);
+        -webkit-transition:0.2s ease;
+        -o-transition:0.2s ease;
+        -moz-transition:0.2s ease;
+        -ms-transition:0.2s ease;
+        transition:0.2s ease;
+        }
+        
+        .outerImage:hover {
+        background: rgb(65,150,255);
         }
 
         .innerImage {

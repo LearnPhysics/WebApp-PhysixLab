@@ -10,14 +10,21 @@ import com.google.gwt.dom.client.HeadingElement;
 import com.google.gwt.dom.client.ParagraphElement;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
-import de.hofuniversity.iws.client.widgets.Thema.Spielwahl.TestGame;
+import de.hofuniversity.iws.client.PhysixLab;
+import de.hofuniversity.iws.client.widgets.Game.Game;
+import de.hofuniversity.iws.client.widgets.LoginPage;
+import de.hofuniversity.iws.client.widgets.TestEntities.EntityHolder;
+import de.hofuniversity.iws.client.widgets.TestEntities.TestGame;
+import de.hofuniversity.iws.client.widgets.Thema.Thema;
 
 /**
  *
@@ -33,8 +40,8 @@ public class GameSelector extends Composite {
     @UiField HeadingElement title;
     @UiField ParagraphElement text;
     
-    TestGame game;
-    int pos;
+    private TestGame game;
+    private int pos;
     
     interface GameSelectorUiBinder extends UiBinder<Widget, GameSelector> {
     }
@@ -52,9 +59,15 @@ public class GameSelector extends Composite {
     
     private void setup() {
         iImg.setUrl(game.getImageURL());
-        title.setInnerText(game.getName());
+        title.setInnerText(game.getTitle());
         text.setInnerText(game.getDescription());
         
         wrap.getElement().getStyle().setTop(180, Unit.PX);
+    }
+    
+    @UiHandler("oImg")
+    public void openGame(ClickEvent ev) {
+        EntityHolder.getInstance().setGame(game);
+        PhysixLab.PAGE_CONTROLLER.changePage(Game.NAME);
     }
 }

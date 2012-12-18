@@ -1,0 +1,105 @@
+<!--
+Uncomment this for XHTML entities
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+-->
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui">
+    <ui:style>
+        @font-face {
+        font-family: geosans;
+        src: url('GeosansLight.ttf');
+        }
+
+        #contentAreaLesson {
+        font-family: geosans;
+        font-size: 15px;
+        background: rgba(255,249,108,0.7);
+        height: 1080px;
+        }
+
+        #content {
+        position: relative; 
+        width: 960px;
+        margin: 0px auto;
+        }
+
+        #content h1 {
+        position: absolute;
+        top: 75px; 
+        left: 40px;
+        color: rgb(65,150,255);
+        margin: 0 0 0 0;
+        font-size: 60px;
+        }
+
+        #content h2 {
+        color: rgb(65,150,255);
+        margin: 0 0 0 0;
+        }
+
+        .element {
+        position: absolute;
+        background: rgb(255,255,255);
+        border-radius: 5px;
+        box-shadow: 3px 3px 5px rgb(0,0,0);
+        }
+        
+        .innerElement {
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        }
+
+        .thumbnail {
+        width: 40px;
+        height: 40px;
+        }
+
+        #aufgabe {
+        top: 195px; 
+        left: 40px;
+        width: 400px;
+        height: 680px;
+        }
+
+        #illu {
+        top: 75px; 
+        left: 520px;
+        width: 400px;
+        height: 800px;
+        }
+        
+        #solu {
+        top: 75px; 
+        left: 520px;
+        width: 400px;
+        height: 800px;
+        }
+    </ui:style>
+    <g:HTMLPanel>
+        <div id="contentAreaTest">
+            <div id="content">
+                <h1 ui:field="theme">Test</h1>
+                <div class="{style.element}" id="aufgabe">
+                    <div class="{style.innerElement}">
+                        <h2 ui:field="title"></h2>
+                        <p ui:field="text"></p>
+                    </div>              
+                </div>
+                <div class="{style.element}" id="illu">
+                    <g:VerticalPanel ui:field="illustration" styleName="{style.innerElement}">
+                    </g:VerticalPanel>
+                </div>              
+                <div class="{style.element}" id="solu">
+                    <g:VerticalPanel styleName="{style.innerElement}">
+                        <g:TextBox ui:field="solution"></g:TextBox>    
+                        <g:Button ui:field="submit">
+                            <b>Check Solution</b>
+                        </g:Button>
+                    </g:VerticalPanel>
+                </div>
+            </div>
+        </div>
+    </g:HTMLPanel>
+</ui:UiBinder>
