@@ -57,98 +57,16 @@ Uncomment this for XHTML entities
         width: 240px;
         height: 800px;
         }
-
-        .outerImage {
-        position: absolute;
-        background: rgb(255,255,255);
-        width: 200px;
-        height: 200px;
-        border-radius: 200px;
-        box-shadow: 3px 3px 5px rgb(0,0,0);
-        -webkit-transition:0.2s ease;
-        -o-transition:0.2s ease;
-        -moz-transition:0.2s ease;
-        -ms-transition:0.2s ease;
-        transition:0.2s ease;
-        }
-        
-        .outerImage:hover {
-        background: rgb(65,150,255);
-        }
-
-        .innerImage {
-        padding: 5px;
-        }
-
-        .subject {
-        position: absolute;
-        width: 320px;
-        height: 200px;
-        }
-
-        .img1 {
-        top: 195px; 
-        left: 40px;
-        }
-
-        #subj1 {
-        top: 195px; 
-        left: 280px;
-        }
-
-        .img2 {
-        top: 435px; 
-        left: 40px;
-        }
-
-        #subj2 {
-        top: 435px; 
-        left: 280px;
-        }
-
-        .img3 {
-        top: 675px; 
-        left: 40px;
-        }
-
-        #subj3 {
-        top: 675px; 
-        left: 280px;
-        }
     </ui:style>
     
     <g:HTMLPanel>
         <div id="contentAreaThemenwahl">
             <div id="content">
                 <h1>Themenwahl</h1>
-                <g:FocusPanel ui:field="img1" styleName="{style.outerImage} {style.img1}">
-                    <g:Image styleName="{style.innerImage}" url="images/UserHome/Thema_Kinetik.png" />
-                </g:FocusPanel>
-                <g:FocusPanel ui:field="img2" styleName="{style.outerImage} {style.img2}">
-                    <g:Image styleName="{style.innerImage}" url="images/UserHome/Thema_Elekt.png" />
-                </g:FocusPanel>
-                <g:FocusPanel ui:field="img3" styleName="{style.outerImage} {style.img3}">
-                    <g:Image styleName="{style.innerImage}" url="images/UserHome/Thema_Thermo.png" />
-                </g:FocusPanel>       
-                <div class="{style.element} {style.subject}" id="subj1">
-                    <div class="{style.innerElement}">
-                    <h2>Kinetik</h2>
-                    <p></p>
-                    </div>
-                </div>
-                <div class="{style.element} {style.subject}" id="subj2">
-                    <div class="{style.innerElement}">
-                    <h2>Elektrizitaet</h2>
-                    <p></p>
-                    </div>
-                </div>
-                <div class="{style.element} {style.subject}" id="subj3">
-                    <div class="{style.innerElement}">
-                    <h2>Thermodynamik</h2>
-                    <p></p>
-                    </div>
-                </div>
-                <div class="{style.element} {style.subject}" id="news">
+                <g:VerticalPanel ui:field='themaPanel'>
+                    
+                </g:VerticalPanel>
+                <div class="{style.element}" id="news">
                     <div class="{style.innerElement}">
                     <h2>News</h2>
                     <p></p>

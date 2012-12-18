@@ -14,9 +14,11 @@ public class TestLektion {
 
     String title;
     String lessonText;
+    String previewURL;
     Widget experiment;
     Widget formular;
     TestTest test;
+    TestLektion parent;
 
     public String getTitle() {
         return title;
@@ -32,6 +34,14 @@ public class TestLektion {
 
     public void setLessonText(String lessonText) {
         this.lessonText = lessonText;
+    }
+
+    public String getPreviewURL() {
+        return previewURL;
+    }
+
+    public void setPreviewURL(String previewURL) {
+        this.previewURL = previewURL;
     }
 
     public Widget getExperiment() {
@@ -56,5 +66,13 @@ public class TestLektion {
 
     public void setTest(TestTest test) {
         this.test = test;
+    }
+
+    public TestLektion getParent() {
+        return parent;
+    }
+
+    public void setParent(TestLektion parent) {
+        this.parent = parent;
     }
 }

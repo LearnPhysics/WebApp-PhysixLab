@@ -12,6 +12,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import de.hofuniversity.iws.client.widgets.SubWidgets.GameSelector;
+import de.hofuniversity.iws.client.widgets.TestEntities.EntityHolder;
 import de.hofuniversity.iws.client.widgets.TestEntities.TestGame;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,32 +33,13 @@ public class Spielwahl extends Composite {
 
     public Spielwahl() {
         initWidget(uiBinder.createAndBindUi(this));
-        games = new LinkedList<TestGame>();
-        setTestGames();
-        drawGames();
+        this.games = EntityHolder.getInstance().getThema().getGames();
+        if(games != null) {
+            setup();
+        }
     }
 
-    private void setTestGames() {
-        TestGame game = new TestGame();
-        game.setTitle("Kinetic Wars");
-        game.setDescription("Bring die Bauten deiner Gegner zum Einsturz.");
-        game.setImageURL("images/Thema/gameTest01.jpg");
-        game.setGameWidget(new Image("images/Thema/gameWidget01.jpg"));
-        addGame(game);
-
-        TestGame game0 = new TestGame();
-        game0.setTitle("Go Fishing");
-        game0.setDescription("Es handelt sich hier um ein reines Testspiel.");
-        game0.setImageURL("images/Thema/gameTest02.jpg");
-        game0.setGameWidget(new Image("images/Thema/gameWidget02.png"));
-        addGame(game0);
-    }
-
-    public void addGame(TestGame game) {
-        games.add(game);
-    }
-
-    public void drawGames() {
+    public void setup() {
         for (int i = 0; i < games.size(); i++) {
             GameSelector gs = new GameSelector(games.get(i), i);
             gamesPanel.add(gs);

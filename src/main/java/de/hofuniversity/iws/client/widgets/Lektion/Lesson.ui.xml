@@ -13,7 +13,7 @@ Uncomment this for XHTML entities
         #contentAreaLesson {
         font-family: geosans;
         font-size: 15px;
-        background: rgba(255,249,108,0.7);
+        background: rgba(109,232,150,0.7);
         height: 1080px;
         }
 
@@ -67,14 +67,14 @@ Uncomment this for XHTML entities
         top: 75px; 
         left: 520px;
         width: 400px;
-        height: 800px;
+        height: 360px;
         }
         
         #formu {
-        top: 75px; 
+        top: 515px; 
         left: 520px;
         width: 400px;
-        height: 800px;
+        height: 360px;
         }
     </ui:style>
     <g:HTMLPanel>
@@ -88,11 +88,19 @@ Uncomment this for XHTML entities
                     </div>              
                 </div>
                 <div class="{style.element}" id="exper">
-                    <g:VerticalPanel ui:field="experiment" styleName="{style.innerElement}">
+                    <g:VerticalPanel styleName="{style.innerElement}">
+                        <g:VerticalPanel ui:field="experiment">
+                        </g:VerticalPanel>
+                        <g:HTMLPanel>
+                        </g:HTMLPanel>
                     </g:VerticalPanel>
                 </div>              
                 <div class="{style.element}" id="formu">
-                    <g:VerticalPanel ui:field="formular" styleName="{style.innerElement}">
+                    <g:VerticalPanel styleName="{style.innerElement}">
+                        <g:VerticalPanel ui:field="formular">  
+                        </g:VerticalPanel>
+                        <g:HTMLPanel>
+                        </g:HTMLPanel>
                     </g:VerticalPanel>
                 </div>
             </div>

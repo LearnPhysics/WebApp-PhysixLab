@@ -14,7 +14,7 @@ Uncomment this for XHTML entities
         font-family: geosans;
         font-size: 15px;
         height: 160px;
-        position: relative; 
+        position: absolute; 
         width: 400px;
         margin: 0px auto;
         left: 40px;
@@ -49,9 +49,9 @@ Uncomment this for XHTML entities
         .outerImage {
         position: absolute;
         background: rgb(255,255,255);
-        width: 120px;
-        height: 120px;
-        border-radius: 120px;
+        width: 80px;
+        height: 80px;
+        border-radius: 80px;
         box-shadow: 3px 3px 5px rgb(0,0,0);
         -webkit-transition:0.2s ease;
         -o-transition:0.2s ease;
@@ -65,19 +65,13 @@ Uncomment this for XHTML entities
         }
 
         .innerImage {
-        border-radius: 110px;
+        border-radius: 70px;
         padding: 5px;
         }
     </ui:style>
     <g:HTMLPanel ui:field="wrap" styleName="{style.wrap}">
-            <g:FocusPanel ui:field="oImg" styleName="{style.outerImage}">
-                <g:Image ui:field="iImg" styleName="{style.innerImage}" />
-            </g:FocusPanel>
-            <div class="{style.element} {style.subject}">
-                <div class="{style.innerElement}">
-                    <h2 ui:field="title"></h2>
-                    <p ui:field="text"></p>
-                </div>
-            </div>
+        <g:FocusPanel ui:field="oImg" styleName="{style.outerImage}">
+            <g:Image ui:field="iImg" styleName="{style.innerImage}" />
+        </g:FocusPanel>
     </g:HTMLPanel>
 </ui:UiBinder>

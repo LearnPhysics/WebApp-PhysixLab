@@ -90,7 +90,7 @@ public class Thema extends Composite {
                 tab3.addStyleName(style.selected());
                 break;
             default:
-                System.err.println("Wrong parameter! Only 1 to 4 allowed. Given was: " + pos);
+                System.err.println("Wrong parameter! Only 1 to 3 allowed. Given was: " + pos);
         }
     }
      

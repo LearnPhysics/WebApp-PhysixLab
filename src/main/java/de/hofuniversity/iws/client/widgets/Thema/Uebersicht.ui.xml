@@ -74,10 +74,10 @@ Uncomment this for XHTML entities
     <g:HTMLPanel>
         <div id="contentAreaUebersicht">
             <div id="content">
-                <h1>Uebersicht</h1>
+                <h1 ui:field="title"></h1>
                 <div class="{style.element}" id="einfuehrung">
-                    <g:VerticalPanel ui:field='einfuehrungstext' styleName="{style.innerElement}">
-                    </g:VerticalPanel>                 
+                    <div ui:field='einfuehrungstext' class="{style.innerElement}">
+                    </div>
                 </div>
                 <div class="{style.element}" id="stats">
                     <div class="{style.innerElement}">

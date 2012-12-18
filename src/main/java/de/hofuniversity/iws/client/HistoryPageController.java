@@ -10,6 +10,7 @@ import com.google.gwt.event.logical.shared.*;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.*;
 import de.hofuniversity.iws.client.widgets.Game.Game;
+import de.hofuniversity.iws.client.widgets.Lektion.Lektion;
 import de.hofuniversity.iws.client.widgets.Thema.Thema;
 import de.hofuniversity.iws.client.widgets.UserHome.UserHome;
 
@@ -40,7 +41,11 @@ public class HistoryPageController implements ValueChangeHandler<String> {
         public static String themapage() {
             return Thema.NAME;
         }
-        
+
+        public static String lektionpage() {
+            return Lektion.NAME;
+        }
+
         public static String gamepage() {
             return Game.NAME;
         }
@@ -63,6 +68,8 @@ public class HistoryPageController implements ValueChangeHandler<String> {
             changePage(new UserHome());
         } else if (Tokens.themapage().equals(pageName)) {
             changePage(new Thema());
+        } else if (Tokens.lektionpage().equals(pageName)) {
+            changePage(new Lektion());
         } else if (Tokens.gamepage().equals(pageName)) {
             changePage(new Game());
         } else {

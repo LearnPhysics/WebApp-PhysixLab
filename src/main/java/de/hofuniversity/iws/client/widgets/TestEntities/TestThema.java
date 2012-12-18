@@ -4,6 +4,7 @@
  */
 package de.hofuniversity.iws.client.widgets.TestEntities;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -14,8 +15,14 @@ public class TestThema {
     
     String title;
     String description;
+    String imageURL;
     List<TestLektion> lektionen;
     List<TestGame> games;
+    
+    public TestThema() {
+        lektionen = new LinkedList<TestLektion>();
+        games = new LinkedList<TestGame>();
+    }
 
     public String getTitle() {
         return title;
@@ -31,6 +38,14 @@ public class TestThema {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public List<TestLektion> getLektionen() {

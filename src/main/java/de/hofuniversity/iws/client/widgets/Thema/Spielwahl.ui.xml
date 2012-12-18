@@ -67,7 +67,7 @@ Uncomment this for XHTML entities
         <div id="contentAreaSpielwahl">
             <div id="content">
                 <h1>Spielwahl</h1>
-                <g:VerticalPanel ui:field='gamesPanel' styleName="{style.innerElement}">
+                <g:VerticalPanel ui:field='gamesPanel'>
                     
                 </g:VerticalPanel>
                 <div class="{style.element}" id="highscore">
