@@ -44,9 +44,4 @@ public class SessionPage extends HistoryPage {
         loginService.logout(null);
         PhysixLab.PAGE_CONTROLLER.changePage(LoginPage.NAME);
     }
-
-    @UiFactory
-    public PlayNWidget createGameWidget() {
-        return new PlayNWidget(new TestGame(), 800);
-    }
 }

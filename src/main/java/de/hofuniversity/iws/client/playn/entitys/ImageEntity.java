@@ -16,9 +16,9 @@ import static playn.core.PlayN.graphics;
 public abstract class ImageEntity implements PhysicEntity {
 
     private float prevX, prevY, prevA;
-    private final ImageLayer layer;
+    private ImageLayer layer;
 
-    public ImageEntity() {
+    protected final void init() {
         layer = graphics().createImageLayer(getImage());
         getImage().addCallback(new ResourceCallback<Image>() {
             @Override

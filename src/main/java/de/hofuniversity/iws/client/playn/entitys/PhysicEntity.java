@@ -23,6 +23,6 @@ public interface PhysicEntity extends Entity{
 
     public interface HasContactListener {
 
-        public void contact(PhysicEntity other);
+        public void contact(PhysicEntity other, float impulse);
     }
 }

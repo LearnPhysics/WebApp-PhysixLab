@@ -14,7 +14,6 @@
             <g:Hyperlink text="Go to User Info" targetHistoryToken="{tokens.userinfopage}"/>
             <g:Label ui:field='sessionLabel'></g:Label>
             <g:Button ui:field='logout'>Logout</g:Button>
-            <my:PlayNWidget/>
         </g:HTMLPanel>
     </g:ScrollPanel>
 </ui:UiBinder>

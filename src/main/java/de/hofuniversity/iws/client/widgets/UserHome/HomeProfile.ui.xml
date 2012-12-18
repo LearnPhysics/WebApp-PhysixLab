@@ -12,7 +12,7 @@ Uncomment this for XHTML entities
 
         #contentAreaProfile {
         font-family: geosans;
-        font-size: 16px;
+        font-size: 15px;
         background: rgba(255,249,108,0.7);
         height: 1080px;
         }
@@ -40,12 +40,15 @@ Uncomment this for XHTML entities
         .element {
         position: absolute;
         background: rgb(255,255,255);
-        padding-left: 10px;
-        padding-right: 10px;
-        padding-top: 5px;
-        padding-bottom: 5px;
         border-radius: 5px;
         box-shadow: 3px 3px 5px rgb(0,0,0);
+        }
+        
+        .innerElement {
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
         }
 
         .thumbnail {
@@ -79,13 +82,19 @@ Uncomment this for XHTML entities
             <div id="content">
                 <h1>Profil</h1>
                 <div class="{style.element}" id="profileData">
-                    Profile Data
+                    <div class="{style.innerElement}">
+                        Profile Data
+                    </div>
                 </div>
                 <div class="{style.element}" id="profileEmptyness">
-                    Emptyness
+                    <div class="{style.innerElement}">
+                        Emptyness
+                    </div>
                 </div>
                 <div class="{style.element}" id="profileStuff">
-                    Some Stuff
+                    <div class="{style.innerElement}">
+                        Some Stuff
+                    </div>
                 </div>
             </div>
         </div>

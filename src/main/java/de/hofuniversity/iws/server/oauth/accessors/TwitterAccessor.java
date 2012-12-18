@@ -97,7 +97,7 @@ public class TwitterAccessor implements UserDataAccessor, FriendListAccessor {
                 if (element != null) {
                     String requestUrl = USER_BY_ID_URL + element + "&include_entities=true";
                     String r = Providers.TWITTER.invokeGetRequest(accessToken, requestUrl);
-                    friendsList.add(parseUser(r));
+                    friendsList.add(parseUser(r, accessToken));
                 }
             }
         }

@@ -15,7 +15,7 @@
         #root {
         background-image: url('images/Startseite/Circle02.png');
         font-family: geosans;
-        font-size: 16px;
+        font-size: 15px;
         margin: 0px auto;
         }
 
@@ -37,12 +37,15 @@
 
         .element {
         background: rgb(255,255,255);
-        padding-left: 10px;
-        padding-right: 10px;
-        padding-top: 5px;
-        padding-bottom: 5px;
         border-radius: 5px;
         box-shadow: 3px 3px 5px rgb(0,0,0);
+        }
+        
+        .innerElement {
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
         }
 
         #hello {
@@ -115,64 +118,72 @@
             <div id="contentArea">
                 <div id="content">
                     <div class="{style.element}" id="hello">
-                        <h2>Willkommen</h2>
-                        <p>
-                            PhysixLab ist ein Lehrportal der Hochschule Hof. Hier sollen Schüler der 8, Klassen mit Spaß den Physikstoff des Jahrganges erlernen.
-                            Physik ist ein Fach, das bei Jugendlichen häufig für Frust sorgt und wenig motiviert. Dies wollen wir durch verschiedene Maßnahmen verhindern:
+                        <div class="{style.innerElement}">
+                            <h2>Willkommen</h2>
+                            <p>
+                                PhysixLab ist ein Lehrportal der Hochschule Hof. Hier sollen Schüler der 8, Klassen mit Spaß den Physikstoff des Jahrganges erlernen.
+                                Physik ist ein Fach, das bei Jugendlichen häufig für Frust sorgt und wenig motiviert. Dies wollen wir durch verschiedene Maßnahmen verhindern:
 	
-                            Kurze Lektionen und Tests, die weniger als eine Stunde Bearbeitungszeit vordern
-                            Auflockerung durch Spiele, in denen gelerntes Wissen angewendet werden kann
-                            Vorschritte können mit Freunden aus vielen sozialen Netzwerken verglichen werden
-                        </p>
+                                Kurze Lektionen und Tests, die weniger als eine Stunde Bearbeitungszeit vordern
+                                Auflockerung durch Spiele, in denen gelerntes Wissen angewendet werden kann
+                                Vorschritte können mit Freunden aus vielen sozialen Netzwerken verglichen werden
+                            </p>
+                        </div>
                     </div>
                     <div class="{style.element}" id="aside">
-                        <h2>Jetzt mitmachen!</h2>
-                        <p>
-                            PhysixLab wird vollständig durch die Hochschule Hof finanziert und ist somit vollkommen kostenlos und werbefrei.
-                            Als Schüler braucht ihr nur einen Account bei Facebook, Google oder Twitter. Mit diesem könnt ihr euch direkt hier anmelden. 
-                        </p>
+                        <div class="{style.innerElement}">
+                            <h2>Jetzt mitmachen!</h2>
+                            <p>
+                                PhysixLab wird vollständig durch die Hochschule Hof finanziert und ist somit vollkommen kostenlos und werbefrei.
+                                Als Schüler braucht ihr nur einen Account bei Facebook, Google oder Twitter. Mit diesem könnt ihr euch direkt hier anmelden. 
+                            </p>
 					
-                        <h2>Login</h2>
-                        <g:Image ui:field='facebookLogin' url='images/Startseite/Facebook_Web.png'/>
-                        <g:Image ui:field='googleLogin' url='images/Startseite/Google_Web.png'/>
-                        <g:Image ui:field='twitterLogin' url='images/Startseite/Twitter_Web.png'/>	
-                        <h2>Entwickler-News</h2>
-                        <p>
-                            22.12.2012:
-                            PhysixLab hat das Beta-Stadium verlassen und jetzt für alle ohne Einschränkungen nutzbar. Neuer Content folgt natürlich trotzdem weiterhin.
+                            <h2>Login</h2>
+                            <g:Image ui:field='facebookLogin' url='images/Startseite/Facebook_Web.png'/>
+                            <g:Image ui:field='googleLogin' url='images/Startseite/Google_Web.png'/>
+                            <g:Image ui:field='twitterLogin' url='images/Startseite/Twitter_Web.png'/>	
+                            <h2>Entwickler-News</h2>
+                            <p>
+                                22.12.2012:
+                                PhysixLab hat das Beta-Stadium verlassen und jetzt für alle ohne Einschränkungen nutzbar. Neuer Content folgt natürlich trotzdem weiterhin.
 	
-                            10.12.2012:
-                            In der Lektion „Schiefe Ebene“ wurde das Widget gefixt. Die Kräfte werden jetzt korrekt angezeigt.
+                                10.12.2012:
+                                In der Lektion „Schiefe Ebene“ wurde das Widget gefixt. Die Kräfte werden jetzt korrekt angezeigt.
 	
-                            0.7.12.2012:
-                            Im Spiel „Floating Bridges“ werden nun die korrekten Lasten berechnet.
-                        </p>
+                                0.7.12.2012:
+                                Im Spiel „Floating Bridges“ werden nun die korrekten Lasten berechnet.
+                            </p>
+                        </div>
                     </div>
                     <div id="image1">
                         <img src="images/Startseite/Startseite_img01.png" />
                     </div>
                     <div class="{style.element}" id="add1">
-                        <h2>Umfangreich</h2>
-                        <p>
-                            PhysicLab bietet den gesammten Stoff des Lehrplans. der 8. Klassen. Dies umfasst Themen aus den Gebieten:
+                        <div class="{style.innerElement}">
+                            <h2>Umfangreich</h2>
+                            <p>
+                                PhysicLab bietet den gesammten Stoff des Lehrplans. der 8. Klassen. Dies umfasst Themen aus den Gebieten:
 	
-                            Kinetik
-                            Elektrik
-                            Thermodymaik
+                                Kinetik
+                                Elektrik
+                                Thermodymaik
 	
-                            Somit ist eine optimale Vorbereitung für alle Prüfungen des Jahrgangs möglich
-                        </p>
+                                Somit ist eine optimale Vorbereitung für alle Prüfungen des Jahrgangs möglich
+                            </p>
+                        </div>
                     </div>
                     <div id="image2">
                         <img src="images/Startseite/Startseite_img02.png" />
                     </div>
                     <div  class="{style.element}" id="add2">
-                        <h2>Praxisorientiert</h2>
-                        <p>
-                            Das Lab in PhysixLab steht für Labor. Es ist uns wichtig, dass die User physikalische Kräfte auch erfahren können und sie nicht nur theoretisch erlernen. 
-                            Deswegen bietet jede Lektion ein interaktives Experiment, mit dessen Hilfe sich Schüler mit Aktion und Reaktion jedes behandelten Phänomens vertraut machen können.
-                            Schüler sollen verstehen und nicht nur Wissen.
-                        </p>
+                        <div class="{style.innerElement}">
+                            <h2>Praxisorientiert</h2>
+                            <p>
+                                Das Lab in PhysixLab steht für Labor. Es ist uns wichtig, dass die User physikalische Kräfte auch erfahren können und sie nicht nur theoretisch erlernen. 
+                                Deswegen bietet jede Lektion ein interaktives Experiment, mit dessen Hilfe sich Schüler mit Aktion und Reaktion jedes behandelten Phänomens vertraut machen können.
+                                Schüler sollen verstehen und nicht nur Wissen.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -9,6 +9,8 @@ import de.hofuniversity.iws.client.widgets.*;
 import com.google.gwt.event.logical.shared.*;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.*;
+import de.hofuniversity.iws.client.widgets.Thema.Thema;
+import de.hofuniversity.iws.client.widgets.UserHome.UserHome;
 
 /**
  *
@@ -29,6 +31,14 @@ public class HistoryPageController implements ValueChangeHandler<String> {
         public static String userinfopage() {
             return UserInfoWidget.NAME;
         }
+
+        public static String userhomepage() {
+            return UserHome.NAME;
+        }
+
+        public static String themapage() {
+            return Thema.NAME;
+        }
     }
 
     @Override
@@ -38,12 +48,16 @@ public class HistoryPageController implements ValueChangeHandler<String> {
 
     public void changePage(String pageName) {
 
-        if (LoginPage.NAME.equals(pageName)) {
+        if (Tokens.loginpage().equals(pageName)) {
             changePage(new LoginPage());
-        } else if (SessionPage.NAME.equals(pageName)) {
+        } else if (Tokens.sessionpage().equals(pageName)) {
             changePage(new SessionPage());
-        } else if (UserInfoWidget.NAME.equals(pageName)) {
+        } else if (Tokens.userinfopage().equals(pageName)) {
             changePage(new UserInfoWidget());
+        } else if (Tokens.userhomepage().equals(pageName)) {
+            changePage(new UserHome());
+        } else if (Tokens.themapage().equals(pageName)) {
+            changePage(new Thema());
         } else {
             //TODO
         }

@@ -10,10 +10,10 @@ Uncomment this for XHTML entities
         src: url('GeosansLight.ttf');
         }
 
-        #contentAreaFreunde {
+        #contentAreaUebersicht {
         font-family: geosans;
         font-size: 15px;
-        background: rgba(209,141,232,0.7);
+        background: rgba(255,249,108,0.7);
         height: 1080px;
         }
 
@@ -56,44 +56,32 @@ Uncomment this for XHTML entities
         height: 40px;
         }
 
-        #physixFriends {
+        #einfuehrung {
         top: 195px; 
         left: 40px;
         width: 400px;
         height: 680px;
         }
 
-        #selectedFriend {
+        #stats {
         top: 75px; 
         left: 520px;
         width: 400px;
-        height: 360px;
+        height: 800px;
         }
 
-        #possibleFriends {
-        top: 515px; 
-        left: 520px;
-        width: 400px;
-        height: 360px;
-        }
     </ui:style>
     <g:HTMLPanel>
-        <div id="contentAreaFreunde">
+        <div id="contentAreaUebersicht">
             <div id="content">
-                <h1>Freunde</h1>
-                <div class="{style.element}" id="physixFriends">
-                    <g:VerticalPanel ui:field='friends' styleName="{style.innerElement}">
-                        
+                <h1>Uebersicht</h1>
+                <div class="{style.element}" id="einfuehrung">
+                    <g:VerticalPanel ui:field='einfuehrungstext' styleName="{style.innerElement}">
                     </g:VerticalPanel>                 
                 </div>
-                <div class="{style.element}" id="selectedFriend">
+                <div class="{style.element}" id="stats">
                     <div class="{style.innerElement}">
                         Selected Friend
-                    </div>
-                </div>
-                <div class="{style.element}" id="possibleFriends">
-                    <div class="{style.innerElement}">
-                        Possible Friends
                     </div>
                 </div>
             </div>

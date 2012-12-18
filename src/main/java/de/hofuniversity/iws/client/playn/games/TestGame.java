@@ -4,7 +4,7 @@
  */
 package de.hofuniversity.iws.client.playn.games;
 
-import de.hofuniversity.iws.client.playn.StandardPhysicGame;
+import de.hofuniversity.iws.client.playn.*;
 import de.hofuniversity.iws.client.playn.entitys.*;
 
 import org.jbox2d.collision.shapes.PolygonShape;
@@ -20,8 +20,8 @@ import static playn.core.PlayN.*;
  */
 public class TestGame extends StandardPhysicGame {
 
-    private static final float width = 100;
-    private static final float height = 50;
+    private static final float width = 10;
+    private static final float height = 5;
     public GroupLayer staticLayerBack;
     public GroupLayer dynamicLayer;
     public GroupLayer staticLayerFront;
@@ -32,6 +32,7 @@ public class TestGame extends StandardPhysicGame {
 
     @Override
     public void init(GroupLayer scaledLayer) {
+        super.init(scaledLayer);
         staticLayerBack = graphics().createGroupLayer();
         scaledLayer.add(staticLayerBack);
         dynamicLayer = graphics().createGroupLayer();
@@ -42,7 +43,7 @@ public class TestGame extends StandardPhysicGame {
         // create the ground
         Body ground = getPhysicWorld().createBody(new BodyDef());
         PolygonShape groundShape = new PolygonShape();
-        groundShape.setAsEdge(new Vec2(0, height), new Vec2(width, height));
+        groundShape.setAsEdge(new Vec2(0, 0), new Vec2(width, 0));
         ground.createFixture(groundShape, 0.0f);
 
         // create the walls
@@ -54,10 +55,25 @@ public class TestGame extends StandardPhysicGame {
         PolygonShape wallRightShape = new PolygonShape();
         wallRightShape.setAsEdge(new Vec2(width, 0), new Vec2(width, height));
         wallRight.createFixture(wallRightShape, 0.0f);
-        
-        Ball b = new Ball(getPhysicWorld(), 50, 25);
-        b.setLinearVelocity(10, 0);
+
+        Ball b = new Ball(getPhysicWorld());
+        b.setPos(2, 5);
+        b.setLinearVelocity(3, 0);
         add(b);
+
+        Box b1 = new Box(getPhysicWorld(), 0.3f, 2);
+        b1.setPos(5.5f, 1f);
+        Box b2 = new Box(getPhysicWorld(), 0.3f, 2);
+        b2.setPos(7f, 1f);
+        Box b3 = new Box(getPhysicWorld(), 2f, 0.3f);
+        b3.setPos(6.25f, 2.15f);
+
+        add(b1);
+        add(b2);
+        add(b3);
+
+        Pendulum p = new Pendulum(getPhysicWorld(), 3, 4, 5);
+        p.setLinearVelocity(-5, 0);
     }
 
     @Override
