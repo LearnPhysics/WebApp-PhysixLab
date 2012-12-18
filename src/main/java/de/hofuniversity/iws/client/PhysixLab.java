@@ -31,10 +31,10 @@ public class PhysixLab {
     public void init() {
         History.addValueChangeHandler(PAGE_CONTROLLER);
         
-        PlayNWidget w = new PlayNWidget(new KineticWars());
-        w.setWidth(800 + "px");
-        RootPanel.get().add(w);
-        loginService.getLoginData(new AsyncCallback<Optional<LoginDTO>>() {
+//        PlayNWidget w = new PlayNWidget(new KineticWars());
+//        w.setWidth(800 + "px");
+//        RootPanel.get().add(w);
+        loginService.getLoginData(new AsyncCallback<Optional>() {
             @Override
             public void onFailure(Throwable caught) {
                 PAGE_CONTROLLER.changePage(LoginPage.NAME);

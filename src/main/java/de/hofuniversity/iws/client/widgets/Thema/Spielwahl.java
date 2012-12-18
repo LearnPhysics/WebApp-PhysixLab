@@ -16,6 +16,9 @@ import de.hofuniversity.iws.client.widgets.TestEntities.TestGame;
 import java.util.LinkedList;
 import java.util.List;
 
+import de.hofuniversity.iws.client.playn.PlayNWidget;
+import de.hofuniversity.iws.client.playn.games.KineticWars;
+
 /**
  *
  * @author Oliver
@@ -42,7 +45,9 @@ public class Spielwahl extends Composite {
         game.setTitle("Kinetic Wars");
         game.setDescription("Bring die Bauten deiner Gegner zum Einsturz.");
         game.setImageURL("images/Thema/gameTest01.jpg");
-        game.setGameWidget(new Image("images/Thema/gameWidget01.jpg"));
+        Widget w = new PlayNWidget(new KineticWars());
+        w.setWidth(860+"px");
+        game.setGameWidget(w);
         addGame(game);
 
         TestGame game0 = new TestGame();

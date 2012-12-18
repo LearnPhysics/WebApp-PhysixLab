@@ -51,7 +51,7 @@ public class GameSelector extends Composite {
     }
     
     public GameSelector(TestGame game, int pos) {
-        initWidget(uiBinder.createAndBindUi(this));
+        this();
         this.game = game;
         this.pos = pos;
         setup();
