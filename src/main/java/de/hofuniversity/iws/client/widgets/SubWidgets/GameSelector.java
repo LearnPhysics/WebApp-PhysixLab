@@ -22,7 +22,8 @@ import com.google.gwt.user.client.ui.Widget;
 import de.hofuniversity.iws.client.PhysixLab;
 import de.hofuniversity.iws.client.widgets.Game.Game;
 import de.hofuniversity.iws.client.widgets.LoginPage;
-import de.hofuniversity.iws.client.widgets.Thema.Spielwahl.TestGame;
+import de.hofuniversity.iws.client.widgets.TestEntities.EntityHolder;
+import de.hofuniversity.iws.client.widgets.TestEntities.TestGame;
 import de.hofuniversity.iws.client.widgets.Thema.Thema;
 
 /**
@@ -58,7 +59,7 @@ public class GameSelector extends Composite {
     
     private void setup() {
         iImg.setUrl(game.getImageURL());
-        title.setInnerText(game.getName());
+        title.setInnerText(game.getTitle());
         text.setInnerText(game.getDescription());
         
         wrap.getElement().getStyle().setTop(180, Unit.PX);
@@ -66,6 +67,7 @@ public class GameSelector extends Composite {
     
     @UiHandler("oImg")
     public void openGame(ClickEvent ev) {
+        EntityHolder.getInstance().setGame(game);
         PhysixLab.PAGE_CONTROLLER.changePage(Game.NAME);
     }
 }

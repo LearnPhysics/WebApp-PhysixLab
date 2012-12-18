@@ -17,8 +17,9 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import de.hofuniversity.iws.client.widgets.Lektion.Lektion.TestTest;
 import de.hofuniversity.iws.client.widgets.LoginPage;
+import de.hofuniversity.iws.client.widgets.TestEntities.EntityHolder;
+import de.hofuniversity.iws.client.widgets.TestEntities.TestTest;
 import de.hofuniversity.iws.shared.services.Utilities;
 
 /**
@@ -41,12 +42,10 @@ public class Test extends Composite {
     
     public Test() {
         initWidget(uiBinder.createAndBindUi(this));
-    }
-    
-    public Test(TestTest test) {
-        initWidget(uiBinder.createAndBindUi(this));
-        this.test = test;
-        setup();
+        this.test = EntityHolder.getInstance().getLektion().getTest();
+        if(test != null) {
+            setup();
+        }
     }
     
     private void setup() {

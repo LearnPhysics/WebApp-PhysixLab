@@ -8,9 +8,11 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import de.hofuniversity.iws.client.widgets.SubWidgets.GameSelector;
+import de.hofuniversity.iws.client.widgets.TestEntities.TestGame;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -37,16 +39,17 @@ public class Spielwahl extends Composite {
 
     private void setTestGames() {
         TestGame game = new TestGame();
-        game.setName("Kinetic Wars");
+        game.setTitle("Kinetic Wars");
         game.setDescription("Bring die Bauten deiner Gegner zum Einsturz.");
         game.setImageURL("images/Thema/gameTest01.jpg");
+        game.setGameWidget(new Image("images/Thema/gameWidget01.jpg"));
         addGame(game);
-        
+
         TestGame game0 = new TestGame();
-        game0.setName("Go Fishing");
+        game0.setTitle("Go Fishing");
         game0.setDescription("Es handelt sich hier um ein reines Testspiel.");
         game0.setImageURL("images/Thema/gameTest02.jpg");
-
+        game0.setGameWidget(new Image("images/Thema/gameWidget02.png"));
         addGame(game0);
     }
 
@@ -58,37 +61,6 @@ public class Spielwahl extends Composite {
         for (int i = 0; i < games.size(); i++) {
             GameSelector gs = new GameSelector(games.get(i), i);
             gamesPanel.add(gs);
-        }
-    }
-
-    public class TestGame {
-
-        String name;
-        String description;
-        String imageURL;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public void setDescription(String description) {
-            this.description = description;
-        }
-
-        public String getImageURL() {
-            return imageURL;
-        }
-
-        public void setImageURL(String imageURL) {
-            this.imageURL = imageURL;
         }
     }
 }

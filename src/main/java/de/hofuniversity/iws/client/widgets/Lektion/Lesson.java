@@ -14,7 +14,9 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import de.hofuniversity.iws.client.widgets.Lektion.Lektion.TestLektion;
+import de.hofuniversity.iws.client.widgets.TestEntities.EntityHolder;
+import de.hofuniversity.iws.client.widgets.TestEntities.TestLektion;
+import de.hofuniversity.iws.client.widgets.TestEntities.TestThema;
 
 /**
  *
@@ -37,16 +39,20 @@ public class Lesson extends Composite {
     
     public Lesson() {
         initWidget(uiBinder.createAndBindUi(this));
-    }
-    
-    public Lesson(TestLektion lesson) {
-        initWidget(uiBinder.createAndBindUi(this));
-        this.lesson = lesson;
-        setup();
+        this.lesson = EntityHolder.getInstance().getLektion();
+        if(lesson != null) {
+            setup();
+        }
     }
     
     private void setup() {
-        theme.setInnerText(lesson.getThema());
+        TestThema thema = EntityHolder.getInstance().getThema();
+        if(thema != null) {
+            theme.setInnerText(thema.getTitle());
+        }
+        else {
+            theme.setInnerText("Test");
+        }
         title.setInnerText(lesson.getTitle());
         text.setInnerText(lesson.getLessonText());
         experiment.add(lesson.getExperiment());
