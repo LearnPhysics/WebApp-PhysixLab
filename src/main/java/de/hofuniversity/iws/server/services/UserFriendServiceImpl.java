@@ -65,6 +65,11 @@ public class UserFriendServiceImpl extends RemoteServiceServlet implements UserF
         return null;
     }
     
+    public String parseThemes()
+    {
+        return "Hello, world";
+    }
+    
     public <T> Optional<T> getSessionAttribute(String attributeName) {
         return getSessionAttribute(getThreadLocalRequest(), attributeName);
     }
