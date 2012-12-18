@@ -14,11 +14,19 @@ public interface PhysicGame {
 
     public void init(GroupLayer scaledLayer);
 
-    public float getWidth();
-
-    public float getHeight();
-
     public void update(float delta);
 
     public void paint(float alpha);
+    
+    /**
+     * The width of the game world. Nothing to do with the screen size.
+     * @return 
+     */
+    public float getWidth();
+
+    /**
+     * The height of the game world. Nothing to do with the screen size.
+     * @return 
+     */
+    public float getHeight();
 }

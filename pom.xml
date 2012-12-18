@@ -75,11 +75,6 @@
             <version>${playNVersion}</version>
         </dependency>
         <dependency>
-            <groupId>com.googlecode.playn</groupId>
-            <artifactId>playn-java</artifactId>
-            <version>${playNVersion}</version>
-        </dependency>
-        <dependency>
             <groupId>com.threerings</groupId>
             <artifactId>tripleplay</artifactId>
             <version>${playNVersion}</version>
@@ -134,6 +129,11 @@
             <groupId>com.reveregroup.gwt</groupId>
             <artifactId>gwt-image-loader</artifactId>
             <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.playn</groupId>
+            <artifactId>playn-java</artifactId>
+            <version>1.5.1</version>
         </dependency>
     </dependencies>
 

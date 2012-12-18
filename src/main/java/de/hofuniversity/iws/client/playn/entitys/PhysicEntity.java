@@ -15,14 +15,60 @@
  */
 package de.hofuniversity.iws.client.playn.entitys;
 
-import org.jbox2d.dynamics.Body;
+import org.jbox2d.dynamics.*;
+import playn.core.Pointer;
 
-public interface PhysicEntity extends Entity{
+public abstract class PhysicEntity implements Entity {
 
-    public Body getBody();
+    public abstract Body getBody();
+
+    @Override
+    public void destroy() {
+        Body b = getBody();
+        if (b != null) {
+            b.getWorld().destroyBody(getBody());
+        }
+    }
+
+    @Override
+    public boolean isMarkedForRemoval() {
+        return false;
+    }
+
+    public static abstract class Builder<T extends PhysicEntity> {
+
+        protected final World world;
+        protected float x, y;
+
+        public Builder(World world) {
+            this.world = world;
+        }
+
+        public Builder<T> onPosition(float x, float y) {
+            this.x = x;
+            this.y = y;
+            return this;
+        }
+
+        public abstract T create();
+    }
 
     public interface HasContactListener {
 
         public void contact(PhysicEntity other, float impulse);
+    }
+
+    public interface HasInteractionListener {
+
+        public InteractionListener getListener();
+    }
+
+    public interface InteractionListener {
+
+        public void clicked(Pointer.Event event);
+
+        public void draged(float x, float y);
+
+        public void dragEnd();
     }
 }

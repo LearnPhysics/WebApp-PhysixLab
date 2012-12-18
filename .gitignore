@@ -3,3 +3,5 @@
 /html/target/
 /target/
 /PhysixLab/nbproject/private/
+*.dll
+*.so

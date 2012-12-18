@@ -13,7 +13,7 @@ import static playn.core.PlayN.graphics;
  * @author Daniel Heinrich <dannynullzwo@gmail.com>
  */
 public class PhysicGameBox implements Game {
-
+    
     private final PhysicGame game;
     private final int width;
 

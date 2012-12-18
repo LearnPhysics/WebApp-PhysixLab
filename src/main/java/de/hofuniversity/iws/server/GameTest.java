@@ -1,7 +1,7 @@
 package de.hofuniversity.iws.server;
 
 import de.hofuniversity.iws.client.playn.*;
-import de.hofuniversity.iws.client.playn.games.TestGame;
+import de.hofuniversity.iws.client.playn.games.KineticWars;
 import playn.core.PlayN;
 import playn.java.JavaPlatform;
 import playn.java.JavaPlatform.Config;
@@ -17,7 +17,7 @@ import playn.java.JavaPlatform.Config;
 public class GameTest {
 
     public static void main(String[] args) {
-        startGame(new TestGame(), 800);
+        startGame(new KineticWars(), 1600);
     }
 
     private static void startGame(PhysicGame game, int width) {

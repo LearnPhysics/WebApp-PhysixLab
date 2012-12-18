@@ -16,4 +16,6 @@ public interface Entity {
     public Layer getLayer();
     public float getWidth();
     public float getHeight();
+    public void destroy();
+    public boolean isMarkedForRemoval();
 }

@@ -14,33 +14,75 @@ import playn.core.*;
  *
  * @author some
  */
-public class Box extends ImageEntity implements HasContactListener{
+public class Box extends ImageEntity implements HasContactListener {
 
     private final Body body;
     private final float width, height;
+    private boolean remove = false;
+    private final static float MAX_LIFE = 3;
+    private float life = MAX_LIFE;
 
-    public Box(World world, float width, float height) {
+    public static class Builder extends ImageEntity.Builder<Box> {
+
+        private float width = 1f;
+        private float height = 1f;
+
+        public Builder(float imageScaleFactor, World world) {
+            super(imageScaleFactor, world);
+        }
+
+        public Builder setWidth(float w) {
+            width = w;
+            return this;
+        }
+
+        public Builder setHeight(float height) {
+            this.height = height;
+            return this;
+        }
+        
+        public Builder setSize(float width, float height) {
+            this.height = height;
+            this.width = width;
+            return this;
+        }
+
+        @Override
+        public Box create() {
+            BodyDef bodyDef = new BodyDef();
+            bodyDef.type = BodyType.DYNAMIC;
+            bodyDef.position = new Vec2(x, y);
+
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox(width / 2, height / 2);
+
+            FixtureDef fixtureDef = new FixtureDef();
+            fixtureDef.shape = shape;
+            fixtureDef.density = 5f;
+            fixtureDef.friction = 0.9f;
+            fixtureDef.restitution = 0.35f;
+
+            Body body = world.createBody(bodyDef);
+            body.createFixture(fixtureDef);
+            body.setLinearDamping(0.2f);
+
+            return new Box(body, imageScaleFactor, width, height);
+        }
+    }
+
+    public static Builder build(World world, float imageScaleFactor) {
+        return new Builder(imageScaleFactor, world);
+    }
+
+    private Box(Body body, float scale, float width, float height) {
+        super(scale);
         this.width = width;
         this.height = height;
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyType.DYNAMIC;
-        bodyDef.position = new Vec2(0, 0);
+        this.body = body;
 
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width / 2, height / 2);
-        
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        fixtureDef.density = 0.1f;
-        fixtureDef.friction = 0.1f;
-        fixtureDef.restitution = 0.35f;
-        
-        body = world.createBody(bodyDef);
-        body.createFixture(fixtureDef);
-        body.setLinearDamping(0.2f);
-        
-        
         init();
+
+        paintImg();
     }
 
     @Override
@@ -48,18 +90,15 @@ public class Box extends ImageEntity implements HasContactListener{
         return body;
     }
 
-    @Override
-    public Image getImage() {
-        float w= width*100;
-        float h= height*100;
-        CanvasImage img = PlayN.graphics().createImage(w, h);
+    private void paintImg() {
+        int color = Color.rgb(0, 0, (int) (255 * life / MAX_LIFE));
+        CanvasImage img = getImage();
         img.canvas().clear();
-        img.canvas().setFillColor(Color.rgb(0, 0, 255));
-        img.canvas().fillRect(0, 0, w, h);
-        img.canvas().setStrokeColor(Color.rgb(0, 120, 0));
+        img.canvas().setFillColor(color);
+        img.canvas().fillRect(0, 0, img.width(), img.height());
+        img.canvas().setStrokeColor(Color.rgb(255, 255, 255));
         img.canvas().setStrokeWidth(2);
-        img.canvas().strokeRect(0, 0, w, h);
-        return img;
+        img.canvas().strokeRect(0, 0, img.width(), img.height());
     }
 
     @Override
@@ -74,6 +113,17 @@ public class Box extends ImageEntity implements HasContactListener{
 
     @Override
     public void contact(PhysicEntity other, float impulse) {
-        System.out.println(impulse);
+        if (!(other instanceof Box)) {
+            life -= impulse;
+            paintImg();
+            if (life < 0) {
+                remove = true;
+            }
+        }
+    }
+
+    @Override
+    public boolean isMarkedForRemoval() {
+        return remove;
     }
 }

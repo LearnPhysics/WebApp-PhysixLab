@@ -5,6 +5,7 @@
 package de.hofuniversity.iws.client.playn.entitys;
 
 import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.World;
 import playn.core.*;
 
 import static playn.core.PlayN.graphics;
@@ -13,14 +14,30 @@ import static playn.core.PlayN.graphics;
  *
  * @author Daniel Heinrich <dannynullzwo@gmail.com>
  */
-public abstract class ImageEntity implements PhysicEntity {
+public abstract class ImageEntity extends PhysicEntity {
 
+    public static abstract class Builder<T extends ImageEntity> extends PhysicEntity.Builder<T> {
+
+        protected final float imageScaleFactor;
+
+        public Builder(float imageScaleFactor, World world) {
+            super(world);
+            this.imageScaleFactor = imageScaleFactor;
+        }
+    }
+    protected final float imageScaleFactor;
     private float prevX, prevY, prevA;
+    private CanvasImage image;
     private ImageLayer layer;
 
-    protected final void init() {
-        layer = graphics().createImageLayer(getImage());
-        getImage().addCallback(new ResourceCallback<Image>() {
+    public ImageEntity(float imageScaleFactor) {
+        this.imageScaleFactor = imageScaleFactor;
+    }
+
+    protected void init() {
+        image = createImage();
+        layer = graphics().createImageLayer(image);
+        image.addCallback(new ResourceCallback<Image>() {
             @Override
             public void done(Image image) {
                 layer.setOrigin(image.width() / 2f, image.height() / 2f);
@@ -37,6 +54,14 @@ public abstract class ImageEntity implements PhysicEntity {
     @Override
     public Layer getLayer() {
         return layer;
+    }
+
+    public CanvasImage getImage() {
+        return image;
+    }
+
+    private CanvasImage createImage() {
+        return PlayN.graphics().createImage(getWidth() * imageScaleFactor, getHeight() * imageScaleFactor);
     }
 
     @Override
@@ -74,5 +99,15 @@ public abstract class ImageEntity implements PhysicEntity {
         prevA = a;
     }
 
-    public abstract Image getImage();
+    @Override
+    public void destroy() {
+        super.destroy();
+        if (layer != null) {
+            GroupLayer parent = layer.parent();
+            if (parent != null) {
+                parent.remove(layer);
+            }
+            layer = null;
+        }
+    }
 }

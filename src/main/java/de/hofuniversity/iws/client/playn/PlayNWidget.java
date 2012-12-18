@@ -4,12 +4,11 @@
  */
 package de.hofuniversity.iws.client.playn;
 
-import com.google.gwt.core.shared.GWT;
-import com.google.gwt.uibinder.client.UiConstructor;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.*;
-import playn.core.*;
+import playn.core.PlayN;
 import playn.html.HtmlPlatform;
+import playn.html.HtmlPlatform.Configuration;
+import playn.html.HtmlPlatform.Mode;
 
 /**
  *
@@ -28,9 +27,12 @@ public class PlayNWidget extends Composite {
     }
 
     private void start() {
-        HtmlPlatform.register();
         PhysicGameBox g = new PhysicGameBox(game, panel.getOffsetWidth());
         panel.setHeight(g.getHeight() + "px");
+        Configuration conf  = new Configuration();
+        conf.antiAliasing = true;
+        conf.mode = Mode.CANVAS;
+        HtmlPlatform.register(conf);
         PlayN.run(g);
     }
 

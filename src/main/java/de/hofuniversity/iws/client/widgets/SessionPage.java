@@ -9,8 +9,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.ui.*;
 import de.hofuniversity.iws.client.PhysixLab;
-import de.hofuniversity.iws.client.playn.PlayNWidget;
-import de.hofuniversity.iws.client.playn.games.TestGame;
 import de.hofuniversity.iws.shared.services.*;
 
 /**
