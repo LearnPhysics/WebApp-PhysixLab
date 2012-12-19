@@ -4,18 +4,20 @@
  */
 package de.hofuniversity.iws.client.widgets.TestEntities;
 
-import com.google.gwt.user.client.ui.Image;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
+
+import com.google.gwt.user.client.ui.*;
+import de.hofuniversity.iws.client.playn.PlayNWidget;
+import de.hofuniversity.iws.client.playn.games.KineticWars;
 
 /**
  *
  * @author Oliver
  */
 public class FakeDatabase {
+
     private static FakeDatabase eh = null;
-    
-    private List<TestThema> themen; 
+    private List<TestThema> themen;
 
     private FakeDatabase() {
         themen = new LinkedList<TestThema>();
@@ -28,16 +30,16 @@ public class FakeDatabase {
         }
         return eh;
     }
-    
+
     public List<TestThema> getAllThemes() {
         return themen;
     }
-    
+
     private void buildTestData() {
         TestThema kinetik = new TestThema();
         TestThema elekt = new TestThema();
         TestThema thermo = new TestThema();
-        
+
         kinetik.setTitle("Kinetik");
         kinetik.setDescription("Die Kinetik (gr. kinesis Bewegung) ist ein Teilgebiet der Mechanik und beschreibt die Änderung der Bewegungsgrößen (Weg, Zeit, Geschwindigkeit und Beschleunigung) unter Einwirkung von Kräften im Raum. Die Kinetik steht im Gegensatz zur Statik, die sich mit dem Kräftegleichgewicht an nicht beschleunigten Körpern beschäftigt. Beide zusammen bilden die Dynamik, die sich mit der Wirkung von Kräften befasst.");
         kinetik.setImageURL("images/UserHome/Thema_Kinetik.png");
@@ -47,12 +49,15 @@ public class FakeDatabase {
         thermo.setTitle("Thermodynamik");
         thermo.setDescription("Die Thermodynamik (von altgriechisch thermós „warm“ sowie dynamis „Kraft“),[1] auch als Wärmelehre bezeichnet, ist ein Teilgebiet der klassischen Physik. Sie beschäftigt sich mit der Möglichkeit, durch Umverteilen von Energie zwischen ihren verschiedenen Erscheinungsformen Arbeit zu verrichten. Die Grundlagen der Thermodynamik wurden aus dem Studium der Volumen-, Druck-, Temperaturverhältnisse bei Dampfmaschinen entwickelt.");
         thermo.setImageURL("images/UserHome/Thema_Thermo.png");
-        
+
         TestGame game = new TestGame();
         game.setTitle("Kinetic Wars");
         game.setDescription("Bring die Bauten deiner Gegner zum Einsturz.");
         game.setImageURL("images/Thema/gameTest01.jpg");
-        game.setGameWidget(new Image("images/ReplacementImages/gameWidget01.jpg"));
+        Widget w = new PlayNWidget(new KineticWars());
+        //normally with css
+        w.setWidth(600 + "px");
+        game.setGameWidget(w);
         kinetik.getGames().add(game);
 
         TestGame game0 = new TestGame();
@@ -61,12 +66,12 @@ public class FakeDatabase {
         game0.setImageURL("images/Thema/gameTest02.jpg");
         game0.setGameWidget(new Image("images/ReplacementImages/gameWidget02.png"));
         kinetik.getGames().add(game0);
-        
+
         TestLektion parent = new TestLektion();
         parent.setTitle("Freier Fall");
         parent.setPreviewURL("images/ReplacementImages/FreeFallPreview.png");
         parent.setParent(null);
-        
+
         TestLektion pendel = new TestLektion();
         pendel.setTitle("Das Fadenpendel");
         pendel.setPreviewURL("images/ReplacementImages/LektionPendelPreview.jpg");
@@ -74,19 +79,19 @@ public class FakeDatabase {
         pendel.setExperiment(new Image("images/ReplacementImages/LektionPendelWidget.jpg"));
         pendel.setFormular(new Image("images/ReplacementImages/PendelFormelWidget.gif"));
         pendel.setParent(parent);
-        
+
         TestTest testPendel = new TestTest();
         testPendel.setTitle("Höchstgeschwindigkeit");
         testPendel.setDescription("Wie man eine Differezialgleichung 2. Ordnung löst ist nicht einfach. Wir müssen eine Funktion f(φ(t)) finden, welche links und rechts von (VIII) eingesetzt werden kann, sodass beide Seiten das Selbe ergeben. Auf der linken Seite muss dabei f(φ(t)) zweimal abgeleitet werden. Um eine solche Funktion f zu finden, schaut man in einem Formelbuch nach, ob man vielleicht schon eine Lösung gefunden hat. Oder man beobachtet, wie sich das Objekt bewegt und versucht daraus eine Formel abzuleiten und überprüft dann, ob die so gefundene Formel korrekt ist. Oder man sucht ähnliche physikalische Systeme bzw. schaut, ob das vorliegende System durch ein ähnliches System angenähert werden kann, für welches man bereits eine Lösung gefunden hat. Im Falle des Fadenpendels können wir beobachten, dass das Pendel periodisch hin und her schwingt. f könnte also eine Sinus-Funktion sein. Wenn man diesen Ansatz überprüft, indem man f = a · sin(b·φ(t) + c) einsetzt, stellt man jedoch fest, dass der Ansatz nicht korrekt ist. Schauen wir also, ob es ein ähnliches System gibt, für das wir die Lösung kennen, und das annähernd wie ein Fadenpendel reagiert. Wir vermuten mal, dass ein Federpendel einem Fadenpendel ähnlich sein könnte und schauen uns die Bewegungsgleichung des Federpendels an, für welches wir die Lösung nachschauen können:");
         testPendel.setSolution(20);
         testPendel.setIllustration(new Image("images/ReplacementImages/PendelTestIllustration.JPG"));
         testPendel.setPassed(false);
-        
+
         pendel.setTest(testPendel);
-        
+
         kinetik.getLektionen().add(parent);
         kinetik.getLektionen().add(pendel);
-        
+
         themen.add(kinetik);
         themen.add(elekt);
         themen.add(thermo);

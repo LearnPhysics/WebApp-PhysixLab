@@ -31,40 +31,38 @@ import de.hofuniversity.iws.client.widgets.Thema.Thema;
  * @author Oliver
  */
 public class GameSelector extends Composite {
-    
+
     private static GameSelectorUiBinder uiBinder = GWT.create(GameSelectorUiBinder.class);
-    
-    @UiField HTMLPanel wrap;
-    @UiField FocusPanel oImg;
-    @UiField Image iImg;
-    @UiField HeadingElement title;
-    @UiField ParagraphElement text;
-    
+    @UiField
+    HTMLPanel wrap;
+    @UiField
+    FocusPanel oImg;
+    @UiField
+    Image iImg;
+    @UiField
+    HeadingElement title;
+    @UiField
+    ParagraphElement text;
     private TestGame game;
-    private int pos;
-    
+
     interface GameSelectorUiBinder extends UiBinder<Widget, GameSelector> {
     }
-    
+
     public GameSelector() {
         initWidget(uiBinder.createAndBindUi(this));
     }
-    
-    public GameSelector(TestGame game, int pos) {
+
+    public GameSelector(TestGame game) {
         this();
         this.game = game;
-        this.pos = pos;
-        setup();
-    }
-    
-    private void setup() {
+        
         iImg.setUrl(game.getImageURL());
         title.setInnerText(game.getTitle());
         text.setInnerText(game.getDescription());
-        
+
         wrap.getElement().getStyle().setTop(180, Unit.PX);
     }
-    
+
     @UiHandler("oImg")
     public void openGame(ClickEvent ev) {
         EntityHolder.getInstance().setGame(game);

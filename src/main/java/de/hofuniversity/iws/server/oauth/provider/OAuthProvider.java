@@ -5,7 +5,6 @@
 package de.hofuniversity.iws.server.oauth.provider;
 
 import de.hofuniversity.iws.server.oauth.*;
-
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.builder.api.Api;
 import org.scribe.model.Token;

@@ -4,21 +4,13 @@
  */
 package de.hofuniversity.iws.client.widgets.Thema;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
-import de.hofuniversity.iws.client.widgets.SubWidgets.GameSelector;
-import de.hofuniversity.iws.client.widgets.TestEntities.EntityHolder;
-import de.hofuniversity.iws.client.widgets.TestEntities.TestGame;
-import java.util.LinkedList;
 import java.util.List;
 
-import de.hofuniversity.iws.client.playn.PlayNWidget;
-import de.hofuniversity.iws.client.playn.games.KineticWars;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.uibinder.client.*;
+import com.google.gwt.user.client.ui.*;
+import de.hofuniversity.iws.client.widgets.SubWidgets.GameSelector;
+import de.hofuniversity.iws.client.widgets.TestEntities.*;
 
 /**
  *
@@ -27,7 +19,6 @@ import de.hofuniversity.iws.client.playn.games.KineticWars;
 public class Spielwahl extends Composite {
 
     private static SpielwahlUiBinder uiBinder = GWT.create(SpielwahlUiBinder.class);
-    private static List<TestGame> games;
     @UiField
     VerticalPanel gamesPanel;
 
@@ -36,16 +27,11 @@ public class Spielwahl extends Composite {
 
     public Spielwahl() {
         initWidget(uiBinder.createAndBindUi(this));
-        this.games = EntityHolder.getInstance().getThema().getGames();
-        if(games != null) {
-            setup();
-        }
-    }
-
-    public void setup() {
-        for (int i = 0; i < games.size(); i++) {
-            GameSelector gs = new GameSelector(games.get(i), i);
-            gamesPanel.add(gs);
+        List<TestGame> games = EntityHolder.getInstance().getThema().getGames();
+        if (games != null) {
+            for (TestGame game : games) {
+                gamesPanel.add(new GameSelector(game));
+            }
         }
     }
 }

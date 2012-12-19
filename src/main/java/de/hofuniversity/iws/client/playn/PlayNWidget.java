@@ -8,7 +8,6 @@ import com.google.gwt.user.client.ui.*;
 import playn.core.PlayN;
 import playn.html.HtmlPlatform;
 import playn.html.HtmlPlatform.Configuration;
-import playn.html.HtmlPlatform.Mode;
 
 /**
  *
@@ -31,7 +30,7 @@ public class PlayNWidget extends Composite {
         panel.setHeight(g.getHeight() + "px");
         Configuration conf  = new Configuration();
         conf.antiAliasing = true;
-        conf.mode = Mode.CANVAS;
+//        conf.mode = Mode.CANVAS;
         HtmlPlatform.register(conf);
         PlayN.run(g);
     }

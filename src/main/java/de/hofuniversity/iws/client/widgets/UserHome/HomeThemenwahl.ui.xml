@@ -68,8 +68,8 @@ Uncomment this for XHTML entities
                 </g:VerticalPanel>
                 <div class="{style.element}" id="news">
                     <div class="{style.innerElement}">
-                    <h2>News</h2>
-                    <p></p>
+                        <h2>News</h2>
+                        <p></p>
                     </div>
                 </div>
             </div>

@@ -39,7 +39,6 @@ public class ThemaSelector extends Composite {
     @UiField ParagraphElement text;
     
     private TestThema thema;
-    private int pos;
     
     interface ThemaSelectorUiBinder extends UiBinder<Widget, ThemaSelector> {
     }
@@ -48,10 +47,9 @@ public class ThemaSelector extends Composite {
         initWidget(uiBinder.createAndBindUi(this));
     }
     
-    public ThemaSelector(TestThema thema, int pos) {
+    public ThemaSelector(TestThema thema) {
         initWidget(uiBinder.createAndBindUi(this));
         this.thema = thema;
-        this.pos = pos;
         setup();
     }
     

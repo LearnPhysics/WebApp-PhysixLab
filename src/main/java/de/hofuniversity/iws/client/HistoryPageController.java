@@ -9,6 +9,7 @@ import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.*;
 import de.hofuniversity.iws.client.widgets.Game.Game;
 import de.hofuniversity.iws.client.widgets.Lektion.Lektion;
+import de.hofuniversity.iws.client.widgets.LoginPage;
 import de.hofuniversity.iws.client.widgets.Thema.Thema;
 import de.hofuniversity.iws.client.widgets.UserHome.UserHome;
 
