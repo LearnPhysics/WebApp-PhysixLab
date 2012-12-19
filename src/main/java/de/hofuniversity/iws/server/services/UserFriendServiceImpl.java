@@ -6,13 +6,21 @@ package de.hofuniversity.iws.server.services;
 
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import de.hofuniversity.iws.dto.UserDTO;
 import de.hofuniversity.iws.server.data.entities.User;
 import de.hofuniversity.iws.server.dto.UserMapper;
 import de.hofuniversity.iws.shared.services.UserFriendService;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -66,8 +74,22 @@ public class UserFriendServiceImpl extends RemoteServiceServlet implements UserF
     }
     
     public String parseThemes()
-    {
-        return "Hello, world";
+    { 
+        FileInputStream in = null;
+        try {
+            File f = new File(GWT.getHostPageBaseURL()+"/Subjects/kinetic/theme.xml");
+            in = new FileInputStream(f);
+            return "Hello, world";
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(UserFriendServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                in.close();
+            } catch (IOException ex) {
+                Logger.getLogger(UserFriendServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
     }
     
     public <T> Optional<T> getSessionAttribute(String attributeName) {

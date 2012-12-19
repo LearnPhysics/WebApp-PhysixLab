@@ -27,22 +27,6 @@ public class HomeThemenwahl extends Composite {
     
     public HomeThemenwahl() {
         initWidget(uiBinder.createAndBindUi(this));
-        userfriend.parseThemes(new ThemeParserCallback());
     }
     
-        private static class ThemeParserCallback implements AsyncCallback<String> {
-
-        public ThemeParserCallback() {
-        }
-
-        @Override
-        public void onFailure(Throwable caught) {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-        @Override
-        public void onSuccess(String result) {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
-    }
 }
