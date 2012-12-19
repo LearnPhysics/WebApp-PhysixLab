@@ -11,8 +11,8 @@ Uncomment this for XHTML entities
         }
 
         #contentAreaLesson {
-        font-family: geosans;
-        font-size: 15px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
         background: rgba(109,232,150,0.7);
         height: 1080px;
         }
@@ -29,6 +29,7 @@ Uncomment this for XHTML entities
         left: 40px;
         color: rgb(65,150,255);
         margin: 0 0 0 0;
+        font-family: geosans;
         font-size: 60px;
         }
 
@@ -60,10 +61,10 @@ Uncomment this for XHTML entities
         top: 195px; 
         left: 40px;
         width: 400px;
-        height: 680px;
+        min-height: 680px;
         }
 
-        #exper {
+        .exper {
         top: 75px; 
         left: 520px;
         width: 400px;
@@ -87,14 +88,14 @@ Uncomment this for XHTML entities
                         <p ui:field="text"></p>
                     </div>              
                 </div>
-                <div class="{style.element}" id="exper">
+                <g:VerticalPanel styleName="{style.element} {style.exper}">
                     <g:VerticalPanel styleName="{style.innerElement}">
                         <g:VerticalPanel ui:field="experiment">
                         </g:VerticalPanel>
                         <g:HTMLPanel>
                         </g:HTMLPanel>
                     </g:VerticalPanel>
-                </div>              
+                </g:VerticalPanel>             
                 <div class="{style.element}" id="formu">
                     <g:VerticalPanel styleName="{style.innerElement}">
                         <g:VerticalPanel ui:field="formular">  

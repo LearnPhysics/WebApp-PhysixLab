@@ -11,8 +11,8 @@ Uncomment this for XHTML entities
         }
 
         #contentAreaSpielwahl {
-        font-family: geosans;
-        font-size: 15px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
         background: rgba(109,232,150,0.7);
         height: 1080px;
         }
@@ -29,6 +29,7 @@ Uncomment this for XHTML entities
         left: 40px;
         color: rgb(65,150,255);
         margin: 0 0 0 0;
+        font-family: geosans;
         font-size: 60px;
         }
 
@@ -72,7 +73,7 @@ Uncomment this for XHTML entities
                 </g:VerticalPanel>
                 <div class="{style.element}" id="highscore">
                     <div class="{style.innerElement}">
-                        Selected Friend
+                        Highscores
                     </div>
                 </div>
             </div>

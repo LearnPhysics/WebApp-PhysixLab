@@ -43,7 +43,7 @@ Uncomment this for XHTML entities
         }
         
         .tab:hover {
-        font-size: 18px;
+        font-size: 16px;
         }
 
         .tab1 {
@@ -64,7 +64,7 @@ Uncomment this for XHTML entities
         .selected {
         height: 32px;
         top: 123px;
-        font-size: 18px;
+        font-size: 16px;
         }
         
         b {

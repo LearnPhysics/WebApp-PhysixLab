@@ -11,8 +11,8 @@ Uncomment this for XHTML entities
         }
 
         .wrap {
-        font-family: geosans;
-        font-size: 15px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
         height: 160px;
         position: relative; 
         width: 400px;

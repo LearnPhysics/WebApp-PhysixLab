@@ -11,8 +11,8 @@ Uncomment this for XHTML entities
         }
 
         html {
-        font-family: geosans;
-        font-size: 16px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
         }
 
         body { 

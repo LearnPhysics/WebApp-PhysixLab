@@ -13,8 +13,8 @@ Uncomment this for XHTML entities
         body { 
         background-image: url('images/Startseite/Circle02.png');
         margin: 0px auto;
-        font-family: geosans;
-        font-size: 15px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
         }
 
         #headerArea {
