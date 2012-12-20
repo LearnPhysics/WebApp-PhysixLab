@@ -1,16 +1,27 @@
 package de.hofuniversity.iws.server.data.handler;
 
-import de.hofuniversity.iws.server.data.entities.User;
-import javax.persistence.EntityManager;
+import de.hofuniversity.iws.shared.entityimpl.UserDBO;
+import de.hofuniversity.iws.shared.entityimpl.NetworkAccountDBO;
+import java.util.*;
+
+import de.hofuniversity.iws.server.oauth.Providers;
+import de.hofuniversity.iws.shared.entityimpl.*;
+
+import com.google.common.base.Optional;
+import javax.persistence.*;
+import javax.persistence.criteria.*;
 
 public class UserHandler {
 
-    private static EntityManager entityManager = HibernateUtil
-            .getEntityManagerFactory().createEntityManager();
+    private static EntityManager entityManager = HibernateUtil.getEntityManagerFactory().createEntityManager();
 
     // Store user
-    public static User store(User user) {
-        User retval = user;
+    public static UserDBO store(UserDBO user) {
+        UserDBO retval = user;
+
+        if (hasDuplicateProvider(user)) {
+            //TODO log warning
+        }
 
         if (entityManager.isOpen()) {
             entityManager.close();
@@ -28,8 +39,8 @@ public class UserHandler {
                 }
                 entityManager.getTransaction().commit();
             } else {
-                User tmpUser = entityManager.find(User.class,
-                        user.getId());
+                UserDBO tmpUser = entityManager.find(UserDBO.class,
+                                                     user.getId());
 
                 if (tmpUser == null) // Phrase does not exist in the
                 // database
@@ -54,6 +65,8 @@ public class UserHandler {
                     tmpUser.setNetworkAccountList(user.getNetworkAccountList());
                     tmpUser.setGameResultList(user.getGameResultList());
                     tmpUser.setLessonProgressList(user.getLessonProgressList());
+                    tmpUser.setFriends(user.getFriends());
+                    tmpUser.setDevotees(user.getDevotees());
 
                     // write values
                     entityManager.getTransaction().begin();
@@ -73,8 +86,57 @@ public class UserHandler {
         return retval;
     }
 
+    public static Optional<NetworkAccountDBO> getNetworkAccount(UserDBO user, Providers prov) {
+        for (NetworkAccountDBO na : user.getNetworkAccountList()) {
+            if (prov.name().equals(na.getNetworkName())) {
+                return Optional.of(na);
+            }
+        }
+        return Optional.absent();
+    }
+
     // Get user by Id
-    public static User getUserEntity(long id, boolean detach) {
-        return (User) GenericHandler.getEntity(User.class, id, detach);
+    public static UserDBO getUserEntity(long id, boolean detach) {
+        return (UserDBO) GenericHandler.getEntity(UserDBO.class, id, detach);
+    }
+
+    // Get list of all users
+    public static List<UserDBO> getAllUsers() {
+        List<UserDBO> userList = null;
+        try {
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            entityManager = HibernateUtil.getEntityManagerFactory()
+                    .createEntityManager();
+
+            CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<UserDBO> criteria = builder
+                    .createQuery(UserDBO.class);
+            Root<UserDBO> userEntityRoot = criteria.from(UserDBO.class);
+            criteria.select(userEntityRoot);
+            criteria.where(builder.greaterThan(
+                    userEntityRoot.get(UserDBO_.id), -1L));
+
+            TypedQuery query = entityManager.createQuery(criteria);
+            userList = query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return userList;
+    }
+
+    private static boolean hasDuplicateProvider(UserDBO user) {
+        HashSet<String> s = new HashSet<String>();
+        if (user.getNetworkAccountList() == null) {
+            return true;
+        }
+        for (NetworkAccountDBO na : user.getNetworkAccountList()) {
+            if (!s.add(na.getNetworkName())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

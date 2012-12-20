@@ -2,7 +2,7 @@ package de.hofuniversity.iws.server.data.handler;
 
 import javax.persistence.EntityManager;
 
-import de.hofuniversity.iws.server.data.entities.Lesson;
+import de.hofuniversity.iws.shared.entityimpl.LessonDBO;
 
 public class LessonHandler {
 
@@ -10,8 +10,8 @@ public class LessonHandler {
             .getEntityManagerFactory().createEntityManager();
 
     // Store lesson
-    public static Lesson store(Lesson lesson) {
-        Lesson retval = lesson;
+    public static LessonDBO store(LessonDBO lesson) {
+        LessonDBO retval = lesson;
 
         if (entityManager.isOpen()) {
             entityManager.close();
@@ -29,7 +29,7 @@ public class LessonHandler {
                 }
                 entityManager.getTransaction().commit();
             } else {
-                Lesson tmpLesson = entityManager.find(Lesson.class,
+                LessonDBO tmpLesson = entityManager.find(LessonDBO.class,
                         lesson.getId());
 
                 if (tmpLesson == null) // Phrase does not exist in the
@@ -71,7 +71,7 @@ public class LessonHandler {
     }
 
     // Get lesson by Id
-    public static Lesson getGameEntity(long id, boolean detach) {
-        return (Lesson) GenericHandler.getEntity(Lesson.class, id, detach);
+    public static LessonDBO getGameEntity(long id, boolean detach) {
+        return (LessonDBO) GenericHandler.getEntity(LessonDBO.class, id, detach);
     }
 }

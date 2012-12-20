@@ -1,0 +1,105 @@
+<!--
+Uncomment this for XHTML entities
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+-->
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui"
+             xmlns:my='urn:import:de.hofuniversity.iws.client.widgets.Thema' 
+             xmlns:header='urn:import:de.hofuniversity.iws.client.widgets'>
+    <ui:style type='de.hofuniversity.iws.client.widgets.Thema.Thema.ThemaStyle'>
+        span {
+        position: absolute;
+        left: 50%;
+        -webkit-transition:1.0s ease;
+        -o-transition:1.0s ease;
+        -moz-transition:1.0s ease;
+        -ms-transition:1.0s ease;
+        transition:1.0s ease;
+        }
+        
+        .posLektionswahl {
+        margin-left: -480px;
+        }
+        
+        .posUebersicht {
+        margin-left: -1440px;
+        }
+        
+        .posSpielwahl {
+        margin-left: -2400px;
+        }
+        
+        .tab {
+        position: absolute;
+        left: 50%;
+        width: 120px;
+        height: 22px;
+        top: 133px;
+        -webkit-transition:0.2s;
+        -o-transition:0.2s;
+        -moz-transition:0.2s;
+        -ms-transition:0.2s;
+        transition:0.2s;
+        }
+        
+        .tab:hover {
+        font-size: 18px;
+        }
+
+        .tab1 {
+        margin-left: 120px;
+        background: rgb(255,141,108);
+        }
+
+        .tab2 {
+        margin-left: 240px;
+        background: rgb(255,249,108);
+        }
+
+        .tab3 {
+        margin-left: 360px;
+        background: rgb(109,232,150);
+        }
+        
+        .selected {
+        height: 32px;
+        top: 123px;
+        font-size: 18px;
+        }
+        
+        b {
+        padding-left: 5px;
+        }
+        
+        .scrollWrap {
+        min-height: 1280px;
+        }
+    </ui:style>
+    <g:ScrollPanel ui:field='sWrap' styleName="{style.scrollWrap}">
+        <g:HTMLPanel>
+            <header:Header></header:Header>
+            <g:FocusPanel ui:field='tab1' styleName="{style.tab} {style.tab1}">
+                <g:HTMLPanel>
+                    <b>Lektionswahl</b>
+                </g:HTMLPanel>
+            </g:FocusPanel>
+            <g:FocusPanel ui:field='tab2' styleName="{style.tab} {style.tab2} {style.selected}">
+                <g:HTMLPanel>
+                    <b>Uebersicht</b>
+                </g:HTMLPanel>
+            </g:FocusPanel>
+            <g:FocusPanel ui:field='tab3' styleName="{style.tab} {style.tab3}">
+                <g:HTMLPanel>
+                    <b>Spielwahl</b>
+                </g:HTMLPanel>
+            </g:FocusPanel>
+            <span ui:field='rail' class="{style.posUebersicht}">
+                <g:HorizontalPanel>
+                    <my:Lektionswahl></my:Lektionswahl>
+                    <my:Uebersicht></my:Uebersicht>
+                    <my:Spielwahl></my:Spielwahl>
+                </g:HorizontalPanel>
+            </span>
+        </g:HTMLPanel>
+    </g:ScrollPanel>
+</ui:UiBinder>

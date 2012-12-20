@@ -1,9 +1,7 @@
 package de.hofuniversity.iws.server.data.handler;
 
+import de.hofuniversity.iws.shared.entityimpl.*;
 
-
-import de.hofuniversity.iws.server.data.entities.NetworkAccount;
-//import de.hofuniversity.iws.server.data.entities.NetworkAccount_;
 import javax.persistence.*;
 import javax.persistence.criteria.*;
 
@@ -13,8 +11,8 @@ public class NetworkAccountHandler {
             .getEntityManagerFactory().createEntityManager();
 
     // Store network account
-    public static NetworkAccount store(NetworkAccount networkAccount) {
-        NetworkAccount retval = networkAccount;
+    public static NetworkAccountDBO store(NetworkAccountDBO networkAccount) {
+        NetworkAccountDBO retval = networkAccount;
 
         if (entityManager.isOpen()) {
             entityManager.close();
@@ -32,7 +30,7 @@ public class NetworkAccountHandler {
                 }
                 entityManager.getTransaction().commit();
             } else {
-                NetworkAccount tmpNetworkAccount = entityManager.find(NetworkAccount.class,
+                NetworkAccountDBO tmpNetworkAccount = entityManager.find(NetworkAccountDBO.class,
                         networkAccount.getId());
 
                 if (tmpNetworkAccount == null) // Phrase does not exist in the
@@ -73,12 +71,12 @@ public class NetworkAccountHandler {
     }
 
     // Get network account by Id
-    public static NetworkAccount getNetworkAccountEntity(long id, boolean detach) {
-        return (NetworkAccount) GenericHandler.getEntity(NetworkAccount.class, id, detach);
+    public static NetworkAccountDBO getNetworkAccountEntity(long id, boolean detach) {
+        return (NetworkAccountDBO) GenericHandler.getEntity(NetworkAccountDBO.class, id, detach);
     }
-/*    
-    public static NetworkAccount getNetworkAccountEntity(String networkName, String accountIdentificationString, boolean detach) {
-        NetworkAccount retval = null;
+
+    public static NetworkAccountDBO getNetworkAccountEntity(String networkName, String accountIdentificationString, boolean detach) {
+        NetworkAccountDBO retval = null;
 
         try {
             if (entityManager.isOpen()) {
@@ -89,19 +87,19 @@ public class NetworkAccountHandler {
 
             CriteriaBuilder criteriaBuilder = entityManager
                     .getCriteriaBuilder();
-            CriteriaQuery<NetworkAccount> queryPhraseEntity = criteriaBuilder
-                    .createQuery(NetworkAccount.class);
-            Root<NetworkAccount> rootPhraseEntity = queryPhraseEntity
-                    .from(NetworkAccount.class);
-            queryPhraseEntity.where(
+            CriteriaQuery<NetworkAccountDBO> queryNA = criteriaBuilder
+                    .createQuery(NetworkAccountDBO.class);
+            Root<NetworkAccountDBO> rootNA = queryNA
+                    .from(NetworkAccountDBO.class);
+            queryNA.where(
                     criteriaBuilder.equal(
-                    rootPhraseEntity.get(NetworkAccount_.networkName), networkName),
+                    rootNA.get(NetworkAccountDBO_.networkName), networkName),
                     criteriaBuilder.equal(
-                    rootPhraseEntity.get(NetworkAccount_.accountIdentificationString), accountIdentificationString));
-            TypedQuery<NetworkAccount> typedPhraseEntityQuery = entityManager
-                    .createQuery(queryPhraseEntity).setMaxResults(1);
+                    rootNA.get(NetworkAccountDBO_.accountIdentificationString), accountIdentificationString));
+            TypedQuery<NetworkAccountDBO> typedNAQuery = entityManager
+                    .createQuery(queryNA).setMaxResults(1);
             try {
-                retval = typedPhraseEntityQuery.getSingleResult();
+                retval = typedNAQuery.getSingleResult();
                 if (detach) {
                     entityManager.detach(retval);
                     retval.setDetached(true);
@@ -114,5 +112,4 @@ public class NetworkAccountHandler {
         }
         return retval;
     }
-    */
 }

@@ -2,7 +2,7 @@ package de.hofuniversity.iws.server.data.handler;
 
 import javax.persistence.EntityManager;
 
-import de.hofuniversity.iws.server.data.entities.GameResult;
+import de.hofuniversity.iws.shared.entityimpl.GameResultDBO;
 
 public class GameResultHandler {
 
@@ -10,8 +10,8 @@ public class GameResultHandler {
             .getEntityManagerFactory().createEntityManager();
 
     // Store game result
-    public static GameResult store(GameResult gameResult) {
-        GameResult retval = gameResult;
+    public static GameResultDBO store(GameResultDBO gameResult) {
+        GameResultDBO retval = gameResult;
 
         if (entityManager.isOpen()) {
             entityManager.close();
@@ -29,7 +29,7 @@ public class GameResultHandler {
                 }
                 entityManager.getTransaction().commit();
             } else {
-                GameResult tmpGameResult = entityManager.find(GameResult.class,
+                GameResultDBO tmpGameResult = entityManager.find(GameResultDBO.class,
                         gameResult.getId());
 
                 if (tmpGameResult == null) // Phrase does not exist in the
@@ -70,7 +70,7 @@ public class GameResultHandler {
     }
 
     // Get game result by Id
-    public static GameResult getGameEntity(long id, boolean detach) {
-        return (GameResult) GenericHandler.getEntity(GameResult.class, id, detach);
+    public static GameResultDBO getGameEntity(long id, boolean detach) {
+        return (GameResultDBO) GenericHandler.getEntity(GameResultDBO.class, id, detach);
     }
 }

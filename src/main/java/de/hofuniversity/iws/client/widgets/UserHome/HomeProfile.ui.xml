@@ -5,8 +5,98 @@ Uncomment this for XHTML entities
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
              xmlns:g="urn:import:com.google.gwt.user.client.ui">
     <ui:style>
+        @font-face {
+        font-family: geosans;
+        src: url('GeosansLight.ttf');
+        }
 
+        #contentAreaProfile {
+        font-family: geosans;
+        font-size: 15px;
+        background: rgba(255,249,108,0.7);
+        height: 1080px;
+        }
+
+        #content {
+        position: relative; 
+        width: 960px;
+        margin: 0px auto;
+        }
+
+        #content h1 {
+        position: absolute;
+        top: 75px; 
+        left: 40px;
+        color: rgb(65,150,255);
+        margin: 0 0 0 0;
+        font-size: 60px;
+        }
+
+        #content h2 {
+        color: rgb(65,150,255);
+        margin: 0 0 0 0;
+        }
+
+        .element {
+        position: absolute;
+        background: rgb(255,255,255);
+        border-radius: 5px;
+        box-shadow: 3px 3px 5px rgb(0,0,0);
+        }
+        
+        .innerElement {
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        }
+
+        .thumbnail {
+        width: 40px;
+        height: 40px;
+        }
+
+        #profileData {
+        top: 195px; 
+        left: 40px;
+        width: 400px;
+        height: 680px;
+        }
+
+        #profileEmptyness {
+        top: 75px; 
+        left: 520px;
+        width: 400px;
+        height: 360px;
+        }
+
+        #profileStuff {
+        top: 515px; 
+        left: 520px;
+        width: 400px;
+        height: 360px;
+        }
     </ui:style>
     <g:HTMLPanel>
+        <div id="contentAreaProfile">
+            <div id="content">
+                <h1>Profil</h1>
+                <div class="{style.element}" id="profileData">
+                    <div class="{style.innerElement}">
+                        Profile Data
+                    </div>
+                </div>
+                <div class="{style.element}" id="profileEmptyness">
+                    <div class="{style.innerElement}">
+                        Emptyness
+                    </div>
+                </div>
+                <div class="{style.element}" id="profileStuff">
+                    <div class="{style.innerElement}">
+                        Some Stuff
+                    </div>
+                </div>
+            </div>
+        </div>
     </g:HTMLPanel>
 </ui:UiBinder>

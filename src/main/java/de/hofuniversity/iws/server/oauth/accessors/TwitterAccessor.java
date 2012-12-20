@@ -4,13 +4,16 @@
  */
 package de.hofuniversity.iws.server.oauth.accessors;
 
+import de.hofuniversity.iws.shared.entityimpl.UserDBO;
+import de.hofuniversity.iws.shared.entityimpl.NetworkAccountDBO;
 import java.util.*;
 
 import darwin.annotations.MultiServiceProvider;
-import darwin.annotations.ServiceProvider;
-import de.hofuniversity.iws.server.data.entities.User;
+
+import de.hofuniversity.iws.server.data.handler.UserHandler;
 import de.hofuniversity.iws.server.oauth.Providers;
 
+import com.google.common.base.Optional;
 import org.json.*;
 import org.scribe.model.Token;
 
@@ -28,19 +31,23 @@ public class TwitterAccessor implements UserDataAccessor, FriendListAccessor {
     private static final String USER_URL = ACCESSORS.getPropertie("TWITTER_USER_URL");
 
     @Override
-    public User getUserData(Token accessToken) throws AccessException {
+    public UserDBO getUserData(Token accessToken) throws AccessException {
         String response = Providers.TWITTER.invokeGetRequest(accessToken, USER_URL);
         try {
-            return parseUser(response);
+            return parseUser(response, accessToken);
         } catch (JSONException ex) {
             throw new AccessException(ex);
         }
     }
 
     @Override
-    public Iterable<User> getFriends(Token accessToken, User currentUser) throws AccessException {
+    public Iterable<UserDBO> getFriends(Token accessToken, UserDBO currentUser) throws AccessException {
+        Optional<NetworkAccountDBO> na = UserHandler.getNetworkAccount(currentUser, Providers.TWITTER);
+        if (!na.isPresent()) {
+            return Collections.EMPTY_LIST;
+        }
 
-        String requestUrl = FRIENDS_ACCESS_URL + currentUser.getAccountIdentificationString();
+        String requestUrl = FRIENDS_ACCESS_URL + na.get().getAccountIdentificationString();
 
         String response = Providers.TWITTER.invokeGetRequest(accessToken, requestUrl);
         try {
@@ -50,32 +57,38 @@ public class TwitterAccessor implements UserDataAccessor, FriendListAccessor {
         }
     }
 
-    private User parseUser(String responceBody) throws JSONException {
+    private UserDBO parseUser(String responceBody, Token access) throws JSONException {
         JSONObject json = new JSONObject(responceBody);
-        User user = new User();
+        UserDBO user = new UserDBO();
         if (json.has("id")) {
-            user.setAccountIdentificationString(json.optString("id"));
+            Optional<NetworkAccountDBO> na = UserHandler.getNetworkAccount(user, Providers.TWITTER);
+            NetworkAccountDBO dbo = na.or(new NetworkAccountDBO());
+            dbo.setNetworkName(Providers.TWITTER.name());
+            dbo.setUser(user);
+            dbo.setOauthAccessSecret(access.getSecret());
+            dbo.setOauthAccessToken(access.getToken());
+            dbo.setAccountIdentificationString(json.getString("id"));
         }
 
         if (json.has("location")) {
-            user.setCity(json.optString("location"));
+            user.setCity(json.getString("location"));
         }
 
         if (json.has("profile_image_url")) {
-            user.setUserPic(json.optString("profile_image_url"));
+            user.setUserPic(json.getString("profile_image_url"));
         }
         if (json.has("screen_name")) {
-            user.setUserName(json.optString("screen_name"));
+            user.setUserName(json.getString("screen_name"));
         }
         if (json.has("name")) {
-            user.setUserName(json.optString("name"));
+            user.setUserName(json.getString("name"));
         }
         return user;
     }
 
-    private Iterable<User> parseFriends(String response, Token accessToken) throws JSONException {
+    private Iterable<UserDBO> parseFriends(String response, Token accessToken) throws JSONException {
         JSONObject json = new JSONObject(response);
-        List<User> friendsList = new ArrayList<>();
+        List<UserDBO> friendsList = new ArrayList<UserDBO>();
 
         JSONArray array = json.optJSONArray("ids");
         if (array != null) {
@@ -84,7 +97,7 @@ public class TwitterAccessor implements UserDataAccessor, FriendListAccessor {
                 if (element != null) {
                     String requestUrl = USER_BY_ID_URL + element + "&include_entities=true";
                     String r = Providers.TWITTER.invokeGetRequest(accessToken, requestUrl);
-                    friendsList.add(parseUser(r));
+                    friendsList.add(parseUser(r, accessToken));
                 }
             }
         }

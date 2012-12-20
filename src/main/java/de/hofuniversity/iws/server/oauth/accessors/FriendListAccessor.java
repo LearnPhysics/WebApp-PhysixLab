@@ -4,7 +4,7 @@
  */
 package de.hofuniversity.iws.server.oauth.accessors;
 
-import de.hofuniversity.iws.server.data.entities.User;
+import de.hofuniversity.iws.shared.entityimpl.UserDBO;
 
 import org.scribe.model.Token;
 
@@ -14,5 +14,5 @@ import org.scribe.model.Token;
  */
 public interface FriendListAccessor extends Accessor{
 
-    public Iterable<User> getFriends(Token accessToken, User currentUser) throws AccessException;
+    public Iterable<UserDBO> getFriends(Token accessToken, UserDBO currentUser) throws AccessException;
 }

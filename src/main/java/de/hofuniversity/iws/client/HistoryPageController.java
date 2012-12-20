@@ -4,11 +4,14 @@
  */
 package de.hofuniversity.iws.client;
 
-import de.hofuniversity.iws.client.widgets.*;
-
 import com.google.gwt.event.logical.shared.*;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.*;
+import de.hofuniversity.iws.client.widgets.Game.Game;
+import de.hofuniversity.iws.client.widgets.Lektion.Lektion;
+import de.hofuniversity.iws.client.widgets.LoginPage;
+import de.hofuniversity.iws.client.widgets.Thema.Thema;
+import de.hofuniversity.iws.client.widgets.UserHome.UserHome;
 
 /**
  *
@@ -16,22 +19,26 @@ import com.google.gwt.user.client.ui.*;
  */
 public class HistoryPageController implements ValueChangeHandler<String> {
 
-    private LoginPage loginPage = null;
-    private SessionPage sessionPage = null;
-    private static UserInfoWidget userInfoWidget = null;
-    
     public static final class Tokens {
 
         public static String loginpage() {
             return LoginPage.NAME;
         }
 
-        public static String sessionpage() {
-            return SessionPage.NAME;
+        public static String userhomepage() {
+            return UserHome.NAME;
         }
 
-        public static String userinfopage() {
-            return UserInfoWidget.NAME;
+        public static String themapage() {
+            return Thema.NAME;
+        }
+
+        public static String lektionpage() {
+            return Lektion.NAME;
+        }
+
+        public static String gamepage() {
+            return Game.NAME;
         }
     }
 
@@ -43,14 +50,15 @@ public class HistoryPageController implements ValueChangeHandler<String> {
     public void changePage(String pageName) {
 
         if (Tokens.loginpage().equals(pageName)) {
-            loginPage = new LoginPage();
-            changePage(loginPage);
-        } else if (Tokens.sessionpage().equals(pageName)) {
-            sessionPage = new SessionPage();
-            changePage(sessionPage);
-        } else if (Tokens.userinfopage().equals(pageName)) {
-            userInfoWidget = new UserInfoWidget();
-            changePage(userInfoWidget);
+            changePage(new LoginPage());
+        } else if (Tokens.userhomepage().equals(pageName)) {
+            changePage(new UserHome());
+        } else if (Tokens.themapage().equals(pageName)) {
+            changePage(new Thema());
+        } else if (Tokens.lektionpage().equals(pageName)) {
+            changePage(new Lektion());
+        } else if (Tokens.gamepage().equals(pageName)) {
+            changePage(new Game());
         } else {
             //TODO
         }
@@ -59,17 +67,5 @@ public class HistoryPageController implements ValueChangeHandler<String> {
     public void changePage(Composite c) {
         RootPanel.get().clear();
         RootPanel.get().add(c);
-    }
-    public LoginPage getLoginPage()
-    {
-        return loginPage;
-    }
-    public SessionPage getSessionPage()
-    {
-        return sessionPage;
-    }
-    public UserInfoWidget getUserInfoWidget()
-    {
-        return userInfoWidget;
     }
 }

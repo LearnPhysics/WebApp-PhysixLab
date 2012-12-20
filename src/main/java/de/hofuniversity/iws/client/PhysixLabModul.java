@@ -4,9 +4,10 @@
  */
 package de.hofuniversity.iws.client;
 
+import de.hofuniversity.iws.shared.services.*;
+
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.inject.client.AbstractGinModule;
-import de.hofuniversity.iws.shared.services.LoginServiceAsync;
 import javax.inject.Provider;
 
 /**
@@ -24,7 +25,7 @@ public class PhysixLabModul extends AbstractGinModule {
 
         @Override
         public LoginServiceAsync get() {
-            return GWT.create(LoginServiceAsync.class);
+            return GWT.create(LoginService.class);
         }
     }
 }

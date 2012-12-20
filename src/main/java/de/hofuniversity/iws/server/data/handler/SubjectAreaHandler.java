@@ -2,7 +2,7 @@ package de.hofuniversity.iws.server.data.handler;
 
 import javax.persistence.EntityManager;
 
-import de.hofuniversity.iws.server.data.entities.SubjectArea;
+import de.hofuniversity.iws.shared.entityimpl.SubjectAreaDBO;
 
 public class SubjectAreaHandler {
 
@@ -10,8 +10,8 @@ public class SubjectAreaHandler {
             .getEntityManagerFactory().createEntityManager();
 
     // Store subject area
-    public static SubjectArea store(SubjectArea subjectArea) {
-        SubjectArea retval = subjectArea;
+    public static SubjectAreaDBO store(SubjectAreaDBO subjectArea) {
+        SubjectAreaDBO retval = subjectArea;
 
         if (entityManager.isOpen()) {
             entityManager.close();
@@ -29,7 +29,7 @@ public class SubjectAreaHandler {
                 }
                 entityManager.getTransaction().commit();
             } else {
-                SubjectArea tmpSubjectArea = entityManager.find(SubjectArea.class,
+                SubjectAreaDBO tmpSubjectArea = entityManager.find(SubjectAreaDBO.class,
                         subjectArea.getId());
 
                 if (tmpSubjectArea == null) // Phrase does not exist in the
@@ -68,7 +68,7 @@ public class SubjectAreaHandler {
     }
 
     // Get subject area by Id
-    public static SubjectArea getGameEntity(long id, boolean detach) {
-        return (SubjectArea) GenericHandler.getEntity(SubjectArea.class, id, detach);
+    public static SubjectAreaDBO getGameEntity(long id, boolean detach) {
+        return (SubjectAreaDBO) GenericHandler.getEntity(SubjectAreaDBO.class, id, detach);
     }
 }

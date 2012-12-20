@@ -1,9 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <module rename-to='PhysixLab'>
     <!-- Inherit the core Web Toolkit stuff.                        -->
     <inherits name='com.google.gwt.user.User' />
-    <inherits name="com.google.gwt.xml.XML" />
-    <inherits name="com.google.gwt.http.HTTP"/>
 
     <!-- We need the JUnit module in the main module,               -->
     <!-- otherwise eclipse complains (Google plugin bug?)           -->
@@ -25,6 +22,8 @@
     <inherits name='com.google.gwt.inject.Inject'/>
     
     <inherits name='com.google.common.base.Base'/>
+    
+    <inherits name="com.reveregroup.gwt.imagepreloader.ImagePreloader" />
   
     <!-- Specify the path to any remote services.                   -->
     <servlet path="/login" class="de.hofuniversity.iws.server.services.LoginServiceImpl" />
@@ -36,6 +35,4 @@
     <!-- Specify the paths for translatable code                    -->
     <source path='client' />
     <source path='shared' />
-    <source path='dto' />
-
 </module>

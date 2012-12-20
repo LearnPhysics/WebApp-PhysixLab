@@ -4,29 +4,19 @@
  */
 package de.hofuniversity.iws.server.services;
 
-import com.google.common.base.Function;
-import com.google.common.base.Optional;
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.http.client.URL;
+import java.util.ArrayList;
+import de.hofuniversity.iws.shared.entityimpl.UserDBO;
+import de.hofuniversity.iws.shared.entitys.User;
+import de.hofuniversity.iws.shared.services.UserFriendService;
+
+import com.google.common.base.*;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import de.hofuniversity.iws.dto.UserDTO;
-import de.hofuniversity.iws.server.data.entities.User;
-import de.hofuniversity.iws.server.dto.UserMapper;
-import de.hofuniversity.iws.shared.services.UserFriendService;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 
 /**
  *
- * @author User
+ * @author UserDBO
  */
 @RemoteServiceRelativePath("userfriend")
 public class UserFriendServiceImpl extends RemoteServiceServlet implements UserFriendService {
@@ -34,39 +24,24 @@ public class UserFriendServiceImpl extends RemoteServiceServlet implements UserF
     public static final String USER_ATTRIBUTE = "user";
     public static final String FRIENDS_ATTRIBUTE = "friends";
     
-    UserDTO actualUser ;
-    
     @Override
-    public UserDTO getactualUser() {
-        Optional<User> loggedinuser = getSessionAttribute(USER_ATTRIBUTE);
-        if(loggedinuser.isPresent())
-        {
-        User u = loggedinuser.get();
-         UserMapper usermapper = new UserMapper();
-         actualUser =  usermapper.mapUsertoDTO(u);
-         return actualUser;
-        }
-
-        return null;
-    }
-    @Override
-    public Iterable<UserDTO> getFriends(){
-        Optional<Iterable<User>> friends = getSessionAttribute(FRIENDS_ATTRIBUTE);
+    public Iterable<User> getFriends(){
+        Optional<Iterable<UserDBO>> friends = getSessionAttribute(FRIENDS_ATTRIBUTE);
         if(friends.isPresent())
         {
-        Iterable<User> f = friends.get();
-            ArrayList<UserDTO> retfriends = new ArrayList<>();
-            for(User x : f)
+        Iterable<UserDBO> f = friends.get();
+            ArrayList<User> retfriends = new ArrayList<User>();
+            for(UserDBO x : f)
             {
-                UserDTO dtoUser = new UserDTO();
-                    dtoUser.setAccountIdentificationString(x.getAccountIdentificationString());
-                    dtoUser.setBirthDate(x.getBirthDate());
-                    dtoUser.setCity(x.getCity());
-                    dtoUser.setFirstName(x.getFirstName());
-                    dtoUser.setLastName(x.getLastName());
-                    dtoUser.setUserName(x.getUserName());
-                    dtoUser.setUserPic(x.getUserPic());  
-                retfriends.add(dtoUser);
+//                UserDTO dtoUser = new UserDTO();
+//                    dtoUser.setAccountIdentificationString(x.getAccountIdentificationString());
+//                    dtoUser.setBirthDate(x.getBirthDate());
+//                    dtoUser.setCity(x.getCity());
+//                    dtoUser.setFirstName(x.getFirstName());
+//                    dtoUser.setLastName(x.getLastName());
+//                    dtoUser.setUserName(x.getUserName());
+//                    dtoUser.setUserPic(x.getUserPic());  
+//                retfriends.add(dtoUser);
             }
             return retfriends;
         }

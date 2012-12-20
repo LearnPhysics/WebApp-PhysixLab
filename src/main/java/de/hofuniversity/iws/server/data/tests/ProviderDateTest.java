@@ -5,7 +5,7 @@
 package de.hofuniversity.iws.server.data.tests;
 
 import com.google.common.base.Optional;
-import de.hofuniversity.iws.server.data.entities.User;
+import de.hofuniversity.iws.shared.entityimpl.UserDBO;
 import de.hofuniversity.iws.server.oauth.*;
 import de.hofuniversity.iws.server.oauth.accessors.*;
 import de.hofuniversity.iws.server.oauth.provider.OAuthProvider;
@@ -17,7 +17,7 @@ import org.scribe.model.*;
 
 /**
  *
- * @author User
+ * @author UserDBO
  */
 public class ProviderDateTest {
 
@@ -32,11 +32,9 @@ public class ProviderDateTest {
         System.out.print(">>");
         Verifier v = new Verifier(in.nextLine());
         Token access = req.generateAccessToken(v);
-        Optional<UserDataAccessor> userData = provider.getAccessor(UserDataAccessor.class);
-        if (userData.isPresent()) {
             try {
-                UserDataAccessor ac = userData.get();
-                User user = ac.getUserData(access);
+                UserDataAccessor ac = provider.getUserDataAccessor();
+                UserDBO user = ac.getUserData(access);
                 System.out.println(user.getUserName() + "(" + user.getFirstName() + " " + user.getLastName() + ")");
                 System.out.println("\t" + user.getBirthDate() + " - " + user.getCity());
                 System.out.println("\t"+user.getUserPic());
@@ -44,8 +42,8 @@ public class ProviderDateTest {
                 Optional<FriendListAccessor> friends = provider.getAccessor(FriendListAccessor.class);
                 if (friends.isPresent()) {
                     FriendListAccessor ac2 = friends.get();
-                    Iterable<User> friends1 = ac2.getFriends(access, user);
-                    for(User f: friends1)
+                    Iterable<UserDBO> friends1 = ac2.getFriends(access, user);
+                    for(UserDBO f: friends1)
                     {
                         System.out.println(f.getUserName());
                     }
@@ -54,22 +52,22 @@ public class ProviderDateTest {
             } catch (AccessException ex) {
                 ex.printStackTrace();
             }
-        }
-        /* angemeldeten User in PhysixLab-Datenbank suchen */
+        
+        /* angemeldeten UserDBO in PhysixLab-Datenbank suchen */
 //        NetworkAccount netACC = NetworkAccountHandler.getNetworkAccountEntity(Providers.TWITTER.name(), CurrentUser.getAccountIdentificationString(), true);
-//       User user = netACC.getUser();   
+//       UserDBO user = netACC.getUser();   
 
-        /* prüfe ob es den User schon in der PhysixLab-Datenbank gibt
+        /* prüfe ob es den UserDBO schon in der PhysixLab-Datenbank gibt
          * wenn ja, dann nix tun
-         * ansonsten User in Datenbank aufnehmen
+         * ansonsten UserDBO in Datenbank aufnehmen
          */
         /*      if(netACC==null)
          {
-         UserHandler.store((User)User_obj[0]);
+         UserHandler.store((UserDBO)User_obj[0]);
          netACC = new NetworkAccount();
          netACC.setNetworkName(Providers.FACEBOOK.name());
          netACC.setAccountIdentificationString((String)User_obj[1]);
-         netACC.setUser((User)User_obj[0]);
+         netACC.setUser((UserDBO)User_obj[0]);
          netACC.setOauthAccessToken(access.getToken());    
          NetworkAccountHandler.store(netACC);                 
          }*/

@@ -1,10 +1,13 @@
 package de.hofuniversity.iws.server.oauth;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.logging.*;
 
 import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import de.hofuniversity.iws.server.data.entities.User;
+import de.hofuniversity.iws.server.data.handler.HibernateUtil;
+import de.hofuniversity.iws.shared.entityimpl.UserDBO;
 import de.hofuniversity.iws.server.oauth.accessors.AccessException;
 import de.hofuniversity.iws.server.oauth.accessors.FriendListAccessor;
 import de.hofuniversity.iws.server.oauth.accessors.UserDataAccessor;
@@ -21,7 +24,7 @@ import static de.hofuniversity.iws.server.services.LoginServiceImpl.*;
  */
 @RemoteServiceRelativePath("oauth_callback")
 public class OAuthCallbackServlet extends HttpServlet {
-
+static boolean a = HibernateUtil.isConnectedToDB();
     public static final String OAUTH_LOGIN_ATTRIBUTE = "oauth-login";
     public static final String[] VERIFICATION_PROPERTIES = new String[]{
         // Parameter: oauth_verifier bei Twitter und Google 
@@ -42,8 +45,8 @@ public class OAuthCallbackServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect(response.encodeURL("PopUpCloser.html")) ;
-                
+        response.sendRedirect(response.encodeURL("PopUpCloser.html"));
+
         Verifier verifier = null;
         for (String p : VERIFICATION_PROPERTIES) {
             if (request.getQueryString().contains(p + '=')) {
@@ -53,65 +56,56 @@ public class OAuthCallbackServlet extends HttpServlet {
         }
 
         Optional<OAuthLogin> login = getSessionAttribute(request, OAUTH_LOGIN_ATTRIBUTE);
-        Optional<String> provider = getSessionAttribute(request, Providers.PROVIDER_NAME_ATTRIBUTE);
-        String ProviderName = provider.get();
         if (login.isPresent()) {
             OAuthLogin l = login.get();
             synchronized (l) {
-                if (verifier == null) {
-                } else {
-                    //Somehow generate a coresponding user
-                    Token accessToken = l.request.generateAccessToken(verifier);
-
-                    User user = getOrCreateUserForAccessToken(accessToken,ProviderName);
-                    Iterable<User> friendsList = getUsersFriendsForAccessToken(accessToken,user,ProviderName);
-                    l.successfull = true;
-                    storeSessionAttribute(request, USER_ATTRIBUTE, user);
-                    storeSessionAttribute(request, FRIENDS_ATTRIBUTE, friendsList);
+                try {
+                    if (verifier == null) {
+                    } else {
+                        //Somehow generate a coresponding user
+                        Token accessToken = l.request.generateAccessToken(verifier);
+                        
+                        UserDBO user;
+                        try {
+                            user = getOrCreateUserForAccessToken(accessToken, l.provider);
+                            Iterable<UserDBO> friendsList = getUsersFriendsForAccessToken(accessToken, user, l.provider);
+                            l.successfull = true;
+                            storeSessionAttribute(request, USER_ATTRIBUTE, user);
+                            storeSessionAttribute(request, FRIENDS_ATTRIBUTE, friendsList);
+                        } catch (AccessException ex) {
+                            l.successfull = false;
+                            //TODO logging
+                        }
+                    }
+                } catch (Throwable e) {
+                    e.printStackTrace();
                 }
                 l.notify();
             }
         }
     }
 
-    private User getOrCreateUserForAccessToken(Token accessToken, String providername) {
+    private UserDBO getOrCreateUserForAccessToken(Token accessToken, Providers provider) throws AccessException {
         //TODO DB access
+        UserDataAccessor userData = provider.getUserDataAccessor();
+        UserDBO user = userData.getUserData(accessToken);
+        return user;
+    }
 
-      //  Optional<OAuthLogin> login = getSessionAttribute();
-        Providers provider = Providers.valueOf(providername);
-        Optional<UserDataAccessor> userData = provider.getAccessor(UserDataAccessor.class);
-        if(userData.isPresent())
-        {
-            try
-            {
-                UserDataAccessor ac = userData.get();
-                User user = ac.getUserData(accessToken);
-                return user;
-            } catch (AccessException ex)
-            {
-                ex.printStackTrace();
-            }
-        }
-        return null;
-    }
-    private Iterable<User> getUsersFriendsForAccessToken(Token accessToken, User u, String providername){
-        Providers provider = Providers.valueOf(providername);
+    private Iterable<UserDBO> getUsersFriendsForAccessToken(Token accessToken, UserDBO u, Providers provider) {
         Optional<FriendListAccessor> friends = provider.getAccessor(FriendListAccessor.class);
-        if(friends.isPresent())
-        {
-            try
-            {
+        if (friends.isPresent()) {
+            try {
                 FriendListAccessor acc = friends.get();
-                Iterable<User> friendsList = acc.getFriends(accessToken,u);
+                Iterable<UserDBO> friendsList = acc.getFriends(accessToken, u);
                 return friendsList;
-            } catch (AccessException ex)
-            {
+            } catch (AccessException ex) {
                 ex.printStackTrace();
+                //TODO token löschen
             }
         }
-        return null;
+        return new LinkedList<UserDBO>();
     }
-            
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
