@@ -48,25 +48,6 @@ public class UserFriendServiceImpl extends RemoteServiceServlet implements UserF
         return null;
     }
     
-    public String parseThemes()
-    { 
-        FileInputStream in = null;
-        try {
-            File f = new File(GWT.getHostPageBaseURL()+"/Subjects/kinetic/theme.xml");
-            in = new FileInputStream(f);
-            return "Hello, world";
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(UserFriendServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                in.close();
-            } catch (IOException ex) {
-                Logger.getLogger(UserFriendServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return null;
-    }
-    
     public <T> Optional<T> getSessionAttribute(String attributeName) {
         return getSessionAttribute(getThreadLocalRequest(), attributeName);
     }

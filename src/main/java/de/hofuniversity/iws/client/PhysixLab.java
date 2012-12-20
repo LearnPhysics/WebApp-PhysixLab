@@ -34,7 +34,7 @@ public class PhysixLab {
 //        PlayNWidget w = new PlayNWidget(new KineticWars());
 //        w.setWidth(800 + "px");
 //        RootPanel.get().add(w);
-        loginService.getLoginData(new AsyncCallback<Optional>() {
+        loginService.getLoginData(new AsyncCallback<Optional<LoginDTO>>() {
             @Override
             public void onFailure(Throwable caught) {
                 PAGE_CONTROLLER.changePage(LoginPage.NAME);
