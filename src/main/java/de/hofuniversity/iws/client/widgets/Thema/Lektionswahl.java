@@ -105,7 +105,7 @@ public class Lektionswahl extends Composite {
         System.out.println("<<< Left Setup >>>");
     }
     
-        private class LessionAsyncCallback implements AsyncCallback<List> {
+        private class LessionAsyncCallback implements AsyncCallback<List<LektionDTO>> {
         @Override
         public void onFailure(Throwable caught) {
             throw new UnsupportedOperationException(caught.getMessage());
