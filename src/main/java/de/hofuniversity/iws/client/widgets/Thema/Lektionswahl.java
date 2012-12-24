@@ -7,6 +7,7 @@ package de.hofuniversity.iws.client.widgets.Thema;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -14,8 +15,14 @@ import com.google.gwt.user.client.ui.Widget;
 import de.hofuniversity.iws.client.widgets.SubWidgets.LektionSelector;
 import de.hofuniversity.iws.client.widgets.TestEntities.EntityHolder;
 import de.hofuniversity.iws.client.widgets.TestEntities.TestLektion;
+import de.hofuniversity.iws.client.widgets.TestEntities.TestThema;
+import de.hofuniversity.iws.shared.dto.LektionDTO;
+import de.hofuniversity.iws.shared.services.LessonService;
+import de.hofuniversity.iws.shared.services.LessonServiceAsync;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -25,21 +32,24 @@ public class Lektionswahl extends Composite {
     
     private static LektionswahlUiBinder uiBinder = GWT.create(LektionswahlUiBinder.class);
     List<TestLektion> lektionen;
+    static TestThema thema;
+    
+    private final LessonServiceAsync lessonService = (LessonServiceAsync) GWT.create(LessonService.class);
+ 
     
     @UiField HTMLPanel lektionTree;
-    
+
     interface LektionswahlUiBinder extends UiBinder<Widget, Lektionswahl> {
     }
     
     public Lektionswahl() {
         initWidget(uiBinder.createAndBindUi(this));
-        this.lektionen = EntityHolder.getInstance().getThema().getLektionen();
-        if(lektionen != null) {
-            setup();
-        }
+        this.thema = EntityHolder.getInstance().getThema();
+        lessonService.readLessons(this.thema.getTopic_name(), new LessionAsyncCallback());
     }
     
-    private void setup() {
+    private void setup(List<TestLektion> l) {
+        this.lektionen = l;
         System.out.println("<<< Called Setup >>>");
         
         int width = 880;
@@ -93,5 +103,55 @@ public class Lektionswahl extends Composite {
         }
         
         System.out.println("<<< Left Setup >>>");
+    }
+    
+        private class LessionAsyncCallback implements AsyncCallback<List> {
+        @Override
+        public void onFailure(Throwable caught) {
+            throw new UnsupportedOperationException(caught.getMessage());
+        }
+
+        @Override
+        public void onSuccess(List result) {
+         //   throw new UnsupportedOperationException("Not supported yet.");
+            Map<String, TestLektion> map = new HashMap<String,TestLektion>();
+            List<LektionDTO> lektion = (LinkedList<LektionDTO>) result;  
+            TestThema thema = EntityHolder.getInstance().getThema();
+            for (LektionDTO x : lektion)
+            {
+                TestLektion lesson = new TestLektion(); 
+                lesson.setLessonId(x.getId());
+                lesson.setLesson_name(x.getLesson_name());
+                lesson.setTitle(x.getTitle());
+                lesson.setPreviewURL(x.getPreviewURL());
+                lesson.setLessonText(x.getLessonText());
+                lesson.setParent_id(x.getParent());
+                lesson.setExperiment_id(x.getWidget_id());
+                lesson.setFormular_id(x.getFormular_id());
+                
+                //lesson.setExperiment(this);
+                //lesson.setFormular(this);
+                
+                map.put(x.getId(), lesson);
+                thema.getLektionen().add(lesson);
+            }
+           EntityHolder.getInstance().setThema(thema);           
+           lektionen = EntityHolder.getInstance().getThema().getLektionen();
+           /*
+            * zuordnen der Elternlektionen 
+            */
+              for(TestLektion x : lektionen)
+              {              
+                 TestLektion t = (TestLektion) map.get(x.getParent_id());
+                 if(t!=null)
+                 {
+                    System.out.println(x.getParent_id()+"   "+t.getLessonId());
+                    x.setParent(t);
+                 }
+              }
+           if(lektionen != null) {
+              setup(lektionen);
+           }
+        }
     }
 }

@@ -9,6 +9,7 @@ import java.util.*;
 import com.google.gwt.user.client.ui.*;
 import de.hofuniversity.iws.client.playn.PlayNWidget;
 import de.hofuniversity.iws.client.playn.games.KineticWars;
+import de.hofuniversity.iws.shared.dto.ThemaDTO;
 
 /**
  *
@@ -21,7 +22,7 @@ public class FakeDatabase {
 
     private FakeDatabase() {
         themen = new LinkedList<TestThema>();
-        buildTestData();
+      //  buildTestData();
     }
 
     public static FakeDatabase getInstance() {

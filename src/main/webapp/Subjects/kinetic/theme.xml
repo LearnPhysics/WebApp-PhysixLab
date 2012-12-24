@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <theme xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="dtd.xsd">
 	<headline>
         Kinetik (Technische Mechanik)
@@ -10,4 +10,5 @@
         die sich mit dem Kräftegleichgewicht an nicht beschleunigten Körpern beschäftigt. 
         Beide zusammen bilden die Dynamik, die sich mit der Wirkung von Kräften befasst.
     </text>
+	<image>images/UserHome/Thema_Kinetik.png</image>
 </theme>

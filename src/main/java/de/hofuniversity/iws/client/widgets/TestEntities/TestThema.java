@@ -18,6 +18,8 @@ public class TestThema {
     String imageURL;
     List<TestLektion> lektionen;
     List<TestGame> games;
+    String topic_name;
+    
     
     public TestThema() {
         lektionen = new LinkedList<TestLektion>();
@@ -63,4 +65,13 @@ public class TestThema {
     public void setGames(List<TestGame> games) {
         this.games = games;
     }
+
+    public String getTopic_name() {
+        return topic_name;
+    }
+
+    public void setTopic_name(String topic_name) {
+        this.topic_name = topic_name;
+    }
+    
 }

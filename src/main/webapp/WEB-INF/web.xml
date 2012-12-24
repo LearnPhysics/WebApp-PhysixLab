@@ -22,7 +22,14 @@
         <servlet-name>userfriendServiceImpl</servlet-name> 
         <url-pattern>/PhysixLab/userfriend</url-pattern> 
     </servlet-mapping>
-    
+    <servlet> 
+        <servlet-name>lessonServiceImpl</servlet-name> 
+        <servlet-class>de.hofuniversity.iws.server.services.LessonServiceImpl</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>lessonServiceImpl</servlet-name> 
+        <url-pattern>/PhysixLab/lessonservice</url-pattern> 
+    </servlet-mapping>   
     <servlet>
         <servlet-name>oauthCallback</servlet-name>
         <servlet-class>de.hofuniversity.iws.server.oauth.OAuthCallbackServlet</servlet-class>

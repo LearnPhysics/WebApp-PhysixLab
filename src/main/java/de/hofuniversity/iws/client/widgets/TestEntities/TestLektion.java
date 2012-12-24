@@ -11,14 +11,59 @@ import com.google.gwt.user.client.ui.Widget;
  * @author Oliver
  */
 public class TestLektion {
-
+    String LessonId;
+    String lesson_name;
     String title;
     String lessonText;
     String previewURL;
+    String parent_id;
     Widget experiment;
+    String experiment_id;
     Widget formular;
+    String formular_id;
     TestTest test;
     TestLektion parent;
+
+    public String getExperiment_id() {
+        return experiment_id;
+    }
+
+    public void setExperiment_id(String experiment_id) {
+        this.experiment_id = experiment_id;
+    }
+
+    public String getFormular_id() {
+        return formular_id;
+    }
+
+    public void setFormular_id(String formular_id) {
+        this.formular_id = formular_id;
+    } 
+
+    public String getParent_id() {
+        return parent_id;
+    }
+
+    public void setParent_id(String parent_id) {
+        this.parent_id = parent_id;
+    }
+    
+
+    public String getLessonId() {
+        return LessonId;
+    }
+
+    public void setLessonId(String LessonId) {
+        this.LessonId = LessonId;
+    }
+    
+    public String getLesson_name() {
+        return lesson_name;
+    }
+
+    public void setLesson_name(String lesson_name) {
+        this.lesson_name = lesson_name;
+    }
 
     public String getTitle() {
         return title;

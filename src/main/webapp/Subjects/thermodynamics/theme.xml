@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <theme xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="dtd.xsd">
 	<headline>
         Thermodynamik
@@ -10,4 +10,5 @@
         Die Grundlagen der Thermodynamik wurden aus dem Studium der Volumen-, Druck-, Temperaturverhältnisse 
         bei Dampfmaschinen entwickelt.
     </text>
+	<image>images/UserHome/Thema_Thermo.png</image>
 </theme>

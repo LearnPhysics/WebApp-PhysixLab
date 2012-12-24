@@ -14,6 +14,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.inject.Inject;
 import de.hofuniversity.iws.client.widgets.UserHome.UserHome;
 
 /**
@@ -28,7 +29,9 @@ public class LoginPage extends HistoryPage {
     }
     public static final String NAME = "login";
     private final LoginServiceAsync loginService = (LoginServiceAsync) GWT.create(LoginService.class);
-
+    @Inject
+    private final LessonServiceAsync lessonService = (LessonServiceAsync) GWT.create(LessonService.class);
+ 
     public LoginPage() {
         initWidget(uiBinder.createAndBindUi(this));
     }
@@ -82,7 +85,7 @@ public class LoginPage extends HistoryPage {
 
         @Override
         public void onSuccess(LoginDTO result) {
-            PhysixLab.setLoginData(result);
+            PhysixLab.setLoginData(result);           
             PhysixLab.PAGE_CONTROLLER.changePage(UserHome.NAME);
         }
     }

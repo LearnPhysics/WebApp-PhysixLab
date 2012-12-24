@@ -11,6 +11,7 @@
     <!-- any one of the following lines.                            -->
     <!--<inherits name='com.google.gwt.user.theme.standard.Standard' />-->
     <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> 
+    <inherits name="com.google.gwt.xml.XML"/>
     <!--<inherits name='com.google.gwt.user.theme.dark.Dark'/>-->     
 
     <!-- Other module inherits                                     -->  
@@ -28,7 +29,7 @@
     <!-- Specify the path to any remote services.                   -->
     <servlet path="/login" class="de.hofuniversity.iws.server.services.LoginServiceImpl" />
     <servlet path="/userfriend" class="de.hofuniversity.iws.server.services.UserFriendServiceImpl" />
-
+    <servlet path="/lessonservice" class="de.hofuniversity.iws.server.services.LessonServiceImpl" />   
     <!-- Specify the app entry point class.                         -->
     <entry-point class='de.hofuniversity.iws.client.Main' />
 

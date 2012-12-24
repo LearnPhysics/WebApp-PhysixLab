@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <theme xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="dtd.xsd">
 	<headline>
         Elektrizität
@@ -12,4 +12,5 @@
         In Hochhäusern würden Aufzüge, im Krankenhaus wichtige medizinische Geräte fehlen,
         ganz abgesehen von Kühlvorrichtungen und Licht.
     </text>
+	<image>images/UserHome/Thema_Elekt.png</image>
 </theme>
