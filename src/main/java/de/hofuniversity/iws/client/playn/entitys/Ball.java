@@ -17,23 +17,59 @@ public class Ball extends ImageEntity {
 
     private final Body body;
 
-    public Ball(World world, float x, float y) {
-        FixtureDef fixtureDef = new FixtureDef();
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyType.DYNAMIC;
-        bodyDef.position = new Vec2(0, 0);
-        body = world.createBody(bodyDef);
+    public static class Builder extends ImageEntity.Builder<Ball> {
 
-        CircleShape circleShape = new CircleShape();
-        circleShape.m_radius = 5;
-        fixtureDef.shape = circleShape;
-        fixtureDef.density = 0.4f;
-        fixtureDef.friction = 0.1f;
-        fixtureDef.restitution = 0.35f;
-        circleShape.m_p.set(0, 0);
-        body.createFixture(fixtureDef);
-        body.setLinearDamping(0.2f);
-        body.setTransform(new Vec2(x, y), 0);
+        private float size = 0.5f;
+
+        public Builder(float imageScaleFactor, World world) {
+            super(imageScaleFactor, world);
+        }
+
+        public Builder setSize(float s) {
+            size = s;
+            return this;
+        }
+
+        @Override
+        public Ball create() {
+            FixtureDef fixtureDef = new FixtureDef();
+            BodyDef bodyDef = new BodyDef();
+            bodyDef.type = BodyType.DYNAMIC;
+            bodyDef.position = new Vec2(x, y);
+            Body body = world.createBody(bodyDef);
+
+            CircleShape circleShape = new CircleShape();
+            circleShape.m_radius = size / 2;
+            fixtureDef.shape = circleShape;
+            fixtureDef.density = 3f;
+            fixtureDef.friction = 0.4f;
+            fixtureDef.restitution = 0.4f;
+            circleShape.m_p.set(0, 0);
+            body.createFixture(fixtureDef);
+            body.setLinearDamping(0.1f);
+            body.setAngularDamping(0.1f);
+
+            return new Ball(body, imageScaleFactor, size);
+        }
+    }
+
+    public static Builder build(World world, float imageScaleFactor) {
+        return new Builder(imageScaleFactor, world);
+    }
+
+    private Ball(Body body, float scale, float size) {
+        super(scale);
+        this.body = body;
+        this.size = size;
+
+        listener = new MouseJointHandler(body);
+
+        init();
+
+        CanvasImage img = getImage();
+        img.canvas().clear();
+        img.canvas().setFillColor(Color.rgb(255, 0, 0));
+        img.canvas().fillCircle(img.width() / 2, img.height() / 2, img.width() / 2);
     }
 
     @Override
