@@ -4,14 +4,17 @@
  */
 package de.hofuniversity.iws.client;
 
-import de.hofuniversity.iws.client.widgets.*;
-import de.hofuniversity.iws.shared.dto.LoginDTO;
-import de.hofuniversity.iws.shared.entitys.User;
-import de.hofuniversity.iws.shared.services.LoginServiceAsync;
-
 import com.google.common.base.Optional;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.RootPanel;
+import de.hofuniversity.iws.client.playn.PlayNWidget;
+import de.hofuniversity.iws.client.playn.games.KineticWars;
+import de.hofuniversity.iws.client.widgets.LoginPage;
+import de.hofuniversity.iws.client.widgets.UserHome.UserHome;
+import de.hofuniversity.iws.shared.dto.LoginDTO;
+import de.hofuniversity.iws.shared.entitys.User;
+import de.hofuniversity.iws.shared.services.LoginServiceAsync;
 import javax.inject.Inject;
 
 /**
@@ -27,8 +30,11 @@ public class PhysixLab {
 
     public void init() {
         History.addValueChangeHandler(PAGE_CONTROLLER);
-
-        loginService.getLoginData(new AsyncCallback<Optional<LoginDTO>>() {
+        
+//        PlayNWidget w = new PlayNWidget(new KineticWars());
+//        w.setWidth(800 + "px");
+//        RootPanel.get().add(w);
+        loginService.getLoginData(new AsyncCallback<Optional>() {
             @Override
             public void onFailure(Throwable caught) {
                 PAGE_CONTROLLER.changePage(LoginPage.NAME);
@@ -39,7 +45,7 @@ public class PhysixLab {
                 if (result.isPresent()) {
                     loginData = (LoginDTO) result.get();
                     if (History.getToken().isEmpty()) {
-                        PAGE_CONTROLLER.changePage(SessionPage.NAME);
+                        PAGE_CONTROLLER.changePage(UserHome.NAME);
                     } else {
                         PAGE_CONTROLLER.changePage(History.getToken());
                     }

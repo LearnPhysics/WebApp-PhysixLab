@@ -1,7 +1,5 @@
 package de.hofuniversity.iws.server.data.handler;
 
-import de.hofuniversity.iws.shared.entityimpl.UserDBO;
-import de.hofuniversity.iws.shared.entityimpl.NetworkAccountDBO;
 import java.util.*;
 
 import de.hofuniversity.iws.server.oauth.Providers;
@@ -13,8 +11,7 @@ import javax.persistence.criteria.*;
 
 public class UserHandler {
 
-    private static EntityManager entityManager = HibernateUtil
-            .getEntityManagerFactory().createEntityManager();
+    private static EntityManager entityManager = HibernateUtil.getEntityManagerFactory().createEntityManager();
 
     // Store user
     public static UserDBO store(UserDBO user) {
@@ -41,7 +38,7 @@ public class UserHandler {
                 entityManager.getTransaction().commit();
             } else {
                 UserDBO tmpUser = entityManager.find(UserDBO.class,
-                                                  user.getId());
+                                                     user.getId());
 
                 if (tmpUser == null) // Phrase does not exist in the
                 // database
@@ -130,6 +127,9 @@ public class UserHandler {
 
     private static boolean hasDuplicateProvider(UserDBO user) {
         HashSet<String> s = new HashSet<String>();
+        if (user.getNetworkAccountList() == null) {
+            return true;
+        }
         for (NetworkAccountDBO na : user.getNetworkAccountList()) {
             if (!s.add(na.getNetworkName())) {
                 return true;

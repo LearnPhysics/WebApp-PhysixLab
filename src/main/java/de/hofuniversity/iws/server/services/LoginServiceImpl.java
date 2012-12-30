@@ -102,12 +102,11 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
     }
 
     public static <T> Optional<T> getSessionAttribute(HttpServletRequest request, final String attributeName) {
-        return getSession(request).transform(new Function<HttpSession, T>() {
-            @Override
-            public T apply(HttpSession session) {
-                return (T) session.getAttribute(attributeName);
-            }
-        });
+        Optional<HttpSession> session = getSession(request);
+        if (session.isPresent()) {
+            return Optional.fromNullable((T) session.get().getAttribute(attributeName));
+        }
+        return Optional.absent();
     }
 
     public void storeSessionAttribute(String attributeName, Object value) {

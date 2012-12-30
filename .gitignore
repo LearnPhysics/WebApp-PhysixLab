@@ -3,4 +3,5 @@
 /html/target/
 /target/
 /PhysixLab/nbproject/private/
-/src/main/resources/META-INF/persistence.xml
+*.dll
+*.so

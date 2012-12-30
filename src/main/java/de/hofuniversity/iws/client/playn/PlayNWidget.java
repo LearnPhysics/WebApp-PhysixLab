@@ -4,34 +4,35 @@
  */
 package de.hofuniversity.iws.client.playn;
 
-import com.google.gwt.core.shared.GWT;
-import com.google.gwt.uibinder.client.UiConstructor;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.*;
-import playn.core.*;
+import playn.core.PlayN;
 import playn.html.HtmlPlatform;
+import playn.html.HtmlPlatform.Configuration;
 
 /**
  *
  * @author Daniel Heinrich <dannynullzwo@gmail.com>
  */
-public class PlayNWidget extends Composite{
+public class PlayNWidget extends Composite {
 
     private final static String ROOT_ID = "playn-root";
     private final PhysicGame game;
-    private final int width;
+    private final SimpleLayoutPanel panel = new SimpleLayoutPanel();
 
-    public PlayNWidget(PhysicGame game, int width) {
+    public PlayNWidget(PhysicGame game) {
         this.game = game;
-        this.width = width;
-        SimplePanel panel = new SimplePanel();
         panel.getElement().setId(ROOT_ID);
         initWidget(panel);
     }
 
     private void start() {
-        HtmlPlatform.register();
-        PlayN.run(new PhysicGameBox(game, width));
+        PhysicGameBox g = new PhysicGameBox(game, panel.getOffsetWidth());
+        panel.setHeight(g.getHeight() + "px");
+        Configuration conf  = new Configuration();
+        conf.antiAliasing = true;
+//        conf.mode = Mode.CANVAS;
+        HtmlPlatform.register(conf);
+        PlayN.run(g);
     }
 
     @Override

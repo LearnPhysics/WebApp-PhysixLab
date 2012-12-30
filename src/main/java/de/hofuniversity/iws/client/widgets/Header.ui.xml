@@ -14,7 +14,7 @@ Uncomment this for XHTML entities
         background-image: url('images/Startseite/Circle02.png');
         margin: 0px auto;
         font-family: geosans;
-        font-size: 16px;
+        font-size: 15px;
         }
 
         #headerArea {

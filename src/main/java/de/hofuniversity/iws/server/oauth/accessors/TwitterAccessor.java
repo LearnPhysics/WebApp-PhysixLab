@@ -34,7 +34,7 @@ public class TwitterAccessor implements UserDataAccessor, FriendListAccessor {
     public UserDBO getUserData(Token accessToken) throws AccessException {
         String response = Providers.TWITTER.invokeGetRequest(accessToken, USER_URL);
         try {
-            return parseUser(response);
+            return parseUser(response, accessToken);
         } catch (JSONException ex) {
             throw new AccessException(ex);
         }
@@ -42,8 +42,12 @@ public class TwitterAccessor implements UserDataAccessor, FriendListAccessor {
 
     @Override
     public Iterable<UserDBO> getFriends(Token accessToken, UserDBO currentUser) throws AccessException {
+        Optional<NetworkAccountDBO> na = UserHandler.getNetworkAccount(currentUser, Providers.TWITTER);
+        if (!na.isPresent()) {
+            return Collections.EMPTY_LIST;
+        }
 
-        String requestUrl = FRIENDS_ACCESS_URL + UserHandler.getNetworkAccount(currentUser, Providers.TWITTER).get().getAccountIdentificationString();
+        String requestUrl = FRIENDS_ACCESS_URL + na.get().getAccountIdentificationString();
 
         String response = Providers.TWITTER.invokeGetRequest(accessToken, requestUrl);
         try {
@@ -53,15 +57,17 @@ public class TwitterAccessor implements UserDataAccessor, FriendListAccessor {
         }
     }
 
-    private UserDBO parseUser(String responceBody) throws JSONException {
+    private UserDBO parseUser(String responceBody, Token access) throws JSONException {
         JSONObject json = new JSONObject(responceBody);
         UserDBO user = new UserDBO();
         if (json.has("id")) {
             Optional<NetworkAccountDBO> na = UserHandler.getNetworkAccount(user, Providers.TWITTER);
-            if(na.isPresent())
-            {
-                na.get().setAccountIdentificationString(json.getString("id"));
-            }
+            NetworkAccountDBO dbo = na.or(new NetworkAccountDBO());
+            dbo.setNetworkName(Providers.TWITTER.name());
+            dbo.setUser(user);
+            dbo.setOauthAccessSecret(access.getSecret());
+            dbo.setOauthAccessToken(access.getToken());
+            dbo.setAccountIdentificationString(json.getString("id"));
         }
 
         if (json.has("location")) {
@@ -91,7 +97,7 @@ public class TwitterAccessor implements UserDataAccessor, FriendListAccessor {
                 if (element != null) {
                     String requestUrl = USER_BY_ID_URL + element + "&include_entities=true";
                     String r = Providers.TWITTER.invokeGetRequest(accessToken, requestUrl);
-                    friendsList.add(parseUser(r));
+                    friendsList.add(parseUser(r, accessToken));
                 }
             }
         }

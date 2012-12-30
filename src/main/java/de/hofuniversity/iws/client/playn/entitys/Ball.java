@@ -4,6 +4,7 @@
  */
 package de.hofuniversity.iws.client.playn.entitys;
 
+import de.hofuniversity.iws.client.playn.entitys.PhysicEntity.HasInteractionListener;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
@@ -13,9 +14,11 @@ import playn.core.*;
  *
  * @author Daniel Heinrich <dannynullzwo@gmail.com>
  */
-public class Ball extends ImageEntity {
+public class Ball extends ImageEntity implements HasInteractionListener {
 
     private final Body body;
+    private final float size;
+    private final InteractionListener listener;
 
     public static class Builder extends ImageEntity.Builder<Ball> {
 
@@ -78,21 +81,17 @@ public class Ball extends ImageEntity {
     }
 
     @Override
-    public Image getImage() {
-        CanvasImage img = PlayN.graphics().createImage(getWidth(), getHeight());
-        img.canvas().clear();
-        img.canvas().setFillColor(Color.rgb(255, 0, 0));
-        img.canvas().fillCircle(5, 5, 5);
-        return img;
-    }
-
-    @Override
     public float getWidth() {
-        return 10;
+        return size;
     }
 
     @Override
     public float getHeight() {
-        return 10;
+        return size;
+    }
+
+    @Override
+    public InteractionListener getListener() {
+        return listener;
     }
 }

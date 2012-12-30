@@ -3,18 +3,9 @@ package de.hofuniversity.iws.shared.entityimpl;
 import java.io.Serializable;
 import java.util.List;
 
-import de.hofuniversity.iws.shared.entitys.*;
 import de.hofuniversity.iws.shared.entitys.Lesson;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+
+import javax.persistence.*;
 
 @Entity
 @Table

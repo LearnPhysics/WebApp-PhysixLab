@@ -12,7 +12,7 @@ Uncomment this for XHTML entities
 
         #contentAreaThemenwahl {
         font-family: geosans;
-        font-size: 16px;
+        font-size: 15px;
         background: rgba(109,232,150,0.7);
         height: 1080px;
         }
@@ -39,12 +39,15 @@ Uncomment this for XHTML entities
 
         .element {
         background: rgb(255,255,255);
-        padding-left: 10px;
-        padding-right: 10px;
-        padding-top: 5px;
-        padding-bottom: 5px;
         border-radius: 5px;
         box-shadow: 3px 3px 5px rgb(0,0,0);
+        }
+        
+        .innerElement {
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
         }
 
         #news {
@@ -54,85 +57,20 @@ Uncomment this for XHTML entities
         width: 240px;
         height: 800px;
         }
-
-        .outerImage {
-        position: absolute;
-        background: rgb(255,255,255);
-        width: 200px;
-        height: 200px;
-        border-radius: 200px;
-        box-shadow: 3px 3px 5px rgb(0,0,0);
-        }
-
-        .innerImage {
-        padding: 5px;
-        }
-
-        .subject {
-        position: absolute;
-        width: 320px;
-        height: 200px;
-        }
-
-        #img1 {
-        top: 195px; 
-        left: 40px;
-        }
-
-        #subj1 {
-        top: 195px; 
-        left: 280px;
-        }
-
-        #img2 {
-        top: 435px; 
-        left: 40px;
-        }
-
-        #subj2 {
-        top: 435px; 
-        left: 280px;
-        }
-
-        #img3 {
-        top: 675px; 
-        left: 40px;
-        }
-
-        #subj3 {
-        top: 675px; 
-        left: 280px;
-        }
     </ui:style>
     
     <g:HTMLPanel>
         <div id="contentAreaThemenwahl">
             <div id="content">
                 <h1>Themenwahl</h1>
-                <div class="{style.outerImage}" id="img1">
-                    <img class="{style.innerImage}" src="images/UserHome/Thema_Kinetik.png" />
-                </div>
-                <div class="{style.outerImage}" id="img2">
-                    <img class="{style.innerImage}" src="images/UserHome/Thema_Elekt.png" />
-                </div>
-                <div class="{style.outerImage}" id="img3">
-                    <img class="{style.innerImage}" src="images/UserHome/Thema_Thermo.png" />
-                </div>
-                <div class="{style.element} {style.subject}" id="subj1">
-                    <h2>Kinetik</h2>
-                    <p></p>
-                </div>
-                <div class="{style.element} {style.subject}" id="subj2">
-                    <h2>Elektrizitaet</h2>
-                    <p></p>
-                </div>
-                <div class="{style.element} {style.subject}" id="subj3">
-                    <h2>Thermodynamik</h2>
-                    <p></p>
-                </div>
-                <div class="{style.element} {style.subject}" id="news">
-                    <h2>News</h2>
-                    <p></p>
+                <g:VerticalPanel ui:field='themaPanel'>
+                    
+                </g:VerticalPanel>
+                <div class="{style.element}" id="news">
+                    <div class="{style.innerElement}">
+                        <h2>News</h2>
+                        <p></p>
+                    </div>
                 </div>
             </div>
         </div>

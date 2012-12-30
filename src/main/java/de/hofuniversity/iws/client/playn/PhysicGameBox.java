@@ -13,27 +13,29 @@ import static playn.core.PlayN.graphics;
  * @author Daniel Heinrich <dannynullzwo@gmail.com>
  */
 public class PhysicGameBox implements Game {
-
+    
     private final PhysicGame game;
     private final int width;
 
     public PhysicGameBox(PhysicGame game, int width) {
-        this.width = width;
         this.game = game;
+        this.width = width;
     }
 
     @Override
     public void init() {
-        float ratio = game.getWidth() / game.getHeight();
-        int height = (int) (width / ratio);
-
-        graphics().setSize(width, height);
-
         GroupLayer worldLayer = graphics().createGroupLayer();
-        worldLayer.setScale(width / game.getWidth());
+        float scale = width / game.getWidth();
+        worldLayer.setScale(scale, -scale);
+        worldLayer.setTranslation(0, getHeight());
         graphics().rootLayer().add(worldLayer);
 
         game.init(worldLayer);
+    }
+
+    public int getHeight() {
+        float ratio = game.getWidth() / game.getHeight();
+        return (int) (width / ratio);
     }
 
     @Override
