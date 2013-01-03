@@ -44,9 +44,9 @@ public class Ball extends ImageEntity implements HasInteractionListener {
             CircleShape circleShape = new CircleShape();
             circleShape.m_radius = size / 2;
             fixtureDef.shape = circleShape;
-            fixtureDef.density = 0.7f;
+            fixtureDef.density = 3f;
             fixtureDef.friction = 0.4f;
-            fixtureDef.restitution = 0.8f;
+            fixtureDef.restitution = 0.4f;
             circleShape.m_p.set(0, 0);
             body.createFixture(fixtureDef);
             body.setLinearDamping(0.1f);
