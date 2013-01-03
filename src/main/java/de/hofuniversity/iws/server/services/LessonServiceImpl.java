@@ -22,18 +22,15 @@ import javax.servlet.ServletException;
  */
 @RemoteServiceRelativePath("lessonservice")
 public class LessonServiceImpl extends RemoteServiceServlet implements LessonService {
-
-    private String resourcePath = "";
-
-    @Override
-    public void init() throws ServletException {
-        super.init();
-        resourcePath = getServletContext().getRealPath(".");
+    
+    private String getResourcePath()
+    {
+        return getServletContext().getRealPath(".");
     }
 
     @Override
     public List<ThemaDTO> readThemes() {
-        File themenDir = new File(resourcePath + "/Subjects/");
+        File themenDir = new File(getResourcePath() + "/Subjects/");
         List<ThemaDTO> themenlist = new LinkedList<ThemaDTO>();
         XMLReaderParser parser = new XMLReaderParser();
 
@@ -52,7 +49,7 @@ public class LessonServiceImpl extends RemoteServiceServlet implements LessonSer
 
     @Override
     public List<LektionDTO> readLessons(String topicName) {
-        File topicLessonsDir = new File(resourcePath + "/Subjects/" + topicName + "/lessons/");
+        File topicLessonsDir = new File(getResourcePath() + "/Subjects/" + topicName + "/lessons/");
         List<LektionDTO> lessonlist = new LinkedList<LektionDTO>();
         XMLReaderParser parser = new XMLReaderParser();
 
@@ -70,7 +67,7 @@ public class LessonServiceImpl extends RemoteServiceServlet implements LessonSer
         return lessonlist;
     }
 
-    public static File[] getSubDirs(File path) {
+    private static File[] getSubDirs(File path) {
         if (!path.isDirectory()) {
             return new File[0];
         }

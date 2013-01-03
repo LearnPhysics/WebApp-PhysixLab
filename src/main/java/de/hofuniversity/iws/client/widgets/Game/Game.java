@@ -43,17 +43,17 @@ public class Game extends Composite {
         sWrap.getElement().getStyle().setOverflow(Style.Overflow.HIDDEN);
         sWrap.setVerticalScrollPosition(0);
         this.game = EntityHolder.getInstance().getGame();
-        if(game != null) {
+        if (game != null) {
             setup();
         }
     }
 
     private void setup() {
-            title.setInnerText(game.getTitle());            
-            gamePanel.add(game.getGameWidget());
-            beschreibung.setInnerText(game.getDescription());
-            outerGame.getElement().getStyle().setWidth(
-                    (extractIntFromCss(game.getGameWidget().getElement().getStyle().getWidth() + 20)), Style.Unit.PX);
+        title.setInnerText(game.getTitle());
+        gamePanel.add(game.getGameWidget());
+        beschreibung.setInnerText(game.getDescription());
+        outerGame.getElement().getStyle().setWidth(
+                (extractIntFromCss(game.getGameWidget().getElement().getStyle().getWidth()) + 20), Style.Unit.PX);
     }
 
     private int extractIntFromCss(String css) {
