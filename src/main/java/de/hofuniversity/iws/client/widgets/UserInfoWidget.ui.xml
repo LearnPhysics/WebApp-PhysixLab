@@ -1,0 +1,20 @@
+<!--<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">-->
+
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui"
+             xmlns:my="urn:import:de.hofuniversity.iws.client.widgets">
+    <ui:with field="res" type="de.hofuniversity.iws.client.widgets.Images"></ui:with>
+    <ui:with field="tokens" type="de.hofuniversity.iws.client.HistoryPageController.Tokens"/>
+    
+    <ui:style>
+        .booth{width:400px; height:300px;}
+    </ui:style>    
+    
+    <g:HTMLPanel>
+        <my:PhotoBoothWidget ui:field='photobooth' styleName='{style.booth}'/>
+        <g:Hyperlink text='Back to the Session screen' targetHistoryToken='{tokens.sessionpage}'/>
+        <g:Image ui:field='user_pic' resource='{res.NoUserImage}'/>
+        <g:Label ui:field='user_name' text='nicht angemeldet'/>
+        <g:Button ui:field='boothButton'>create Photobooth</g:Button>
+    </g:HTMLPanel>
+</ui:UiBinder>

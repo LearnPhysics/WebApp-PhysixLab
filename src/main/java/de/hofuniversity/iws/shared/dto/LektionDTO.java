@@ -20,16 +20,9 @@ public class LektionDTO implements Serializable {
     private String lessonText;
     private String lesson_name;
     private String parent;
-    private String formularID;
+    private String formular;
+    private String widget;
     private GameFactory widgetFactory;
-
-    public String getFormularID() {
-        return formularID;
-    }
-
-    public void setFormularID(String formularID) {
-        this.formularID = formularID;
-    }
 
     public GameFactory getWidgetFactory() {
         return widgetFactory;
@@ -37,6 +30,22 @@ public class LektionDTO implements Serializable {
 
     public void setWidgetFactory(GameFactory widgetFactory) {
         this.widgetFactory = widgetFactory;
+    }
+
+    public String getWidget() {
+        return widget;
+    }
+
+    public void setWidget(String widget_id) {
+        this.widget = widget_id;
+    }
+
+    public String getFormular() {
+        return formular;
+    }
+
+    public void setFormular(String formular_id) {
+        this.formular = formular_id;
     }
 
     public String getId() {

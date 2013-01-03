@@ -55,14 +55,16 @@ public class XMLReaderParser {
         lektion.setPreviewURL(root.getChildText("pictogram"));
         lektion.setParent(root.getChildText("parentlesson"));
         lektion.setId(root.getChildText("id"));
+        lektion.setFormular(root.getChildText("formular"));
+        lektion.setWidget(root.getChildText("widget"));
 
-        String widgetClassName = root.getChildText("widget");
-        for (GameFactory fac : ServiceLoader.load(GameFactory.class)) {
-            if (fac.getGameClass().getCanonicalName().equals(widgetClassName)) {
-                lektion.setWidgetFactory(fac);
-                break;
-            }
-        }
+//        String widgetClassName = root.getChildText("widgetFactory");
+//        for (GameFactory fac : ServiceLoader.load(GameFactory.class)) {
+//            if (fac.getGameClass().getCanonicalName().equals(widgetClassName)) {
+//                lektion.setWidgetFactory(fac);
+//                break;
+//            }
+//        }
 
         return lektion;
     }

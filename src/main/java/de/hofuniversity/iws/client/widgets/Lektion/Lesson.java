@@ -55,7 +55,13 @@ public class Lesson extends Composite {
         }
         title.setInnerText(lesson.getTitle());
         text.setInnerText(lesson.getLessonText());
-        experiment.add(lesson.getExperiment());
-        formular.add(lesson.getFormular());
+        if(lesson.getExperiment()!=null)
+        {
+            experiment.add(lesson.getExperiment());
+        }
+        if(lesson.getFormular()!=null)
+        {
+            formular.add(lesson.getFormular());
+        }
     }
 }

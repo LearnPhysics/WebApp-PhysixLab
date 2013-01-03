@@ -115,12 +115,16 @@ public class Lektionswahl extends Composite {
                 lesson.setPreviewURL(x.getPreviewURL());
                 lesson.setLessonText(x.getLessonText());
                 lesson.setParent_id(x.getParent());
-                lesson.setExperiment_id(x.getWidget_id());
-                lesson.setFormular_id(x.getFormular_id());
-
-                //lesson.setExperiment(this);
-                //lesson.setFormular(this);
-
+               
+                if(x.getWidget().startsWith("images\\"))
+                {
+                   lesson.setExperiment(new Image(x.getWidget()));
+                }
+                if(x.getFormular().startsWith("images\\"))
+                {
+                   lesson.setFormular(new Image(x.getFormular()));
+                }
+                
                 map.put(x.getId(), lesson);
                 thema.getLektionen().add(lesson);
             }
