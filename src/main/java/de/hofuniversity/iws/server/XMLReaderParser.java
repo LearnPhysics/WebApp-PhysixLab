@@ -5,9 +5,8 @@
 package de.hofuniversity.iws.server;
 
 import java.io.*;
-import java.util.*;
+import java.util.List;
 
-import de.hofuniversity.iws.shared.GameFactory;
 import de.hofuniversity.iws.shared.dto.*;
 
 import org.jdom.*;
@@ -57,14 +56,6 @@ public class XMLReaderParser {
         lektion.setId(root.getChildText("id"));
         lektion.setFormular(root.getChildText("formular"));
         lektion.setWidget(root.getChildText("widget"));
-
-//        String widgetClassName = root.getChildText("widgetFactory");
-//        for (GameFactory fac : ServiceLoader.load(GameFactory.class)) {
-//            if (fac.getGameClass().getCanonicalName().equals(widgetClassName)) {
-//                lektion.setWidgetFactory(fac);
-//                break;
-//            }
-//        }
 
         return lektion;
     }

@@ -75,7 +75,7 @@ public abstract class StandardPhysicGame implements PhysicGame, ContactListener 
             phyWorld.drawDebugData();
         }
     }
-    private final float TIME_STEP = 0.010f;
+    private final float TIME_STEP = 0.020f;
     private float time = 0;
 
     @Override

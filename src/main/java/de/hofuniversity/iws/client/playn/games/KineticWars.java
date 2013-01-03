@@ -4,10 +4,9 @@
  */
 package de.hofuniversity.iws.client.playn.games;
 
-import darwin.annotations.ServiceProvider;
 import de.hofuniversity.iws.client.playn.StandardPhysicGame;
 import de.hofuniversity.iws.client.playn.entitys.*;
-import de.hofuniversity.iws.shared.GameFactory;
+
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
@@ -21,19 +20,6 @@ import static playn.core.PlayN.graphics;
  */
 public class KineticWars extends StandardPhysicGame {
 
-    @ServiceProvider(GameFactory.class)
-    public static class Factory implements GameFactory<KineticWars> {
-
-        @Override
-        public KineticWars create() {
-            return new KineticWars();
-        }
-
-        @Override
-        public Class<KineticWars> getGameClass() {
-            return KineticWars.class;
-        }
-    }
     public GroupLayer staticLayerBack, dynamicLayer, staticLayerFront;
     private Pendulum pendel;
     private Rampe rampe;

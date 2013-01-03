@@ -50,6 +50,6 @@ public class PhysicGameBox implements Game {
 
     @Override
     public int updateRate() {
-        return 60;
+        return 25;
     }
 }

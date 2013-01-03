@@ -6,7 +6,7 @@ package de.hofuniversity.iws.shared.dto;
 
 import java.io.Serializable;
 
-import de.hofuniversity.iws.shared.GameFactory;
+import de.hofuniversity.iws.shared.games.GameFactory;
 
 /**
  *
