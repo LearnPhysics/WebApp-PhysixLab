@@ -6,34 +6,37 @@ package de.hofuniversity.iws.shared.dto;
 
 import java.io.Serializable;
 
+import de.hofuniversity.iws.shared.GameFactory;
+
 /**
  *
  * @author Andreas
  */
 public class LektionDTO implements Serializable {
-        String id;
-        String title;
-        String previewURL;
-        String lessonText;
-        String lesson_name;
-        String parent;
-        String widget_id;
-        String formular_id;
 
-    public String getWidget_id() {
-        return widget_id;
+    private String id;
+    private String title;
+    private String previewURL;
+    private String lessonText;
+    private String lesson_name;
+    private String parent;
+    private String formularID;
+    private GameFactory widgetFactory;
+
+    public String getFormularID() {
+        return formularID;
     }
 
-    public void setWidget_id(String widget_id) {
-        this.widget_id = widget_id;
+    public void setFormularID(String formularID) {
+        this.formularID = formularID;
     }
 
-    public String getFormular_id() {
-        return formular_id;
+    public GameFactory getWidgetFactory() {
+        return widgetFactory;
     }
 
-    public void setFormular_id(String formular_id) {
-        this.formular_id = formular_id;
+    public void setWidgetFactory(GameFactory widgetFactory) {
+        this.widgetFactory = widgetFactory;
     }
 
     public String getId() {
@@ -42,7 +45,7 @@ public class LektionDTO implements Serializable {
 
     public void setId(String id) {
         this.id = id;
-    }       
+    }
 
     public String getParent() {
         return parent;
@@ -58,7 +61,7 @@ public class LektionDTO implements Serializable {
 
     public void setLesson_name(String lesson_name) {
         this.lesson_name = lesson_name;
-    }       
+    }
 
     public String getTitle() {
         return title;
@@ -83,5 +86,4 @@ public class LektionDTO implements Serializable {
     public void setLessonText(String description) {
         this.lessonText = description;
     }
-        
 }

@@ -1,7 +1,5 @@
 package de.hofuniversity.iws.server.data.handler;
 
-import de.hofuniversity.iws.shared.entityimpl.UserDBO;
-import de.hofuniversity.iws.shared.entityimpl.NetworkAccountDBO;
 import java.util.*;
 
 import de.hofuniversity.iws.server.oauth.Providers;

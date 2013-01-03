@@ -4,12 +4,11 @@
  */
 package de.hofuniversity.iws.shared.services;
 
-import com.google.common.base.Optional;
-import com.google.gwt.user.client.rpc.RemoteService;
-import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import de.hofuniversity.iws.shared.dto.LektionDTO;
-import de.hofuniversity.iws.shared.dto.ThemaDTO;
 import java.util.List;
+
+import de.hofuniversity.iws.shared.dto.*;
+
+import com.google.gwt.user.client.rpc.*;
 
 /**
  *
