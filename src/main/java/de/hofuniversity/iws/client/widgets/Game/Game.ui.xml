@@ -14,8 +14,8 @@ Uncomment this for XHTML entities
         #contentAreaGame {
         background: rgba(255,249,108,0.7);
         height: 1080px;
-        font-family: geosans;
-        font-size: 15px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
         }
 
         #content {
@@ -30,6 +30,7 @@ Uncomment this for XHTML entities
         left: 40px;
         color: rgb(65,150,255);
         margin: 0 0 0 0;
+        font-family: geosans;
         font-size: 60px;
         }
 

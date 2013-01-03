@@ -14,8 +14,8 @@
 
         #root {
         background-image: url('images/Startseite/Circle02.png');
-        font-family: geosans;
-        font-size: 15px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
         margin: 0px auto;
         }
 
@@ -110,6 +110,13 @@
         min-height: 240px;
         }
 
+        #iconWrapper {
+        left: 20px;
+        }
+        
+        .icon {
+        padding: 5px;
+        }
     </ui:style>
     
     <g:HTMLPanel>
@@ -137,12 +144,15 @@
                                 PhysixLab wird vollständig durch die Hochschule Hof finanziert und ist somit vollkommen kostenlos und werbefrei.
                                 Als Schüler braucht ihr nur einen Account bei Facebook, Google oder Twitter. Mit diesem könnt ihr euch direkt hier anmelden. 
                             </p>
-					
+                            <br></br>	
                             <h2>Login</h2>
-                            <g:Image ui:field='facebookLogin' url='images/Startseite/Facebook_Web.png'/>
-                            <g:Image ui:field='googleLogin' url='images/Startseite/Google_Web.png'/>
-                            <g:Image ui:field='twitterLogin' url='images/Startseite/Twitter_Web.png'/>	
-                            <h2>Entwickler-News</h2>
+                            <div id="iconWrapper">
+                            <g:Image styleName="{style.icon}" ui:field='facebookLogin' url='images/Startseite/Facebook_Web.png'/>
+                            <g:Image styleName="{style.icon}" ui:field='googleLogin' url='images/Startseite/Google_Web.png'/>
+                            <g:Image styleName="{style.icon}" ui:field='twitterLogin' url='images/Startseite/Twitter_Web.png'/>	
+                            </div>
+                            <br></br>
+                            <h2 style="margin-top:5px">Entwickler-News</h2>
                             <p>
                                 22.12.2012:
                                 PhysixLab hat das Beta-Stadium verlassen und jetzt für alle ohne Einschränkungen nutzbar. Neuer Content folgt natürlich trotzdem weiterhin.

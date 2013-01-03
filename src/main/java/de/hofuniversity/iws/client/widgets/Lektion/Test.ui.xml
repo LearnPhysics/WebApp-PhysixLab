@@ -11,8 +11,8 @@ Uncomment this for XHTML entities
         }
 
         #contentAreaTest {
-        font-family: geosans;
-        font-size: 15px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
         background: rgba(209,141,232,0.7);
         height: 1080px;
         }
@@ -29,6 +29,7 @@ Uncomment this for XHTML entities
         left: 40px;
         color: rgb(65,150,255);
         margin: 0 0 0 0;
+        font-family: geosans;
         font-size: 60px;
         }
 
@@ -60,10 +61,10 @@ Uncomment this for XHTML entities
         top: 195px; 
         left: 40px;
         width: 400px;
-        height: 680px;
+        min-height: 680px;
         }
 
-        #illu {
+        .illu {
         top: 75px; 
         left: 520px;
         width: 400px;
@@ -74,7 +75,7 @@ Uncomment this for XHTML entities
         top: 515px; 
         left: 520px;
         width: 400px;
-        height: 360px;
+        min-height: 360px;
         }
     </ui:style>
     <g:HTMLPanel>
@@ -87,14 +88,14 @@ Uncomment this for XHTML entities
                         <p ui:field="text"></p>
                     </div>              
                 </div>
-                <div class="{style.element}" id="illu">
+                <g:VerticalPanel styleName="{style.element} {style.illu}">
                     <g:VerticalPanel styleName="{style.innerElement}">
                         <g:VerticalPanel ui:field="illustration">
                         </g:VerticalPanel>
                         <g:HTMLPanel>
                         </g:HTMLPanel>
                     </g:VerticalPanel>
-                </div>              
+                </g:VerticalPanel>
                 <div class="{style.element}" id="solu">
                     <g:VerticalPanel styleName="{style.innerElement}">
                         <g:TextBox ui:field="solution"></g:TextBox>    
