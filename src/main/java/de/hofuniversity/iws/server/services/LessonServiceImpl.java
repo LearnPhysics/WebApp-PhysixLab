@@ -78,8 +78,6 @@ public class LessonServiceImpl extends RemoteServiceServlet implements LessonSer
                                         int lastindex = x.toString().lastIndexOf("\\");
                                         lesson.setLesson_name(x.getAbsolutePath().toString().substring(lastindex+1));
                                         lessonlist.add(lesson);
-                          /*              lessonList = new LinkedList();
-                                        lessonList.add(lesson);*/
                            //             TestDTO test = xmlReaderParser.parseTest(x.getAbsoluteFile()+"/test.xml");
                            /*             testList = new LinkedList();
                                         testList.add(test);*/

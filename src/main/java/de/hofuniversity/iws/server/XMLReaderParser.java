@@ -133,7 +133,10 @@ public class XMLReaderParser {
                     lektion.setId(column.getText());
               h = root.getChildren("widget");
                     column = (Element) h.get(0);
-                    lektion.setWidget_id(column.getText());
+                    lektion.setWidget(column.getText());
+              h = root.getChildren("math");
+                    column = (Element) h.get(0);
+                    lektion.setFormular(column.getText());
     }
     
     public ThemaDTO parseThemes(String file) 

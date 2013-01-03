@@ -17,23 +17,23 @@ public class LektionDTO implements Serializable {
         String lessonText;
         String lesson_name;
         String parent;
-        String widget_id;
-        String formular_id;
+        String widget;
+        String formular;
 
-    public String getWidget_id() {
-        return widget_id;
+    public String getWidget() {
+        return widget;
     }
 
-    public void setWidget_id(String widget_id) {
-        this.widget_id = widget_id;
+    public void setWidget(String widget_id) {
+        this.widget = widget_id;
     }
 
-    public String getFormular_id() {
-        return formular_id;
+    public String getFormular() {
+        return formular;
     }
 
-    public void setFormular_id(String formular_id) {
-        this.formular_id = formular_id;
+    public void setFormular(String formular_id) {
+        this.formular = formular_id;
     }
 
     public String getId() {

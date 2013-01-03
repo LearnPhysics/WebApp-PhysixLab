@@ -11,6 +11,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 import de.hofuniversity.iws.client.widgets.SubWidgets.LektionSelector;
 import de.hofuniversity.iws.client.widgets.TestEntities.EntityHolder;
@@ -126,11 +127,15 @@ public class Lektionswahl extends Composite {
                 lesson.setPreviewURL(x.getPreviewURL());
                 lesson.setLessonText(x.getLessonText());
                 lesson.setParent_id(x.getParent());
-                lesson.setExperiment_id(x.getWidget_id());
-                lesson.setFormular_id(x.getFormular_id());
-                
-                //lesson.setExperiment(this);
-                //lesson.setFormular(this);
+               
+                if(x.getWidget().startsWith("images\\"))
+                {
+                   lesson.setExperiment(new Image(x.getWidget()));
+                }
+                if(x.getFormular().startsWith("images\\"))
+                {
+                   lesson.setFormular(new Image(x.getFormular()));
+                }
                 
                 map.put(x.getId(), lesson);
                 thema.getLektionen().add(lesson);
