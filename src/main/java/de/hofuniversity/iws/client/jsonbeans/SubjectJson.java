@@ -12,7 +12,7 @@ import com.google.gwt.core.client.JavaScriptObject;
  */
 public class SubjectJson extends JavaScriptObject {
 
-    private SubjectJson() {
+    protected SubjectJson() {
     }
 
     public static native SubjectJson create(String json) /*-{

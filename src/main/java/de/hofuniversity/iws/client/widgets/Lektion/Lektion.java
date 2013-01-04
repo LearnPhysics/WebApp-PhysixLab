@@ -24,7 +24,6 @@ public class Lektion extends Composite {
 
     public final static String NAME = "lektion";
     private static LektionUiBinder uiBinder = GWT.create(LektionUiBinder.class);
-    private final LessonServiceAsync lessonService = (LessonServiceAsync) GWT.create(LessonService.class);
     @UiField
     Lektion.LektionStyle style;
     @UiField
@@ -56,13 +55,41 @@ public class Lektion extends Composite {
         String tab2();
     }
 
-    public Lektion(String lektion,final SubjectJson subject) {
-        initWidget(uiBinder.createAndBindUi(this));
-        History.newItem(NAME, false);
-        sWrap.getElement().getStyle().setOverflow(Style.Overflow.HIDDEN);
-        sWrap.setVerticalScrollPosition(0);
+    public static class Builder {
 
-        lessonService.getLesson(lektion, new AsyncCallback<String>() {
+        private final LessonServiceAsync lessonService = (LessonServiceAsync) GWT.create(LessonService.class);
+        private LessonJson lesson;
+        private SubjectJson subject;
+        private String lessonName, subjectName;
+
+        public Builder withLesson(String name) {
+            lessonName = name;
+            return this;
+        }
+
+        public Builder withLesson(LessonJson bean) {
+            lesson = bean;
+            return this;
+        }
+
+        public Builder withSubject(String name) {
+            subjectName = name;
+            return this;
+        }
+
+        public Builder withSubject(SubjectJson bean) {
+            subject = bean;
+            return this;
+        }
+
+        private static class SubAsync implements AsyncCallback<String> {
+
+            private final Lektion l;
+
+            public SubAsync(Lektion l) {
+                this.l = l;
+            }
+
             @Override
             public void onFailure(Throwable caught) {
                 throw new UnsupportedOperationException("Not supported yet.");
@@ -70,11 +97,75 @@ public class Lektion extends Composite {
 
             @Override
             public void onSuccess(String result) {
-                LessonJson lesson = LessonJson.create(result);
-                railContent.add(new Lesson(lesson, subject));
-                railContent.add(new Test(lesson.getTest()));
+                l.ini(SubjectJson.create(result));
             }
-        });
+        }
+
+        public Lektion create() {
+            final Lektion l = new Lektion();
+            if (subject != null) {
+                l.ini(subject);
+            } else if (subjectName != null) {
+                lessonService.getSubject(subjectName, new SubAsync(l));
+            }
+            if (lesson != null) {
+                l.ini(lesson);
+            } else if (lessonName != null) {
+                lessonService.getLesson(lessonName, new AsyncCallback<String>() {
+                    @Override
+                    public void onFailure(Throwable caught) {
+                        throw new UnsupportedOperationException("Not supported yet.");
+                    }
+
+                    @Override
+                    public void onSuccess(String result) {
+                        LessonJson les = LessonJson.create(result);
+                        l.ini(les);
+                        if (subjectName == null) {
+                            lessonService.getSubject(les.getThema(), new SubAsync(l));
+                        }
+                    }
+                });
+            }
+            return l;
+        }
+    }
+
+    public static Builder build() {
+        return new Builder();
+    }
+    private LessonJson lesson;
+    private SubjectJson subject;
+
+    private Lektion() {
+        initWidget(uiBinder.createAndBindUi(this));
+        History.newItem(NAME, false);
+        sWrap.getElement().getStyle().setOverflow(Style.Overflow.HIDDEN);
+        sWrap.setVerticalScrollPosition(0);
+    }
+
+    public Lektion(LessonJson lektion, SubjectJson subject) {
+        this();
+
+        railContent.add(new Lesson(lektion, subject));
+        railContent.add(new Test(lektion.getTest()));
+    }
+
+    private void ini(LessonJson l) {
+        lesson = l;
+        ini();
+    }
+
+    private void ini(SubjectJson s) {
+        subject = s;
+        ini();
+    }
+
+    private void ini() {
+        if (lesson != null && subject != null) {
+            railContent.add(new Lesson(lesson, subject));
+            railContent.add(new Test(lesson.getTest()));
+        }
     }
 
     @UiHandler("tab1")

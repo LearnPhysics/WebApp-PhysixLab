@@ -19,6 +19,8 @@ import com.google.gwt.user.client.rpc.*;
 public interface LessonService extends RemoteService {
 
     public List<String> getSubjects();
+    
+    public String getSubject(String name) throws IOException;
 
     public List<LessonPreview> getLessonPreviews(String subject) throws IOException;
     

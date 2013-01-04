@@ -12,7 +12,7 @@ import com.google.gwt.core.client.JavaScriptObject;
  */
 public class TestJson   extends JavaScriptObject {
 
-    private TestJson() {
+    protected TestJson() {
     }
 
     public static native TestJson create(String json) /*-{

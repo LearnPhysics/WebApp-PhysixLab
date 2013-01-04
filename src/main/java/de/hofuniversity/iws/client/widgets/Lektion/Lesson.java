@@ -5,6 +5,7 @@
 package de.hofuniversity.iws.client.widgets.Lektion;
 
 import de.hofuniversity.iws.client.jsonbeans.*;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.*;
 import com.google.gwt.uibinder.client.*;
@@ -34,10 +35,10 @@ public class Lesson extends Composite {
     public Lesson(LessonJson lesson, SubjectJson subject) {
         initWidget(uiBinder.createAndBindUi(this));
 
-        theme.setInnerText(subject.getTitle());
-
         title.setInnerText(lesson.getTitle());
-        text.setInnerText(lesson.getText());
+        text.setInnerText(lesson.getText());        
+        
+        theme.setInnerText(subject.getTitle());
 
 //        if (lesson.getExperiment() != null) {
 //            experiment.add(lesson.getExperiment());

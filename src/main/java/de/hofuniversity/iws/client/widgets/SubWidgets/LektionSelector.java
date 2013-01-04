@@ -46,6 +46,9 @@ public class LektionSelector extends Composite {
 
     @UiHandler("oImg")
     public void openLektion(ClickEvent ev) {
-        PhysixLab.PAGE_CONTROLLER.changePage(new Lektion(lektion.getName(), subject));
+        Lektion l = Lektion.build()
+                .withLesson(lektion.getName())
+                .withSubject(subject).create();
+        PhysixLab.PAGE_CONTROLLER.changePage(l);
     }
 }

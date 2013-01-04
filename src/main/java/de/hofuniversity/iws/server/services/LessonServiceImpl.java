@@ -48,6 +48,11 @@ public class LessonServiceImpl extends RemoteServiceServlet implements LessonSer
         });
     }
 
+    public String getSubject(String name) throws IOException {
+        File subject = new File(getResourcePath() + SUBJECTS_PATH + name + ".json");
+        return Files.toString(subject, Charset.forName("UTF-8"));
+    }
+
     @Override
     public List<LessonPreview> getLessonPreviews(String subject) throws IOException {
         File[] subjects = new File(getResourcePath() + LESSONS_PATH).listFiles();

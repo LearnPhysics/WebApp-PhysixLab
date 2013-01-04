@@ -16,7 +16,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
-import org.tritonus.share.ArraySet;
 
 import static de.hofuniversity.iws.shared.CollectionUtils.*;
 
@@ -73,7 +72,7 @@ public class Lektionswahl extends Composite {
             }
         });
 
-        List<Entry<Integer, List<LessonPreview>>> lektionsDepth = new ArraySet(groupedByDepth.entrySet());
+        List<Entry<Integer, List<LessonPreview>>> lektionsDepth = new ArrayList<Entry<Integer, List<LessonPreview>>>(groupedByDepth.entrySet());
         Collections.sort(lektionsDepth, new Comparator<Entry<Integer, List<LessonPreview>>>() {
             @Override
             public int compare(Entry<Integer, List<LessonPreview>> o1, Entry<Integer, List<LessonPreview>> o2) {

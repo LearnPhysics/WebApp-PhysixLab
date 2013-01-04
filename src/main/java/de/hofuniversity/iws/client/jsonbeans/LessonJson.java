@@ -12,7 +12,7 @@ import com.google.gwt.core.client.JavaScriptObject;
  */
 public class LessonJson  extends JavaScriptObject {
 
-    private LessonJson() {
+    protected LessonJson() {
     }
 
     public static native LessonJson create(String json) /*-{

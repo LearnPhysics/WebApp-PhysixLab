@@ -4,12 +4,7 @@
  */
 package de.hofuniversity.iws.shared;
 
-import java.io.*;
-import java.nio.charset.Charset;
 import java.util.*;
-
-import com.google.common.io.Files;
-import org.json.*;
 
 /**
  *
