@@ -4,8 +4,7 @@
  */
 package de.hofuniversity.iws.client.widgets.Lektion;
 
-import de.hofuniversity.iws.client.widgets.TestEntities.*;
-
+import de.hofuniversity.iws.shared.dto.LektionDTO;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.*;
 import com.google.gwt.uibinder.client.*;
@@ -16,45 +15,39 @@ import com.google.gwt.user.client.ui.*;
  * @author Oliver
  */
 public class Lesson extends Composite {
-    
+
     private static LessonUiBinder uiBinder = GWT.create(LessonUiBinder.class);
-    
-    @UiField HeadingElement theme;
-    @UiField HeadingElement title;
-    @UiField ParagraphElement text;
-    @UiField VerticalPanel experiment;
-    @UiField VerticalPanel formular;
-    
-    private TestLektion lesson;
-    
+    @UiField
+    HeadingElement theme;
+    @UiField
+    HeadingElement title;
+    @UiField
+    ParagraphElement text;
+    @UiField
+    VerticalPanel experiment;
+    @UiField
+    VerticalPanel formular;
+
     interface LessonUiBinder extends UiBinder<Widget, Lesson> {
     }
-    
-    public Lesson() {
+
+    public Lesson(LektionDTO lesson) {
         initWidget(uiBinder.createAndBindUi(this));
-        this.lesson = EntityHolder.getInstance().getLektion();
-        if(lesson != null) {
-            setup();
-        }
-    }
-    
-    private void setup() {
-        TestThema thema = EntityHolder.getInstance().getThema();
-        if(thema != null) {
-            theme.setInnerText(thema.getTitle());
-        }
-        else {
-            theme.setInnerText("Empty");
-        }
+        
+//        if (thema != null) {
+//            theme.setInnerText(thema.getTitle());
+//        } else {
+//            theme.setInnerText("Empty");
+//        }
+        
         title.setInnerText(lesson.getTitle());
         text.setInnerText(lesson.getLessonText());
-        if(lesson.getExperiment()!=null)
-        {
-            experiment.add(lesson.getExperiment());
-        }
-        if(lesson.getFormular()!=null)
-        {
-            formular.add(lesson.getFormular());
-        }
+        
+//        if (lesson.getExperiment() != null) {
+//            experiment.add(lesson.getExperiment());
+//        }
+//        if (lesson.getFormular() != null) {
+//            formular.add(lesson.getFormular());
+//        }
     }
 }

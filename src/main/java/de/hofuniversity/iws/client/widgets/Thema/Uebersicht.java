@@ -4,17 +4,12 @@
  */
 package de.hofuniversity.iws.client.widgets.Thema;
 
+import de.hofuniversity.iws.shared.dto.ThemaDTO;
+
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.DivElement;
-import com.google.gwt.dom.client.HeadingElement;
-import com.google.gwt.dom.client.Style;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
-import de.hofuniversity.iws.client.widgets.TestEntities.EntityHolder;
-import de.hofuniversity.iws.client.widgets.TestEntities.TestThema;
+import com.google.gwt.dom.client.*;
+import com.google.gwt.uibinder.client.*;
+import com.google.gwt.user.client.ui.*;
 
 /**
  *
@@ -23,7 +18,6 @@ import de.hofuniversity.iws.client.widgets.TestEntities.TestThema;
 public class Uebersicht extends Composite {
 
     private static UebersichtUiBinder uiBinder = GWT.create(UebersichtUiBinder.class);
-    private TestThema thema;
     @UiField
     HeadingElement title;
     @UiField
@@ -32,15 +26,9 @@ public class Uebersicht extends Composite {
     interface UebersichtUiBinder extends UiBinder<Widget, Uebersicht> {
     }
 
-    public Uebersicht() {
+    public Uebersicht(ThemaDTO thema) {
         initWidget(uiBinder.createAndBindUi(this));
-        this.thema = EntityHolder.getInstance().getThema();
-        if (thema != null) {
-            setup();
-        }
-    }
 
-    private void setup() {
         title.setInnerText(thema.getTitle());
         einfuehrungstext.setInnerText(thema.getDescription());
     }

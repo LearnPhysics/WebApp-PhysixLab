@@ -94,11 +94,7 @@ Uncomment this for XHTML entities
                 </g:HTMLPanel>
             </g:FocusPanel>
             <span ui:field='rail' class="{style.posUebersicht}">
-                <g:HorizontalPanel>
-                    <my:Lektionswahl></my:Lektionswahl>
-                    <my:Uebersicht></my:Uebersicht>
-                    <my:Spielwahl></my:Spielwahl>
-                </g:HorizontalPanel>
+                <g:HorizontalPanel ui:field='railContent'/>
             </span>
         </g:HTMLPanel>
     </g:ScrollPanel>

@@ -62,7 +62,7 @@ public class UserHome extends Composite {
 
     public UserHome() {
         initWidget(uiBinder.createAndBindUi(this));
-        History.newItem(NAME);
+        History.newItem(NAME, false);
         sWrap.getElement().getStyle().setOverflow(Style.Overflow.HIDDEN);
         sWrap.setVerticalScrollPosition(0);
     }

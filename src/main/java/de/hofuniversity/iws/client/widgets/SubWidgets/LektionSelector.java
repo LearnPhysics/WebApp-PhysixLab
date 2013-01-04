@@ -4,23 +4,15 @@
  */
 package de.hofuniversity.iws.client.widgets.SubWidgets;
 
+import de.hofuniversity.iws.client.PhysixLab;
+import de.hofuniversity.iws.client.widgets.Lektion.Lektion;
+import de.hofuniversity.iws.shared.dto.LektionDTO;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FocusPanel;
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Widget;
-import de.hofuniversity.iws.client.PhysixLab;
-import de.hofuniversity.iws.client.widgets.Game.Game;
-import de.hofuniversity.iws.client.widgets.Lektion.Lektion;
-import de.hofuniversity.iws.client.widgets.TestEntities.EntityHolder;
-import de.hofuniversity.iws.client.widgets.TestEntities.TestGame;
-import de.hofuniversity.iws.client.widgets.TestEntities.TestLektion;
+import com.google.gwt.uibinder.client.*;
+import com.google.gwt.user.client.ui.*;
 
 /**
  *
@@ -29,7 +21,7 @@ import de.hofuniversity.iws.client.widgets.TestEntities.TestLektion;
 public class LektionSelector extends Composite {
     
     private static LektionSelectorUiBinder uiBinder = GWT.create(LektionSelectorUiBinder.class);
-    private TestLektion lektion;
+    private LektionDTO lektion;
     private int x, y;
     
     @UiField HTMLPanel wrap;
@@ -39,11 +31,7 @@ public class LektionSelector extends Composite {
     interface LektionSelectorUiBinder extends UiBinder<Widget, LektionSelector> {
     }
     
-    public LektionSelector() {
-        initWidget(uiBinder.createAndBindUi(this));
-    }
-    
-    public LektionSelector(TestLektion lektion, int x, int y) {
+    public LektionSelector(LektionDTO lektion, int x, int y) {
         initWidget(uiBinder.createAndBindUi(this));
         this.lektion = lektion;
         this.x = x;
@@ -59,7 +47,6 @@ public class LektionSelector extends Composite {
     
     @UiHandler("oImg")
     public void openLektion(ClickEvent ev) {
-        EntityHolder.getInstance().setLektion(lektion);
-        PhysixLab.PAGE_CONTROLLER.changePage(Lektion.NAME);
+        PhysixLab.PAGE_CONTROLLER.changePage(new Lektion(lektion));
     }
 }

@@ -14,7 +14,6 @@ import de.hofuniversity.iws.shared.services.LessonService;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import javax.servlet.ServletException;
 
 /**
  *
@@ -38,7 +37,7 @@ public class LessonServiceImpl extends RemoteServiceServlet implements LessonSer
             try {
                 Path p = themaFile.toPath();
                 ThemaDTO thema = parser.parseThemes(p.resolve("theme.xml").toFile());
-                thema.setTopic_name(p.getFileName().toString());
+                thema.setTopicName(p.getFileName().toString());
                 themenlist.add(thema);
             } catch (IOException ex) {
                 //TODO log

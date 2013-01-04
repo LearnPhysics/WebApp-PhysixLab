@@ -30,7 +30,7 @@ public class UserInfoWidget extends Composite {
 
     public UserInfoWidget() {
         initWidget(uiBinder.createAndBindUi(this));
-        History.newItem(NAME);
+        History.newItem(NAME, false);
         photobooth.addListener(new Listener() {
             @Override
             public void onImage(String url) {

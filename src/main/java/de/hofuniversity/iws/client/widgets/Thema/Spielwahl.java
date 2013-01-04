@@ -4,13 +4,13 @@
  */
 package de.hofuniversity.iws.client.widgets.Thema;
 
-import java.util.List;
+
+import de.hofuniversity.iws.client.widgets.SubWidgets.GameSelector;
+import de.hofuniversity.iws.shared.dto.GameDTO;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.ui.*;
-import de.hofuniversity.iws.client.widgets.SubWidgets.GameSelector;
-import de.hofuniversity.iws.client.widgets.TestEntities.*;
 
 /**
  *
@@ -25,11 +25,10 @@ public class Spielwahl extends Composite {
     interface SpielwahlUiBinder extends UiBinder<Widget, Spielwahl> {
     }
 
-    public Spielwahl() {
+    public Spielwahl(Iterable<GameDTO> games) {
         initWidget(uiBinder.createAndBindUi(this));
-        List<TestGame> games = EntityHolder.getInstance().getThema().getGames();
         if (games != null) {
-            for (TestGame game : games) {
+            for (GameDTO game : games) {
                 gamesPanel.add(new GameSelector(game));
             }
         }

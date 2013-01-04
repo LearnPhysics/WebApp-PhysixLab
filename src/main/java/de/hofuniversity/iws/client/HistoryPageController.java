@@ -4,14 +4,15 @@
  */
 package de.hofuniversity.iws.client;
 
-import com.google.gwt.event.logical.shared.*;
-import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.ui.*;
 import de.hofuniversity.iws.client.widgets.Game.Game;
 import de.hofuniversity.iws.client.widgets.Lektion.Lektion;
 import de.hofuniversity.iws.client.widgets.LoginPage;
 import de.hofuniversity.iws.client.widgets.Thema.Thema;
 import de.hofuniversity.iws.client.widgets.UserHome.UserHome;
+
+import com.google.gwt.event.logical.shared.*;
+import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.ui.*;
 
 /**
  *
@@ -47,21 +48,36 @@ public class HistoryPageController implements ValueChangeHandler<String> {
         changePage(History.getToken());
     }
 
-    public void changePage(String pageName) {
-
+    public void changePage(String token) {
+        String[] split = token.split("\\?");
+        String pageName = split[0];
         if (Tokens.loginpage().equals(pageName)) {
             changePage(new LoginPage());
         } else if (Tokens.userhomepage().equals(pageName)) {
             changePage(new UserHome());
-        } else if (Tokens.themapage().equals(pageName)) {
-            changePage(new Thema());
-        } else if (Tokens.lektionpage().equals(pageName)) {
-            changePage(new Lektion());
-        } else if (Tokens.gamepage().equals(pageName)) {
-            changePage(new Game());
+        } else if (split.length > 1) {
+            if (Tokens.themapage().equals(pageName)) {
+                tryOpenThema(split[1]);
+            } else if (Tokens.lektionpage().equals(pageName)) {
+                tryOpenLektion(split[1]);
+            } else if (Tokens.gamepage().equals(pageName)) {
+                tryOpenGame(split[1]);
+            }
         } else {
             //TODO
         }
+    }
+
+    private void tryOpenThema(String options) {
+        //TODO options = topicName, get from server
+    }
+
+    private void tryOpenGame(String options) {
+        //TODO
+    }
+
+    private void tryOpenLektion(String options) {
+        //TODO
     }
 
     public void changePage(Composite c) {

@@ -33,7 +33,7 @@ public class SessionPage extends Composite {
         initWidget(uiBinder.createAndBindUi(this));
         sessionLabel.setVisible(true);
         sessionLabel.setText("token: " + PhysixLab.getSessionToken());
-        History.newItem(NAME);
+        History.newItem(NAME, false);
     }
 
     @UiHandler("logout")

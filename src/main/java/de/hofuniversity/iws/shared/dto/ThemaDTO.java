@@ -5,7 +5,6 @@
 package de.hofuniversity.iws.shared.dto;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  *
@@ -15,14 +14,14 @@ public class ThemaDTO implements Serializable {
     String title;
     String description;
     String imageURL;
-    String topic_name;
+    String topicName;
 
-    public String getTopic_name() {
-        return topic_name;
+    public String getTopicName() {
+        return topicName;
     }
 
-    public void setTopic_name(String topic_name) {
-        this.topic_name = topic_name;
+    public void setTopicName(String topic_name) {
+        this.topicName = topic_name;
     }
     
     public String getTitle() {
@@ -48,7 +47,4 @@ public class ThemaDTO implements Serializable {
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }
-    
-    
-    
 }

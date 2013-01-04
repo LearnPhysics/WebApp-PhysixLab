@@ -80,10 +80,7 @@ Uncomment this for XHTML entities
                 </g:HTMLPanel>
             </g:FocusPanel>
             <span ui:field='rail' class="{style.posLektion}">
-                <g:HorizontalPanel>
-                    <my:Lesson></my:Lesson>
-                    <my:Test></my:Test>
-                </g:HorizontalPanel>
+                <g:HorizontalPanel ui:field='railContent'/>
             </span>
         </g:HTMLPanel>
     </g:ScrollPanel>

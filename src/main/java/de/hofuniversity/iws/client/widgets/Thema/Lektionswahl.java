@@ -5,16 +5,19 @@
 package de.hofuniversity.iws.client.widgets.Thema;
 
 import java.util.*;
+import java.util.Map.Entry;
 
 import de.hofuniversity.iws.client.widgets.SubWidgets.LektionSelector;
-import de.hofuniversity.iws.client.widgets.TestEntities.*;
-import de.hofuniversity.iws.shared.dto.LektionDTO;
+import de.hofuniversity.iws.shared.dto.*;
 import de.hofuniversity.iws.shared.services.*;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
+import org.tritonus.share.ArraySet;
+
+import static de.hofuniversity.iws.shared.CollectionUtils.*;
 
 /**
  *
@@ -23,8 +26,9 @@ import com.google.gwt.user.client.ui.*;
 public class Lektionswahl extends Composite {
 
     private static LektionswahlUiBinder uiBinder = GWT.create(LektionswahlUiBinder.class);
-    List<TestLektion> lektionen;
-    static TestThema thema;
+    private static final int TOTAL_TREE_WIDTH = 880;
+    private static final int TREE_Y_STRIDE = 160;
+    private static final int TREE_X_OFFSET = -40;
     private final LessonServiceAsync lessonService = (LessonServiceAsync) GWT.create(LessonService.class);
     @UiField
     HTMLPanel lektionTree;
@@ -32,66 +36,72 @@ public class Lektionswahl extends Composite {
     interface LektionswahlUiBinder extends UiBinder<Widget, Lektionswahl> {
     }
 
-    public Lektionswahl() {
+    public Lektionswahl(ThemaDTO thema) {
         initWidget(uiBinder.createAndBindUi(this));
-        this.thema = EntityHolder.getInstance().getThema();
-        lessonService.readLessons(this.thema.getTopic_name(), new LessionAsyncCallback());
+        lessonService.readLessons(thema.getTopicName(), new LessionAsyncCallback());
     }
 
-    private void setup(List<TestLektion> l) {
-        this.lektionen = l;
-        System.out.println("<<< Called Setup >>>");
-
-        int width = 880;
-        List<TestLektion> copy = new LinkedList<TestLektion>();
-        for (TestLektion lek : lektionen) {
-            copy.add(lek);
+    private void setup(List<LektionDTO> l) {
+        //set parents
+        final Map<String, LektionDTO> idToBean = new HashMap<String, LektionDTO>();
+        for (LektionDTO lektionDTO : l) {
+            idToBean.put(lektionDTO.getId(), lektionDTO);
         }
 
-        // Make tree
-        LinkedList<LinkedList<TestLektion>> tree = new LinkedList<LinkedList<TestLektion>>();
-        boolean added = true;
-        while (added) {
-            System.out.println("--------- Entered Added ---------");
-            added = false;
-            tree.add(new LinkedList<TestLektion>());
-            for (int i = copy.size() - 1; i >= 0; i--) {
-                TestLektion lek = copy.get(i);
-                if (tree.size() > 1) {
-                    for (TestLektion parent : tree.get(tree.size() - 2)) {
-                        if (lek.getParent().equals(parent)) {
-                            System.out.println("child added");
-                            tree.get(tree.size() - 1).add(lek);
-                            copy.remove(i);
-                            added = true;
-                        }
-                    }
-                } else {
+        Map<String, List<LektionDTO>> idToChildren = new HashMap<String, List<LektionDTO>>();
+        for (LektionDTO lektionDTO : l) {
+            List<LektionDTO> get = idToChildren.get(lektionDTO.getParent());
+            if (get == null) {
+                get = new ArrayList<LektionDTO>();
+                idToChildren.put(lektionDTO.getParent(), get);
+            }
+            get.add(lektionDTO);
+        }
 
-                    if (lek.getParent() == null) {
-                        System.out.println("Root added");
-                        tree.get(tree.size() - 1).add(lek);
-                        copy.remove(i);
-                        added = true;
-                    }
+        Map<Integer, List<LektionDTO>> groupedByDepth = groupBy(l, new Selector<LektionDTO, Integer>() {
+            @Override
+            public Integer select(LektionDTO e) {
+                int count = 0;
+                LektionDTO acc = e;
+                while ((acc = idToBean.get(acc.getParent())) != null) {
+                    ++count;
                 }
+                return count;
+            }
+        });
+
+        List<Entry<Integer, List<LektionDTO>>> lektionsDepth = new ArraySet(groupedByDepth.entrySet());
+        Collections.sort(lektionsDepth, new Comparator<Entry<Integer, List<LektionDTO>>>() {
+            @Override
+            public int compare(Entry<Integer, List<LektionDTO>> o1, Entry<Integer, List<LektionDTO>> o2) {
+                return o1.getKey().compareTo(o2.getKey());
+            }
+        });
+
+        List<Integer> widths = select(lektionsDepth, new Selector<Entry<Integer, List<LektionDTO>>, Integer>() {
+            @Override
+            public Integer select(Entry<Integer, List<LektionDTO>> e) {
+                return e.getValue().size();
+            }
+        });
+
+        addToTree(lektionsDepth.get(0).getValue(), 0, 0, widths, idToChildren);
+    }
+
+    private void addToTree(List<LektionDTO> lek, int depth, int offset,
+                           List<Integer> widths, Map<String, List<LektionDTO>> idToChildren) {
+        int unit = TOTAL_TREE_WIDTH / widths.get(depth);
+        int childs = 0;
+        for (int i = 0; i < lek.size(); i++) {
+            int x = unit * (i + offset) + unit / 2 + TREE_X_OFFSET;
+            int y = depth * TREE_Y_STRIDE;
+            lektionTree.add(new LektionSelector(lek.get(i), x, y));
+            List<LektionDTO> children = idToChildren.get(lek.get(1).getId());
+            if (children != null) {
+                addToTree(children, depth + 1, childs, widths, idToChildren);
+                childs += children.size();
             }
         }
-
-        // Draw tree
-        for (int y = 0; y < tree.size() - 1; y++) {
-            System.out.println("TreeSize: " + tree.size());
-            LinkedList<TestLektion> layer = tree.get(y);
-            int unit = width / layer.size();
-            System.out.println(unit);
-            for (int x = 0; x < layer.size(); x++) {
-                System.out.println("Size Layer " + y + ": " + layer.size());
-                System.out.println(layer.get(x).getTitle() + " drawn at " + ((unit / 2) + (x * unit) - 40) + ":" + y * 160);
-                lektionTree.add(new LektionSelector(layer.get(x), (unit / 2) + (x * unit) - 40, y * 160));
-            }
-        }
-
-        System.out.println("<<< Left Setup >>>");
     }
 
     private class LessionAsyncCallback implements AsyncCallback<List<LektionDTO>> {
@@ -102,47 +112,8 @@ public class Lektionswahl extends Composite {
         }
 
         @Override
-        public void onSuccess(List result) {
-            //   throw new UnsupportedOperationException("Not supported yet.");
-            Map<String, TestLektion> map = new HashMap<String, TestLektion>();
-            List<LektionDTO> lektion = (LinkedList<LektionDTO>) result;
-            TestThema thema = EntityHolder.getInstance().getThema();
-            for (LektionDTO x : lektion) {
-                TestLektion lesson = new TestLektion();
-                lesson.setLessonId(x.getId());
-                lesson.setLesson_name(x.getLesson_name());
-                lesson.setTitle(x.getTitle());
-                lesson.setPreviewURL(x.getPreviewURL());
-                lesson.setLessonText(x.getLessonText());
-                lesson.setParent_id(x.getParent());
-               
-                if(x.getWidget().startsWith("images\\"))
-                {
-                   lesson.setExperiment(new Image(x.getWidget()));
-                }
-                if(x.getFormular().startsWith("images\\"))
-                {
-                   lesson.setFormular(new Image(x.getFormular()));
-                }
-                
-                map.put(x.getId(), lesson);
-                thema.getLektionen().add(lesson);
-            }
-            EntityHolder.getInstance().setThema(thema);
-            lektionen = EntityHolder.getInstance().getThema().getLektionen();
-            /*
-             * zuordnen der Elternlektionen 
-             */
-            for (TestLektion x : lektionen) {
-                TestLektion t = (TestLektion) map.get(x.getParent_id());
-                if (t != null) {
-                    System.out.println(x.getParent_id() + "   " + t.getLessonId());
-                    x.setParent(t);
-                }
-            }
-            if (lektionen != null) {
-                setup(lektionen);
-            }
+        public void onSuccess(List<LektionDTO> result) {
+            setup(result);
         }
     }
 }
