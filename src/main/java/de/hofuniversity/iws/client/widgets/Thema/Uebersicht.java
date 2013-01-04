@@ -4,7 +4,7 @@
  */
 package de.hofuniversity.iws.client.widgets.Thema;
 
-import de.hofuniversity.iws.shared.dto.ThemaDTO;
+import de.hofuniversity.iws.client.jsonbeans.SubjectJson;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.*;
@@ -26,10 +26,10 @@ public class Uebersicht extends Composite {
     interface UebersichtUiBinder extends UiBinder<Widget, Uebersicht> {
     }
 
-    public Uebersicht(ThemaDTO thema) {
+    public Uebersicht(SubjectJson thema) {
         initWidget(uiBinder.createAndBindUi(this));
 
         title.setInnerText(thema.getTitle());
-        einfuehrungstext.setInnerText(thema.getDescription());
+        einfuehrungstext.setInnerText(thema.getText());
     }
 }

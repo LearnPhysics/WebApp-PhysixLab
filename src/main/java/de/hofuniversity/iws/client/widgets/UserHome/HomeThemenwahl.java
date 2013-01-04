@@ -6,8 +6,8 @@ package de.hofuniversity.iws.client.widgets.UserHome;
 
 import java.util.*;
 
+import de.hofuniversity.iws.client.jsonbeans.SubjectJson;
 import de.hofuniversity.iws.client.widgets.SubWidgets.ThemaSelector;
-import de.hofuniversity.iws.shared.dto.ThemaDTO;
 import de.hofuniversity.iws.shared.services.*;
 
 import com.google.gwt.core.client.GWT;
@@ -34,16 +34,16 @@ public class HomeThemenwahl extends Composite {
     public HomeThemenwahl() {
         initWidget(uiBinder.createAndBindUi(this));
 
-        lessonService.readThemes(new AsyncCallback<List<ThemaDTO>>() {
+        lessonService.getSubjects(new AsyncCallback<List<String>>() {
             @Override
             public void onFailure(Throwable caught) {
                 throw new UnsupportedOperationException(caught.getLocalizedMessage());
             }
 
             @Override
-            public void onSuccess(List<ThemaDTO> result) {
-                for (ThemaDTO thema : result) {
-                    themaPanel.add(new ThemaSelector(thema));
+            public void onSuccess(List<String> result) {
+                for (String thema : result) {
+                    themaPanel.add(new ThemaSelector(SubjectJson.create(thema)));
                 }
             }
         });

@@ -4,7 +4,7 @@
  */
 package de.hofuniversity.iws.client.widgets.Lektion;
 
-import de.hofuniversity.iws.shared.dto.LektionDTO;
+import de.hofuniversity.iws.client.jsonbeans.*;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.*;
 import com.google.gwt.uibinder.client.*;
@@ -31,18 +31,14 @@ public class Lesson extends Composite {
     interface LessonUiBinder extends UiBinder<Widget, Lesson> {
     }
 
-    public Lesson(LektionDTO lesson) {
+    public Lesson(LessonJson lesson, SubjectJson subject) {
         initWidget(uiBinder.createAndBindUi(this));
-        
-//        if (thema != null) {
-//            theme.setInnerText(thema.getTitle());
-//        } else {
-//            theme.setInnerText("Empty");
-//        }
-        
+
+        theme.setInnerText(subject.getTitle());
+
         title.setInnerText(lesson.getTitle());
-        text.setInnerText(lesson.getLessonText());
-        
+        text.setInnerText(lesson.getText());
+
 //        if (lesson.getExperiment() != null) {
 //            experiment.add(lesson.getExperiment());
 //        }

@@ -4,6 +4,7 @@
  */
 package de.hofuniversity.iws.shared.services;
 
+import java.io.IOException;
 import java.util.List;
 
 import de.hofuniversity.iws.shared.dto.*;
@@ -16,6 +17,12 @@ import com.google.gwt.user.client.rpc.*;
  */
 @RemoteServiceRelativePath("lessonservice")
 public interface LessonService extends RemoteService {
-    public List<ThemaDTO> readThemes();
-    public List<LektionDTO> readLessons(String topic_name);
+
+    public List<String> getSubjects();
+
+    public List<LessonPreview> getLessonPreviews(String subject) throws IOException;
+    
+    public List<GameDTO> getGamesForSession(String subject);
+
+    public String getLesson(String name) throws IOException;
 }

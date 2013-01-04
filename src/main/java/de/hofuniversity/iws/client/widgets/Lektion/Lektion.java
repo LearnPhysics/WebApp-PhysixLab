@@ -4,7 +4,8 @@
  */
 package de.hofuniversity.iws.client.widgets.Lektion;
 
-import de.hofuniversity.iws.shared.dto.LektionDTO;
+import de.hofuniversity.iws.client.jsonbeans.*;
+import de.hofuniversity.iws.shared.services.*;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.*;
@@ -12,6 +13,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 
 /**
@@ -22,6 +24,7 @@ public class Lektion extends Composite {
 
     public final static String NAME = "lektion";
     private static LektionUiBinder uiBinder = GWT.create(LektionUiBinder.class);
+    private final LessonServiceAsync lessonService = (LessonServiceAsync) GWT.create(LessonService.class);
     @UiField
     Lektion.LektionStyle style;
     @UiField
@@ -53,14 +56,25 @@ public class Lektion extends Composite {
         String tab2();
     }
 
-    public Lektion(LektionDTO lektion) {
+    public Lektion(String lektion,final SubjectJson subject) {
         initWidget(uiBinder.createAndBindUi(this));
         History.newItem(NAME, false);
         sWrap.getElement().getStyle().setOverflow(Style.Overflow.HIDDEN);
         sWrap.setVerticalScrollPosition(0);
 
-        railContent.add(new Lesson(lektion));
-        railContent.add(new Test(lektion.getTest()));
+        lessonService.getLesson(lektion, new AsyncCallback<String>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                LessonJson lesson = LessonJson.create(result);
+                railContent.add(new Lesson(lesson, subject));
+                railContent.add(new Test(lesson.getTest()));
+            }
+        });
     }
 
     @UiHandler("tab1")

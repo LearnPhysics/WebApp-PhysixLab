@@ -5,15 +5,18 @@
 package de.hofuniversity.iws.server.services;
 
 import java.io.*;
-import java.nio.file.Path;
+import java.nio.charset.Charset;
 import java.util.*;
 
-import de.hofuniversity.iws.server.XMLReaderParser;
 import de.hofuniversity.iws.shared.dto.*;
 import de.hofuniversity.iws.shared.services.LessonService;
 
+import com.google.common.io.Files;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import org.json.*;
+
+import static de.hofuniversity.iws.shared.CollectionUtils.*;
 
 /**
  *
@@ -21,62 +24,73 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
  */
 @RemoteServiceRelativePath("lessonservice")
 public class LessonServiceImpl extends RemoteServiceServlet implements LessonService {
-    
-    private String getResourcePath()
-    {
+
+    private static final Map<String, String> lessons = new HashMap<String, String>();
+    private static final String SUBJECTS_PATH = "/Subjects/";
+    private static final String LESSONS_PATH = "/Lessons/";
+
+    private String getResourcePath() {
         return getServletContext().getRealPath(".");
     }
 
     @Override
-    public List<ThemaDTO> readThemes() {
-        File themenDir = new File(getResourcePath() + "/Subjects/");
-        List<ThemaDTO> themenlist = new LinkedList<ThemaDTO>();
-        XMLReaderParser parser = new XMLReaderParser();
-
-        for (File themaFile : getSubDirs(themenDir)) {
-            try {
-                Path p = themaFile.toPath();
-                ThemaDTO thema = parser.parseThemes(p.resolve("theme.xml").toFile());
-                thema.setTopicName(p.getFileName().toString());
-                themenlist.add(thema);
-            } catch (IOException ex) {
-                //TODO log
+    public List<String> getSubjects() {
+        File[] subjects = new File(getResourcePath() + SUBJECTS_PATH).listFiles();
+        return select(asIterable(subjects), new Selector<File, String>() {
+            @Override
+            public String select(File e) {
+                try {
+                    return Files.toString(e, Charset.forName("UTF-8"));
+                } catch (IOException ex) {
+                    throw new RuntimeException();
+                }
             }
-        }
-        return themenlist;
+        });
     }
 
     @Override
-    public List<LektionDTO> readLessons(String topicName) {
-        File topicLessonsDir = new File(getResourcePath() + "/Subjects/" + topicName + "/lessons/");
-        List<LektionDTO> lessonlist = new LinkedList<LektionDTO>();
-        XMLReaderParser parser = new XMLReaderParser();
-
-        for (File lessonDir : getSubDirs(topicLessonsDir)) {
-            try {
-                Path p = lessonDir.toPath();
-                LektionDTO lesson = parser.parseLessons(p.resolve("lesson.xml").toFile());
-                lesson.setLesson_name(p.getFileName().toString());
-                lessonlist.add(lesson);
-            } catch (IOException ex) {
-                //TODO log
-            }
-        }
-
-        return lessonlist;
-    }
-
-    private static File[] getSubDirs(File path) {
-        if (!path.isDirectory()) {
-            return new File[0];
-        }
-
-        File[] subDirs = path.listFiles(new FileFilter() {
+    public List<LessonPreview> getLessonPreviews(String subject) throws IOException {
+        File[] subjects = new File(getResourcePath() + LESSONS_PATH).listFiles();
+        List<String> lessonFiles = select(asIterable(subjects), new Selector<File, String>() {
             @Override
-            public boolean accept(File pathname) {
-                return pathname.isDirectory();
+            public String select(File e) {
+                return e.getName().split("\\.")[0];
             }
         });
-        return subDirs;
+
+        List<LessonPreview> previews = new ArrayList<LessonPreview>();
+        for (String name : lessonFiles) {
+            try {
+                JSONObject a = new JSONObject(getLesson(name));
+                if (subject.equals(a.getString("thema"))) {
+                    previews.add(new LessonPreview(name,
+                                                   a.getString("parent"),
+                                                   a.getString("image")));
+                }
+            } catch (JSONException ex) {
+                //TODO logging
+            }
+        }
+        return previews;
+    }
+
+    @Override
+    public String getLesson(String name) throws IOException {
+        String json = lessons.get(name);
+        if (json == null) {
+            synchronized (lessons) {
+                json = lessons.get(name);
+                if (json == null) {
+                    File file = new File(getResourcePath() + LESSONS_PATH + name + ".json");
+                    json = Files.toString(file, Charset.forName("UTF-8"));
+                    lessons.put(name, json);
+                }
+            }
+        }
+        return json;
+    }
+
+    public List<GameDTO> getGamesForSession(String subject) {
+        return null;
     }
 }

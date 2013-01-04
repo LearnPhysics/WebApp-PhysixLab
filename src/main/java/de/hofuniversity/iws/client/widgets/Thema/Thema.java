@@ -4,7 +4,7 @@
  */
 package de.hofuniversity.iws.client.widgets.Thema;
 
-import de.hofuniversity.iws.shared.dto.ThemaDTO;
+import de.hofuniversity.iws.client.jsonbeans.SubjectJson;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.*;
@@ -22,6 +22,7 @@ public class Thema extends Composite {
 
     public final static String NAME = "thema";
     private static ThemaUiBinder uiBinder = GWT.create(ThemaUiBinder.class);
+    
     @UiField
     Thema.ThemaStyle style;
     @UiField
@@ -59,15 +60,15 @@ public class Thema extends Composite {
         String tab3();
     }
 
-    public Thema(ThemaDTO bean) {
+    public Thema(SubjectJson bean) {
         initWidget(uiBinder.createAndBindUi(this));
-        History.newItem(NAME + "?" + bean.getTopicName(), false);
+        History.newItem(NAME + "?" + bean.getName(), false);
         sWrap.getElement().getStyle().setOverflow(Style.Overflow.HIDDEN);
         sWrap.setVerticalScrollPosition(0);
         
         railContent.add(new Lektionswahl(bean));
         railContent.add(new Uebersicht(bean));
-        railContent.add(new Spielwahl(bean.getGames()));
+        railContent.add(new Spielwahl(bean.getName()));
     }
 
     @UiHandler("tab1")

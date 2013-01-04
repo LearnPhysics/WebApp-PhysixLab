@@ -5,8 +5,8 @@
 package de.hofuniversity.iws.client.widgets.SubWidgets;
 
 import de.hofuniversity.iws.client.PhysixLab;
+import de.hofuniversity.iws.client.jsonbeans.SubjectJson;
 import de.hofuniversity.iws.client.widgets.Thema.Thema;
-import de.hofuniversity.iws.shared.dto.ThemaDTO;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.*;
@@ -28,31 +28,24 @@ public class ThemaSelector extends Composite {
     @UiField HeadingElement title;
     @UiField ParagraphElement text;
     
-    private ThemaDTO themaBean;
+    private final SubjectJson thema;
     
     interface ThemaSelectorUiBinder extends UiBinder<Widget, ThemaSelector> {
     }
     
-    public ThemaSelector() {
+    public ThemaSelector(SubjectJson thema) {
         initWidget(uiBinder.createAndBindUi(this));
-    }
-    
-    public ThemaSelector(ThemaDTO thema) {
-        initWidget(uiBinder.createAndBindUi(this));
-        this.themaBean = thema;
-        setup();
-    }
-    
-    private void setup() {
-        iImg.setUrl(themaBean.getImageURL());
-        title.setInnerText(themaBean.getTitle());
-        text.setInnerText(themaBean.getDescription());
+        this.thema = thema;
+        
+        iImg.setUrl(thema.getImageUrl());
+        title.setInnerText(thema.getTitle());
+        text.setInnerText(thema.getText());
         
         wrap.getElement().getStyle().setTop(180, Style.Unit.PX);
     }
     
     @UiHandler("oImg")
     public void openGame(ClickEvent ev) {
-        PhysixLab.PAGE_CONTROLLER.changePage(new Thema(themaBean));
+        PhysixLab.PAGE_CONTROLLER.changePage(new Thema(thema));
     }
 }

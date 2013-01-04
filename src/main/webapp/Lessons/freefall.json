@@ -1,0 +1,19 @@
+{
+    "thema": "kinetic",
+    "name": "freefall",
+    "parent": null,
+    
+    "title": "Freier Fall",
+    "text": "",
+    "image": "images/ReplacementImages/FreeFallPreview.png",
+    "widget": "w_0815",
+    "math": "f_0815",
+    
+    "test": {
+        "title": "Höstgeschwindigkeit",
+        "problem": "Wie man eine Differezialgleichung 2. Ordnung löst ist nicht einfach",
+        "solution": 20,
+        "widget": "tw_0815",
+        "image": "images/ReplacementImages/PendelTestIllustration.jpg",
+    }
+}
