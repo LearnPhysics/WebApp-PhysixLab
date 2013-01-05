@@ -25,7 +25,7 @@ import de.hofuniversity.iws.shared.services.*;
  */
 public class Lektion extends Composite {
 
-    public final static String NAME = "lektion";
+    //<editor-fold defaultstate="collapsed" desc="ui-stuff">
     private static LektionUiBinder uiBinder = GWT.create(LektionUiBinder.class);
     @UiField
     Lektion.LektionStyle style;
@@ -43,68 +43,70 @@ public class Lektion extends Composite {
 
     interface LektionUiBinder extends UiBinder<Widget, Lektion> {
     }
-
+    
     interface LektionStyle extends CssResource {
-
+        
         String posLektion();
-
+        
         String posTest();
-
+        
         String selected();
-
+        
         String tab();
-
+        
         String tab1();
-
+        
         String tab2();
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Builder">
     public static class Builder {
-
+        
         private final LessonServiceAsync lessonService = (LessonServiceAsync) GWT.create(LessonService.class);
         private LessonJson lesson;
         private SubjectJson subject;
         private String lessonName, subjectName;
-
+        
         public Builder withLesson(String name) {
             lessonName = name;
             return this;
         }
-
+        
         public Builder withLesson(LessonJson bean) {
             lesson = bean;
             return this;
         }
-
+        
         public Builder withSubject(String name) {
             subjectName = name;
             return this;
         }
-
+        
         public Builder withSubject(SubjectJson bean) {
             subject = bean;
             return this;
         }
-
+        
         private static class SubAsync implements AsyncCallback<String> {
-
+            
             private final Lektion l;
-
+            
             public SubAsync(Lektion l) {
                 this.l = l;
             }
-
+            
             @Override
             public void onFailure(Throwable caught) {
                 throw new UnsupportedOperationException("Not supported yet.");
             }
-
+            
             @Override
             public void onSuccess(String result) {
                 l.ini(SubjectJson.create(result));
             }
         }
-
+        
         public Lektion create() {
             final Lektion l = new Lektion();
             if (subject != null) {
@@ -120,7 +122,7 @@ public class Lektion extends Composite {
                     public void onFailure(Throwable caught) {
                         throw new UnsupportedOperationException("Not supported yet.");
                     }
-
+                    
                     @Override
                     public void onSuccess(String result) {
                         LessonJson les = LessonJson.create(result);
@@ -134,10 +136,13 @@ public class Lektion extends Composite {
             return l;
         }
     }
-
+    
     public static Builder build() {
         return new Builder();
     }
+    //</editor-fold>
+    
+    public final static String NAME = "lektion";
     private LessonJson lesson;
     private SubjectJson subject;
 
@@ -192,25 +197,21 @@ public class Lektion extends Composite {
     }
 
     public void setPosition(int pos) {
-        unselectAllTabs();
+        rail.removeClassName(rail.getClassName());
+        tab1.removeStyleName(style.selected());
+        tab2.removeStyleName(style.selected());
+        
         switch (pos) {
             case 1:
-                rail.removeClassName(rail.getClassName());
                 rail.setClassName(style.posLektion());
                 tab1.addStyleName(style.selected());
                 break;
             case 2:
-                rail.removeClassName(rail.getClassName());
                 rail.setClassName(style.posTest());
                 tab2.addStyleName(style.selected());
                 break;
             default:
                 System.err.println("Wrong parameter! Only 1 to 2 allowed. Given was: " + pos);
         }
-    }
-
-    private void unselectAllTabs() {
-        tab1.removeStyleName(style.selected());
-        tab2.removeStyleName(style.selected());
     }
 }
