@@ -46,70 +46,87 @@ public class UserDBO implements Serializable, GenericEntity, User {
     @ManyToMany(mappedBy = "friends")
     private List<UserDBO> devotees = new ArrayList<UserDBO>();
 
+    @Override
     public boolean isDetached() {
         return detached;
     }
 
+    @Override
     public void setDetached(boolean detached) {
         this.detached = detached;
     }
 
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
 
+    @Override
     public String getUserName() {
         return userName;
     }
 
+    @Override
     public void setUserName(String userName) {
         this.userName = userName;
     }
 
+    @Override
     public String getLastName() {
         return lastName;
     }
 
+    @Override
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
+    @Override
     public String getFirstName() {
         return firstName;
     }
 
+    @Override
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
+    @Override
     public Timestamp getBirthDate() {
         return birthDate;
     }
 
+    @Override
     public void setBirthDate(Timestamp birthDate) {
         this.birthDate = birthDate;
     }
 
+    @Override
     public String getCity() {
         return city;
     }
 
+    @Override
     public void setCity(String city) {
         this.city = city;
     }
 
+    @Override
     public String getUserPic() {
         return userPic;
     }
 
+    @Override
     public void setUserPic(String userPic) {
         this.userPic = userPic;
     }
 
+    @Override
     public List<NetworkAccountDBO> getNetworkAccountList() {
         return networkAccountList;
     }
@@ -118,6 +135,7 @@ public class UserDBO implements Serializable, GenericEntity, User {
         this.networkAccountList = networkAccountList;
     }
 
+    @Override
     public List<GameResultDBO> getGameResultList() {
         return gameResultList;
     }
@@ -126,6 +144,7 @@ public class UserDBO implements Serializable, GenericEntity, User {
         this.gameResultList = gameResultList;
     }
 
+    @Override
     public List<LessonProgressDBO> getLessonProgressList() {
         return lessonProgressList;
     }
@@ -134,6 +153,7 @@ public class UserDBO implements Serializable, GenericEntity, User {
         this.lessonProgressList = lessonProgressList;
     }
 
+    @Override
     public List<UserDBO> getFriends() {
         return friends;
     }
@@ -142,6 +162,7 @@ public class UserDBO implements Serializable, GenericEntity, User {
         this.friends = friends;
     }
 
+    @Override
     public List<UserDBO> getDevotees() {
         return devotees;
     }
@@ -150,6 +171,7 @@ public class UserDBO implements Serializable, GenericEntity, User {
         this.devotees = devotees;
     }
     
+    @Override
     public List<UserDBO> getBilateralFriends() {
         List<UserDBO> retval = new LinkedList<UserDBO>();
         for(UserDBO devotee : devotees) {

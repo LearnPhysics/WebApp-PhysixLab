@@ -6,7 +6,6 @@ package de.hofuniversity.iws.client.playn.games;
 
 import de.hofuniversity.iws.client.playn.StandardPhysicGame;
 import de.hofuniversity.iws.client.playn.entitys.*;
-
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;

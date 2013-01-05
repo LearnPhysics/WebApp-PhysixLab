@@ -6,17 +6,13 @@ package de.hofuniversity.iws.server.oauth;
 
 import java.util.*;
 
-import de.hofuniversity.iws.server.oauth.accessors.Accessor;
-import de.hofuniversity.iws.server.oauth.accessors.UserDataAccessor;
-import de.hofuniversity.iws.server.oauth.provider.*;
-
 import com.google.common.base.Optional;
-import de.hofuniversity.iws.server.oauth.accessors.FacebookUserData;
-import de.hofuniversity.iws.server.oauth.accessors.GoogleUserData;
-import de.hofuniversity.iws.server.oauth.accessors.TwitterAccessor;
+import de.hofuniversity.iws.server.oauth.accessors.*;
+import de.hofuniversity.iws.server.oauth.provider.*;
 import org.scribe.builder.api.TwitterApi;
 import org.scribe.model.*;
-import static de.hofuniversity.iws.server.oauth.OAuthProperties.*;
+
+import static de.hofuniversity.iws.server.oauth.OAuthProperties.APP;
 
 /**
  *
@@ -25,6 +21,7 @@ import static de.hofuniversity.iws.server.oauth.OAuthProperties.*;
 public enum Providers {
 
     GOOGLE {
+        @Override
         protected OAuthProvider createProvider(String key, String secret) {
             return new GoogleProvider(key, secret);
         }
@@ -35,6 +32,7 @@ public enum Providers {
         }
     },
     TWITTER {
+        @Override
         protected OAuthProvider createProvider(String key, String secret) {
             return new OAuthProvider(key, secret, TwitterApi.class);
         }
@@ -45,6 +43,7 @@ public enum Providers {
         }
     },
     FACEBOOK {
+        @Override
         protected OAuthProvider createProvider(String key, String secret) {
             return new FacebookProvider(key, secret);
         }

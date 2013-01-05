@@ -6,9 +6,8 @@ package de.hofuniversity.iws.server;
 
 import java.util.*;
 
-import de.hofuniversity.iws.shared.games.GameFactory;
-
 import com.google.common.base.Optional;
+import de.hofuniversity.iws.shared.games.GameFactory;
 
 /**
  *

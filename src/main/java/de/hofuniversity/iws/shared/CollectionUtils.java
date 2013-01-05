@@ -32,6 +32,10 @@ public class CollectionUtils {
         return m;
     }
 
+    public static <K, S> Map<K, List<S>> groupBy(S[] c, Selector<S, K> s) {
+        return groupBy(asIterable(c), s);
+    }
+
     public static <E, A> List<A> select(Iterable<E> c, Selector<E, A> s) {
         List<A> a = new ArrayList<A>();
         for (E e : c) {
@@ -62,6 +66,9 @@ public class CollectionUtils {
 
                     @Override
                     public T next() {
+                        if(!hasNext()) {
+                            throw new NoSuchElementException();
+                        }
                         return a[index++];
                     }
 

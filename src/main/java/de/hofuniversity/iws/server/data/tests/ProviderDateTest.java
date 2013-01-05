@@ -4,15 +4,16 @@
  */
 package de.hofuniversity.iws.server.data.tests;
 
-import com.google.common.base.Optional;
-import de.hofuniversity.iws.shared.entityimpl.UserDBO;
-import de.hofuniversity.iws.server.oauth.*;
-import de.hofuniversity.iws.server.oauth.accessors.*;
-import de.hofuniversity.iws.server.oauth.provider.OAuthProvider;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.*;
 import java.util.Scanner;
+
+import com.google.common.base.Optional;
+import de.hofuniversity.iws.server.oauth.*;
+import de.hofuniversity.iws.server.oauth.accessors.*;
+import de.hofuniversity.iws.server.oauth.provider.OAuthProvider;
+import de.hofuniversity.iws.shared.entityimpl.UserDBO;
 import org.scribe.model.*;
 
 /**

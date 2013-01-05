@@ -4,19 +4,18 @@
  */
 package de.hofuniversity.iws.client;
 
-import de.hofuniversity.iws.client.jsonbeans.*;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.logical.shared.*;
+import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.*;
+import de.hofuniversity.iws.client.jsonbeans.SubjectJson;
 import de.hofuniversity.iws.client.widgets.Game.Game;
 import de.hofuniversity.iws.client.widgets.Lektion.Lektion;
 import de.hofuniversity.iws.client.widgets.LoginPage;
 import de.hofuniversity.iws.client.widgets.Thema.Thema;
 import de.hofuniversity.iws.client.widgets.UserHome.UserHome;
 import de.hofuniversity.iws.shared.services.*;
-
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.logical.shared.*;
-import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.*;
 
 /**
  *

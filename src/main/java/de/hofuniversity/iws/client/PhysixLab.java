@@ -4,15 +4,14 @@
  */
 package de.hofuniversity.iws.client;
 
+import com.google.common.base.Optional;
+import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import de.hofuniversity.iws.client.widgets.LoginPage;
 import de.hofuniversity.iws.client.widgets.UserHome.UserHome;
 import de.hofuniversity.iws.shared.dto.LoginDTO;
 import de.hofuniversity.iws.shared.entitys.User;
 import de.hofuniversity.iws.shared.services.LoginServiceAsync;
-
-import com.google.common.base.Optional;
-import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import javax.inject.Inject;
 
 /**

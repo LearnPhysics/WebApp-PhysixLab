@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -43,18 +42,22 @@ public class User implements Serializable, GenericEntity {
     @OneToMany(mappedBy = "user")
     private List<LessonProgress> lessonProgressList;
 
+    @Override
     public boolean isDetached() {
         return detached;
     }
 
+    @Override
     public void setDetached(boolean detached) {
         this.detached = detached;
     }
 
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }

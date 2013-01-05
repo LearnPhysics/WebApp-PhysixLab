@@ -5,13 +5,13 @@
 package de.hofuniversity.iws.server.services;
 
 import java.util.ArrayList;
-import de.hofuniversity.iws.shared.entityimpl.UserDBO;
-import de.hofuniversity.iws.shared.entitys.User;
-import de.hofuniversity.iws.shared.services.UserFriendService;
 
 import com.google.common.base.*;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import de.hofuniversity.iws.shared.entityimpl.UserDBO;
+import de.hofuniversity.iws.shared.entitys.User;
+import de.hofuniversity.iws.shared.services.UserFriendService;
 import javax.servlet.http.*;
 
 /**

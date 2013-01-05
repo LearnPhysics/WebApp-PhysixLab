@@ -4,9 +4,6 @@
  */
 package de.hofuniversity.iws.client.widgets.Lektion;
 
-import de.hofuniversity.iws.client.jsonbeans.*;
-import de.hofuniversity.iws.shared.services.*;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.*;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -15,6 +12,8 @@ import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
+import de.hofuniversity.iws.client.jsonbeans.*;
+import de.hofuniversity.iws.shared.services.*;
 
 /**
  *
@@ -139,7 +138,6 @@ public class Lektion extends Composite {
 
     private Lektion() {
         initWidget(uiBinder.createAndBindUi(this));
-        History.newItem(NAME, false);
         sWrap.getElement().getStyle().setOverflow(Style.Overflow.HIDDEN);
         sWrap.setVerticalScrollPosition(0);
     }
@@ -147,12 +145,14 @@ public class Lektion extends Composite {
     public Lektion(LessonJson lektion, SubjectJson subject) {
         this();
 
+        History.newItem(NAME + "?" + lektion.getName(), false);
         railContent.add(new Lesson(lektion, subject));
         railContent.add(new Test(lektion.getTest()));
     }
 
     private void ini(LessonJson l) {
         lesson = l;
+        History.newItem(NAME + "?" + l.getName(), false);
         ini();
     }
 
@@ -165,6 +165,8 @@ public class Lektion extends Composite {
         if (lesson != null && subject != null) {
             railContent.add(new Lesson(lesson, subject));
             railContent.add(new Test(lesson.getTest()));
+            lesson = null;
+            subject = null;
         }
     }
 

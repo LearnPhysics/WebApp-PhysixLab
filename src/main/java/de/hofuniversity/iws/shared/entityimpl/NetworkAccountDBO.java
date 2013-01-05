@@ -26,46 +26,57 @@ public class NetworkAccountDBO implements Serializable, GenericEntity, NetworkAc
     @ManyToOne
     private UserDBO user;
 
+    @Override
     public boolean isDetached() {
         return detached;
     }
     
+    @Override
     public void setDetached(boolean detached) {
         this.detached = detached;
     }
     
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
     
+    @Override
     public String getNetworkName() {
         return networkName;
     }
 
+    @Override
     public void setNetworkName(String networkName) {
         this.networkName = networkName;
     }
 
+    @Override
     public String getAccountIdentificationString() {
         return accountIdentificationString;
     }
 
+    @Override
     public void setAccountIdentificationString(String accountIdentificationString) {
         this.accountIdentificationString = accountIdentificationString;
     }
 
+    @Override
     public String getOauthAccessToken() {
         return oauthAccessToken;
     }
 
+    @Override
     public void setOauthAccessToken(String oauthAccessToken) {
         this.oauthAccessToken = oauthAccessToken;
     }
 
+    @Override
     public UserDBO getUser() {
         return user;
     }
@@ -74,10 +85,12 @@ public class NetworkAccountDBO implements Serializable, GenericEntity, NetworkAc
         this.user = user;
     }
 
+    @Override
     public String getOauthAccessSecret() {
         return oauthAccessSecret;
     }
 
+    @Override
     public void setOauthAccessSecret(String oauthAccessSecret) {
         this.oauthAccessSecret = oauthAccessSecret;
     }

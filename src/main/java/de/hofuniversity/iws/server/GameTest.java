@@ -2,9 +2,7 @@ package de.hofuniversity.iws.server;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
 import java.net.*;
-import java.util.ServiceLoader;
 import de.hofuniversity.iws.client.playn.*;
 import de.hofuniversity.iws.shared.games.GameFactory;
 

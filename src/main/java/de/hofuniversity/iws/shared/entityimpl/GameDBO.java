@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import de.hofuniversity.iws.shared.entitys.Game;
-
 import javax.persistence.*;
 
 @Entity
@@ -44,14 +43,17 @@ public class GameDBO implements Serializable, GenericEntity, Game {
         this.id = id;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }
 
+    @Override
     public List<GameResultDBO> getGameResultList() {
         return gameResultList;
     }
@@ -60,6 +62,7 @@ public class GameDBO implements Serializable, GenericEntity, Game {
         this.gameResultList = gameResultList;
     }
 
+    @Override
     public List<LessonDBO> getLessonList() {
         return lessonList;
     }

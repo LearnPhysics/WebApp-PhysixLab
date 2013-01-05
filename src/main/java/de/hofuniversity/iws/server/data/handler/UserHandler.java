@@ -2,10 +2,9 @@ package de.hofuniversity.iws.server.data.handler;
 
 import java.util.*;
 
+import com.google.common.base.Optional;
 import de.hofuniversity.iws.server.oauth.Providers;
 import de.hofuniversity.iws.shared.entityimpl.*;
-
-import com.google.common.base.Optional;
 import javax.persistence.*;
 import javax.persistence.criteria.*;
 

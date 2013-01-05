@@ -4,8 +4,6 @@
  */
 package de.hofuniversity.iws.client.widgets.Thema;
 
-import de.hofuniversity.iws.client.jsonbeans.SubjectJson;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.*;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -13,6 +11,7 @@ import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.*;
+import de.hofuniversity.iws.client.jsonbeans.SubjectJson;
 
 /**
  *

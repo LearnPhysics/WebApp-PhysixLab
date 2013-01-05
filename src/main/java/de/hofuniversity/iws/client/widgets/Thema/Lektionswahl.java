@@ -7,17 +7,18 @@ package de.hofuniversity.iws.client.widgets.Thema;
 import java.util.*;
 import java.util.Map.Entry;
 
-import de.hofuniversity.iws.client.jsonbeans.SubjectJson;
-import de.hofuniversity.iws.client.widgets.SubWidgets.LektionSelector;
-import de.hofuniversity.iws.shared.dto.LessonPreview;
-import de.hofuniversity.iws.shared.services.*;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
+import de.hofuniversity.iws.client.jsonbeans.SubjectJson;
+import de.hofuniversity.iws.client.widgets.SubWidgets.LektionSelector;
+import de.hofuniversity.iws.shared.CollectionUtils.Selector;
+import de.hofuniversity.iws.shared.dto.LessonPreview;
+import de.hofuniversity.iws.shared.services.*;
 
-import static de.hofuniversity.iws.shared.CollectionUtils.*;
+import static de.hofuniversity.iws.shared.CollectionUtils.groupBy;
+import static de.hofuniversity.iws.shared.CollectionUtils.select;
 
 /**
  *
@@ -40,10 +41,21 @@ public class Lektionswahl extends Composite {
     public Lektionswahl(SubjectJson thema) {
         subject = thema;
         initWidget(uiBinder.createAndBindUi(this));
-        lessonService.getLessonPreviews(thema.getName(), new LessionAsyncCallback());
+        lessonService.getLessonPreviews(thema.getName(), new AsyncCallback<LessonPreview[]>() {
+
+            @Override
+            public void onFailure(Throwable caught) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+
+            @Override
+            public void onSuccess(LessonPreview[] result) {
+                setup(result);
+            }
+        });
     }
 
-    private void setup(List<LessonPreview> l) {
+    private void setup(LessonPreview[] l) {
         //set parents
         final Map<String, LessonPreview> idToBean = new HashMap<String, LessonPreview>();
         for (LessonPreview lektionDTO : l) {
@@ -87,7 +99,9 @@ public class Lektionswahl extends Composite {
             }
         });
 
-        addToTree(lektionsDepth.get(0).getValue(), 0, 0, widths, idToChildren);
+        if (lektionsDepth.size() > 0) {
+            addToTree(lektionsDepth.get(0).getValue(), 0, 0, widths, idToChildren);
+        }
     }
 
     private void addToTree(List<LessonPreview> lek, int depth, int offset,
@@ -98,24 +112,11 @@ public class Lektionswahl extends Composite {
             int x = unit * (i + offset) + unit / 2 + TREE_X_OFFSET;
             int y = depth * TREE_Y_STRIDE;
             lektionTree.add(new LektionSelector(lek.get(i), subject, x, y));
-            List<LessonPreview> children = idToChildren.get(lek.get(1).getName());
+            List<LessonPreview> children = idToChildren.get(lek.get(i).getName());
             if (children != null) {
                 addToTree(children, depth + 1, childs, widths, idToChildren);
                 childs += children.size();
             }
-        }
-    }
-
-    private class LessionAsyncCallback implements AsyncCallback<List<LessonPreview>> {
-
-        @Override
-        public void onFailure(Throwable caught) {
-            throw new UnsupportedOperationException(caught.getMessage());
-        }
-
-        @Override
-        public void onSuccess(List<LessonPreview> result) {
-            setup(result);
         }
     }
 }

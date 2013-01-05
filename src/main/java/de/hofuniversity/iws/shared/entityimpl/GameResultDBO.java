@@ -3,7 +3,6 @@ package de.hofuniversity.iws.shared.entityimpl;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-import de.hofuniversity.iws.shared.entitys.*;
 import de.hofuniversity.iws.shared.entitys.GameResult;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,38 +32,47 @@ public class GameResultDBO implements Serializable, GenericEntity, GameResult {
     @ManyToOne
     private GameDBO game;
 
+    @Override
     public boolean isDetached() {
         return detached;
     }
 
+    @Override
     public void setDetached(boolean detached) {
         this.detached = detached;
     }
 
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
 
+    @Override
     public Timestamp getDate() {
         return date;
     }
 
+    @Override
     public void setDate(Timestamp date) {
         this.date = date;
     }
 
+    @Override
     public Integer getPoints() {
         return points;
     }
 
+    @Override
     public void setPoints(Integer points) {
         this.points = points;
     }
 
+    @Override
     public UserDBO getUser() {
         return user;
     }
@@ -73,6 +81,7 @@ public class GameResultDBO implements Serializable, GenericEntity, GameResult {
         this.user = user;
     }
 
+    @Override
     public GameDBO getGame() {
         return game;
     }

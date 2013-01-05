@@ -4,7 +4,6 @@
  */
 package de.hofuniversity.iws.client.widgets.UserHome;
 
-import java.util.*;
 
 import de.hofuniversity.iws.client.jsonbeans.SubjectJson;
 import de.hofuniversity.iws.client.widgets.SubWidgets.ThemaSelector;
@@ -34,14 +33,14 @@ public class HomeThemenwahl extends Composite {
     public HomeThemenwahl() {
         initWidget(uiBinder.createAndBindUi(this));
 
-        lessonService.getSubjects(new AsyncCallback<List<String>>() {
+        lessonService.getSubjects(new AsyncCallback<String[]>() {
             @Override
             public void onFailure(Throwable caught) {
                 throw new UnsupportedOperationException(caught.getLocalizedMessage());
             }
 
             @Override
-            public void onSuccess(List<String> result) {
+            public void onSuccess(String[] result) {
                 for (String thema : result) {
                     themaPanel.add(new ThemaSelector(SubjectJson.create(thema)));
                 }

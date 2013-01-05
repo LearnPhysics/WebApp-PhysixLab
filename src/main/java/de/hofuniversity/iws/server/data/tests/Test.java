@@ -3,7 +3,6 @@ package de.hofuniversity.iws.server.data.tests;
 import java.util.List;
 
 import de.hofuniversity.iws.server.data.handler.*;
-import de.hofuniversity.iws.server.oauth.Providers;
 import de.hofuniversity.iws.shared.entityimpl.UserDBO;
 
 public class Test {

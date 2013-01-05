@@ -4,10 +4,9 @@
  */
 package de.hofuniversity.iws.shared.services;
 
-import de.hofuniversity.iws.shared.dto.LoginDTO;
-
 import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.*;
+import de.hofuniversity.iws.shared.dto.LoginDTO;
 import org.scribe.exceptions.OAuthException;
 
 /**

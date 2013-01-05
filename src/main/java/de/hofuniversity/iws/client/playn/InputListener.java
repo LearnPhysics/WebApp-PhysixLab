@@ -4,7 +4,8 @@
  */
 package de.hofuniversity.iws.client.playn;
 
-import java.util.*;
+import java.util.Map;
+
 import de.hofuniversity.iws.client.playn.entitys.PhysicEntity;
 import de.hofuniversity.iws.client.playn.entitys.PhysicEntity.HasInteractionListener;
 import org.jbox2d.callbacks.QueryCallback;

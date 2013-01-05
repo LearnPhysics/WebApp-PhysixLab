@@ -4,13 +4,12 @@
  */
 package de.hofuniversity.iws.client.widgets;
 
-import de.hofuniversity.iws.client.widgets.PhotoBooth.Listener;
-import de.hofuniversity.iws.client.widgets.PhotoBooth.ListenerCollection;
-
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.*;
+import de.hofuniversity.iws.client.widgets.PhotoBooth.Listener;
+import de.hofuniversity.iws.client.widgets.PhotoBooth.ListenerCollection;
 
 /**
  *

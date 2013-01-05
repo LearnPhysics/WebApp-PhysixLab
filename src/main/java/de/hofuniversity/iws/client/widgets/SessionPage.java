@@ -11,8 +11,7 @@ import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import de.hofuniversity.iws.client.PhysixLab;
-import de.hofuniversity.iws.shared.services.LoginService;
-import de.hofuniversity.iws.shared.services.LoginServiceAsync;
+import de.hofuniversity.iws.shared.services.*;
 
 /**
  *

@@ -4,7 +4,6 @@
  */
 package de.hofuniversity.iws.client.widgets.Thema;
 
-import java.util.List;
 import de.hofuniversity.iws.client.widgets.SubWidgets.GameSelector;
 import de.hofuniversity.iws.shared.dto.GameDTO;
 import de.hofuniversity.iws.shared.services.*;
@@ -31,16 +30,18 @@ public class Spielwahl extends Composite {
     public Spielwahl(String subject) {
         initWidget(uiBinder.createAndBindUi(this));
 
-        lessonService.getGamesForSession(subject, new AsyncCallback<List<GameDTO>>() {
+        lessonService.getGamesForSession(subject, new AsyncCallback<GameDTO[]>() {
             @Override
             public void onFailure(Throwable caught) {
                 throw new UnsupportedOperationException("Not supported yet.");
             }
 
             @Override
-            public void onSuccess(List<GameDTO> result) {
-                for (GameDTO game : result) {
-                    gamesPanel.add(new GameSelector(game));
+            public void onSuccess(GameDTO[] result) {
+                if (result != null) {
+                    for (GameDTO game : result) {
+                        gamesPanel.add(new GameSelector(game));
+                    }
                 }
             }
         });

@@ -12,9 +12,12 @@ import java.io.Serializable;
  */
 public class LessonPreview implements Serializable {
 
-    private final String name;
-    private final String parent;
-    private final String imageUrl;
+    private String name;
+    private String parent;
+    private String imageUrl;
+
+    private LessonPreview() {
+    }
 
     public LessonPreview(String name, String parent, String imageUrl) {
         this.name = name;

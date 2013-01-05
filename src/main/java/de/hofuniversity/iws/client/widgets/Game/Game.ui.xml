@@ -64,6 +64,9 @@ Uncomment this for XHTML entities
         .scrollWrap {
         min-height: 1280px;
         }
+        .gameWidget {
+        width:800px;
+        }
     </ui:style>
     <g:ScrollPanel ui:field='sWrap' styleName="{style.scrollWrap}">
         <g:HTMLPanel>
@@ -71,13 +74,11 @@ Uncomment this for XHTML entities
             <div id="contentAreaGame">
                 <div id="content">
                     <h1 ui:field="title"></h1>
-                    <g:VerticalPanel ui:field="outerGame" styleName="{style.element} {style.game}">
-                        <g:VerticalPanel styleName="{style.innerElement}">
-                            <playn:PlayNWidget ui:field="gamePanel" style="width:800px;"/>
-                            <g:HTMLPanel>
-                                <p ui:field="beschreibung"></p>
-                            </g:HTMLPanel>
-                        </g:VerticalPanel>
+                    <g:VerticalPanel ui:field="outerGame" styleName="{style.element} {style.game}{style.innerElement}">
+                        <playn:PlayNWidget ui:field="gamePanel" styleName="{style.gameWidget}"/>
+                        <g:HTMLPanel>
+                            <p ui:field="beschreibung"></p>
+                        </g:HTMLPanel>
                     </g:VerticalPanel>
                 </div>
             </div>

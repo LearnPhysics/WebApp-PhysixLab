@@ -8,15 +8,16 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.util.*;
 
-import de.hofuniversity.iws.shared.dto.*;
-import de.hofuniversity.iws.shared.services.LessonService;
-
 import com.google.common.io.Files;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import de.hofuniversity.iws.shared.CollectionUtils.Selector;
+import de.hofuniversity.iws.shared.dto.*;
+import de.hofuniversity.iws.shared.services.LessonService;
 import org.json.*;
 
-import static de.hofuniversity.iws.shared.CollectionUtils.*;
+import static de.hofuniversity.iws.shared.CollectionUtils.asIterable;
+import static de.hofuniversity.iws.shared.CollectionUtils.select;
 
 /**
  *
@@ -34,7 +35,7 @@ public class LessonServiceImpl extends RemoteServiceServlet implements LessonSer
     }
 
     @Override
-    public List<String> getSubjects() {
+    public String[] getSubjects() {
         File[] subjects = new File(getResourcePath() + SUBJECTS_PATH).listFiles();
         return select(asIterable(subjects), new Selector<File, String>() {
             @Override
@@ -45,16 +46,17 @@ public class LessonServiceImpl extends RemoteServiceServlet implements LessonSer
                     throw new RuntimeException();
                 }
             }
-        });
+        }).toArray(new String[0]);
     }
 
+    @Override
     public String getSubject(String name) throws IOException {
         File subject = new File(getResourcePath() + SUBJECTS_PATH + name + ".json");
         return Files.toString(subject, Charset.forName("UTF-8"));
     }
 
     @Override
-    public List<LessonPreview> getLessonPreviews(String subject) throws IOException {
+    public LessonPreview[] getLessonPreviews(String subject) throws IOException {
         File[] subjects = new File(getResourcePath() + LESSONS_PATH).listFiles();
         List<String> lessonFiles = select(asIterable(subjects), new Selector<File, String>() {
             @Override
@@ -76,7 +78,7 @@ public class LessonServiceImpl extends RemoteServiceServlet implements LessonSer
                 //TODO logging
             }
         }
-        return previews;
+        return previews.toArray(new LessonPreview[previews.size()]);
     }
 
     @Override
@@ -95,7 +97,8 @@ public class LessonServiceImpl extends RemoteServiceServlet implements LessonSer
         return json;
     }
 
-    public List<GameDTO> getGamesForSession(String subject) {
+    @Override
+    public GameDTO[] getGamesForSession(String subject) {
         return null;
     }
 }

@@ -4,14 +4,13 @@
  */
 package de.hofuniversity.iws.client.widgets.Game;
 
-import de.hofuniversity.iws.client.playn.PlayNWidget;
-import de.hofuniversity.iws.shared.dto.GameDTO;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.*;
 import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.*;
+import de.hofuniversity.iws.client.playn.PlayNWidget;
+import de.hofuniversity.iws.shared.dto.GameDTO;
 
 /**
  *

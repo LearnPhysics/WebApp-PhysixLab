@@ -4,16 +4,15 @@
  */
 package de.hofuniversity.iws.client.widgets.SubWidgets;
 
-import de.hofuniversity.iws.client.PhysixLab;
-import de.hofuniversity.iws.client.jsonbeans.SubjectJson;
-import de.hofuniversity.iws.client.widgets.Lektion.Lektion;
-import de.hofuniversity.iws.shared.dto.LessonPreview;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.ui.*;
+import de.hofuniversity.iws.client.PhysixLab;
+import de.hofuniversity.iws.client.jsonbeans.SubjectJson;
+import de.hofuniversity.iws.client.widgets.Lektion.Lektion;
+import de.hofuniversity.iws.shared.dto.LessonPreview;
 
 /**
  *

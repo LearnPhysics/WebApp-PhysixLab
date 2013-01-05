@@ -2,7 +2,6 @@ package de.hofuniversity.iws.server.oauth;
 
 import java.io.IOException;
 import java.util.LinkedList;
-import java.util.logging.*;
 
 import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;

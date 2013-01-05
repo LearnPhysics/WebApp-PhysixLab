@@ -4,10 +4,9 @@
  */
 package de.hofuniversity.iws.client;
 
-import de.hofuniversity.iws.shared.services.*;
-
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.inject.client.AbstractGinModule;
+import de.hofuniversity.iws.shared.services.*;
 import javax.inject.Provider;
 
 /**
