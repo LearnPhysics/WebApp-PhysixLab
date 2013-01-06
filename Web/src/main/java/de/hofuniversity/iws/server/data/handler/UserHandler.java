@@ -17,9 +17,9 @@ public class UserHandler {
     public static UserDBO store(UserDBO user) {
         UserDBO retval = user;
 
-        if (hasDuplicateProvider(user)) {
-            //TODO log warning
-        }
+//        if (hasDuplicateProvider(user)) {
+//            //TODO log warning
+//        }
 
         if (entityManager.isOpen()) {
             entityManager.close();
@@ -128,14 +128,20 @@ public class UserHandler {
 
     private static boolean hasDuplicateProvider(UserDBO user) {
         HashSet<String> s = new HashSet<String>();
-        if (user.getNetworkAccountList() == null) {
-            return true;
-        }
         for (NetworkAccountDBO na : user.getNetworkAccountList()) {
             if (!s.add(na.getNetworkName())) {
                 return true;
             }
         }
         return false;
+    }
+
+    public static Optional<NetworkAccountDBO> getNetworkAccount(UserDBO user, Providers prov) {
+        for (NetworkAccountDBO na : user.getNetworkAccountList()) {
+            if (prov.name().equals(na.getNetworkName())) {
+                return Optional.of(na);
+            }
+        }
+        return Optional.absent();
     }
 }

@@ -83,7 +83,8 @@ public class OAuthCallbackServlet extends HttpServlet {
         UserDBO user = UserHandler.getUser(accessToken, provider);
         if (user == null) {
             UserDBO userData = provider.getUserDataAccessor().getUserData(accessToken);
-            NetworkAccountDBO account = userData.getNetworkAccount(provider).get();
+            NetworkAccountDBO account = UserHandler.getNetworkAccount(userData, 
+                                                                       provider).get();
             UserDBO userByAID = UserHandler.getUserByAIDString(account.getAccountIdentificationString(), provider);
             if (userByAID != null) {
                 user = userByAID;//TODO merge with userData?
@@ -93,6 +94,7 @@ public class OAuthCallbackServlet extends HttpServlet {
             }
         }
 
+        List<UserDBO> toAdd = new ArrayList<UserDBO>();
         outer:
         for (UserDBO newFriend : getUsersFriendsForAccessToken(accessToken, user, provider)) {
             //next if already connected friend
@@ -103,15 +105,17 @@ public class OAuthCallbackServlet extends HttpServlet {
             }
 
             //check if user is already in db
-            NetworkAccountDBO account = newFriend.getNetworkAccount(provider).get();
+            NetworkAccountDBO account = UserHandler.getNetworkAccount(newFriend, provider).get();
             UserDBO userByAID = UserHandler.getUserByAIDString(account.getAccountIdentificationString(), provider);
             if (userByAID != null) {
                 newFriend = userByAID;
             } else {
                 UserHandler.store(newFriend);
+                NetworkAccountHandler.store(account);
             }
-            user.getFriends().add(newFriend);            
+            toAdd.add(newFriend);            
         }
+        user.getFriends().addAll(toAdd);
         return UserHandler.store(user);
     }
 

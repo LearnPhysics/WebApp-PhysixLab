@@ -6,8 +6,6 @@ package de.hofuniversity.iws.server.oauth.accessors;
 
 import darwin.annotations.ServiceProvider;
 
-import com.google.common.base.Optional;
-import de.hofuniversity.iws.server.data.handler.UserHandler;
 import de.hofuniversity.iws.server.oauth.Providers;
 import de.hofuniversity.iws.shared.entityimpl.*;
 import org.json.*;
@@ -60,8 +58,9 @@ public class FacebookUserData implements UserDataAccessor {
         }
 
         NetworkAccountDBO account = new NetworkAccountDBO();
-        account.setNetworkName(Providers.FACEBOOK);
-        account.setOauthToken(accessToken);
+        account.setNetworkName(Providers.FACEBOOK.name());
+        account.setOauthAccessSecret(accessToken.getSecret());
+        account.setOauthAccessToken(accessToken.getToken());
         account.setUser(user);
         user.getNetworkAccountList().add(account);
 

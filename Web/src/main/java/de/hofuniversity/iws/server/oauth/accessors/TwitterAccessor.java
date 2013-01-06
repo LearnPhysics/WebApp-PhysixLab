@@ -40,7 +40,7 @@ public class TwitterAccessor implements UserDataAccessor, FriendListAccessor {
 
     @Override
     public Iterable<UserDBO> getFriends(Token accessToken, UserDBO currentUser) throws AccessException {
-        Optional<NetworkAccountDBO> na = currentUser.getNetworkAccount(Providers.TWITTER);
+        Optional<NetworkAccountDBO> na = UserHandler.getNetworkAccount(currentUser, Providers.TWITTER);
         if (!na.isPresent()) {
             return Collections.EMPTY_LIST;
         }
@@ -60,9 +60,10 @@ public class TwitterAccessor implements UserDataAccessor, FriendListAccessor {
         UserDBO user = new UserDBO();
 
         NetworkAccountDBO account = new NetworkAccountDBO();
-        account.setNetworkName(Providers.TWITTER);
+        account.setNetworkName(Providers.TWITTER.name());
         if (access != null) {
-            account.setOauthToken(access);
+            account.setOauthAccessSecret(access.getSecret());
+            account.setOauthAccessToken(access.getToken());
         }
         account.setUser(user);
         user.getNetworkAccountList().add(account);

@@ -2,10 +2,8 @@ package de.hofuniversity.iws.shared.entityimpl;
 
 import java.io.Serializable;
 
-import de.hofuniversity.iws.server.oauth.Providers;
 import de.hofuniversity.iws.shared.entitys.NetworkAccount;
 import javax.persistence.*;
-import org.scribe.model.Token;
 
 @Entity
 @Table
@@ -57,10 +55,6 @@ public class NetworkAccountDBO implements Serializable, GenericEntity, NetworkAc
         this.networkName = networkName;
     }
 
-    public void setNetworkName(Providers networkName) {
-        setNetworkName(networkName.name());
-    }
-
     @Override
     public String getAccountIdentificationString() {
         return accountIdentificationString;
@@ -79,11 +73,6 @@ public class NetworkAccountDBO implements Serializable, GenericEntity, NetworkAc
     @Override
     public void setOauthAccessToken(String oauthAccessToken) {
         this.oauthAccessToken = oauthAccessToken;
-    }
-
-    public void setOauthToken(Token token) {
-        setOauthAccessToken(token.getToken());
-        setOauthAccessSecret(token.getSecret());
     }
 
     @Override

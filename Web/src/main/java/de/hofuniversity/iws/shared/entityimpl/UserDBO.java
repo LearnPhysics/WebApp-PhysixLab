@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.*;
 
-import com.google.common.base.Optional;
-import de.hofuniversity.iws.server.oauth.Providers;
 import de.hofuniversity.iws.shared.entitys.User;
 import javax.persistence.*;
 
@@ -30,8 +28,6 @@ public class UserDBO implements Serializable, GenericEntity, User {
     private String city;
     @Column
     private String userPic;
-    @Column
-    private String accountIdentificationString;
     @OneToMany(mappedBy = "user")
     private List<NetworkAccountDBO> networkAccountList = new ArrayList<NetworkAccountDBO>();
     @OneToMany(mappedBy = "user")
@@ -185,15 +181,6 @@ public class UserDBO implements Serializable, GenericEntity, User {
             }
         }
         return retval;
-    }
-
-    public Optional<NetworkAccountDBO> getNetworkAccount(Providers prov) {
-        for (NetworkAccountDBO na : getNetworkAccountList()) {
-            if (prov.name().equals(na.getNetworkName())) {
-                return Optional.of(na);
-            }
-        }
-        return Optional.absent();
     }
 
     public boolean samePerson(UserDBO user) {

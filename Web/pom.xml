@@ -196,6 +196,7 @@
                 <!-- Plugin configuration. There are many available options, see 
                 gwt-maven-plugin documentation at codehaus.org -->
                 <configuration>
+                    <!--<logLevel>TRACE</logLevel>-->
                     <mergedWebXml>${webappDirectory}/WEB-INF/web.xml</mergedWebXml>
                     <runTarget>${runTarget}</runTarget>
                     <hostedWebapp>${webappDirectory}</hostedWebapp>

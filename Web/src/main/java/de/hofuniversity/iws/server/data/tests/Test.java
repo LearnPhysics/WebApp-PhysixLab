@@ -19,6 +19,11 @@ public class Test {
         UserDBO kitenge = new UserDBO();
         kitenge.setFirstName("Kitenge");
         
+//        UserHandler.store(joe);
+//        UserHandler.store(franz);
+//        UserHandler.store(julia);
+//        UserHandler.store(kitenge);
+        
         joe.getFriends().add(franz);
         joe.getFriends().add(julia);
         joe.getFriends().add(kitenge);
