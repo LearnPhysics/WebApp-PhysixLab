@@ -87,13 +87,8 @@ public class OAuthCallbackServlet extends HttpServlet {
             user = userData.getUserData(accessToken);
 
             Iterable<UserDBO> friendsList = getUsersFriendsForAccessToken(accessToken, user, provider);
-            List<UserDBO> friends = user.getFriends();
-            if (friends == null) {
-                friends = new ArrayList<UserDBO>();
-                user.setFriends(friends);
-            }
             for (UserDBO userDBO : friendsList) {
-                friends.add(userDBO);
+                user.getFriends().add(userDBO);
             }
         }
         return user;
@@ -108,6 +103,7 @@ public class OAuthCallbackServlet extends HttpServlet {
                 return friendsList;
             } catch (AccessException ex) {
                 ex.printStackTrace();
+                
                 //TODO token löschen
             }
         }
