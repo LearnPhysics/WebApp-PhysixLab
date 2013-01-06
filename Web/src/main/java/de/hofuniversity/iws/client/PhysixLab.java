@@ -5,13 +5,13 @@
 package de.hofuniversity.iws.client;
 
 import com.google.common.base.Optional;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import de.hofuniversity.iws.client.widgets.LoginPage;
 import de.hofuniversity.iws.shared.dto.LoginDTO;
 import de.hofuniversity.iws.shared.entitys.User;
-import de.hofuniversity.iws.shared.services.LoginServiceAsync;
-import javax.inject.Inject;
+import de.hofuniversity.iws.shared.services.*;
 
 /**
  *
@@ -21,8 +21,8 @@ public class PhysixLab {
 
     public static final HistoryPageController PAGE_CONTROLLER = new HistoryPageController();
     private static LoginDTO loginData;
-    @Inject
-    private LoginServiceAsync loginService;
+    
+    private LoginServiceAsync loginService = GWT.create(LoginService.class);
 
     public void init() {
         History.addValueChangeHandler(PAGE_CONTROLLER);

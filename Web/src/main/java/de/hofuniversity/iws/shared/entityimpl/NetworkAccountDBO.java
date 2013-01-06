@@ -2,8 +2,10 @@ package de.hofuniversity.iws.shared.entityimpl;
 
 import java.io.Serializable;
 
+import de.hofuniversity.iws.server.oauth.Providers;
 import de.hofuniversity.iws.shared.entitys.NetworkAccount;
 import javax.persistence.*;
+import org.scribe.model.Token;
 
 @Entity
 @Table
@@ -11,7 +13,6 @@ public class NetworkAccountDBO implements Serializable, GenericEntity, NetworkAc
 
     @Transient
     private boolean detached = false;
-    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -30,12 +31,12 @@ public class NetworkAccountDBO implements Serializable, GenericEntity, NetworkAc
     public boolean isDetached() {
         return detached;
     }
-    
+
     @Override
     public void setDetached(boolean detached) {
         this.detached = detached;
     }
-    
+
     @Override
     public Long getId() {
         return id;
@@ -45,7 +46,7 @@ public class NetworkAccountDBO implements Serializable, GenericEntity, NetworkAc
     public void setId(Long id) {
         this.id = id;
     }
-    
+
     @Override
     public String getNetworkName() {
         return networkName;
@@ -54,6 +55,10 @@ public class NetworkAccountDBO implements Serializable, GenericEntity, NetworkAc
     @Override
     public void setNetworkName(String networkName) {
         this.networkName = networkName;
+    }
+
+    public void setNetworkName(Providers networkName) {
+        setNetworkName(networkName.name());
     }
 
     @Override
@@ -76,6 +81,11 @@ public class NetworkAccountDBO implements Serializable, GenericEntity, NetworkAc
         this.oauthAccessToken = oauthAccessToken;
     }
 
+    public void setOauthToken(Token token) {
+        setOauthAccessToken(token.getToken());
+        setOauthAccessSecret(token.getSecret());
+    }
+
     @Override
     public UserDBO getUser() {
         return user;
@@ -94,5 +104,22 @@ public class NetworkAccountDBO implements Serializable, GenericEntity, NetworkAc
     public void setOauthAccessSecret(String oauthAccessSecret) {
         this.oauthAccessSecret = oauthAccessSecret;
     }
-    
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof NetworkAccountDBO)) {
+            return false;
+        }
+        NetworkAccountDBO na = (NetworkAccountDBO) obj;
+        return na.getAccountIdentificationString().equals(getAccountIdentificationString())
+               && na.getNetworkName().equals(getNetworkName());
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 89 * hash + (this.networkName != null ? this.networkName.hashCode() : 0);
+        hash = 89 * hash + (this.accountIdentificationString != null ? this.accountIdentificationString.hashCode() : 0);
+        return hash;
+    }
 }

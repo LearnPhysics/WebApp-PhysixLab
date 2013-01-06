@@ -12,10 +12,8 @@ import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.*;
 import de.hofuniversity.iws.client.jsonbeans.SubjectJson;
-import de.hofuniversity.iws.client.util.AddressStack;
-import de.hofuniversity.iws.client.util.CrumbTuple;
-import de.hofuniversity.iws.client.widgets.SubWidgets.BackButton;
-import de.hofuniversity.iws.client.widgets.SubWidgets.Breadcrumb;
+import de.hofuniversity.iws.client.util.*;
+import de.hofuniversity.iws.client.widgets.SubWidgets.*;
 
 /**
  *

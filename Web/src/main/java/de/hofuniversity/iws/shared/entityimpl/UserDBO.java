@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.*;
 
+import com.google.common.base.Optional;
+import de.hofuniversity.iws.server.oauth.Providers;
 import de.hofuniversity.iws.shared.entitys.User;
 import javax.persistence.*;
 
@@ -38,9 +40,9 @@ public class UserDBO implements Serializable, GenericEntity, User {
     private List<LessonProgressDBO> lessonProgressList = new ArrayList<LessonProgressDBO>();
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "DEVOTEE_FRIENDS",
-    joinColumns = {
+               joinColumns = {
         @JoinColumn(name = "DEVOTEE_ID")},
-    inverseJoinColumns = {
+               inverseJoinColumns = {
         @JoinColumn(name = "FRIEND_ID")})
     private List<UserDBO> friends = new ArrayList<UserDBO>();
     @ManyToMany(mappedBy = "friends")
@@ -170,18 +172,36 @@ public class UserDBO implements Serializable, GenericEntity, User {
     public void setDevotees(List<UserDBO> devotees) {
         this.devotees = devotees;
     }
-    
+
     @Override
     public List<UserDBO> getBilateralFriends() {
         List<UserDBO> retval = new LinkedList<UserDBO>();
-        for(UserDBO devotee : devotees) {
-            for(UserDBO friend : friends) {
-                if(friend.getId().longValue() == devotee.getId().longValue()) {
+        for (UserDBO devotee : devotees) {
+            for (UserDBO friend : friends) {
+                if (friend.getId().longValue() == devotee.getId().longValue()) {
                     retval.add(friend);
                     break;
                 }
             }
         }
         return retval;
+    }
+
+    public Optional<NetworkAccountDBO> getNetworkAccount(Providers prov) {
+        for (NetworkAccountDBO na : getNetworkAccountList()) {
+            if (prov.name().equals(na.getNetworkName())) {
+                return Optional.of(na);
+            }
+        }
+        return Optional.absent();
+    }
+
+    public boolean samePerson(UserDBO user) {
+        for (NetworkAccountDBO networkAccountDBO : getNetworkAccountList()) {
+            if (user.getNetworkAccountList().contains(networkAccountDBO)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

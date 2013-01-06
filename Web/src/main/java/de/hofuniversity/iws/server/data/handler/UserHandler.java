@@ -7,6 +7,7 @@ import de.hofuniversity.iws.server.oauth.Providers;
 import de.hofuniversity.iws.shared.entityimpl.*;
 import javax.persistence.*;
 import javax.persistence.criteria.*;
+import org.scribe.model.Token;
 
 public class UserHandler {
 
@@ -83,15 +84,6 @@ public class UserHandler {
         return retval;
     }
 
-    public static Optional<NetworkAccountDBO> getNetworkAccount(UserDBO user, Providers prov) {
-        for (NetworkAccountDBO na : user.getNetworkAccountList()) {
-            if (prov.name().equals(na.getNetworkName())) {
-                return Optional.of(na);
-            }
-        }
-        return Optional.absent();
-    }
-
     // Get user by Id
     public static UserDBO getUserEntity(long id, boolean detach) {
         return (UserDBO) GenericHandler.getEntity(UserDBO.class, id, detach);
@@ -123,15 +115,15 @@ public class UserHandler {
 
         return userList;
     }
-    
-    public static UserDBO getUser(String oauthAccessToken, String networkName) {
+
+    public static UserDBO getUser(Token oauthAccessToken, Providers networkName) {
         NetworkAccountDBO na = NetworkAccountHandler.getNetworkAccountEntityByAccessToken(networkName, oauthAccessToken, true);
-        return na.getUser();
+        return na != null ? na.getUser() : null;
     }
-    
-    public static UserDBO getUserByAIDString(String accountIdentificationString, String networkName) {
+
+    public static UserDBO getUserByAIDString(String accountIdentificationString, Providers networkName) {
         NetworkAccountDBO na = NetworkAccountHandler.getNetworkAccountEntity(networkName, accountIdentificationString, true);
-        return na.getUser();
+        return na != null ? na.getUser() : null;
     }
 
     private static boolean hasDuplicateProvider(UserDBO user) {

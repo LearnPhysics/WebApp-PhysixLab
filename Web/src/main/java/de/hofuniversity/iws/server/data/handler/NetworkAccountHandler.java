@@ -1,8 +1,10 @@
 package de.hofuniversity.iws.server.data.handler;
 
+import de.hofuniversity.iws.server.oauth.Providers;
 import de.hofuniversity.iws.shared.entityimpl.*;
 import javax.persistence.*;
 import javax.persistence.criteria.*;
+import org.scribe.model.Token;
 
 public class NetworkAccountHandler {
 
@@ -74,7 +76,7 @@ public class NetworkAccountHandler {
         return (NetworkAccountDBO) GenericHandler.getEntity(NetworkAccountDBO.class, id, detach);
     }
 
-    public static NetworkAccountDBO getNetworkAccountEntity(String networkName, String accountIdentificationString, boolean detach) {
+    public static NetworkAccountDBO getNetworkAccountEntity(Providers networkName, String accountIdentificationString, boolean detach) {
         NetworkAccountDBO retval = null;
 
         try {
@@ -92,7 +94,7 @@ public class NetworkAccountHandler {
                     .from(NetworkAccountDBO.class);
             queryNA.where(
                     criteriaBuilder.equal(
-                    rootNA.get(NetworkAccountDBO_.networkName), networkName),
+                    rootNA.get(NetworkAccountDBO_.networkName), networkName.name()),
                     criteriaBuilder.equal(
                     rootNA.get(NetworkAccountDBO_.accountIdentificationString), accountIdentificationString));
             TypedQuery<NetworkAccountDBO> typedNAQuery = entityManager
@@ -112,7 +114,7 @@ public class NetworkAccountHandler {
         return retval;
     }
     
-    public static NetworkAccountDBO getNetworkAccountEntityByAccessToken(String networkName, String oauthAccesToken, boolean detach) {
+    public static NetworkAccountDBO getNetworkAccountEntityByAccessToken(Providers networkName, Token oauthToken, boolean detach) {
         NetworkAccountDBO retval = null;
 
         try {
@@ -130,9 +132,11 @@ public class NetworkAccountHandler {
                     .from(NetworkAccountDBO.class);
             queryNA.where(
                     criteriaBuilder.equal(
-                    rootNA.get(NetworkAccountDBO_.networkName), networkName),
+                    rootNA.get(NetworkAccountDBO_.networkName), networkName.name()),
                     criteriaBuilder.equal(
-                    rootNA.get(NetworkAccountDBO_.oauthAccessToken), oauthAccesToken));
+                    rootNA.get(NetworkAccountDBO_.oauthAccessToken), oauthToken.getToken()),
+                    criteriaBuilder.equal(
+                    rootNA.get(NetworkAccountDBO_.oauthAccessSecret), oauthToken.getSecret()));
             TypedQuery<NetworkAccountDBO> typedNAQuery = entityManager
                     .createQuery(queryNA).setMaxResults(1);
             try {

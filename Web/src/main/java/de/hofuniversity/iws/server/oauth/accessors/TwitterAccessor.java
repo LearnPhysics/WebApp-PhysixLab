@@ -40,7 +40,7 @@ public class TwitterAccessor implements UserDataAccessor, FriendListAccessor {
 
     @Override
     public Iterable<UserDBO> getFriends(Token accessToken, UserDBO currentUser) throws AccessException {
-        Optional<NetworkAccountDBO> na = UserHandler.getNetworkAccount(currentUser, Providers.TWITTER);
+        Optional<NetworkAccountDBO> na = currentUser.getNetworkAccount(Providers.TWITTER);
         if (!na.isPresent()) {
             return Collections.EMPTY_LIST;
         }
@@ -58,15 +58,16 @@ public class TwitterAccessor implements UserDataAccessor, FriendListAccessor {
     private UserDBO parseUser(String responceBody, Token access) throws JSONException {
         JSONObject json = new JSONObject(responceBody);
         UserDBO user = new UserDBO();
-        if (json.has("id")) {
-            Optional<NetworkAccountDBO> na = UserHandler.getNetworkAccount(user, Providers.TWITTER);
-            NetworkAccountDBO dbo = na.or(new NetworkAccountDBO());
-            dbo.setNetworkName(Providers.TWITTER.name());
-            dbo.setUser(user);
-            dbo.setOauthAccessSecret(access.getSecret());
-            dbo.setOauthAccessToken(access.getToken());
-            dbo.setAccountIdentificationString(json.getString("id"));
+
+        NetworkAccountDBO account = new NetworkAccountDBO();
+        account.setNetworkName(Providers.TWITTER);
+        if (access != null) {
+            account.setOauthToken(access);
         }
+        account.setUser(user);
+        user.getNetworkAccountList().add(account);
+
+        account.setAccountIdentificationString(json.optString("id"));
 
         if (json.has("location")) {
             user.setCity(json.getString("location"));
@@ -95,7 +96,7 @@ public class TwitterAccessor implements UserDataAccessor, FriendListAccessor {
                 if (element != null) {
                     String requestUrl = USER_BY_ID_URL + element + "&include_entities=true";
                     String r = Providers.TWITTER.invokeGetRequest(accessToken, requestUrl);
-                    friendsList.add(parseUser(r, accessToken));
+                    friendsList.add(parseUser(r, null));
                 }
             }
         }

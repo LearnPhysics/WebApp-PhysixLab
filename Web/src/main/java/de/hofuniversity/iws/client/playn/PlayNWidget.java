@@ -34,7 +34,7 @@ public class PlayNWidget extends Composite implements GameEventListener {
         panel.setHeight(gameBox.getHeight() + "px");
         Configuration conf = new Configuration();
         conf.antiAliasing = true;
-        conf.mode = Mode.CANVAS;
+        conf.mode = Mode.AUTODETECT;
         platform = StopableHtmlPlatform.register(conf);
         PlayN.run(gameBox);
     }
