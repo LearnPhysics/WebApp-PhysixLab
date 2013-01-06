@@ -70,4 +70,18 @@ public class PendelWidget extends StandardPhysicGame {
     public float getHeight() {
         return 5;
     }
+
+    @Override
+    public int getPlayerScore() {
+        return 0;
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
+
+    @Override
+    public void restart() {
+    }
 }

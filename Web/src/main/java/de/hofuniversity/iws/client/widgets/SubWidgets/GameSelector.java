@@ -13,7 +13,6 @@ import com.google.gwt.user.client.ui.*;
 import de.hofuniversity.iws.client.PhysixLab;
 import de.hofuniversity.iws.client.jsonbeans.GameJson;
 import de.hofuniversity.iws.client.widgets.Game.Game;
-import de.hofuniversity.iws.shared.dto.GameDTO;
 
 /**
  *

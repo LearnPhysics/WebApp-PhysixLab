@@ -14,13 +14,18 @@ public class CollectionUtils {
 
     public interface Selector<E, A> {
 
-        public A select(E e);
+        public A select(E e) throws Exception;
     }
 
     public static <K, S> Map<K, List<S>> groupBy(Iterable<S> c, Selector<S, K> s) {
         Map<K, List<S>> m = new HashMap<K, List<S>>();
         for (S s1 : c) {
-            K key = s.select(s1);
+            K key;
+            try {
+                key = s.select(s1);
+            } catch (Exception ex) {
+                continue;
+            }
             List<S> get = m.get(key);
             if (get == null) {
                 get = new ArrayList<S>();
@@ -39,7 +44,11 @@ public class CollectionUtils {
     public static <E, A> List<A> select(Iterable<E> c, Selector<E, A> s) {
         List<A> a = new ArrayList<A>();
         for (E e : c) {
-            a.add(s.select(e));
+            try {
+                a.add(s.select(e));
+            } catch (Exception ex) {
+                continue;
+            }
         }
         return a;
     }
@@ -66,7 +75,7 @@ public class CollectionUtils {
 
                     @Override
                     public T next() {
-                        if(!hasNext()) {
+                        if (!hasNext()) {
                             throw new NoSuchElementException();
                         }
                         return a[index++];

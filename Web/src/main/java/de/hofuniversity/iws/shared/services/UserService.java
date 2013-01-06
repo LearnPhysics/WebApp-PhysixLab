@@ -12,7 +12,9 @@ import de.hofuniversity.iws.shared.entitys.User;
  * @author User
  */
 @RemoteServiceRelativePath("userfriend")
-public interface UserFriendService extends RemoteService {
+public interface UserService extends RemoteService {
 
-    public Iterable<User> getFriends();
+    public Iterable<? extends User> getFriends();
+    
+    public void addGameResult(String game, int points);
 }

@@ -71,4 +71,8 @@ public class GameHandler {
     public static GameDBO getGameEntity(long id, boolean detach) {
         return (GameDBO) GenericHandler.getEntity(GameDBO.class, id, detach);
     }
+    
+    public static GameDBO getGameEntity(String name, boolean detach) {
+        throw new UnsupportedOperationException();
+    }
 }

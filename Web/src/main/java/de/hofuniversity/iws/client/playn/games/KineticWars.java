@@ -24,6 +24,8 @@ public class KineticWars extends StandardPhysicGame {
     private Rampe rampe;
     private Ball ball;
     private Box[] boxes;
+    private int points;
+    private boolean finished;
 
     public KineticWars() {
         super(true);
@@ -49,34 +51,39 @@ public class KineticWars extends StandardPhysicGame {
     }
 
     private void reset() {
+        points = 1000;
+        finished = false;
+
         setBall();
         setPendel(2 + (float) Math.random() * 3, 7);
         setBurg();
-        setRampe(15 +(float) Math.random()*10);
+        setRampe(15 + (float) Math.random() * 10);
     }
     private boolean wasActive;
     private final static float SLEEP_VEL = 0.1f;
 
     @Override
     public void update(float delta) {
-        super.update(delta);
+        if (!finished) {
+            super.update(delta);
 
-        wasActive |= ball.getBody().getLinearVelocity().lengthSquared() > SLEEP_VEL;
+            wasActive |= ball.getBody().getLinearVelocity().lengthSquared() > SLEEP_VEL;
 
-        float x = ball.getBody().m_xf.position.x;
-        float hw = ball.getWidth() / 2;
-        if (x - hw < 0 || x + hw > getWidth() || (wasActive && ball.getBody().getLinearVelocity().lengthSquared() < SLEEP_VEL)) {
-            setPendel(2 + (float) Math.random() * 3, 7);
-            setBall();
-            wasActive = false;
-        }
-
-        for (Box box : boxes) {
-            if (!box.isMarkedForRemoval()) {
-                return;
+            float x = ball.getBody().m_xf.position.x;
+            float hw = ball.getWidth() / 2;
+            if (x - hw < 0 || x + hw > getWidth() || (wasActive && ball.getBody().getLinearVelocity().lengthSquared() < SLEEP_VEL)) {
+                setPendel(2 + (float) Math.random() * 3, 7);
+                setBall();
+                wasActive = false;
             }
+
+            for (Box box : boxes) {
+                if (!box.isMarkedForRemoval()) {
+                    return;
+                }
+            }
+            finished = true;
         }
-        reset();
     }
 
     public void setRampe(float angle) {
@@ -92,6 +99,7 @@ public class KineticWars extends StandardPhysicGame {
     }
 
     public void setBall() {
+        changePointsBy(-100);
         if (ball != null) {
             remove(ball);
         }
@@ -158,5 +166,25 @@ public class KineticWars extends StandardPhysicGame {
     @Override
     public float getHeight() {
         return 5;
+    }
+
+    private void changePointsBy(float delta) {
+        points += delta;
+        System.out.println("--" + points);
+    }
+
+    @Override
+    public int getPlayerScore() {
+        return points;
+    }
+
+    @Override
+    public boolean isFinished() {
+        return finished;
+    }
+
+    @Override
+    public void restart() {
+        reset();
     }
 }

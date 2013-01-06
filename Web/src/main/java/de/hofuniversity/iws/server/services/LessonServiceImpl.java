@@ -12,7 +12,7 @@ import com.google.common.io.Files;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import de.hofuniversity.iws.shared.CollectionUtils.Selector;
-import de.hofuniversity.iws.shared.dto.*;
+import de.hofuniversity.iws.shared.dto.LessonPreview;
 import de.hofuniversity.iws.shared.services.LessonService;
 import org.json.*;
 
@@ -39,12 +39,8 @@ public class LessonServiceImpl extends RemoteServiceServlet implements LessonSer
         File[] subjects = new File(getResourcePath() + SUBJECTS_PATH).listFiles();
         return select(asIterable(subjects), new Selector<File, String>() {
             @Override
-            public String select(File e) {
-                try {
-                    return Files.toString(e, Charset.forName("UTF-8"));
-                } catch (IOException ex) {
-                    throw new RuntimeException();
-                }
+            public String select(File e) throws IOException {
+                return Files.toString(e, Charset.forName("UTF-8"));
             }
         }).toArray(new String[0]);
     }
@@ -69,10 +65,9 @@ public class LessonServiceImpl extends RemoteServiceServlet implements LessonSer
         for (String name : lessonFiles) {
             try {
                 JSONObject a = new JSONObject(getLesson(name));
-                if (subject.equals(a.getString("thema"))) {
-                    previews.add(new LessonPreview(name,
-                                                   a.getString("parent"),
-                                                   a.getString("image")));
+                if (subject.equals(a.optString("thema"))) {
+                    previews.add(new LessonPreview(name, a.optString("parent"),
+                                                   a.optString("image")));
                 }
             } catch (JSONException ex) {
                 //TODO logging
@@ -98,7 +93,20 @@ public class LessonServiceImpl extends RemoteServiceServlet implements LessonSer
     }
 
     @Override
-    public GameDTO[] getGamesForSession(String subject) {
+    public String getGame(String name) throws IOException {
+        for (String subject : getSubjects()) {
+            try {
+                JSONObject a = new JSONObject(getSubject(subject));
+                JSONArray games = a.optJSONArray("games");
+                for (int i = 0; i < games.length(); i++) {
+                    JSONObject game = games.optJSONObject(i);
+                    if (name.equals(game.optString("name"))) {
+                        return game.toString();
+                    }
+                }
+            } catch (JSONException ex) {
+            }
+        }
         return null;
     }
 }

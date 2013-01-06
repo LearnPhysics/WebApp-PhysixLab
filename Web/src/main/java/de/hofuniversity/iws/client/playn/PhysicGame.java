@@ -10,6 +10,7 @@ import playn.core.GroupLayer;
  *
  * @author Daniel Heinrich <dannynullzwo@gmail.com>
  */
+//don't change the class name, because this interface is used in a gwt generator with hardcoded names
 public interface PhysicGame {
 
     public void init(GroupLayer scaledLayer);
@@ -29,4 +30,10 @@ public interface PhysicGame {
      * @return 
      */
     public float getHeight();
+    
+    public int getPlayerScore();
+    
+    public boolean isFinished();
+    
+    public void restart();
 }

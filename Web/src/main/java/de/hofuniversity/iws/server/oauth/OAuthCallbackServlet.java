@@ -1,19 +1,16 @@
 package de.hofuniversity.iws.server.oauth;
 
 import java.io.IOException;
-import java.util.LinkedList;
+import java.util.*;
 
 import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import de.hofuniversity.iws.server.data.handler.HibernateUtil;
+import de.hofuniversity.iws.server.oauth.accessors.*;
 import de.hofuniversity.iws.shared.entityimpl.UserDBO;
-import de.hofuniversity.iws.server.oauth.accessors.AccessException;
-import de.hofuniversity.iws.server.oauth.accessors.FriendListAccessor;
-import de.hofuniversity.iws.server.oauth.accessors.UserDataAccessor;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
-import org.scribe.model.Token;
-import org.scribe.model.Verifier;
+import org.scribe.model.*;
 
 import static de.hofuniversity.iws.server.services.LoginServiceImpl.*;
 
@@ -23,7 +20,8 @@ import static de.hofuniversity.iws.server.services.LoginServiceImpl.*;
  */
 @RemoteServiceRelativePath("oauth_callback")
 public class OAuthCallbackServlet extends HttpServlet {
-static boolean a = HibernateUtil.isConnectedToDB();
+
+    static boolean a = HibernateUtil.isConnectedToDB();
     public static final String OAUTH_LOGIN_ATTRIBUTE = "oauth-login";
     public static final String[] VERIFICATION_PROPERTIES = new String[]{
         // Parameter: oauth_verifier bei Twitter und Google 
@@ -61,16 +59,13 @@ static boolean a = HibernateUtil.isConnectedToDB();
                 try {
                     if (verifier == null) {
                     } else {
-                        //Somehow generate a coresponding user
                         Token accessToken = l.request.generateAccessToken(verifier);
-                        
+
                         UserDBO user;
                         try {
                             user = getOrCreateUserForAccessToken(accessToken, l.provider);
-                            Iterable<UserDBO> friendsList = getUsersFriendsForAccessToken(accessToken, user, l.provider);
                             l.successfull = true;
                             storeSessionAttribute(request, USER_ATTRIBUTE, user);
-                            storeSessionAttribute(request, FRIENDS_ATTRIBUTE, friendsList);
                         } catch (AccessException ex) {
                             l.successfull = false;
                             //TODO logging
@@ -86,8 +81,21 @@ static boolean a = HibernateUtil.isConnectedToDB();
 
     private UserDBO getOrCreateUserForAccessToken(Token accessToken, Providers provider) throws AccessException {
         //TODO DB access
-        UserDataAccessor userData = provider.getUserDataAccessor();
-        UserDBO user = userData.getUserData(accessToken);
+        UserDBO user = null;
+        if (user == null) {
+            UserDataAccessor userData = provider.getUserDataAccessor();
+            user = userData.getUserData(accessToken);
+
+            Iterable<UserDBO> friendsList = getUsersFriendsForAccessToken(accessToken, user, provider);
+            List<UserDBO> friends = user.getFriends();
+            if (friends == null) {
+                friends = new ArrayList<UserDBO>();
+                user.setFriends(friends);
+            }
+            for (UserDBO userDBO : friendsList) {
+                friends.add(userDBO);
+            }
+        }
         return user;
     }
 

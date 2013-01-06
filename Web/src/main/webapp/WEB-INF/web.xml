@@ -1,35 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="http://java.sun.com/xml/ns/j2ee" 
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" 
-        version="2.4"> 
-
-    <!-- Servlets -->    
-    <servlet> 
-        <servlet-name>loginServiceImpl</servlet-name> 
-        <servlet-class>de.hofuniversity.iws.server.services.LoginServiceImpl</servlet-class> 
-    </servlet> 
-    <servlet-mapping> 
-        <servlet-name>loginServiceImpl</servlet-name> 
-        <url-pattern>/PhysixLab/login</url-pattern> 
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+    <!-- Servlets -->
+    <servlet>
+        <servlet-name>loginServiceImpl</servlet-name>
+        <servlet-class>de.hofuniversity.iws.server.services.LoginServiceImpl</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>loginServiceImpl</servlet-name>
+        <url-pattern>/PhysixLab/login</url-pattern>
     </servlet-mapping>
     
-    <servlet> 
-        <servlet-name>userfriendServiceImpl</servlet-name> 
-        <servlet-class>de.hofuniversity.iws.server.services.UserFriendServiceImpl</servlet-class> 
-    </servlet> 
-    <servlet-mapping> 
-        <servlet-name>userfriendServiceImpl</servlet-name> 
-        <url-pattern>/PhysixLab/userfriend</url-pattern> 
+    <servlet>
+        <servlet-name>userServiceImpl</servlet-name>
+        <servlet-class>de.hofuniversity.iws.server.services.UserServiceImpl</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>userServiceImpl</servlet-name>
+        <url-pattern>/PhysixLab/user</url-pattern>
     </servlet-mapping>
-    <servlet> 
-        <servlet-name>lessonServiceImpl</servlet-name> 
-        <servlet-class>de.hofuniversity.iws.server.services.LessonServiceImpl</servlet-class> 
-    </servlet> 
-    <servlet-mapping> 
-        <servlet-name>lessonServiceImpl</servlet-name> 
-        <url-pattern>/PhysixLab/lessonservice</url-pattern> 
-    </servlet-mapping>   
+    
+    <servlet>
+        <servlet-name>lessonServiceImpl</servlet-name>
+        <servlet-class>de.hofuniversity.iws.server.services.LessonServiceImpl</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>lessonServiceImpl</servlet-name>
+        <url-pattern>/PhysixLab/lessonservice</url-pattern>
+    </servlet-mapping>
+    
     <servlet>
         <servlet-name>oauthCallback</servlet-name>
         <servlet-class>de.hofuniversity.iws.server.oauth.OAuthCallbackServlet</servlet-class>
@@ -38,10 +36,8 @@
         <servlet-name>oauthCallback</servlet-name>
         <url-pattern>/PhysixLab/oauth_callback</url-pattern>
     </servlet-mapping>
-    
     <!-- Default page to serve -->
     <welcome-file-list>
         <welcome-file>PhysixLab.html</welcome-file>
     </welcome-file-list>
-
 </web-app>
