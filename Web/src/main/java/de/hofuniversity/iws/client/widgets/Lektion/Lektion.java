@@ -157,7 +157,7 @@ public class Lektion extends Composite {
 
         History.newItem(NAME + "?" + lektion.getName(), false);
         railContent.add(new Lesson(lektion, subject));
-        railContent.add(new Test(lektion.getTest(),lesson.getName()));
+        railContent.add(new Test(lektion.getTest(),lesson,subject));
         AddressStack.getInstance().addAddress(new CrumbTuple(this, lektion.getTitle(), 3));
         page.add(new Breadcrumb(3));
         page.add(new BackButton(3));
@@ -177,7 +177,7 @@ public class Lektion extends Composite {
     private void ini() {
         if (lesson != null && subject != null) {
             railContent.add(new Lesson(lesson, subject));
-            railContent.add(new Test(lesson.getTest(),lesson.getName()));
+            railContent.add(new Test(lesson.getTest(),lesson,subject));
             AddressStack.getInstance().addAddress(new CrumbTuple(this, lesson.getTitle(), 3));
             page.add(new Breadcrumb(3));
             page.add(new BackButton(3));

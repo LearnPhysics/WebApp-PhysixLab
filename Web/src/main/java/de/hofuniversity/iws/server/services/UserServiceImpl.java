@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import de.hofuniversity.iws.client.jsonbeans.LessonJson;
 import de.hofuniversity.iws.server.data.handler.*;
 import de.hofuniversity.iws.shared.entityimpl.*;
 import de.hofuniversity.iws.shared.entitys.User;
@@ -41,12 +42,14 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
     }
     
     @Override
-    public void addTestResult(String lesson, int points) {
+    public void addTestResult(String name,String subject, int points) {
         LessonProgressDBO result = new LessonProgressDBO();
         result.setDate(new Timestamp(System.currentTimeMillis()));
         result.setUser(getSessionUser());
-        result.setPoints(1);
-        result.setLesson(LessonHandler.getGameEntity(getLesson(lesson), false));
+        result.setPoints(1);        
+        LessonDBO lesson = LessonHandler.getGameEntityOrCreateTemplate(name, false);  
+      //  result.setLesson(lesson);
+        LessonProgressHandler.store(result);        
     }
 
     private UserDBO getSessionUser() {
@@ -56,10 +59,5 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
         } else {
             throw new RuntimeException("No loged in user!");
         }
-    }
-
-    private long getLesson(String name) {
-        LessonDBO lesson = LessonHandler.getGameEntityOrCreateTemplate(name, false);
-        return 0;
     }
 }

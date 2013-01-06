@@ -5,6 +5,7 @@
 package de.hofuniversity.iws.shared.services;
 
 import com.google.gwt.user.client.rpc.*;
+import de.hofuniversity.iws.client.jsonbeans.LessonJson;
 import de.hofuniversity.iws.shared.entitys.User;
 
 /**
@@ -17,5 +18,5 @@ public interface UserService extends RemoteService {
     public Iterable<? extends User> getFriends();
     
     public void addGameResult(String game, int points);
-    public void addTestResult(String lesson, int points);
+    public void addTestResult(String lesson, String subject, int points);
 }

@@ -8,9 +8,11 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.*;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.*;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import de.hofuniversity.iws.client.jsonbeans.LessonJson;
+import de.hofuniversity.iws.client.jsonbeans.SubjectJson;
 import de.hofuniversity.iws.client.jsonbeans.TestJson;
 import de.hofuniversity.iws.shared.services.UserService;
 import de.hofuniversity.iws.shared.services.UserServiceAsync;
@@ -24,7 +26,8 @@ public class Test extends Composite {
 
     private static TestUiBinder uiBinder = GWT.create(TestUiBinder.class);
     private TestJson test;
-    private String lessonName;
+    private LessonJson lesson;
+    private SubjectJson subject;
     private UserServiceAsync userService = (UserServiceAsync)GWT.create(UserService.class);
     @UiField
     HeadingElement title;
@@ -40,11 +43,12 @@ public class Test extends Composite {
     interface TestUiBinder extends UiBinder<Widget, Test> {
     }
 
-    public Test(TestJson test, String lessonName) {
+    public Test(TestJson test, LessonJson lesson, SubjectJson subject) {
         initWidget(uiBinder.createAndBindUi(this));
 
         this.test = test;
-        this.lessonName = lessonName;
+        this.lesson = lesson;
+        this.subject = subject;
         title.setInnerText(test.getTitle());
         text.setInnerText(test.getProblem());
         illustration.add(new Image(test.getImage()));
@@ -55,9 +59,7 @@ public class Test extends Composite {
         try {
             double sol = Double.parseDouble(solution.getText());
             if(Utilities.isSimilar(test.getSolution(), sol, 10)) {
-                userService.addTestResult(lessonName, 0,new TestAsyncCallback());
-//                test.setPassed(true);
-                // Spiele Lösungsanimation
+                userService.addTestResult(lesson.getName(),subject.getName(), 0,new TestAsyncCallback());
             }
         }
         catch(Exception e) {
@@ -74,7 +76,8 @@ public class Test extends Composite {
 
         @Override
         public void onSuccess(Void result) {
-            System.out.println("");
+            Window.alert("Congratulation, you passed the test.");
+                // Spiele Lösungsanimation
         }
 
     }
