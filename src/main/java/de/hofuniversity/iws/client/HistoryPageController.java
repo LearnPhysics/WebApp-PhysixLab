@@ -59,10 +59,10 @@ public class HistoryPageController implements ValueChangeHandler<String> {
         if (LoginPage.NAME.equals(pageName)) {
             changePage(new LoginPage());
         } else if (UserHome.NAME.equals(pageName)) {
-            changePage(new UserHome());
+            changePage(new UserHome());            
         } else if (split.length > 1) {
             if (Thema.NAME.equals(pageName)) {
-                tryOpenThema(split[1]);
+                tryOpenThema(split[1], token);              
             } else if (Lektion.NAME.equals(pageName)) {
                 tryOpenLektion(split[1]);
             } else if (Game.NAME.equals(pageName)) {
@@ -73,7 +73,7 @@ public class HistoryPageController implements ValueChangeHandler<String> {
         }
     }
 
-    private void tryOpenThema(String options) {
+    private void tryOpenThema(String options, final String address) {
         lessonService.getSubject(options, new AsyncCallback<String>() {
 
             @Override
@@ -82,7 +82,8 @@ public class HistoryPageController implements ValueChangeHandler<String> {
 
             @Override
             public void onSuccess(String result) {
-                changePage(new Thema(SubjectJson.create(result)));
+                SubjectJson sj = SubjectJson.create(result);
+                changePage(new Thema(sj));
             }
         });
     }
@@ -92,7 +93,8 @@ public class HistoryPageController implements ValueChangeHandler<String> {
     }
 
     private void tryOpenLektion(String options) {
-        changePage(Lektion.build().withLesson(options).create());
+        Lektion l = Lektion.build().withLesson(options).create();
+        changePage(l);
     }
 
     public void changePage(Composite c) {

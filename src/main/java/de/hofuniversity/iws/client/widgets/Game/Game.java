@@ -10,6 +10,10 @@ import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.*;
 import de.hofuniversity.iws.client.playn.PlayNWidget;
+import de.hofuniversity.iws.client.util.AddressStack;
+import de.hofuniversity.iws.client.util.CrumbTuple;
+import de.hofuniversity.iws.client.widgets.SubWidgets.BackButton;
+import de.hofuniversity.iws.client.widgets.SubWidgets.Breadcrumb;
 import de.hofuniversity.iws.shared.dto.GameDTO;
 
 /**
@@ -31,6 +35,7 @@ public class Game extends Composite {
     PlayNWidget gamePanel;
     @UiField
     ParagraphElement beschreibung;
+    @UiField HTMLPanel page;
 
     interface GameUiBinder extends UiBinder<Widget, Game> {
     }
@@ -44,6 +49,10 @@ public class Game extends Composite {
 
         initWidget(uiBinder.createAndBindUi(this));
         History.newItem(NAME + "?" + bean.getDbo().getName(), false);
+        
+        AddressStack.getInstance().addAddress(new CrumbTuple(this, bean.getTitle(), 3));
+        page.add(new Breadcrumb(3));
+        page.add(new BackButton(3));
     }
 
     @Override

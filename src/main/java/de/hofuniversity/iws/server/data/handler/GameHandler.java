@@ -1,7 +1,15 @@
 package de.hofuniversity.iws.server.data.handler;
 
 import de.hofuniversity.iws.shared.entityimpl.GameDBO;
+import de.hofuniversity.iws.shared.entityimpl.GameDBO_;
+import de.hofuniversity.iws.shared.entityimpl.NetworkAccountDBO;
+import de.hofuniversity.iws.shared.entityimpl.NetworkAccountDBO_;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 public class GameHandler {
 
@@ -70,5 +78,41 @@ public class GameHandler {
     // Get game by Id
     public static GameDBO getGameEntity(long id, boolean detach) {
         return (GameDBO) GenericHandler.getEntity(GameDBO.class, id, detach);
+    }
+    
+    public static GameDBO getGameEntity(String name, boolean detach) {
+        GameDBO retval = null;
+
+        try {
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            entityManager = HibernateUtil.getEntityManagerFactory()
+                    .createEntityManager();
+
+            CriteriaBuilder criteriaBuilder = entityManager
+                    .getCriteriaBuilder();
+            CriteriaQuery<GameDBO> queryG = criteriaBuilder
+                    .createQuery(GameDBO.class);
+            Root<GameDBO> rootG = queryG
+                    .from(GameDBO.class);
+            queryG.where(
+                    criteriaBuilder.equal(
+                    rootG.get(GameDBO_.name), name));
+            TypedQuery<GameDBO> typedGQuery = entityManager
+                    .createQuery(queryG).setMaxResults(1);
+            try {
+                retval = typedGQuery.getSingleResult();
+                if (detach) {
+                    entityManager.detach(retval);
+                    retval.setDetached(true);
+                }
+            } catch (NoResultException e) {
+                retval = null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return retval;
     }
 }

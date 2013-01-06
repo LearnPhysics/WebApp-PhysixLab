@@ -31,4 +31,13 @@ public class Utilities {
             return true;
         }
     }
+    
+    public static String textShortener(String text, int maxLength) {
+        if(text.length() > maxLength) {
+            String retval = text.substring(0, maxLength);
+            retval = retval.substring(0, retval.lastIndexOf(" ")) + "...";
+            return retval;
+        }
+        return text;
+    }
 }

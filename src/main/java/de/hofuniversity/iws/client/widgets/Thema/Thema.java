@@ -12,6 +12,10 @@ import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.*;
 import de.hofuniversity.iws.client.jsonbeans.SubjectJson;
+import de.hofuniversity.iws.client.util.AddressStack;
+import de.hofuniversity.iws.client.util.CrumbTuple;
+import de.hofuniversity.iws.client.widgets.SubWidgets.BackButton;
+import de.hofuniversity.iws.client.widgets.SubWidgets.Breadcrumb;
 
 /**
  *
@@ -36,6 +40,7 @@ public class Thema extends Composite {
     FocusPanel tab2;
     @UiField
     FocusPanel tab3;
+    @UiField HTMLPanel page;
 
     interface ThemaUiBinder extends UiBinder<Widget, Thema> {
     }
@@ -68,6 +73,10 @@ public class Thema extends Composite {
         railContent.add(new Lektionswahl(bean));
         railContent.add(new Uebersicht(bean));
         railContent.add(new Spielwahl(bean.getName()));
+        
+        AddressStack.getInstance().addAddress(new CrumbTuple(this, bean.getTitle(), 2));
+        page.add(new Breadcrumb(2));
+        page.add(new BackButton(2));
     }
 
     @UiHandler("tab1")

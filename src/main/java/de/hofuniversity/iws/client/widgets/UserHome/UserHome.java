@@ -11,6 +11,10 @@ import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.*;
+import de.hofuniversity.iws.client.util.AddressStack;
+import de.hofuniversity.iws.client.util.CrumbTuple;
+import de.hofuniversity.iws.client.widgets.SubWidgets.BackButton;
+import de.hofuniversity.iws.client.widgets.SubWidgets.Breadcrumb;
 
 /**
  *
@@ -22,6 +26,7 @@ public class UserHome extends Composite {
     private static UserHomeUiBinder uiBinder = GWT.create(UserHomeUiBinder.class);
     
     @UiField UserHomeStyle style;
+    @UiField HTMLPanel page;
     @UiField SpanElement rail;
     @UiField ScrollPanel sWrap;
     
@@ -61,6 +66,9 @@ public class UserHome extends Composite {
         History.newItem(NAME, false);
         sWrap.getElement().getStyle().setOverflow(Style.Overflow.HIDDEN);
         sWrap.setVerticalScrollPosition(0);
+        AddressStack.getInstance().addAddress(new CrumbTuple(this, " Home ", 1));
+        page.add(new Breadcrumb(1));
+        page.add(new BackButton(1));
     }
 
     @UiHandler("tab1")

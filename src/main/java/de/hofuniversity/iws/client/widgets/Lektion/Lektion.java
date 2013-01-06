@@ -13,6 +13,10 @@ import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import de.hofuniversity.iws.client.jsonbeans.*;
+import de.hofuniversity.iws.client.util.AddressStack;
+import de.hofuniversity.iws.client.util.CrumbTuple;
+import de.hofuniversity.iws.client.widgets.SubWidgets.BackButton;
+import de.hofuniversity.iws.client.widgets.SubWidgets.Breadcrumb;
 import de.hofuniversity.iws.shared.services.*;
 
 /**
@@ -35,6 +39,7 @@ public class Lektion extends Composite {
     FocusPanel tab1;
     @UiField
     FocusPanel tab2;
+    @UiField HTMLPanel page;
 
     interface LektionUiBinder extends UiBinder<Widget, Lektion> {
     }
@@ -148,6 +153,9 @@ public class Lektion extends Composite {
         History.newItem(NAME + "?" + lektion.getName(), false);
         railContent.add(new Lesson(lektion, subject));
         railContent.add(new Test(lektion.getTest()));
+        AddressStack.getInstance().addAddress(new CrumbTuple(this, lektion.getTitle(), 3));
+        page.add(new Breadcrumb(3));
+        page.add(new BackButton(3));
     }
 
     private void ini(LessonJson l) {
@@ -165,6 +173,9 @@ public class Lektion extends Composite {
         if (lesson != null && subject != null) {
             railContent.add(new Lesson(lesson, subject));
             railContent.add(new Test(lesson.getTest()));
+            AddressStack.getInstance().addAddress(new CrumbTuple(this, lesson.getTitle(), 3));
+            page.add(new Breadcrumb(3));
+            page.add(new BackButton(3));
             lesson = null;
             subject = null;
         }

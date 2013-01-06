@@ -123,6 +123,16 @@ public class UserHandler {
 
         return userList;
     }
+    
+    public static UserDBO getUser(String oauthAccessToken, String networkName) {
+        NetworkAccountDBO na = NetworkAccountHandler.getNetworkAccountEntityByAccessToken(networkName, oauthAccessToken, true);
+        return na.getUser();
+    }
+    
+    public static UserDBO getUserByAIDString(String accountIdentificationString, String networkName) {
+        NetworkAccountDBO na = NetworkAccountHandler.getNetworkAccountEntity(networkName, accountIdentificationString, true);
+        return na.getUser();
+    }
 
     private static boolean hasDuplicateProvider(UserDBO user) {
         HashSet<String> s = new HashSet<String>();

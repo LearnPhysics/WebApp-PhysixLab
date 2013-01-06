@@ -12,6 +12,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import de.hofuniversity.iws.client.PhysixLab;
+import de.hofuniversity.iws.client.util.AddressStack;
+import de.hofuniversity.iws.client.util.CrumbTuple;
 import de.hofuniversity.iws.client.widgets.UserHome.UserHome;
 import de.hofuniversity.iws.shared.dto.LoginDTO;
 import de.hofuniversity.iws.shared.services.*;
@@ -33,6 +35,7 @@ public class LoginPage extends HistoryPage {
  
     public LoginPage() {
         initWidget(uiBinder.createAndBindUi(this));
+        AddressStack.getInstance().addAddress(new CrumbTuple(this, " Startseite ", 0));
     }
 
     @Override
@@ -70,7 +73,7 @@ public class LoginPage extends HistoryPage {
                                                    + "resizable=yes,"
                                                    + "scrollbars=yes,"
                                                    + "status=no,"
-                                                   + "dependent=true, height=300, width=600");
+                                                   + "dependent=true, height=500, width=600");
             loginService.waitForOAuthVerification(new VerificationCallback());
         }
     }

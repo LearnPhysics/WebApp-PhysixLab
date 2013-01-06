@@ -1,0 +1,51 @@
+<!--
+Uncomment this for XHTML entities
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+-->
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui">
+    <ui:style>
+        @font-face {
+        font-family: geosans;
+        src: url('GeosansLight.ttf');
+        }
+
+        .plate h2 {
+        color: rgb(65,150,255);
+        margin: 0 0 0 0;
+        }
+        
+        .element {
+        background: rgb(255,255,255);
+        border-radius: 5px;
+        box-shadow: 3px 3px 5px rgb(0,0,0);
+        }
+        
+        .innerElement {
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        }
+        
+        .lektion {
+        width: 160px;
+        height: 80px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        }
+        
+        .plate {
+        position: relative;
+        margin-left: 90px;
+        }
+    </ui:style>
+    <g:HTMLPanel ui:field="plate" styleName="{style.plate}">
+        <div class="{style.element} {style.lektion}">
+            <div class="{style.innerElement}">
+                <h2 ui:field="title"></h2>
+                <p ui:field="text"></p>
+            </div>
+        </div>
+    </g:HTMLPanel>
+</ui:UiBinder>

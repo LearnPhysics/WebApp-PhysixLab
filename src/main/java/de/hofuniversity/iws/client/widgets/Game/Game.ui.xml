@@ -5,6 +5,7 @@ Uncomment this for XHTML entities
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
              xmlns:g="urn:import:com.google.gwt.user.client.ui"
              xmlns:header='urn:import:de.hofuniversity.iws.client.widgets'
+             xmlns:bread='urn:import:de.hofuniversity.iws.client.widgets.SubWidgets'
              xmlns:playn='urn:import:de.hofuniversity.iws.client.playn'>
     <ui:style>
         @font-face {
@@ -69,7 +70,7 @@ Uncomment this for XHTML entities
         }
     </ui:style>
     <g:ScrollPanel ui:field='sWrap' styleName="{style.scrollWrap}">
-        <g:HTMLPanel>
+        <g:HTMLPanel ui:field="page">
             <header:Header></header:Header>
             <div id="contentAreaGame">
                 <div id="content">

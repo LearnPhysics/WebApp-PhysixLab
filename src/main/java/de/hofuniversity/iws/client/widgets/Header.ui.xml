@@ -35,12 +35,14 @@ Uncomment this for XHTML entities
 
         #header img {
         margin: 25px 40px;
-        }
+        }  
     </ui:style>
     <g:HTMLPanel>
         <div id="headerArea">
             <div id="header">
-                <img src="images/Startseite/PhysixLab_WebLogo.png" />
+                <g:FocusPanel ui:field="logo">
+                    <g:Image url="images/Startseite/PhysixLab_WebLogo.png" />
+                </g:FocusPanel>
             </div>
         </div>
         <div id="horizon">

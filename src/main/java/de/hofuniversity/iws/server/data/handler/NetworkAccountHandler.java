@@ -111,4 +111,42 @@ public class NetworkAccountHandler {
         }
         return retval;
     }
+    
+    public static NetworkAccountDBO getNetworkAccountEntityByAccessToken(String networkName, String oauthAccesToken, boolean detach) {
+        NetworkAccountDBO retval = null;
+
+        try {
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            entityManager = HibernateUtil.getEntityManagerFactory()
+                    .createEntityManager();
+
+            CriteriaBuilder criteriaBuilder = entityManager
+                    .getCriteriaBuilder();
+            CriteriaQuery<NetworkAccountDBO> queryNA = criteriaBuilder
+                    .createQuery(NetworkAccountDBO.class);
+            Root<NetworkAccountDBO> rootNA = queryNA
+                    .from(NetworkAccountDBO.class);
+            queryNA.where(
+                    criteriaBuilder.equal(
+                    rootNA.get(NetworkAccountDBO_.networkName), networkName),
+                    criteriaBuilder.equal(
+                    rootNA.get(NetworkAccountDBO_.oauthAccessToken), oauthAccessToken));
+            TypedQuery<NetworkAccountDBO> typedNAQuery = entityManager
+                    .createQuery(queryNA).setMaxResults(1);
+            try {
+                retval = typedNAQuery.getSingleResult();
+                if (detach) {
+                    entityManager.detach(retval);
+                    retval.setDetached(true);
+                }
+            } catch (NoResultException e) {
+                retval = null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return retval;
+    }
 }

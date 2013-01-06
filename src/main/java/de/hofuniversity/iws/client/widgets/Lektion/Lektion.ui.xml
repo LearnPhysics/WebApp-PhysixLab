@@ -5,8 +5,14 @@ Uncomment this for XHTML entities
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
              xmlns:g="urn:import:com.google.gwt.user.client.ui"
              xmlns:my='urn:import:de.hofuniversity.iws.client.widgets.Lektion' 
-             xmlns:header='urn:import:de.hofuniversity.iws.client.widgets'>
+             xmlns:header='urn:import:de.hofuniversity.iws.client.widgets'
+             xmlns:bread='urn:import:de.hofuniversity.iws.client.widgets.SubWidgets'>
     <ui:style type='de.hofuniversity.iws.client.widgets.Lektion.Lektion.LektionStyle'>
+        @font-face {
+        font-family: geosans;
+        src: url('GeosansLight.ttf');
+        }
+        
         span {
         position: absolute;
         left: 50%;
@@ -29,17 +35,19 @@ Uncomment this for XHTML entities
         position: absolute;
         left: 50%;
         width: 120px;
-        height: 22px;
-        top: 133px;
-        -webkit-transition:0.2s;
-        -o-transition:0.2s;
-        -moz-transition:0.2s;
-        -ms-transition:0.2s;
-        transition:0.2s;
+        height: 60px;
+        top: 95px;
+        border-top-left-radius: 50px;
+        border-top-right-radius: 50px;
+        -webkit-transition: 0.2s;
+        -o-transition: 0.2s;
+        -moz-transition: 0.2s;
+        -ms-transition: 0.2s;
+        transition: 0.2s;
         }
         
         .tab:hover {
-        font-size: 16px;
+        color: rgb(65,150,255);
         }
 
         .tab1 {
@@ -53,13 +61,17 @@ Uncomment this for XHTML entities
         }
         
         .selected {
-        height: 32px;
-        top: 123px;
-        font-size: 16px;
+        height: 60px;
+        top: 95px;
+        color: rgb(65,150,255);
         }
         
-        b {
-        padding-left: 5px;
+        .tab p {
+        position: relative;
+        text-align: center;
+        bottom: -15px;
+        font-family: geosans;
+        font-size: 20px;
         }
         
         .scrollWrap {
@@ -67,16 +79,16 @@ Uncomment this for XHTML entities
         }
     </ui:style>
     <g:ScrollPanel ui:field='sWrap' styleName="{style.scrollWrap}">
-        <g:HTMLPanel>
+        <g:HTMLPanel ui:field="page">
             <header:Header></header:Header>
             <g:FocusPanel ui:field='tab1' styleName="{style.tab} {style.tab1} {style.selected}">
                 <g:HTMLPanel>
-                    <b>Lektion</b>
+                    <p>Lektion</p>
                 </g:HTMLPanel>
             </g:FocusPanel>
             <g:FocusPanel ui:field='tab2' styleName="{style.tab} {style.tab2}">
                 <g:HTMLPanel>
-                    <b>Test</b>
+                    <p>Test</p>
                 </g:HTMLPanel>
             </g:FocusPanel>
             <span ui:field='rail' class="{style.posLektion}">
