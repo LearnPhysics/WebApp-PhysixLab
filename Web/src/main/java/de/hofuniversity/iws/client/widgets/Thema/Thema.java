@@ -67,7 +67,7 @@ public class Thema extends Composite {
         
         railContent.add(new Lektionswahl(bean));
         railContent.add(new Uebersicht(bean));
-        railContent.add(new Spielwahl(bean.getName()));
+        railContent.add(new Spielwahl(bean.getGames()));
     }
 
     @UiHandler("tab1")

@@ -9,6 +9,7 @@ import com.google.gwt.dom.client.*;
 import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.ui.*;
 import de.hofuniversity.iws.client.jsonbeans.*;
+import de.hofuniversity.iws.client.playn.*;
 import de.hofuniversity.iws.client.widgets.MathWidget;
 
 /**
@@ -17,6 +18,7 @@ import de.hofuniversity.iws.client.widgets.MathWidget;
  */
 public class Lesson extends Composite {
 
+    private static GameInstantiator instantiator = GWT.create(GameInstantiator.class);
     private static LessonUiBinder uiBinder = GWT.create(LessonUiBinder.class);
     @UiField
     HeadingElement theme;
@@ -25,14 +27,16 @@ public class Lesson extends Composite {
     @UiField
     ParagraphElement text;
     @UiField
-    VerticalPanel experiment;
+    PlayNWidget experiment;
     @UiField
     MathWidget formular;
+    private final LessonJson lesson;
 
     interface LessonUiBinder extends UiBinder<Widget, Lesson> {
     }
 
     public Lesson(LessonJson lesson, SubjectJson subject) {
+        this.lesson = lesson;
         initWidget(uiBinder.createAndBindUi(this));
 
         title.setInnerText(lesson.getTitle());
@@ -41,8 +45,10 @@ public class Lesson extends Composite {
         theme.setInnerText(subject.getTitle());
 
         formular.setMathText(lesson.getMath());
-//        if (lesson.getExperiment() != null) {
-//            experiment.add(lesson.getExperiment());
-//        }
+    }
+    
+    @UiFactory
+    public PlayNWidget createGameWidget() {
+        return new PlayNWidget(instantiator.createGame(lesson.getWidget()));
     }
 }

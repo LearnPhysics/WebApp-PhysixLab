@@ -4,10 +4,12 @@
  */
 package de.hofuniversity.iws.client.playn;
 
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.*;
 import playn.core.PlayN;
-import playn.html.HtmlPlatform;
 import playn.html.HtmlPlatform.Configuration;
+import playn.html.HtmlPlatform.Mode;
+import playn.html.StopableHtmlPlatform;
 
 /**
  *
@@ -18,6 +20,7 @@ public class PlayNWidget extends Composite {
     private final static String ROOT_ID = "playn-root";
     private final PhysicGame game;
     private final SimpleLayoutPanel panel = new SimpleLayoutPanel();
+    private StopableHtmlPlatform platform;
 
     public PlayNWidget(PhysicGame game) {
         this.game = game;
@@ -28,16 +31,30 @@ public class PlayNWidget extends Composite {
     private void start() {
         PhysicGameBox g = new PhysicGameBox(game, panel.getOffsetWidth());
         panel.setHeight(g.getHeight() + "px");
-        Configuration conf  = new Configuration();
+        Configuration conf = new Configuration();
         conf.antiAliasing = true;
-//        conf.mode = Mode.CANVAS;
-        HtmlPlatform.register(conf);
+        conf.mode = Mode.CANVAS;
+        platform = StopableHtmlPlatform.register(conf);
         PlayN.run(g);
     }
 
     @Override
     protected void onAttach() {
         super.onAttach();
-        start();
+        new Timer() {
+            @Override
+            public void run() {
+                start();
+            }
+        }.schedule(200);
+    }
+
+    @Override
+    protected void onDetach() {
+        super.onDetach();
+        if (platform != null) {
+            platform.stop();
+            platform = null;
+        }
     }
 }

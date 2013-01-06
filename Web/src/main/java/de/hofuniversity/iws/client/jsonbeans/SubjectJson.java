@@ -5,6 +5,7 @@
 package de.hofuniversity.iws.client.jsonbeans;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArray;
 
 /**
  *
@@ -33,5 +34,9 @@ public class SubjectJson extends JavaScriptObject {
 
     public final native String getImageUrl() /*-{ 
      return this.image;
+     }-*/;
+    
+    public final native JsArray<GameJson> getGames() /*-{ 
+     return this.games;
      }-*/;
 }

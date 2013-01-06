@@ -4,7 +4,8 @@ Uncomment this for XHTML entities
 -->
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
              xmlns:g="urn:import:com.google.gwt.user.client.ui"
-             xmlns:my="urn:import:de.hofuniversity.iws.client.widgets">
+             xmlns:my="urn:import:de.hofuniversity.iws.client.widgets"
+             xmlns:playn='urn:import:de.hofuniversity.iws.client.playn'>
     <ui:style>
         @font-face {
         font-family: geosans;
@@ -76,7 +77,10 @@ Uncomment this for XHTML entities
         top: 515px; 
         left: 520px;
         width: 400px;
-        height: 360px;
+        height: 360px;        
+        }
+        #playn-root {
+        width: 400px;
         }
     </ui:style>
     <g:HTMLPanel>
@@ -90,9 +94,8 @@ Uncomment this for XHTML entities
                     </div>              
                 </div>
                 <g:VerticalPanel styleName="{style.element} {style.exper}">
-                    <g:VerticalPanel styleName="{style.innerElement}">
-                        <g:VerticalPanel ui:field="experiment">
-                        </g:VerticalPanel>
+                    <g:VerticalPanel styleName="{style.innerElement}">                        
+                        <playn:PlayNWidget ui:field="experiment"/>
                     </g:VerticalPanel>
                 </g:VerticalPanel>             
                 <div class="{style.element}" id="formu">

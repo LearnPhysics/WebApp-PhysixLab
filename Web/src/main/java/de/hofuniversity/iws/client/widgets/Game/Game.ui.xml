@@ -64,7 +64,7 @@ Uncomment this for XHTML entities
         .scrollWrap {
         min-height: 1280px;
         }
-        .gameWidget {
+        #playn-root {
         width:800px;
         }
     </ui:style>
@@ -75,7 +75,7 @@ Uncomment this for XHTML entities
                 <div id="content">
                     <h1 ui:field="title"></h1>
                     <g:VerticalPanel ui:field="outerGame" styleName="{style.element} {style.game}{style.innerElement}">
-                        <playn:PlayNWidget ui:field="gamePanel" styleName="{style.gameWidget}"/>
+                        <playn:PlayNWidget ui:field="gamePanel"/>
                         <g:HTMLPanel>
                             <p ui:field="beschreibung"></p>
                         </g:HTMLPanel>
