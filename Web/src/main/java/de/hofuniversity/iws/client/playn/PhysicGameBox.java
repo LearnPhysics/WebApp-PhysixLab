@@ -13,13 +13,15 @@ import static playn.core.PlayN.graphics;
  * @author Daniel Heinrich <dannynullzwo@gmail.com>
  */
 public class PhysicGameBox implements Game {
-    
+
     private final PhysicGame game;
     private final int width;
+    private final GameEventListener listener;
 
-    public PhysicGameBox(PhysicGame game, int width) {
+    public PhysicGameBox(PhysicGame game, int width, GameEventListener listener) {
         this.game = game;
         this.width = width;
+        this.listener = listener;
     }
 
     @Override
@@ -41,6 +43,9 @@ public class PhysicGameBox implements Game {
     @Override
     public void update(float delta) {
         game.update(delta);
+        if (game.isFinished()) {
+            listener.gameEnded(new GameEvent(game.getPlayerScore()));
+        }
     }
 
     @Override

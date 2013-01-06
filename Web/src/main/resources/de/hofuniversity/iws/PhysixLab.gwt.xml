@@ -30,7 +30,7 @@
   
     <!-- Specify the path to any remote services.                   -->
     <servlet path="/login" class="de.hofuniversity.iws.server.services.LoginServiceImpl" />
-    <servlet path="/userfriend" class="de.hofuniversity.iws.server.services.UserFriendServiceImpl" />
+    <servlet path="/user" class="de.hofuniversity.iws.server.services.UserServiceImpl" />
     <servlet path="/lessonservice" class="de.hofuniversity.iws.server.services.LessonServiceImpl" />   
     <!-- Specify the app entry point class.                         -->
     <entry-point class='de.hofuniversity.iws.client.Main' />

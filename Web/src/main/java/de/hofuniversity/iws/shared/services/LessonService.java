@@ -16,13 +16,13 @@ import de.hofuniversity.iws.shared.dto.*;
 @RemoteServiceRelativePath("lessonservice")
 public interface LessonService extends RemoteService {
 
-    public String[] getSubjects();
+    public String[] getSubjects() throws IOException;
     
     public String getSubject(String name) throws IOException;
 
     public LessonPreview[] getLessonPreviews(String subject) throws IOException;
     
-    public GameDTO[] getGamesForSession(String subject);
+    public String getGame(String name) throws IOException;
 
     public String getLesson(String name) throws IOException;
 }

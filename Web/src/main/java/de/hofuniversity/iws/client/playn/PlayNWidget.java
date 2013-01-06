@@ -15,12 +15,13 @@ import playn.html.StopableHtmlPlatform;
  *
  * @author Daniel Heinrich <dannynullzwo@gmail.com>
  */
-public class PlayNWidget extends Composite {
+public class PlayNWidget extends Composite implements GameEventListener {
 
     private final static String ROOT_ID = "playn-root";
     private final PhysicGame game;
     private final SimpleLayoutPanel panel = new SimpleLayoutPanel();
     private StopableHtmlPlatform platform;
+    private GameEventListener listener;
 
     public PlayNWidget(PhysicGame game) {
         this.game = game;
@@ -29,13 +30,13 @@ public class PlayNWidget extends Composite {
     }
 
     private void start() {
-        PhysicGameBox g = new PhysicGameBox(game, panel.getOffsetWidth());
-        panel.setHeight(g.getHeight() + "px");
+        PhysicGameBox gameBox = new PhysicGameBox(game, panel.getOffsetWidth(), this);
+        panel.setHeight(gameBox.getHeight() + "px");
         Configuration conf = new Configuration();
         conf.antiAliasing = true;
         conf.mode = Mode.CANVAS;
         platform = StopableHtmlPlatform.register(conf);
-        PlayN.run(g);
+        PlayN.run(gameBox);
     }
 
     @Override
@@ -56,5 +57,20 @@ public class PlayNWidget extends Composite {
             platform.stop();
             platform = null;
         }
+    }
+
+    @Override
+    public void gameEnded(GameEvent ev) {
+        if (listener != null) {
+            listener.gameEnded(ev);
+        }
+    }
+
+    public void setListener(GameEventListener listener) {
+        this.listener = listener;
+    }
+
+    public void restartGame() {
+        game.restart();
     }
 }

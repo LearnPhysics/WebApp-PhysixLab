@@ -132,7 +132,7 @@ public class NetworkAccountHandler {
                     criteriaBuilder.equal(
                     rootNA.get(NetworkAccountDBO_.networkName), networkName),
                     criteriaBuilder.equal(
-                    rootNA.get(NetworkAccountDBO_.oauthAccessToken), oauthAccessToken));
+                    rootNA.get(NetworkAccountDBO_.oauthAccessToken), oauthAccesToken));
             TypedQuery<NetworkAccountDBO> typedNAQuery = entityManager
                     .createQuery(queryNA).setMaxResults(1);
             try {

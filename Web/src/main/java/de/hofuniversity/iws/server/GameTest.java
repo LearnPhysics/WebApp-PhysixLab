@@ -43,13 +43,19 @@ public class GameTest {
         startGame(new KineticWars(), 600);
     }
 
-    private static void startGame(PhysicGame game, int width) {
-        PhysicGameBox g = new PhysicGameBox(game, width);
+    private static void startGame(final PhysicGame game, int width) {
+        PhysicGameBox g = new PhysicGameBox(game, width, new GameEventListener() {
+            @Override
+            public void gameEnded(GameEvent ev) {
+                System.out.println("Game finished with " + ev.points + " points!");
+                game.restart();
+            }
+        });
 
         JavaPlatform.Config c = new Config();
         c.width = width;
         c.height = g.getHeight();
-        
+
         JavaPlatform.register(c);
 
         PlayN.run(g);

@@ -9,7 +9,7 @@ import com.google.gwt.event.logical.shared.*;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
-import de.hofuniversity.iws.client.jsonbeans.SubjectJson;
+import de.hofuniversity.iws.client.jsonbeans.*;
 import de.hofuniversity.iws.client.widgets.Game.Game;
 import de.hofuniversity.iws.client.widgets.Lektion.Lektion;
 import de.hofuniversity.iws.client.widgets.LoginPage;
@@ -89,7 +89,17 @@ public class HistoryPageController implements ValueChangeHandler<String> {
     }
 
     private void tryOpenGame(String options) {
-        //TODO
+        lessonService.getGame(options, new AsyncCallback<String>() {
+
+            @Override
+            public void onFailure(Throwable caught) {
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                changePage(new Game(GameJson.create(result)));
+            }
+        });
     }
 
     private void tryOpenLektion(String options) {
