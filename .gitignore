@@ -5,5 +5,4 @@
 /PhysixLab/nbproject/private/
 *.dll
 *.so
-/GameGenerator/target/
-/Shared/target/
+**/target/
