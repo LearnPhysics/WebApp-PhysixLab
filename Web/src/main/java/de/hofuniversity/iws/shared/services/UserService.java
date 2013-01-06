@@ -10,7 +10,7 @@ import de.hofuniversity.iws.shared.entitys.User;
 
 /**
  *
- * @author User
+ * @author User 
  */
 @RemoteServiceRelativePath("user")
 public interface UserService extends RemoteService {

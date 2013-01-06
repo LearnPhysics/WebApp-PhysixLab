@@ -20,9 +20,9 @@ public class LessonProgressDBO implements Serializable, GenericEntity, LessonPro
     private Timestamp date;
     @Column
     private Integer points;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private UserDBO user;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private LessonDBO lesson;
 
     @Override
