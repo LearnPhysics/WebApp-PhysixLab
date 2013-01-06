@@ -15,8 +15,6 @@
     
     <modules>
         <module>Web</module>
-        <module>Shared</module>
         <module>GameGenerator</module>
     </modules>
-
 </project>
