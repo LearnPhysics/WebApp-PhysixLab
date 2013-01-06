@@ -1,7 +1,13 @@
 package de.hofuniversity.iws.server.data.handler;
 
 import de.hofuniversity.iws.shared.entityimpl.LessonDBO;
+import de.hofuniversity.iws.shared.entityimpl.LessonDBO_;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 public class LessonHandler {
 
@@ -72,5 +78,43 @@ public class LessonHandler {
     // Get lesson by Id
     public static LessonDBO getGameEntity(long id, boolean detach) {
         return (LessonDBO) GenericHandler.getEntity(LessonDBO.class, id, detach);
+    }
+    
+    public static LessonDBO getGameEntityOrCreateTemplate(String name, boolean detach) {
+        LessonDBO retval = null;
+
+        try {
+            if (entityManager.isOpen()) {
+                entityManager.close();
+            }
+            entityManager = HibernateUtil.getEntityManagerFactory()
+                    .createEntityManager();
+
+            CriteriaBuilder criteriaBuilder = entityManager
+                    .getCriteriaBuilder();
+            CriteriaQuery<LessonDBO> queryL = criteriaBuilder
+                    .createQuery(LessonDBO.class);
+            Root<LessonDBO> rootL = queryL
+                    .from(LessonDBO.class);
+            queryL.where(
+                    criteriaBuilder.equal(
+                    rootL.get(LessonDBO_.name), name));
+            TypedQuery<LessonDBO> typedGQuery = entityManager
+                    .createQuery(queryL).setMaxResults(1);
+            try {
+                retval = typedGQuery.getSingleResult();
+                if (detach) {
+                    entityManager.detach(retval);
+                    retval.setDetached(true);
+                }
+            } catch (NoResultException e) {
+                retval = null;
+                retval = new LessonDBO();
+                retval.setName(name);  
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return retval;
     }
 }

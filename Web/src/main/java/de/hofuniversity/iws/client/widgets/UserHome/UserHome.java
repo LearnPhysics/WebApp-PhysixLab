@@ -66,7 +66,7 @@ public class UserHome extends Composite {
         sWrap.setVerticalScrollPosition(0);
         AddressStack.getInstance().addAddress(new CrumbTuple(this, " Home ", 1));
         page.add(new Breadcrumb(1));
-        page.add(new BackButton(1));
+        page.add(new OnlyLogout());
     }
 
     @UiHandler("tab1")

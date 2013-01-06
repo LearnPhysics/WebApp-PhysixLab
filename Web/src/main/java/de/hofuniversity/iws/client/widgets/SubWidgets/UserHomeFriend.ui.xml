@@ -5,9 +5,34 @@ Uncomment this for XHTML entities
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
              xmlns:g="urn:import:com.google.gwt.user.client.ui">
     <ui:style>
-
+        .wide {
+        width: 380px;
+        }
+        .dat {
+        position: relative;
+        left: -25px;
+        margin-top: 10px;
+        }
+        .stars {
+        float: right;
+        margin-top: 11px;
+        }
+        .marg {
+        margin-right: 3px:
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        }
     </ui:style>
-    <g:HTMLPanel>
-        <g:Image></g:Image>
-    </g:HTMLPanel>
+    <g:HorizontalPanel styleName="{style.wide}">
+        <g:Image ui:field="image"></g:Image>
+        <g:VerticalPanel ui:field="data" styleName="{style.dat}">
+            <g:HTMLPanel>
+                <h2 ui:field="userName"></h2>
+            </g:HTMLPanel>
+        </g:VerticalPanel>
+        <g:HorizontalPanel styleName="{style.stars}">
+            <g:Label ui:field="rank" styleName="{style.marg}"></g:Label>
+            <g:Image url='images/UserHome/LittleStar.png' />
+        </g:HorizontalPanel>
+    </g:HorizontalPanel>
 </ui:UiBinder>

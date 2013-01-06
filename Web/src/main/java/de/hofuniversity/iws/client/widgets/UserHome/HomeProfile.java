@@ -7,6 +7,8 @@ package de.hofuniversity.iws.client.widgets.UserHome;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.user.client.ui.*;
+import de.hofuniversity.iws.client.PhysixLab;
+import de.hofuniversity.iws.shared.entitys.User;
 
 /**
  *
@@ -21,5 +23,6 @@ public class HomeProfile extends Composite {
     
     public HomeProfile() {
         initWidget(uiBinder.createAndBindUi(this));
+        User user = PhysixLab.getSessionUser();
     }
 }

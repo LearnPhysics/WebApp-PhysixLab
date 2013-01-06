@@ -1,0 +1,52 @@
+<!--
+Uncomment this for XHTML entities
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+-->
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui">
+    <ui:style>
+        @font-face {
+        font-family: geosans;
+        src: url('GeosansLight.ttf');
+        }
+        
+        .back {
+        position: absolute;
+        left: 50%;
+        width: 120px;
+        height: 60px;
+        top: 0px;
+        border-bottom-left-radius: 50px;
+        border-bottom-right-radius: 50px;
+        -webkit-transition: 0.2s;
+        -o-transition: 0.2s;
+        -moz-transition: 0.2s;
+        -ms-transition: 0.2s;
+        transition: 0.2s;
+        background: rgb(65,150,255);
+        }
+        
+        .backlogout {
+        margin-left: 360px;
+        }
+        
+        .back:hover {
+        color: rgb(255,255,255);
+        }
+        
+        .back p {
+        position: relative;
+        text-align: center;
+        bottom: -15px;
+        font-family: geosans;
+        font-size: 20px;
+        }
+    </ui:style>
+    <g:HTMLPanel>
+        <g:FocusPanel ui:field='logout' styleName="{style.back} {style.backlogout}">
+            <g:HTMLPanel>
+                <p>Logout</p>
+            </g:HTMLPanel>
+        </g:FocusPanel>
+    </g:HTMLPanel>
+</ui:UiBinder>
