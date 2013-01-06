@@ -62,7 +62,7 @@ public class HistoryPageController implements ValueChangeHandler<String> {
             changePage(new UserHome());            
         } else if (split.length > 1) {
             if (Thema.NAME.equals(pageName)) {
-                tryOpenThema(split[1], token);              
+                tryOpenThema(split[1]);              
             } else if (Lektion.NAME.equals(pageName)) {
                 tryOpenLektion(split[1]);
             } else if (Game.NAME.equals(pageName)) {
@@ -73,7 +73,7 @@ public class HistoryPageController implements ValueChangeHandler<String> {
         }
     }
 
-    private void tryOpenThema(String options, final String address) {
+    private void tryOpenThema(String options) {
         lessonService.getSubject(options, new AsyncCallback<String>() {
 
             @Override
