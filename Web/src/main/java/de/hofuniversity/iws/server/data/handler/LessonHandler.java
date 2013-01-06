@@ -1,6 +1,7 @@
 package de.hofuniversity.iws.server.data.handler;
 
-import de.hofuniversity.iws.server.data.entities.LessonDBO;
+import de.hofuniversity.iws.shared.entityimpl.LessonDBO;
+import de.hofuniversity.iws.shared.entityimpl.LessonDBO_;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
