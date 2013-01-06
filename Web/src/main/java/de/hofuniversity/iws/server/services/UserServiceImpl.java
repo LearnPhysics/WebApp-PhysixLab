@@ -39,6 +39,15 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
         
         GameResultHandler.store(result);
     }
+    
+    @Override
+    public void addTestResult(String lesson, int points) {
+        LessonProgressDBO result = new LessonProgressDBO();
+        result.setDate(new Timestamp(System.currentTimeMillis()));
+        result.setUser(getSessionUser());
+        result.setPoints(1);
+        result.setLesson(LessonHandler.getGameEntity(getLesson(lesson), false));
+    }
 
     private UserDBO getSessionUser() {
         Optional<UserDBO> user = getSessionAttribute(getThreadLocalRequest(), USER_ATTRIBUTE);
@@ -47,5 +56,10 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
         } else {
             throw new RuntimeException("No loged in user!");
         }
+    }
+
+    private long getLesson(String name) {
+        LessonDBO lesson = LessonHandler.getGameEntityOrCreateTemplate(name, false);
+        return 0;
     }
 }

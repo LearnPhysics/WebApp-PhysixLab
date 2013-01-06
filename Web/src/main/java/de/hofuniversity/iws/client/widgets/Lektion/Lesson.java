@@ -38,7 +38,7 @@ public class Lesson extends Composite {
     public Lesson(LessonJson lesson, SubjectJson subject) {
         this.lesson = lesson;
         initWidget(uiBinder.createAndBindUi(this));
-
+        String s = lesson.getText();
         title.setInnerText(lesson.getTitle());
         text.setInnerText(lesson.getText());        
         

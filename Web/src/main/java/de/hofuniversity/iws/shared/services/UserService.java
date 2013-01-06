@@ -17,4 +17,5 @@ public interface UserService extends RemoteService {
     public Iterable<? extends User> getFriends();
     
     public void addGameResult(String game, int points);
+    public void addTestResult(String lesson, int points);
 }
