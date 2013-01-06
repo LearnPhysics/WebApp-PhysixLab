@@ -11,6 +11,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.ui.*;
 import de.hofuniversity.iws.client.PhysixLab;
+import de.hofuniversity.iws.client.jsonbeans.GameJson;
 import de.hofuniversity.iws.client.widgets.Game.Game;
 import de.hofuniversity.iws.shared.dto.GameDTO;
 
@@ -31,12 +32,12 @@ public class GameSelector extends Composite {
     HeadingElement title;
     @UiField
     ParagraphElement text;
-    private GameDTO game;
+    private GameJson game;
 
     interface GameSelectorUiBinder extends UiBinder<Widget, GameSelector> {
     }
 
-    public GameSelector(GameDTO game) {
+    public GameSelector(GameJson game) {
         initWidget(uiBinder.createAndBindUi(this));
         this.game = game;
 

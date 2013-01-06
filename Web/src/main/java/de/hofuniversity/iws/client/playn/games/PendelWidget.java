@@ -49,7 +49,6 @@ public class PendelWidget extends StandardPhysicGame {
     @Override
     public void update(float delta) {
         super.update(delta);
-
     }
 
     public void setPendelLength(float len) {

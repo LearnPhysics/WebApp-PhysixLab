@@ -72,7 +72,7 @@ public class Thema extends Composite {
         
         railContent.add(new Lektionswahl(bean));
         railContent.add(new Uebersicht(bean));
-        railContent.add(new Spielwahl(bean.getName()));
+        railContent.add(new Spielwahl(bean.getGames()));
         
         AddressStack.getInstance().addAddress(new CrumbTuple(this, bean.getTitle(), 2));
         page.add(new Breadcrumb(2));
