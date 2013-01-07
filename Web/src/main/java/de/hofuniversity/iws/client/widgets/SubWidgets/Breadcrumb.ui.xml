@@ -5,11 +5,18 @@ Uncomment this for XHTML entities
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
              xmlns:g="urn:import:com.google.gwt.user.client.ui">
     <ui:style>
+        @font-face {
+        font-family: geosans;
+        src: url('../GeosansLight.ttf');
+        }
+        
         .bread {
         position: absolute;
         left: 50%;
         top: 175px;
         margin-left: -440px;
+        font-family: geosans;
+        font-size: 14px;
         }
     </ui:style>
     <g:HTMLPanel>

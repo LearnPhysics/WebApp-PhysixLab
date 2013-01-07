@@ -1,0 +1,51 @@
+<!--
+Uncomment this for XHTML entities
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+-->
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui">
+    <ui:style>
+        .wide {
+        width: 410px;
+        }
+        
+        .dat {
+        position: relative;
+        left: 0px;
+        margin-top: 10px;
+        }
+        
+        .stars {
+        float: right;
+        margin-top: 11px;
+        margin-right: 10px;
+        }
+        
+        .marg {
+        margin-right: 3px:
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        }
+        
+        .img {
+        float: right;
+        }
+    </ui:style>
+    <g:HTMLPanel>
+        <g:HorizontalPanel styleName="{style.wide}">
+            <g:VerticalPanel ui:field="data" styleName="{style.dat}">
+                <g:HTMLPanel>
+                    <h2 ui:field="userName"></h2>
+                </g:HTMLPanel>
+            </g:VerticalPanel>
+            <g:HorizontalPanel styleName="{style.stars}">
+                <g:Label ui:field="rank" styleName="{style.marg}"></g:Label>
+                <g:Image url='images/UserHome/LittleStar.png' />
+            </g:HorizontalPanel>
+            <g:Image ui:field="image" styleName="{style.img}"></g:Image>
+        </g:HorizontalPanel>
+        <g:HTMLPanel>
+            
+        </g:HTMLPanel>
+    </g:HTMLPanel>
+</ui:UiBinder>
