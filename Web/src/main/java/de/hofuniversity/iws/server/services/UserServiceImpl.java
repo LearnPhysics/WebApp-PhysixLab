@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import de.hofuniversity.iws.client.jsonbeans.LessonJson;
 import de.hofuniversity.iws.server.data.handler.*;
 import de.hofuniversity.iws.shared.CollectionUtils;
 import de.hofuniversity.iws.shared.CollectionUtils.Selector;
@@ -47,6 +48,17 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
         result.setGame(GameHandler.getGameEntity(game, false));
         
         GameResultHandler.store(result);
+    }
+    
+    @Override
+    public void addTestResult(String name,String subject, int points) {
+        LessonProgressDBO result = new LessonProgressDBO();
+        result.setDate(new Timestamp(System.currentTimeMillis()));
+        result.setUser(getSessionUser());
+        result.setPoints(1);        
+        LessonDBO lesson = LessonHandler.getGameEntityOrCreateTemplate(name, false);  
+      //  result.setLesson(lesson);
+        LessonProgressHandler.store(result);        
     }
 
     private UserDBO getSessionUser() {
