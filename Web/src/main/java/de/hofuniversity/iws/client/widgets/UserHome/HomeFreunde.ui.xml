@@ -3,7 +3,8 @@ Uncomment this for XHTML entities
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 -->
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-             xmlns:g="urn:import:com.google.gwt.user.client.ui">
+             xmlns:g="urn:import:com.google.gwt.user.client.ui"
+             xmlns:bread='urn:import:de.hofuniversity.iws.client.widgets.SubWidgets'>
     <ui:style>
         @font-face {
         font-family: geosans;
@@ -89,12 +90,12 @@ Uncomment this for XHTML entities
                 </div>
                 <div class="{style.element}" id="selectedFriend">
                     <div class="{style.innerElement}">
-                        Selected Friend
+                        <bread:ProfileBig></bread:ProfileBig>
                     </div>
                 </div>
                 <div class="{style.element}" id="possibleFriends">
                     <div class="{style.innerElement}">
-                        Possible Friends
+                        <g:Image url="images/ReplacementImages/Freunde_Possible.png"></g:Image>
                     </div>
                 </div>
             </div>

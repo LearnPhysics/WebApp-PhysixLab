@@ -6,6 +6,7 @@ package de.hofuniversity.iws.client.widgets.SubWidgets;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.HeadingElement;
+import com.google.gwt.dom.client.ParagraphElement;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -31,10 +32,17 @@ public class ProfileBig extends Composite {
     @UiField Label rank;
     @UiField VerticalPanel data;
     @UiField HeadingElement userName;
+    @UiField ParagraphElement text;
     
     interface ProfileBigUiBinder extends UiBinder<Widget, ProfileBig> {
     }
-    
+   
+    public ProfileBig() {
+        initWidget(uiBinder.createAndBindUi(this));
+        setTestUser();
+        setup();
+    }
+   
     public ProfileBig(User user) {
         initWidget(uiBinder.createAndBindUi(this));
         this.user = user;
@@ -61,6 +69,14 @@ public class ProfileBig extends Composite {
         data.add(new Label("Name: " + user.getFirstName() + " " + user.getLastName()));
         data.add(new Label("Alter: " + Utilities.getAge(user.getBirthDate())));
         data.add(new Label("Wohnort: " + user.getCity()));
-        data.add(new Label("Rang: " + "Experte"));
+        data.add(new Label("Rang: " + "Experte"));      
+        text.setInnerText("Über mich: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, "
+                + "sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, "
+                + "sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. "
+                + "Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. "
+                + "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod "
+                + "tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
+                + "At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, "
+                + "no sea takimata sanctus est Lorem ipsum dolor sit amet.");
     }
 }
