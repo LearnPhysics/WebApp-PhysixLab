@@ -10,6 +10,7 @@ import de.hofuniversity.iws.client.widgets.SubWidgets.ThemaSelector;
 import de.hofuniversity.iws.shared.services.*;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.ParagraphElement;
 import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
@@ -26,6 +27,7 @@ public class HomeThemenwahl extends Composite {
     private final LessonServiceAsync lessonService = (LessonServiceAsync) GWT.create(LessonService.class);
     @UiField
     VerticalPanel themaPanel;
+    @UiField ParagraphElement text;
 
     interface HomeThemenwahlUiBinder extends UiBinder<Widget, HomeThemenwahl> {
     }
@@ -46,5 +48,23 @@ public class HomeThemenwahl extends Composite {
                 }
             }
         });
+        
+        text.setInnerText("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, "
+                + "sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, "
+                + "sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. "
+                + "Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. "
+                + "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod "
+                + "tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. "
+                + "At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, "
+                + "no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, "
+                + "consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut "
+                + "labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et "
+                + "justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata "
+                + "sanctus est Lorem ipsum dolor sit amet.   Duis autem vel eum iriure dolor in "
+                + "hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat "
+                + "nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit "
+                + "praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. "
+                + "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy "
+                + "nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.");
     }
 }

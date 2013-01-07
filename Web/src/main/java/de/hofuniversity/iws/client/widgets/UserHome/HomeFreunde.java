@@ -64,13 +64,15 @@ public class HomeFreunde extends Composite {
         user1.setBirthDate(new Timestamp(133876800));
         user2.setBirthDate(new Timestamp(1038768000));
 
+        
+        
         user0.setUserPic("https://si0.twimg.com/profile_images/2641434457/369709d0d9861e4a7298c8606023e42b.png");
-        user1.setUserPic("https://si0.twimg.com/profile_images/1765911582/image1326962316_reasonably_small.png");
-        user2.setUserPic("http://www.msc.org/publikationen/images-DE/logonutzung/missuse.jpg/image_preview");
+        user1.setUserPic("images/ReplacementImages/Profile01.png");
+        user2.setUserPic("images/ReplacementImages/Profile02.png");
 
-        addFriend(user0);
         addFriend(user1);
         addFriend(user2);
+        addFriend(user0);
     }
 
     public void addFriend(User friend) {

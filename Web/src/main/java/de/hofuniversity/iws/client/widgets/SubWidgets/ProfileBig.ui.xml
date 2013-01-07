@@ -30,6 +30,10 @@ Uncomment this for XHTML entities
         .img {
         float: right;
         }
+        
+        .stuffed {
+        width: 380px;
+        }
     </ui:style>
     <g:HTMLPanel>
         <g:HorizontalPanel styleName="{style.wide}">
@@ -45,7 +49,9 @@ Uncomment this for XHTML entities
             <g:Image ui:field="image" styleName="{style.img}"></g:Image>
         </g:HorizontalPanel>
         <g:HTMLPanel>
-            
+            <div class="{style.stuffed}">
+                <p ui:field="text"></p>
+            </div>
         </g:HTMLPanel>
     </g:HTMLPanel>
 </ui:UiBinder>

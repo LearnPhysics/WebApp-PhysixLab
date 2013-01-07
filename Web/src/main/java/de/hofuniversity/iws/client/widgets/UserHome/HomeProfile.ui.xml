@@ -86,6 +86,7 @@ Uncomment this for XHTML entities
                     <g:VerticalPanel ui:field="uData" styleName="{style.innerElement}">
                     </g:VerticalPanel>
                 </div>
+                <!--
                 <div class="{style.element}" id="profileEmptyness">
                     <div class="{style.innerElement}">
                         Emptyness
@@ -96,6 +97,7 @@ Uncomment this for XHTML entities
                         Some Stuff
                     </div>
                 </div>
+                -->
             </div>
         </div>
     </g:HTMLPanel>

@@ -84,17 +84,18 @@ Uncomment this for XHTML entities
                 <h1>Statistik</h1>
                 <div class="{style.element}" id="highscores">
                     <div class="{style.innerElement}">
-                        Highscores
+                        <g:Image url="images/ReplacementImages/Statistik_Highscore.png"></g:Image>
                     </div>
                 </div>
                 <div class="{style.element}" id="workingTimes">
                     <div class="{style.innerElement}">
-                        Arbeitszeiten
+                        <g:Image url="images/ReplacementImages/Statistik_Diagramm.png"></g:Image>
                     </div>
                 </div>
                 <div class="{style.element}" id="protocol">
                     <div class="{style.innerElement}">
-                        Letzte Aktionen
+                        <h2>Letzte Aktionen</h2>
+                        <p ui:field="text"></p>
                     </div>
                 </div>
             </div>

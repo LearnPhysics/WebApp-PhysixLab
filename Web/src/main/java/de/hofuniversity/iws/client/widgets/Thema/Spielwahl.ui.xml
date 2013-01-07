@@ -73,7 +73,7 @@ Uncomment this for XHTML entities
                 </g:VerticalPanel>
                 <div class="{style.element}" id="highscore">
                     <div class="{style.innerElement}">
-                        Highscores
+                        <g:Image url="images/ReplacementImages/Statistik_Highscore.png"></g:Image>
                     </div>
                 </div>
             </div>

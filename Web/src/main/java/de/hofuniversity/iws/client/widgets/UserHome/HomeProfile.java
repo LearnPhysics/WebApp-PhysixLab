@@ -5,6 +5,7 @@
 package de.hofuniversity.iws.client.widgets.UserHome;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.*;
@@ -29,5 +30,8 @@ public class HomeProfile extends Composite {
         initWidget(uiBinder.createAndBindUi(this));
         User user = PhysixLab.getSessionUser();  
         uData.add(new ProfileBig(user));
+        Image img = new Image("images/ReplacementImages/EditProfile.png");
+        img.getElement().getStyle().setMarginLeft(195, Style.Unit.PX);
+        uData.add(img);
     }
 }

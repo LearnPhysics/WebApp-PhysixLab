@@ -82,7 +82,8 @@ Uncomment this for XHTML entities
                 </div>
                 <div class="{style.element}" id="stats">
                     <div class="{style.innerElement}">
-                        Fortschritte in diesem Themenbereich
+                        <h2>Fortschritte</h2>
+                        <g:Image url="images/ReplacementImages/Uebersicht_Stats.png"></g:Image>
                     </div>
                 </div>
             </div>
