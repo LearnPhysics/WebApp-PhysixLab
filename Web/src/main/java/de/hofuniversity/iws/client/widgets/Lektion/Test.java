@@ -11,12 +11,8 @@ import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
-import de.hofuniversity.iws.client.jsonbeans.LessonJson;
-import de.hofuniversity.iws.client.jsonbeans.SubjectJson;
-import de.hofuniversity.iws.client.jsonbeans.TestJson;
-import de.hofuniversity.iws.shared.services.UserService;
-import de.hofuniversity.iws.shared.services.UserServiceAsync;
-import de.hofuniversity.iws.shared.services.Utilities;
+import de.hofuniversity.iws.client.jsonbeans.*;
+import de.hofuniversity.iws.shared.services.*;
 
 /**
  *

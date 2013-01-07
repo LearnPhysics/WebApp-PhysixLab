@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import de.hofuniversity.iws.client.jsonbeans.LessonJson;
+import de.hofuniversity.iws.server.data.entities.*;
 import de.hofuniversity.iws.server.data.handler.*;
 import de.hofuniversity.iws.shared.CollectionUtils;
 import de.hofuniversity.iws.shared.CollectionUtils.Selector;

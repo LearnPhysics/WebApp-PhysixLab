@@ -33,6 +33,30 @@ public class User implements Serializable {
         return name;
     }
 
+    public void setUserName(String name) {
+        this.name = name;
+    }
+
+    public void setLastName(String last) {
+        this.last = last;
+    }
+
+    public void setFirstName(String first) {
+        this.first = first;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setUserPic(String pic) {
+        this.pic = pic;
+    }
+
+    public void setBirthDate(Timestamp birt) {
+        this.birt = birt;
+    }
+
     public String getLastName()
     {
         return last;
