@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import de.hofuniversity.iws.client.PhysixLab;
 import de.hofuniversity.iws.client.widgets.SubWidgets.UserHomeFriend;
 import de.hofuniversity.iws.shared.entityimpl.UserDBO;
 import de.hofuniversity.iws.shared.entitys.User;
@@ -34,9 +35,17 @@ public class HomeFreunde extends Composite {
 
     public HomeFreunde() {
         initWidget(uiBinder.createAndBindUi(this));
+        // setup();
         setTestFriends();
     }
 
+    private void setup() {
+        User user = PhysixLab.getSessionUser();
+        for(User friend : user.getBilateralFriends()) {
+            addFriend(friend);
+        }
+    }
+    
     private void setTestFriends() {
 
         User user0 = new UserDBO();

@@ -8,15 +8,18 @@ Uncomment this for XHTML entities
         .wide {
         width: 380px;
         }
+        
         .dat {
         position: relative;
         left: -25px;
         margin-top: 10px;
         }
+        
         .stars {
         float: right;
         margin-top: 11px;
         }
+        
         .marg {
         margin-right: 3px:
         font-family: Arial, sans-serif;

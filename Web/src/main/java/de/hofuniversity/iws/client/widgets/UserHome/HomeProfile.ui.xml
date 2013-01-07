@@ -83,9 +83,8 @@ Uncomment this for XHTML entities
             <div id="content">
                 <h1>Profil</h1>
                 <div class="{style.element}" id="profileData">
-                    <div class="{style.innerElement}">
-                        Profile Data
-                    </div>
+                    <g:VerticalPanel ui:field="uData" styleName="{style.innerElement}">
+                    </g:VerticalPanel>
                 </div>
                 <div class="{style.element}" id="profileEmptyness">
                     <div class="{style.innerElement}">
