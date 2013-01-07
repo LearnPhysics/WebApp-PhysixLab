@@ -53,6 +53,7 @@ public class UserHandler {
                 } else // phrase exists already in the Database - update the
                 // Attributes
                 {
+                    
                     // update values
                     tmpUser.setUserName(user.getUserName());
                     tmpUser.setLastName(user.getLastName());
@@ -65,17 +66,17 @@ public class UserHandler {
                     tmpUser.setLessonProgressList(user.getLessonProgressList());
                     tmpUser.setFriends(user.getFriends());
                     tmpUser.setDevotees(user.getDevotees());
-
+                    
                     // write values
                     entityManager.getTransaction().begin();
-                    entityManager.persist(tmpUser);
+                    entityManager.merge(user);
                     entityManager.getTransaction().commit();
-                    retval = tmpUser;
+                    retval = user;
                 }
             }
         } catch (Exception e) {
             if (user.isDetached()) {
-                e.printStackTrace();
+                //e.printStackTrace();
             } else {
                 user.setDetached(true);
                 return store(user);

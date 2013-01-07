@@ -41,7 +41,7 @@ public class UserDBO implements Serializable, GenericEntity, User {
                inverseJoinColumns = {
         @JoinColumn(name = "FRIEND_ID")})
     private List<UserDBO> friends = new ArrayList<UserDBO>();
-    @ManyToMany(mappedBy = "friends")
+    @ManyToMany(mappedBy = "friends", cascade = {CascadeType.ALL})
     private List<UserDBO> devotees = new ArrayList<UserDBO>();
 
     @Override
@@ -190,5 +190,24 @@ public class UserDBO implements Serializable, GenericEntity, User {
             }
         }
         return false;
+    }
+    
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if ( !(other instanceof UserDBO) ) return false;
+
+        final UserDBO uDBO = (UserDBO) other;
+
+        if ( !uDBO.getUserName().equals( getUserName() ) ) return false;
+        if ( !uDBO.getBirthDate().equals( getBirthDate() ) ) return false;
+
+        return true;
+    }
+
+    public int hashCode() {
+        int result;
+        result = getUserName().hashCode();
+        result = 29 * result + getBirthDate().getNanos();
+        return result;
     }
 }

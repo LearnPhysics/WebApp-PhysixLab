@@ -19,10 +19,10 @@ public class Test {
         UserDBO kitenge = new UserDBO();
         kitenge.setFirstName("Kitenge");
         
-//        UserHandler.store(joe);
-//        UserHandler.store(franz);
-//        UserHandler.store(julia);
-//        UserHandler.store(kitenge);
+        UserHandler.store(joe);
+        UserHandler.store(franz);
+        UserHandler.store(julia);
+        UserHandler.store(kitenge);
         
         joe.getFriends().add(franz);
         joe.getFriends().add(julia);
@@ -36,6 +36,24 @@ public class Test {
         julia.getFriends().add(joe);
         
         kitenge.getFriends().add(julia);
+        
+        System.out.println(joe.getFirstName() + " : " + joe.getId());
+        for(UserDBO user : joe.getFriends()) {
+            System.out.println(user.getId());
+        }
+        System.out.println(franz.getFirstName() + " : " + franz.getId());
+        for(UserDBO user : franz.getFriends()) {
+            System.out.println(user.getId());
+        }
+        System.out.println(julia.getFirstName() + " : " + julia.getId());
+        for(UserDBO user : julia.getFriends()) {
+            System.out.println(user.getId());
+        }
+        System.out.println(kitenge.getFirstName() + " : " + kitenge.getId());
+        for(UserDBO user : kitenge.getFriends()) {
+            System.out.println(user.getId());
+        }
+        
         
         UserHandler.store(joe);
         UserHandler.store(franz);
@@ -52,7 +70,7 @@ public class Test {
             peopleILike = user.getFriends();
             peopleWhoLikeMe = user.getDevotees();
             bilateralFriends = user.getBilateralFriends();
-            System.out.println(user.getFirstName());
+            System.out.println(user.getFirstName() + " : " + user.getId());
             System.out.println("-----");
             for(UserDBO personILike : peopleILike) {
                 System.out.println(user.getFirstName() + " likes " + personILike.getFirstName());
