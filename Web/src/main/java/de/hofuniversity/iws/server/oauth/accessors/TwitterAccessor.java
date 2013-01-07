@@ -4,6 +4,8 @@
  */
 package de.hofuniversity.iws.server.oauth.accessors;
 
+import de.hofuniversity.iws.server.data.entities.NetworkAccountDBO;
+import de.hofuniversity.iws.server.data.entities.UserDBO;
 import java.util.*;
 
 import darwin.annotations.MultiServiceProvider;
@@ -11,7 +13,6 @@ import darwin.annotations.MultiServiceProvider;
 import com.google.common.base.Optional;
 import de.hofuniversity.iws.server.data.handler.UserHandler;
 import de.hofuniversity.iws.server.oauth.Providers;
-import de.hofuniversity.iws.shared.entityimpl.*;
 import org.json.*;
 import org.scribe.model.Token;
 

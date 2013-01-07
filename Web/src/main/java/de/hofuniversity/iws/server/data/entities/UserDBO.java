@@ -1,15 +1,16 @@
-package de.hofuniversity.iws.shared.entityimpl;
+package de.hofuniversity.iws.server.data.entities;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.*;
+import java.util.logging.*;
 
-import de.hofuniversity.iws.shared.entitys.User;
+import de.hofuniversity.iws.shared.dto.User;
 import javax.persistence.*;
 
 @Entity
 @Table
-public class UserDBO implements Serializable, GenericEntity, User {
+public class UserDBO implements Serializable, GenericEntity {
 
     @Transient
     private boolean detached = false;
@@ -64,67 +65,54 @@ public class UserDBO implements Serializable, GenericEntity, User {
         this.id = id;
     }
 
-    @Override
     public String getUserName() {
         return userName;
     }
 
-    @Override
     public void setUserName(String userName) {
         this.userName = userName;
     }
 
-    @Override
     public String getLastName() {
         return lastName;
     }
 
-    @Override
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    @Override
     public String getFirstName() {
         return firstName;
     }
 
-    @Override
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    @Override
     public Timestamp getBirthDate() {
         return birthDate;
     }
 
-    @Override
     public void setBirthDate(Timestamp birthDate) {
         this.birthDate = birthDate;
     }
 
-    @Override
     public String getCity() {
         return city;
     }
 
-    @Override
     public void setCity(String city) {
         this.city = city;
     }
 
-    @Override
     public String getUserPic() {
         return userPic;
     }
 
-    @Override
     public void setUserPic(String userPic) {
         this.userPic = userPic;
     }
 
-    @Override
     public List<NetworkAccountDBO> getNetworkAccountList() {
         return networkAccountList;
     }
@@ -133,7 +121,6 @@ public class UserDBO implements Serializable, GenericEntity, User {
         this.networkAccountList = networkAccountList;
     }
 
-    @Override
     public List<GameResultDBO> getGameResultList() {
         return gameResultList;
     }
@@ -142,7 +129,6 @@ public class UserDBO implements Serializable, GenericEntity, User {
         this.gameResultList = gameResultList;
     }
 
-    @Override
     public List<LessonProgressDBO> getLessonProgressList() {
         return lessonProgressList;
     }
@@ -151,7 +137,6 @@ public class UserDBO implements Serializable, GenericEntity, User {
         this.lessonProgressList = lessonProgressList;
     }
 
-    @Override
     public List<UserDBO> getFriends() {
         return friends;
     }
@@ -160,7 +145,6 @@ public class UserDBO implements Serializable, GenericEntity, User {
         this.friends = friends;
     }
 
-    @Override
     public List<UserDBO> getDevotees() {
         return devotees;
     }
@@ -169,7 +153,6 @@ public class UserDBO implements Serializable, GenericEntity, User {
         this.devotees = devotees;
     }
 
-    @Override
     public List<UserDBO> getBilateralFriends() {
         List<UserDBO> retval = new LinkedList<UserDBO>();
         for (UserDBO devotee : devotees) {
@@ -192,14 +175,28 @@ public class UserDBO implements Serializable, GenericEntity, User {
         return false;
     }
     
+    public User getDTO()
+    {
+        return new User(getUserName(), getLastName(), getFirstName(), getCity(), getUserPic(), getBirthDate());
+    }
+
+    @Override
     public boolean equals(Object other) {
-        if (this == other) return true;
-        if ( !(other instanceof UserDBO) ) return false;
+        if (this == other) {
+            return true;
+        }
+        if (!(other instanceof UserDBO)) {
+            return false;
+        }
 
         final UserDBO uDBO = (UserDBO) other;
 
-        if ( !uDBO.getUserName().equals( getUserName() ) ) return false;
-        if ( !uDBO.getBirthDate().equals( getBirthDate() ) ) return false;
+        if (!uDBO.getUserName().equals(getUserName())) {
+            return false;
+        }
+        if (!uDBO.getBirthDate().equals(getBirthDate())) {
+            return false;
+        }
 
         return true;
     }

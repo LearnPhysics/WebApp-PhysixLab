@@ -12,7 +12,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import de.hofuniversity.iws.server.oauth.*;
 import de.hofuniversity.iws.server.oauth.provider.OAuthProvider;
 import de.hofuniversity.iws.shared.dto.LoginDTO;
-import de.hofuniversity.iws.shared.entityimpl.UserDBO;
+import de.hofuniversity.iws.server.data.entities.UserDBO;
 import de.hofuniversity.iws.shared.services.*;
 import javax.servlet.http.*;
 
@@ -33,7 +33,7 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
         Optional<String> token = getSessionAttribute(TOKEN_ATTRIBUTE);
         Optional<UserDBO> user = getSessionAttribute(USER_ATTRIBUTE);
         if (token.isPresent() && user.isPresent()) {
-            return Optional.of(new LoginDTO(user.get(), token.get()));
+            return Optional.of(new LoginDTO(user.get().getDTO(), token.get()));
         }
         return Optional.absent();
     }

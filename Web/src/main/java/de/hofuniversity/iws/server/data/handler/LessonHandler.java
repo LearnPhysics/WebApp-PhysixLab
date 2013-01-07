@@ -1,6 +1,6 @@
 package de.hofuniversity.iws.server.data.handler;
 
-import de.hofuniversity.iws.shared.entityimpl.LessonDBO;
+import de.hofuniversity.iws.server.data.entities.LessonDBO;
 import javax.persistence.EntityManager;
 
 public class LessonHandler {

@@ -10,7 +10,7 @@ import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import de.hofuniversity.iws.client.widgets.LoginPage;
 import de.hofuniversity.iws.shared.dto.LoginDTO;
-import de.hofuniversity.iws.shared.entitys.User;
+import de.hofuniversity.iws.shared.dto.User;
 import de.hofuniversity.iws.shared.services.*;
 
 /**

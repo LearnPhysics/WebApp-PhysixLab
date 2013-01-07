@@ -1,5 +1,7 @@
 package de.hofuniversity.iws.server.oauth;
 
+import de.hofuniversity.iws.server.data.entities.NetworkAccountDBO;
+import de.hofuniversity.iws.server.data.entities.UserDBO;
 import java.io.IOException;
 import java.util.*;
 
@@ -7,7 +9,6 @@ import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import de.hofuniversity.iws.server.data.handler.*;
 import de.hofuniversity.iws.server.oauth.accessors.*;
-import de.hofuniversity.iws.shared.entityimpl.*;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import org.scribe.model.*;
@@ -42,6 +43,7 @@ public class OAuthCallbackServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         response.sendRedirect(response.encodeURL("PopUpCloser.html"));
 
         Verifier verifier = null;
@@ -61,9 +63,8 @@ public class OAuthCallbackServlet extends HttpServlet {
                     } else {
                         Token accessToken = l.request.generateAccessToken(verifier);
 
-                        UserDBO user;
                         try {
-                            user = getOrCreateUserForAccessToken(accessToken, l.provider);
+                            UserDBO user = getOrCreateUserForAccessToken(accessToken, l.provider);
                             l.successfull = true;
                             storeSessionAttribute(request, USER_ATTRIBUTE, user);
                         } catch (AccessException ex) {
@@ -79,12 +80,12 @@ public class OAuthCallbackServlet extends HttpServlet {
         }
     }
 
-    private UserDBO getOrCreateUserForAccessToken(Token accessToken, Providers provider) throws AccessException {
+    private UserDBO getOrCreateUserForAccessToken(final Token accessToken, final Providers provider) throws AccessException {
         UserDBO user = UserHandler.getUser(accessToken, provider);
         if (user == null) {
             UserDBO userData = provider.getUserDataAccessor().getUserData(accessToken);
-            NetworkAccountDBO account = UserHandler.getNetworkAccount(userData, 
-                                                                       provider).get();
+            NetworkAccountDBO account = UserHandler.getNetworkAccount(userData,
+                                                                      provider).get();
             UserDBO userByAID = UserHandler.getUserByAIDString(account.getAccountIdentificationString(), provider);
             if (userByAID != null) {
                 user = userByAID;//TODO merge with userData?
@@ -93,30 +94,36 @@ public class OAuthCallbackServlet extends HttpServlet {
                 NetworkAccountHandler.store(account);
             }
         }
+        final UserDBO u = user;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                List<UserDBO> toAdd = new ArrayList<UserDBO>();
+                outer:
+                for (UserDBO newFriend : getUsersFriendsForAccessToken(accessToken, u, provider)) {
+                    //next if already connected friend
+                    for (UserDBO oldFriend : u.getFriends()) {
+                        if (oldFriend.samePerson(newFriend)) {
+                            continue outer;
+                        }
+                    }
 
-        List<UserDBO> toAdd = new ArrayList<UserDBO>();
-        outer:
-        for (UserDBO newFriend : getUsersFriendsForAccessToken(accessToken, user, provider)) {
-            //next if already connected friend
-            for (UserDBO oldFriend : user.getFriends()) {
-                if (oldFriend.samePerson(newFriend)) {
-                    continue outer;
+                    //check if user is already in db
+                    NetworkAccountDBO account = UserHandler.getNetworkAccount(newFriend, provider).get();
+                    UserDBO userByAID = UserHandler.getUserByAIDString(account.getAccountIdentificationString(), provider);
+                    if (userByAID != null) {
+                        newFriend = userByAID;
+                    } else {
+                        UserHandler.store(newFriend);
+                        NetworkAccountHandler.store(account);
+                    }
+                    toAdd.add(newFriend);
                 }
+                u.getFriends().addAll(toAdd);
+                UserHandler.store(u);
             }
-
-            //check if user is already in db
-            NetworkAccountDBO account = UserHandler.getNetworkAccount(newFriend, provider).get();
-            UserDBO userByAID = UserHandler.getUserByAIDString(account.getAccountIdentificationString(), provider);
-            if (userByAID != null) {
-                newFriend = userByAID;
-            } else {
-                UserHandler.store(newFriend);
-                NetworkAccountHandler.store(account);
-            }
-            toAdd.add(newFriend);            
-        }
-        user.getFriends().addAll(toAdd);
-        return UserHandler.store(user);
+        }).start();
+        return user;
     }
 
     private Iterable<UserDBO> getUsersFriendsForAccessToken(Token accessToken, UserDBO u, Providers provider) {

@@ -4,12 +4,13 @@
  */
 package de.hofuniversity.iws.server.oauth.accessors;
 
+import de.hofuniversity.iws.server.data.entities.NetworkAccountDBO;
+import de.hofuniversity.iws.server.data.entities.UserDBO;
 import java.util.ArrayList;
 
 import darwin.annotations.ServiceProvider;
 
 import de.hofuniversity.iws.server.oauth.Providers;
-import de.hofuniversity.iws.shared.entityimpl.*;
 import org.json.*;
 import org.scribe.model.Token;
 

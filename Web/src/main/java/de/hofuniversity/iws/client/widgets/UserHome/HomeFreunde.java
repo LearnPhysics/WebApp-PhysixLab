@@ -16,6 +16,12 @@ import com.google.gwt.user.client.ui.Widget;
 import de.hofuniversity.iws.shared.services.Utilities;
 import java.sql.Timestamp;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import de.hofuniversity.iws.server.data.entities.UserDBO;
+import de.hofuniversity.iws.shared.dto.User;
+import de.hofuniversity.iws.shared.services.UserService;
+import de.hofuniversity.iws.shared.services.UserServiceAsync;
+
 /**
  *
  * @author Oliver
@@ -23,6 +29,7 @@ import java.sql.Timestamp;
 public class HomeFreunde extends Composite {
 
     private static HomeFreundeUiBinder uiBinder = GWT.create(HomeFreundeUiBinder.class);
+    private final static UserServiceAsync userService = GWT.create(UserService.class);
     @UiField
     VerticalPanel friends;
 
@@ -31,41 +38,27 @@ public class HomeFreunde extends Composite {
 
     public HomeFreunde() {
         initWidget(uiBinder.createAndBindUi(this));
-        setTestFriends();
+        userService.getFriends(new AsyncCallback<Iterable<? extends User>>() {
+
+            @Override
+            public void onFailure(Throwable caught) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+
+            @Override
+            public void onSuccess(Iterable<? extends User> result) {
+                for (User user : result) {
+                    addFriend(user);
+                }
+            }
+        });
     }
 
-    private void setTestFriends() {
-
-        TestUser user0 = new TestUser();
-        TestUser user1 = new TestUser();
-        TestUser user2 = new TestUser();
-
-        user0.setUserName("Test00");
-        user1.setUserName("Test01");
-        user2.setUserName("Test02");
-
-        user0.setCity("TestTown00");
-        user1.setCity("TestTown01");
-        user2.setCity("TestTown02");
-
-        user0.setBirthDate(new Timestamp(100));
-        user1.setBirthDate(new Timestamp(133876800));
-        user2.setBirthDate(new Timestamp(1038768000));
-
-        String url0 = "https://si0.twimg.com/profile_images/2641434457/369709d0d9861e4a7298c8606023e42b.png";
-        String url1 = "https://si0.twimg.com/profile_images/1765911582/image1326962316_reasonably_small.png";
-        String url2 = "http://www.msc.org/publikationen/images-DE/logonutzung/missuse.jpg/image_preview";
-
-        addFriend(user0, url0);
-        addFriend(user1, url1);
-        addFriend(user2, url2);
-    }
-
-    public void addFriend(TestUser friend, String imageURL) {
+    public void addFriend(User friend) {
         try {
             HorizontalPanel friendPanel = new HorizontalPanel();          
             Image image = new Image();
-            image.setUrl(imageURL);
+            image.setUrl(friend.getUserPic());
             
             int oWidth = image.getWidth();
             int oHeight = image.getHeight();
@@ -113,37 +106,6 @@ public class HomeFreunde extends Composite {
 
         } catch (Exception e) {
             System.err.println("OuterCatch: " + e);
-        }
-    }
-
-    private class TestUser {
-
-        String userName;
-        String city;
-        Timestamp birthDate;
-
-        public String getUserName() {
-            return userName;
-        }
-
-        public void setUserName(String userName) {
-            this.userName = userName;
-        }
-
-        public String getCity() {
-            return city;
-        }
-
-        public void setCity(String city) {
-            this.city = city;
-        }
-
-        public Timestamp getBirthDate() {
-            return birthDate;
-        }
-
-        public void setBirthDate(Timestamp birthDate) {
-            this.birthDate = birthDate;
         }
     }
 }

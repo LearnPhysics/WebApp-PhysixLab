@@ -1,4 +1,4 @@
-package de.hofuniversity.iws.shared.entityimpl;
+package de.hofuniversity.iws.server.data.entities;
 
 
 public interface GenericEntity {

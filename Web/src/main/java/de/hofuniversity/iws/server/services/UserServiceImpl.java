@@ -4,14 +4,17 @@
  */
 package de.hofuniversity.iws.server.services;
 
+import de.hofuniversity.iws.server.data.entities.GameResultDBO;
+import de.hofuniversity.iws.server.data.entities.UserDBO;
 import java.sql.Timestamp;
 
 import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import de.hofuniversity.iws.server.data.handler.*;
-import de.hofuniversity.iws.shared.entityimpl.*;
-import de.hofuniversity.iws.shared.entitys.User;
+import de.hofuniversity.iws.shared.CollectionUtils;
+import de.hofuniversity.iws.shared.CollectionUtils.Selector;
+import de.hofuniversity.iws.shared.dto.User;
 import de.hofuniversity.iws.shared.services.UserService;
 
 import static de.hofuniversity.iws.server.services.LoginServiceImpl.USER_ATTRIBUTE;
@@ -26,7 +29,13 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
 
     @Override
     public Iterable<? extends User> getFriends() {
-        return getSessionUser().getFriends();
+        return CollectionUtils.select(getSessionUser().getFriends(), new Selector<UserDBO, User>() {
+
+            @Override
+            public User select(UserDBO e) throws Exception {
+                return e.getDTO();
+            }
+        });
     }
 
     @Override

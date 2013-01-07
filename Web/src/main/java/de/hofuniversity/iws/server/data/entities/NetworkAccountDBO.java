@@ -1,13 +1,12 @@
-package de.hofuniversity.iws.shared.entityimpl;
+package de.hofuniversity.iws.server.data.entities;
 
 import java.io.Serializable;
 
-import de.hofuniversity.iws.shared.entitys.NetworkAccount;
 import javax.persistence.*;
 
 @Entity
 @Table
-public class NetworkAccountDBO implements Serializable, GenericEntity, NetworkAccount {
+public class NetworkAccountDBO implements Serializable, GenericEntity {
 
     @Transient
     private boolean detached = false;
@@ -45,37 +44,30 @@ public class NetworkAccountDBO implements Serializable, GenericEntity, NetworkAc
         this.id = id;
     }
 
-    @Override
     public String getNetworkName() {
         return networkName;
     }
 
-    @Override
     public void setNetworkName(String networkName) {
         this.networkName = networkName;
     }
 
-    @Override
     public String getAccountIdentificationString() {
         return accountIdentificationString;
     }
 
-    @Override
     public void setAccountIdentificationString(String accountIdentificationString) {
         this.accountIdentificationString = accountIdentificationString;
     }
 
-    @Override
     public String getOauthAccessToken() {
         return oauthAccessToken;
     }
 
-    @Override
     public void setOauthAccessToken(String oauthAccessToken) {
         this.oauthAccessToken = oauthAccessToken;
     }
 
-    @Override
     public UserDBO getUser() {
         return user;
     }
@@ -84,12 +76,10 @@ public class NetworkAccountDBO implements Serializable, GenericEntity, NetworkAc
         this.user = user;
     }
 
-    @Override
     public String getOauthAccessSecret() {
         return oauthAccessSecret;
     }
 
-    @Override
     public void setOauthAccessSecret(String oauthAccessSecret) {
         this.oauthAccessSecret = oauthAccessSecret;
     }

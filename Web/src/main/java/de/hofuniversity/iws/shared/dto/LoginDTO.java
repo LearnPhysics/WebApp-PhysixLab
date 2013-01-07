@@ -6,7 +6,6 @@ package de.hofuniversity.iws.shared.dto;
 
 import java.io.Serializable;
 
-import de.hofuniversity.iws.shared.entitys.User;
 
 /**
  *

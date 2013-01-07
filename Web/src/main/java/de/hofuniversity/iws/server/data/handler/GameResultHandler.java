@@ -1,6 +1,6 @@
 package de.hofuniversity.iws.server.data.handler;
 
-import de.hofuniversity.iws.shared.entityimpl.GameResultDBO;
+import de.hofuniversity.iws.server.data.entities.GameResultDBO;
 import javax.persistence.EntityManager;
 
 public class GameResultHandler {

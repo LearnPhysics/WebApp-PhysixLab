@@ -5,7 +5,7 @@
 package de.hofuniversity.iws.shared.services;
 
 import com.google.gwt.user.client.rpc.*;
-import de.hofuniversity.iws.shared.entitys.User;
+import de.hofuniversity.iws.shared.dto.User;
 
 /**
  *

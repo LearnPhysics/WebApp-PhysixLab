@@ -1,7 +1,7 @@
 package de.hofuniversity.iws.server.data.handler;
 
+import de.hofuniversity.iws.server.data.entities.*;
 import de.hofuniversity.iws.server.oauth.Providers;
-import de.hofuniversity.iws.shared.entityimpl.*;
 import javax.persistence.*;
 import javax.persistence.criteria.*;
 import org.scribe.model.Token;
