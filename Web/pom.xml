@@ -174,7 +174,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>
-                <version>${gwtVersion}</version>
+                <version>2.5.0-rc2</version>
                 <executions>
                     <execution>
                         <goals>
@@ -196,6 +196,7 @@
                 <!-- Plugin configuration. There are many available options, see 
                 gwt-maven-plugin documentation at codehaus.org -->
                 <configuration>
+                    <!--<logLevel>TRACE</logLevel>-->
                     <mergedWebXml>${webappDirectory}/WEB-INF/web.xml</mergedWebXml>
                     <runTarget>${runTarget}</runTarget>
                     <hostedWebapp>${webappDirectory}</hostedWebapp>

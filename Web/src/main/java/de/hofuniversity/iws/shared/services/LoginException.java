@@ -4,13 +4,11 @@
  */
 package de.hofuniversity.iws.shared.services;
 
-import java.io.Serializable;
-
 /**
  *
  * @author some
  */
-public class LoginException extends Exception implements Serializable{
+public class LoginException extends Exception{
 
     public LoginException() {
     }

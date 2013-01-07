@@ -3,10 +3,11 @@ package de.hofuniversity.iws.server.data.handler;
 import java.util.*;
 
 import com.google.common.base.Optional;
+import de.hofuniversity.iws.server.data.entities.*;
 import de.hofuniversity.iws.server.oauth.Providers;
-import de.hofuniversity.iws.shared.entityimpl.*;
 import javax.persistence.*;
 import javax.persistence.criteria.*;
+import org.scribe.model.Token;
 
 public class UserHandler {
 
@@ -16,9 +17,9 @@ public class UserHandler {
     public static UserDBO store(UserDBO user) {
         UserDBO retval = user;
 
-        if (hasDuplicateProvider(user)) {
-            //TODO log warning
-        }
+//        if (hasDuplicateProvider(user)) {
+//            //TODO log warning
+//        }
 
         if (entityManager.isOpen()) {
             entityManager.close();
@@ -52,6 +53,7 @@ public class UserHandler {
                 } else // phrase exists already in the Database - update the
                 // Attributes
                 {
+                    
                     // update values
                     tmpUser.setUserName(user.getUserName());
                     tmpUser.setLastName(user.getLastName());
@@ -64,32 +66,23 @@ public class UserHandler {
                     tmpUser.setLessonProgressList(user.getLessonProgressList());
                     tmpUser.setFriends(user.getFriends());
                     tmpUser.setDevotees(user.getDevotees());
-
+                    
                     // write values
                     entityManager.getTransaction().begin();
-                    entityManager.persist(tmpUser);
+                    entityManager.merge(user);
                     entityManager.getTransaction().commit();
-                    retval = tmpUser;
+                    retval = user;
                 }
             }
         } catch (Exception e) {
             if (user.isDetached()) {
-                e.printStackTrace();
+                //e.printStackTrace();
             } else {
                 user.setDetached(true);
                 return store(user);
             }
         }
         return retval;
-    }
-
-    public static Optional<NetworkAccountDBO> getNetworkAccount(UserDBO user, Providers prov) {
-        for (NetworkAccountDBO na : user.getNetworkAccountList()) {
-            if (prov.name().equals(na.getNetworkName())) {
-                return Optional.of(na);
-            }
-        }
-        return Optional.absent();
     }
 
     // Get user by Id
@@ -123,27 +116,33 @@ public class UserHandler {
 
         return userList;
     }
-    
-    public static UserDBO getUser(String oauthAccessToken, String networkName) {
+
+    public static UserDBO getUser(Token oauthAccessToken, Providers networkName) {
         NetworkAccountDBO na = NetworkAccountHandler.getNetworkAccountEntityByAccessToken(networkName, oauthAccessToken, true);
-        return na.getUser();
+        return na != null ? na.getUser() : null;
     }
-    
-    public static UserDBO getUserByAIDString(String accountIdentificationString, String networkName) {
+
+    public static UserDBO getUserByAIDString(String accountIdentificationString, Providers networkName) {
         NetworkAccountDBO na = NetworkAccountHandler.getNetworkAccountEntity(networkName, accountIdentificationString, true);
-        return na.getUser();
+        return na != null ? na.getUser() : null;
     }
 
     private static boolean hasDuplicateProvider(UserDBO user) {
         HashSet<String> s = new HashSet<String>();
-        if (user.getNetworkAccountList() == null) {
-            return true;
-        }
         for (NetworkAccountDBO na : user.getNetworkAccountList()) {
             if (!s.add(na.getNetworkName())) {
                 return true;
             }
         }
         return false;
+    }
+
+    public static Optional<NetworkAccountDBO> getNetworkAccount(UserDBO user, Providers prov) {
+        for (NetworkAccountDBO na : user.getNetworkAccountList()) {
+            if (prov.name().equals(na.getNetworkName())) {
+                return Optional.of(na);
+            }
+        }
+        return Optional.absent();
     }
 }

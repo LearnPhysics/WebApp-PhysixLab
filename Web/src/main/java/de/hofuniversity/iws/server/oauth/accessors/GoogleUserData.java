@@ -4,12 +4,11 @@
  */
 package de.hofuniversity.iws.server.oauth.accessors;
 
+import de.hofuniversity.iws.server.data.entities.NetworkAccountDBO;
+import de.hofuniversity.iws.server.data.entities.UserDBO;
 import darwin.annotations.ServiceProvider;
 
-import com.google.common.base.Optional;
-import de.hofuniversity.iws.server.data.handler.UserHandler;
 import de.hofuniversity.iws.server.oauth.Providers;
-import de.hofuniversity.iws.shared.entityimpl.*;
 import org.json.*;
 import org.scribe.model.Token;
 
@@ -28,22 +27,24 @@ public class GoogleUserData implements UserDataAccessor {
     public UserDBO getUserData(Token accessToken) throws AccessException {
         String response = Providers.GOOGLE.invokeGetRequest(accessToken, USER_URL);
         try {
-            return parseUserJSON(response);
+            return parseUserJSON(response, accessToken);
         } catch (JSONException ex) {
             throw new AccessException(ex);
         }
     }
 
-    private UserDBO parseUserJSON(String responceBody) throws JSONException {
+    private UserDBO parseUserJSON(String responceBody, Token accessToken) throws JSONException {
         JSONObject json = new JSONObject(responceBody);
         UserDBO user = new UserDBO();
-        if (json.has("id")) {
-            Optional<NetworkAccountDBO> na = UserHandler.getNetworkAccount(user, Providers.GOOGLE);
-            if(na.isPresent())
-            {
-                na.get().setAccountIdentificationString(json.getString("id"));
-            }
-        }
+
+        NetworkAccountDBO account = new NetworkAccountDBO();
+        account.setNetworkName(Providers.GOOGLE.name());
+        account.setOauthAccessSecret(accessToken.getSecret());
+        account.setOauthAccessToken(accessToken.getToken());
+        account.setUser(user);
+        user.getNetworkAccountList().add(account);
+
+        account.setAccountIdentificationString(json.optString("id"));
 
         if (json.has("displayName")) {
             user.setUserName(json.getString("displayName"));

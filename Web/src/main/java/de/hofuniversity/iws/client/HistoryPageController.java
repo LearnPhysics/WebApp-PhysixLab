@@ -46,7 +46,7 @@ public class HistoryPageController implements ValueChangeHandler<String> {
         }
     }
     
-    private final LessonServiceAsync lessonService = (LessonServiceAsync) GWT.create(LessonService.class);
+    private final LessonServiceAsync lessonService = GWT.create(LessonService.class);
 
     @Override
     public void onValueChange(ValueChangeEvent<String> event) {

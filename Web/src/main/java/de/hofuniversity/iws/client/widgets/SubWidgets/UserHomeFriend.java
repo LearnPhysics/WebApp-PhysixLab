@@ -6,10 +6,9 @@ package de.hofuniversity.iws.client.widgets.SubWidgets;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.HeadingElement;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.ui.*;
-import de.hofuniversity.iws.shared.entitys.User;
+import de.hofuniversity.iws.shared.dto.User;
 import de.hofuniversity.iws.shared.services.Utilities;
 
 /**

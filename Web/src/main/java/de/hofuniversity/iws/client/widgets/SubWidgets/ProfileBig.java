@@ -4,20 +4,14 @@
  */
 package de.hofuniversity.iws.client.widgets.SubWidgets;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.HeadingElement;
-import com.google.gwt.dom.client.ParagraphElement;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
-import de.hofuniversity.iws.shared.entityimpl.UserDBO;
-import de.hofuniversity.iws.shared.entitys.User;
-import de.hofuniversity.iws.shared.services.Utilities;
 import java.sql.Timestamp;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.*;
+import com.google.gwt.uibinder.client.*;
+import com.google.gwt.user.client.ui.*;
+import de.hofuniversity.iws.shared.dto.User;
+import de.hofuniversity.iws.shared.services.Utilities;
 
 /**
  *
@@ -51,7 +45,7 @@ public class ProfileBig extends Composite {
     }
     
     private void setTestUser() {
-        user = new UserDBO();
+        user = new User();
         user.setFirstName("George");
         user.setLastName("Washington");
         user.setUserName("El presidente");

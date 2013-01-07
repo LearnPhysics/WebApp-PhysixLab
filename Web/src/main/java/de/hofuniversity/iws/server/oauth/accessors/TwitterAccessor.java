@@ -4,6 +4,8 @@
  */
 package de.hofuniversity.iws.server.oauth.accessors;
 
+import de.hofuniversity.iws.server.data.entities.NetworkAccountDBO;
+import de.hofuniversity.iws.server.data.entities.UserDBO;
 import java.util.*;
 
 import darwin.annotations.MultiServiceProvider;
@@ -11,7 +13,6 @@ import darwin.annotations.MultiServiceProvider;
 import com.google.common.base.Optional;
 import de.hofuniversity.iws.server.data.handler.UserHandler;
 import de.hofuniversity.iws.server.oauth.Providers;
-import de.hofuniversity.iws.shared.entityimpl.*;
 import org.json.*;
 import org.scribe.model.Token;
 
@@ -58,15 +59,17 @@ public class TwitterAccessor implements UserDataAccessor, FriendListAccessor {
     private UserDBO parseUser(String responceBody, Token access) throws JSONException {
         JSONObject json = new JSONObject(responceBody);
         UserDBO user = new UserDBO();
-        if (json.has("id")) {
-            Optional<NetworkAccountDBO> na = UserHandler.getNetworkAccount(user, Providers.TWITTER);
-            NetworkAccountDBO dbo = na.or(new NetworkAccountDBO());
-            dbo.setNetworkName(Providers.TWITTER.name());
-            dbo.setUser(user);
-            dbo.setOauthAccessSecret(access.getSecret());
-            dbo.setOauthAccessToken(access.getToken());
-            dbo.setAccountIdentificationString(json.getString("id"));
+
+        NetworkAccountDBO account = new NetworkAccountDBO();
+        account.setNetworkName(Providers.TWITTER.name());
+        if (access != null) {
+            account.setOauthAccessSecret(access.getSecret());
+            account.setOauthAccessToken(access.getToken());
         }
+        account.setUser(user);
+        user.getNetworkAccountList().add(account);
+
+        account.setAccountIdentificationString(json.optString("id"));
 
         if (json.has("location")) {
             user.setCity(json.getString("location"));
@@ -95,7 +98,7 @@ public class TwitterAccessor implements UserDataAccessor, FriendListAccessor {
                 if (element != null) {
                     String requestUrl = USER_BY_ID_URL + element + "&include_entities=true";
                     String r = Providers.TWITTER.invokeGetRequest(accessToken, requestUrl);
-                    friendsList.add(parseUser(r, accessToken));
+                    friendsList.add(parseUser(r, null));
                 }
             }
         }

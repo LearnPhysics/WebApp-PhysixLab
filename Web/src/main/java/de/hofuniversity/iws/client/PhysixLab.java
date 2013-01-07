@@ -5,13 +5,14 @@
 package de.hofuniversity.iws.client;
 
 import com.google.common.base.Optional;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import de.hofuniversity.iws.client.widgets.LoginPage;
+import de.hofuniversity.iws.client.widgets.UserHome.UserHome;
 import de.hofuniversity.iws.shared.dto.LoginDTO;
-import de.hofuniversity.iws.shared.entitys.User;
-import de.hofuniversity.iws.shared.services.LoginServiceAsync;
-import javax.inject.Inject;
+import de.hofuniversity.iws.shared.dto.User;
+import de.hofuniversity.iws.shared.services.*;
 
 /**
  *
@@ -21,15 +22,12 @@ public class PhysixLab {
 
     public static final HistoryPageController PAGE_CONTROLLER = new HistoryPageController();
     private static LoginDTO loginData;
-    @Inject
-    private LoginServiceAsync loginService;
+    
+    private LoginServiceAsync loginService = GWT.create(LoginService.class);
 
     public void init() {
         History.addValueChangeHandler(PAGE_CONTROLLER);
         
-//        PlayNWidget w = new PlayNWidget(new KineticWars());
-//        w.setWidth(800 + "px");
-//        RootPanel.get().add(w);
         loginService.getLoginData(new AsyncCallback<Optional<LoginDTO>>() {
             @Override
             public void onFailure(Throwable caught) {
@@ -41,11 +39,9 @@ public class PhysixLab {
                 if (result.isPresent()) {
                     loginData = result.get();
                     if (History.getToken().isEmpty()) {
-                        //PAGE_CONTROLLER.changePage(UserHome.NAME);
-                        PAGE_CONTROLLER.changePage(LoginPage.NAME);
+                        PAGE_CONTROLLER.changePage(UserHome.NAME);
                     } else {
-                        //PAGE_CONTROLLER.changePage(History.getToken());
-                        PAGE_CONTROLLER.changePage(LoginPage.NAME);
+                        PAGE_CONTROLLER.changePage(History.getToken());
                     }
 
                 } else {

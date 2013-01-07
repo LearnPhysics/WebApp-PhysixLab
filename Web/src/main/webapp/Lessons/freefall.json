@@ -4,16 +4,16 @@
     "parent": null,
     
     "title": "Freier Fall",
-    "text": "",
+    "text": "Unter einem freien Fall versteht man den Fall eines Körpers in der Nähe der Erde, ohne Berücksichtigung des Luftwiderstandes. Für diesen Fall gelten die Formeln der gleichmäßig beschleunigten Bewegung.",
     "image": "images/ReplacementImages/FreeFallPreview.png",
     "widget": "w_0815",
-    "math": "f_0815",
+    "math": "\\begin{align*}s(t)=\\frac{1}{2}\\cdot g\\frac{m}{s^2}\\cdot t^2\\end{align*}",
     
     "test": {
         "title": "Höstgeschwindigkeit",
         "problem": "Wie man eine Differezialgleichung 2. Ordnung löst ist nicht einfach",
         "solution": 20,
         "widget": "tw_0815",
-        "image": "images/ReplacementImages/PendelTestIllustration.jpg"
+        "image": "images/ReplacementImages/PendelTestIllustration.JPG"
     }
 }

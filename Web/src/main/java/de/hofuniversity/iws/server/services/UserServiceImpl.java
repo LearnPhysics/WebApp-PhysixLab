@@ -4,14 +4,18 @@
  */
 package de.hofuniversity.iws.server.services;
 
+import de.hofuniversity.iws.server.data.entities.GameResultDBO;
+import de.hofuniversity.iws.server.data.entities.UserDBO;
 import java.sql.Timestamp;
 
 import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import de.hofuniversity.iws.server.data.entities.*;
 import de.hofuniversity.iws.server.data.handler.*;
-import de.hofuniversity.iws.shared.entityimpl.*;
-import de.hofuniversity.iws.shared.entitys.User;
+import de.hofuniversity.iws.shared.CollectionUtils;
+import de.hofuniversity.iws.shared.CollectionUtils.Selector;
+import de.hofuniversity.iws.shared.dto.User;
 import de.hofuniversity.iws.shared.services.UserService;
 
 import static de.hofuniversity.iws.server.services.LoginServiceImpl.USER_ATTRIBUTE;
@@ -26,7 +30,13 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
 
     @Override
     public Iterable<? extends User> getFriends() {
-        return getSessionUser().getFriends();
+        return CollectionUtils.select(getSessionUser().getFriends(), new Selector<UserDBO, User>() {
+
+            @Override
+            public User select(UserDBO e) throws Exception {
+                return e.getDTO();
+            }
+        });
     }
 
     @Override
@@ -38,6 +48,17 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
         result.setGame(GameHandler.getGameEntity(game, false));
         
         GameResultHandler.store(result);
+    }
+    
+    @Override
+    public void addTestResult(String name,String subject, int points) {
+        LessonProgressDBO result = new LessonProgressDBO();
+        result.setDate(new Timestamp(System.currentTimeMillis()));
+        result.setUser(getSessionUser());
+        result.setPoints(1);        
+        LessonDBO lesson = LessonHandler.getGameEntityOrCreateTemplate(name, false);  
+      //  result.setLesson(lesson);
+        LessonProgressHandler.store(result);        
     }
 
     private UserDBO getSessionUser() {

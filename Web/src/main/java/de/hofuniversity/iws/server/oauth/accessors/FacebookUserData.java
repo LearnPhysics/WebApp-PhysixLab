@@ -4,12 +4,11 @@
  */
 package de.hofuniversity.iws.server.oauth.accessors;
 
+import de.hofuniversity.iws.server.data.entities.NetworkAccountDBO;
+import de.hofuniversity.iws.server.data.entities.UserDBO;
 import darwin.annotations.ServiceProvider;
 
-import com.google.common.base.Optional;
-import de.hofuniversity.iws.server.data.handler.UserHandler;
 import de.hofuniversity.iws.server.oauth.Providers;
-import de.hofuniversity.iws.shared.entityimpl.*;
 import org.json.*;
 import org.scribe.model.Token;
 
@@ -59,13 +58,16 @@ public class FacebookUserData implements UserDataAccessor {
             }
         }
 
+        NetworkAccountDBO account = new NetworkAccountDBO();
+        account.setNetworkName(Providers.FACEBOOK.name());
+        account.setOauthAccessSecret(accessToken.getSecret());
+        account.setOauthAccessToken(accessToken.getToken());
+        account.setUser(user);
+        user.getNetworkAccountList().add(account);
+
         if (json.has("id")) {
             String id = json.getString("id");
-            Optional<NetworkAccountDBO> na = UserHandler.getNetworkAccount(user, Providers.FACEBOOK);
-            if(na.isPresent())
-            {
-                na.get().setAccountIdentificationString(id);
-            }
+            account.setAccountIdentificationString(id);
             user.setUserPic("https://graph.facebook.com/" + id + "/picture&type=normal");
         }
 

@@ -1,14 +1,13 @@
-package de.hofuniversity.iws.shared.entityimpl;
+package de.hofuniversity.iws.server.data.entities;
 
 import java.io.Serializable;
 import java.util.List;
 
-import de.hofuniversity.iws.shared.entitys.Game;
 import javax.persistence.*;
 
 @Entity
 @Table
-public class GameDBO implements Serializable, GenericEntity, Game {
+public class SubjectAreaDBO implements Serializable, GenericEntity {
 
     @Transient
     private boolean detached = false;
@@ -18,21 +17,19 @@ public class GameDBO implements Serializable, GenericEntity, Game {
     private Long id;
     @Column
     private String name;
-    @OneToMany(mappedBy = "game")
-    private List<GameResultDBO> gameResultList;
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "subjectArea")
     private List<LessonDBO> lessonList;
 
     @Override
     public boolean isDetached() {
         return detached;
     }
-    
+
     @Override
     public void setDetached(boolean detached) {
         this.detached = detached;
     }
-    
+
     @Override
     public Long getId() {
         return id;
@@ -43,26 +40,14 @@ public class GameDBO implements Serializable, GenericEntity, Game {
         this.id = id;
     }
 
-    @Override
     public String getName() {
         return name;
     }
 
-    @Override
     public void setName(String name) {
         this.name = name;
     }
 
-    @Override
-    public List<GameResultDBO> getGameResultList() {
-        return gameResultList;
-    }
-
-    public void setGameResultList(List<GameResultDBO> gameResultList) {
-        this.gameResultList = gameResultList;
-    }
-
-    @Override
     public List<LessonDBO> getLessonList() {
         return lessonList;
     }

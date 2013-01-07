@@ -1,14 +1,13 @@
-package de.hofuniversity.iws.shared.entityimpl;
+package de.hofuniversity.iws.server.data.entities;
 
 import java.io.Serializable;
 import java.util.List;
 
-import de.hofuniversity.iws.shared.entitys.Lesson;
 import javax.persistence.*;
 
 @Entity
 @Table
-public class LessonDBO implements Serializable, GenericEntity, Lesson {
+public class LessonDBO implements Serializable, GenericEntity {
 
     @Transient
     private boolean detached = false;
@@ -46,17 +45,14 @@ public class LessonDBO implements Serializable, GenericEntity, Lesson {
         this.id = id;
     }
 
-    @Override
     public String getName() {
         return name;
     }
 
-    @Override
     public void setName(String name) {
         this.name = name;
     }
 
-    @Override
     public List<LessonProgressDBO> getLessonProgressList() {
         return lessonProgressList;
     }
@@ -65,7 +61,6 @@ public class LessonDBO implements Serializable, GenericEntity, Lesson {
         this.lessonProgressList = lessonProgressList;
     }
 
-    @Override
     public SubjectAreaDBO getSubjectArea() {
         return subjectArea;
     }
@@ -74,7 +69,6 @@ public class LessonDBO implements Serializable, GenericEntity, Lesson {
         this.subjectArea = subjectArea;
     }
 
-    @Override
     public List<GameDBO> getGameList() {
         return gameList;
     }
@@ -83,7 +77,6 @@ public class LessonDBO implements Serializable, GenericEntity, Lesson {
         this.gameList = gameList;
     }
 
-    @Override
     public LessonDBO getParentLesson() {
         return parentLesson;
     }

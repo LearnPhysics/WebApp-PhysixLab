@@ -4,21 +4,15 @@
  */
 package de.hofuniversity.iws.client.widgets.UserHome;
 
+import java.sql.Timestamp;
+
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.uibinder.client.*;
+import com.google.gwt.user.client.ui.*;
 import de.hofuniversity.iws.client.PhysixLab;
 import de.hofuniversity.iws.client.widgets.SubWidgets.UserHomeFriend;
-import de.hofuniversity.iws.shared.entityimpl.UserDBO;
-import de.hofuniversity.iws.shared.entitys.User;
-import de.hofuniversity.iws.shared.services.Utilities;
-import java.sql.Timestamp;
+import de.hofuniversity.iws.shared.dto.User;
+import de.hofuniversity.iws.shared.services.*;
 
 /**
  *
@@ -27,6 +21,7 @@ import java.sql.Timestamp;
 public class HomeFreunde extends Composite {
 
     private static HomeFreundeUiBinder uiBinder = GWT.create(HomeFreundeUiBinder.class);
+    private final static UserServiceAsync userService = GWT.create(UserService.class);
     @UiField
     VerticalPanel friends;
 
@@ -41,16 +36,16 @@ public class HomeFreunde extends Composite {
 
     private void setup() {
         User user = PhysixLab.getSessionUser();
-        for(User friend : user.getBilateralFriends()) {
-            addFriend(friend);
-        }
+//        for(User friend : user.getBilateralFriends()) {
+//            addFriend(friend);
+//        }
     }
     
     private void setTestFriends() {
 
-        User user0 = new UserDBO();
-        User user1 = new UserDBO();
-        User user2 = new UserDBO();
+        User user0 = new User();
+        User user1 = new User();
+        User user2 = new User();
 
         user0.setUserName("Test00");
         user1.setUserName("Test01");

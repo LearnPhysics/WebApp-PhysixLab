@@ -1,6 +1,6 @@
 package de.hofuniversity.iws.server.data.handler;
 
-import de.hofuniversity.iws.shared.entityimpl.SubjectAreaDBO;
+import de.hofuniversity.iws.server.data.entities.SubjectAreaDBO;
 import javax.persistence.EntityManager;
 
 public class SubjectAreaHandler {
