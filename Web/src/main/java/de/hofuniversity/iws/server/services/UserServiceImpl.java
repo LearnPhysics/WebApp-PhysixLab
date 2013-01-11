@@ -47,7 +47,7 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
         result.setDate(new Timestamp(System.currentTimeMillis()));
         result.setUser(getSessionUser());
         result.setPoints(1);        
-        LessonDBO lesson = LessonHandler.getGameEntityOrCreateTemplate(name, false);  
+    //    LessonDBO lesson = LessonHandler.getGameEntityOrCreateTemplate(name, false);  
       //  result.setLesson(lesson);
         LessonProgressHandler.store(result);        
     }
