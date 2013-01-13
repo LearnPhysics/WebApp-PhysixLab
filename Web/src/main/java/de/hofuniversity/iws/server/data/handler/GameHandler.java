@@ -1,15 +1,9 @@
 package de.hofuniversity.iws.server.data.handler;
 
-import de.hofuniversity.iws.server.data.entities.GameDBO;
-import de.hofuniversity.iws.server.data.entities.GameDBO_;
-import de.hofuniversity.iws.server.data.entities.NetworkAccountDBO;
-import de.hofuniversity.iws.server.data.entities.NetworkAccountDBO_;
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import de.hofuniversity.iws.server.data.entities.*;
+
+import javax.persistence.*;
+import javax.persistence.criteria.*;
 
 public class GameHandler {
 

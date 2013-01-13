@@ -14,7 +14,6 @@ import com.google.gwt.dom.client.ParagraphElement;
 import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
-import com.google.inject.Inject;
 
 /**
  *
@@ -23,8 +22,8 @@ import com.google.inject.Inject;
 public class HomeThemenwahl extends Composite {
 
     private static HomeThemenwahlUiBinder uiBinder = GWT.create(HomeThemenwahlUiBinder.class);
-    @Inject
-    private final LessonServiceAsync lessonService = (LessonServiceAsync) GWT.create(LessonService.class);
+    
+    private final LessonServiceAsync lessonService = GWT.create(LessonService.class);
     @UiField
     VerticalPanel themaPanel;
     @UiField ParagraphElement text;
