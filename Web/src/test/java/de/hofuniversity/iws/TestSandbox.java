@@ -23,26 +23,24 @@ import static org.mockito.Mockito.*;
 @GwtModule("de.hofuniversity.iws.PhysixLabTest")
 public class TestSandbox extends GwtTestWithMockito {
 
-//    private LoginPage page;
-//
-//    @Before
-//    public void before() {
-//        app = new Main();
-//        app.onModuleLoad();
-//    }
+    private LoginModul page;
+
+    @Before
+    public void before() {
+        page = new LoginModul();
+        page.onModuleLoad();
+    }
     
-//    @Mock
-//    private LoginServiceAsync loginService;
-//    
-//    @Test
-//    public void testGoogleLogin()
-//    {
-//        LoginPage page = new LoginPage();
-//        
-//        doSuccessCallback(null).when(loginService).getOAuthLoginUrl(eq(Providers.GOOGLE.name()), any(AsyncCallback.class));
-//        
-//        page.loginWithGoogle(null);
-//        
-//        verify(loginService).getOAuthLoginUrl(eq(Providers.GOOGLE.name()), any(AsyncCallback.class));        
-//    }
+    @Mock
+    private LoginServiceAsync loginService;
+    
+    @Test
+    public void testGoogleLogin()
+    {        
+        doSuccessCallback(null).when(loginService).getOAuthLoginUrl(eq(Providers.GOOGLE.name()), any(AsyncCallback.class));
+        
+        page.getLogin().loginWithGoogle(null);
+        
+        verify(loginService).getOAuthLoginUrl(eq(Providers.GOOGLE.name()), any(AsyncCallback.class));        
+    }
 }
