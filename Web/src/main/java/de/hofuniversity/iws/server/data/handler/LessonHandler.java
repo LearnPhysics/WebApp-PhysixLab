@@ -1,6 +1,7 @@
 package de.hofuniversity.iws.server.data.handler;
 
-import de.hofuniversity.iws.server.data.entities.LessonDBO;
+import de.hofuniversity.iws.server.data.entities.*;
+
 import javax.persistence.*;
 import javax.persistence.criteria.*;
 
