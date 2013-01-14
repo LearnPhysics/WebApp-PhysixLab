@@ -64,13 +64,14 @@ Uncomment this for XHTML entities
 
         .scrollWrap {
         min-height: 1280px;
+        overflow: hidden;
         }
         #playn-root {
         width:800px;
         }
     </ui:style>
-    <g:ScrollPanel ui:field='sWrap' styleName="{style.scrollWrap}">
-        <g:HTMLPanel ui:field="page">
+    <g:ScrollPanel ui:field='sWrap' styleName="{style.scrollWrap}" VerticalScrollPosition="0">
+        <g:HTMLPanel>
             <header:Header></header:Header>
             <div id="contentAreaGame">
                 <div id="content">
@@ -82,7 +83,9 @@ Uncomment this for XHTML entities
                         </g:HTMLPanel>
                     </g:VerticalPanel>
                 </div>
-            </div>
+            </div>            
+            <bread:BackButton/>
+            <bread:Breadcrumb/>
         </g:HTMLPanel>
     </g:ScrollPanel>
 </ui:UiBinder>

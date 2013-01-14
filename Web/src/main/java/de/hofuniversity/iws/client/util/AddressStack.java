@@ -4,36 +4,29 @@
  */
 package de.hofuniversity.iws.client.util;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
+
+import javax.inject.Singleton;
 
 /**
  *
  * @author Oliver
  */
+@Singleton
 public class AddressStack {
-    private static AddressStack as = null;
     
     private LinkedList<CrumbTuple> list;
     int pointer;
 
-    private AddressStack() {
+    public AddressStack() {
         list = new LinkedList<CrumbTuple>();
         pointer = 0;
-    }
-
-    public static AddressStack getInstance() {
-        if (as == null) {
-            as = new AddressStack();
-        }
-        return as;
     }
     
     public void addAddress(CrumbTuple page) {
         System.out.println("--------------------------------------------------- Adding: " + page.getLabel());
         list.add(page);
         int layer = page.getLayer();
-        boolean found = false;
         for(int i = list.size() - 1; i >= 0; i--) {
             if(list.get(i).getLayer() > layer) {
                 list.remove(i);

@@ -6,8 +6,7 @@ package de.hofuniversity.iws.client.widgets.UserHome;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.ParagraphElement;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.ui.*;
 
 /**
@@ -16,12 +15,12 @@ import com.google.gwt.user.client.ui.*;
  */
 public class HomeStatistik extends Composite {
     
+    interface HomeStatistikUiBinder extends UiBinder<Widget, HomeStatistik> {
+    }
     private static HomeStatistikUiBinder uiBinder = GWT.create(HomeStatistikUiBinder.class);
     
     @UiField ParagraphElement text;
     
-    interface HomeStatistikUiBinder extends UiBinder<Widget, HomeStatistik> {
-    }
     
     public HomeStatistik() {
         initWidget(uiBinder.createAndBindUi(this));

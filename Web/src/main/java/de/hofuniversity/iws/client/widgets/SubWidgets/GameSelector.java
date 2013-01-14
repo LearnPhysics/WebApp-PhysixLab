@@ -10,9 +10,9 @@ import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.ui.*;
-import de.hofuniversity.iws.client.PhysixLab;
+import com.google.inject.assistedinject.*;
+import de.hofuniversity.iws.client.HistoryPageController;
 import de.hofuniversity.iws.client.jsonbeans.GameJson;
-import de.hofuniversity.iws.client.widgets.Game.Game;
 
 /**
  *
@@ -20,24 +20,25 @@ import de.hofuniversity.iws.client.widgets.Game.Game;
  */
 public class GameSelector extends Composite {
 
-    private static GameSelectorUiBinder uiBinder = GWT.create(GameSelectorUiBinder.class);
-    @UiField
-    HTMLPanel wrap;
-    @UiField
-    FocusPanel oImg;
-    @UiField
-    Image iImg;
-    @UiField
-    HeadingElement title;
-    @UiField
-    ParagraphElement text;
-    private GameJson game;
-
     interface GameSelectorUiBinder extends UiBinder<Widget, GameSelector> {
     }
+    private static GameSelectorUiBinder uiBinder = GWT.create(GameSelectorUiBinder.class);
+    private final HistoryPageController pageController;
+    private GameJson game;
+    @UiField HTMLPanel wrap;
+    @UiField FocusPanel oImg;
+    @UiField Image iImg;
+    @UiField HeadingElement title;
+    @UiField ParagraphElement text;
+    
+    public interface GameSelectorFactory{
+        public GameSelector create(GameJson game);
+    }
 
-    public GameSelector(GameJson game) {
+    @AssistedInject
+    public GameSelector(HistoryPageController pc, @Assisted GameJson game) {
         initWidget(uiBinder.createAndBindUi(this));
+        pageController = pc;
         this.game = game;
 
         iImg.setUrl(game.getImageUrl());
@@ -49,6 +50,6 @@ public class GameSelector extends Composite {
 
     @UiHandler("oImg")
     public void openGame(ClickEvent ev) {
-        PhysixLab.PAGE_CONTROLLER.changePage(new Game(game));
+        pageController.changeToGame(game);
     }
 }

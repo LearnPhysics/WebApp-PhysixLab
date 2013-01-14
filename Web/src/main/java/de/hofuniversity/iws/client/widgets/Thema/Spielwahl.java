@@ -7,8 +7,9 @@ package de.hofuniversity.iws.client.widgets.Thema;
 import com.google.gwt.core.client.*;
 import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.ui.*;
+import com.google.inject.assistedinject.*;
 import de.hofuniversity.iws.client.jsonbeans.GameJson;
-import de.hofuniversity.iws.client.widgets.SubWidgets.GameSelector;
+import de.hofuniversity.iws.client.widgets.SubWidgets.GameSelector.GameSelectorFactory;
 
 /**
  *
@@ -16,17 +17,21 @@ import de.hofuniversity.iws.client.widgets.SubWidgets.GameSelector;
  */
 public class Spielwahl extends Composite {
 
-    private static SpielwahlUiBinder uiBinder = GWT.create(SpielwahlUiBinder.class);
-    @UiField
-    VerticalPanel gamesPanel;
-
     interface SpielwahlUiBinder extends UiBinder<Widget, Spielwahl> {
     }
+    private static SpielwahlUiBinder uiBinder = GWT.create(SpielwahlUiBinder.class);
+    @UiField VerticalPanel gamesPanel;
 
-    public Spielwahl(JsArray<GameJson> games) {
+    public interface SpielwahlFactory {
+
+        public Spielwahl create(JsArray<GameJson> games);
+    }
+
+    @AssistedInject
+    public Spielwahl(GameSelectorFactory factory, @Assisted JsArray<GameJson> games) {
         initWidget(uiBinder.createAndBindUi(this));
         for (int i = 0; i < games.length(); i++) {
-            gamesPanel.add(new GameSelector(games.get(i)));
+            gamesPanel.add(factory.create(games.get(i)));
         }
     }
 }

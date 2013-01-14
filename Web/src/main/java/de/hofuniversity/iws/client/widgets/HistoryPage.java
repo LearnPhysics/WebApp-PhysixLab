@@ -13,11 +13,19 @@ import com.google.gwt.user.client.ui.Composite;
  */
 public abstract class HistoryPage extends Composite {
 
-    public abstract String getName();
+    private String name;
+
+    public HistoryPage(String name) {
+        this.name = name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     @Override
     protected void onAttach() {
         super.onAttach();
-        History.newItem(getName(), false);
+        History.newItem(name, false);
     }
 }

@@ -95,10 +95,11 @@ Uncomment this for XHTML entities
         
         .scrollWrap {
         min-height: 1280px;
+        overflow: hidden;
         }
     </ui:style>
     
-    <g:ScrollPanel ui:field='sWrap' styleName="{style.scrollWrap}">
+    <g:ScrollPanel ui:field='sWrap' styleName="{style.scrollWrap}" VerticalScrollPosition="0">
         <g:HTMLPanel ui:field="page">
             <header:Header></header:Header>
             <g:FocusPanel ui:field='tab1' styleName="{style.tab} {style.tab1}">
@@ -129,6 +130,8 @@ Uncomment this for XHTML entities
                     <my:HomeProfile></my:HomeProfile>
                 </g:HorizontalPanel>
             </span>
+            <bread:Breadcrumb/>
+            <bread:OnlyLogout/>
         </g:HTMLPanel>
     </g:ScrollPanel>
 </ui:UiBinder>

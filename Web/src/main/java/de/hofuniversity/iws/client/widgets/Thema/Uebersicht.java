@@ -16,14 +16,11 @@ import de.hofuniversity.iws.client.jsonbeans.SubjectJson;
  */
 public class Uebersicht extends Composite {
 
-    private static UebersichtUiBinder uiBinder = GWT.create(UebersichtUiBinder.class);
-    @UiField
-    HeadingElement title;
-    @UiField
-    DivElement einfuehrungstext;
-
     interface UebersichtUiBinder extends UiBinder<Widget, Uebersicht> {
     }
+    private static UebersichtUiBinder uiBinder = GWT.create(UebersichtUiBinder.class);
+    @UiField HeadingElement title;
+    @UiField DivElement einfuehrungstext;
 
     public Uebersicht(SubjectJson thema) {
         initWidget(uiBinder.createAndBindUi(this));

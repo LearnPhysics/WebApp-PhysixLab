@@ -5,35 +5,36 @@
 package de.hofuniversity.iws.client.widgets.UserHome;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.*;
+import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.*;
-import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.*;
-import de.hofuniversity.iws.client.util.*;
-import de.hofuniversity.iws.client.widgets.SubWidgets.*;
+import de.hofuniversity.iws.client.GenericFactory;
+import de.hofuniversity.iws.client.widgets.CrumbPage;
+import de.hofuniversity.iws.client.widgets.SubWidgets.Breadcrumb.BreadcrumbFactory;
+import javax.inject.Inject;
 
 /**
  *
  * @author Oliver
  */
-public class UserHome extends Composite {
+public class UserHome extends CrumbPage {
 
+    interface UserHomeUiBinder extends UiBinder<Widget, UserHome> {
+    }
+    private final static UserHomeUiBinder uiBinder = GWT.create(UserHomeUiBinder.class);
     public final static String NAME = "userHome";
-    private static UserHomeUiBinder uiBinder = GWT.create(UserHomeUiBinder.class);
-    
     @UiField UserHomeStyle style;
     @UiField HTMLPanel page;
     @UiField SpanElement rail;
     @UiField ScrollPanel sWrap;
-    
     @UiField FocusPanel tab1;
     @UiField FocusPanel tab2;
     @UiField FocusPanel tab3;
     @UiField FocusPanel tab4;
 
-    interface UserHomeUiBinder extends UiBinder<Widget, UserHome> {
+    public interface UserHomeFactory extends GenericFactory<UserHome> {
     }
 
     interface UserHomeStyle extends CssResource {
@@ -59,14 +60,10 @@ public class UserHome extends Composite {
         String tab4();
     }
 
-    public UserHome() {
+    @Inject
+    public UserHome(BreadcrumbFactory factory) {
+        super(null, factory, 1, NAME);
         initWidget(uiBinder.createAndBindUi(this));
-        History.newItem(NAME, false);
-        sWrap.getElement().getStyle().setOverflow(Style.Overflow.HIDDEN);
-        sWrap.setVerticalScrollPosition(0);
-        AddressStack.getInstance().addAddress(new CrumbTuple(this, " Home ", 1));
-        page.add(new Breadcrumb(1));
-        page.add(new OnlyLogout());
     }
 
     @UiHandler("tab1")
@@ -119,5 +116,5 @@ public class UserHome extends Composite {
         tab2.removeStyleName(style.selected());
         tab3.removeStyleName(style.selected());
         tab4.removeStyleName(style.selected());
-    }    
+    }
 }

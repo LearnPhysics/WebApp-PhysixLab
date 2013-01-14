@@ -13,12 +13,11 @@ import com.google.gwt.user.client.ui.*;
  * @author Oliver
  */
 public class HomeHeader extends Composite {
-    
-    private static HomeHeaderUiBinder uiBinder = GWT.create(HomeHeaderUiBinder.class);
-    
+
     interface HomeHeaderUiBinder extends UiBinder<Widget, HomeHeader> {
     }
-    
+    private static HomeHeaderUiBinder uiBinder = GWT.create(HomeHeaderUiBinder.class);
+
     public HomeHeader() {
         initWidget(uiBinder.createAndBindUi(this));
     }
