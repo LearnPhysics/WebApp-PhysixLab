@@ -22,7 +22,7 @@
     <!--for the menu UI--> 
     <inherits name='tripleplay.TriplePlay'/>
     <!--for enhanced logging--> 
-    <!--<inherits name='com.google.gwt.inject.Inject'/>-->
+    <inherits name='com.google.gwt.inject.Inject'/>
     
     <inherits name='com.google.common.base.Base'/>
     

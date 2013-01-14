@@ -10,25 +10,24 @@ import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.ui.*;
 import de.hofuniversity.iws.client.PhysixLab;
 import de.hofuniversity.iws.client.widgets.SubWidgets.ProfileBig;
-import de.hofuniversity.iws.shared.dto.User;
+import javax.inject.Inject;
 
 /**
  *
  * @author Oliver
  */
 public class HomeProfile extends Composite {
-    
-    private static HomeProfileUiBinder uiBinder = GWT.create(HomeProfileUiBinder.class);
-    
-    @UiField VerticalPanel uData;
-    
+
     interface HomeProfileUiBinder extends UiBinder<Widget, HomeProfile> {
     }
-    
-    public HomeProfile() {
+    private static HomeProfileUiBinder uiBinder = GWT.create(HomeProfileUiBinder.class);
+    @UiField
+    VerticalPanel uData;
+
+    @Inject
+    public HomeProfile(PhysixLab lab) {
         initWidget(uiBinder.createAndBindUi(this));
-        User user = PhysixLab.getSessionUser();  
-        uData.add(new ProfileBig(user));
+        uData.add(new ProfileBig(lab.getSessionUser()));
         Image img = new Image("images/ReplacementImages/EditProfile.png");
         img.getElement().getStyle().setMarginLeft(195, Style.Unit.PX);
         uData.add(img);

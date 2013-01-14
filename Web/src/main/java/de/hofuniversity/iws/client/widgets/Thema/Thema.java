@@ -5,43 +5,40 @@
 package de.hofuniversity.iws.client.widgets.Thema;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.*;
+import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.*;
-import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.*;
+import com.google.inject.assistedinject.*;
 import de.hofuniversity.iws.client.jsonbeans.SubjectJson;
-import de.hofuniversity.iws.client.util.*;
-import de.hofuniversity.iws.client.widgets.SubWidgets.*;
+import de.hofuniversity.iws.client.widgets.CrumbPage;
+import de.hofuniversity.iws.client.widgets.SubWidgets.BackButton.BackButtonFactory;
+import de.hofuniversity.iws.client.widgets.SubWidgets.Breadcrumb.BreadcrumbFactory;
+import de.hofuniversity.iws.client.widgets.Thema.Lektionswahl.LektionswahlFactory;
+import de.hofuniversity.iws.client.widgets.Thema.Spielwahl.SpielwahlFactory;
 
 /**
  *
  * @author Oliver
  */
-public class Thema extends Composite {
-
-    public final static String NAME = "thema";
-    private static ThemaUiBinder uiBinder = GWT.create(ThemaUiBinder.class);
-    
-    @UiField
-    Thema.ThemaStyle style;
-    @UiField
-    SpanElement rail;
-    @UiField
-    HorizontalPanel railContent;
-    @UiField
-    ScrollPanel sWrap;
-    @UiField
-    FocusPanel tab1;
-    @UiField
-    FocusPanel tab2;
-    @UiField
-    FocusPanel tab3;
-    @UiField HTMLPanel page;
+public class Thema extends CrumbPage {
 
     interface ThemaUiBinder extends UiBinder<Widget, Thema> {
     }
+    private static ThemaUiBinder uiBinder = GWT.create(ThemaUiBinder.class);
+    public final static String NAME = "thema";
+    private final LektionswahlFactory lektionFactory;
+    private final SpielwahlFactory spielFactory;
+    private final SubjectJson bean;
+    @UiField Thema.ThemaStyle style;
+    @UiField SpanElement rail;
+    @UiField HorizontalPanel railContent;
+    @UiField ScrollPanel sWrap;
+    @UiField FocusPanel tab1;
+    @UiField FocusPanel tab2;
+    @UiField FocusPanel tab3;
+    @UiField HTMLPanel page;
 
     interface ThemaStyle extends CssResource {
 
@@ -62,19 +59,20 @@ public class Thema extends Composite {
         String tab3();
     }
 
-    public Thema(SubjectJson bean) {
+    public interface ThemaFactory {
+
+        public Thema create(SubjectJson bean);
+    }
+
+    @AssistedInject
+    public Thema(BackButtonFactory backFactory, BreadcrumbFactory breadFactory,
+                 LektionswahlFactory lektionFactory, SpielwahlFactory spielFactory, @Assisted SubjectJson bean) {
+        super(backFactory, breadFactory, 2, NAME + "?" + bean.getName());
+        this.lektionFactory = lektionFactory;
+        this.spielFactory = spielFactory;
+        this.bean = bean;
+        
         initWidget(uiBinder.createAndBindUi(this));
-        History.newItem(NAME + "?" + bean.getName(), false);
-        sWrap.getElement().getStyle().setOverflow(Style.Overflow.HIDDEN);
-        sWrap.setVerticalScrollPosition(0);
-        
-        railContent.add(new Lektionswahl(bean));
-        railContent.add(new Uebersicht(bean));
-        railContent.add(new Spielwahl(bean.getGames()));
-        
-        AddressStack.getInstance().addAddress(new CrumbTuple(this, bean.getTitle(), 2));
-        page.add(new Breadcrumb(2));
-        page.add(new BackButton(2));
     }
 
     @UiHandler("tab1")
@@ -119,5 +117,20 @@ public class Thema extends Composite {
         tab1.removeStyleName(style.selected());
         tab2.removeStyleName(style.selected());
         tab3.removeStyleName(style.selected());
+    }
+
+    @UiFactory
+    public Lektionswahl buildLektion() {
+        return lektionFactory.create(bean);
+    }
+
+    @UiFactory
+    public Uebersicht buildUebrsicht() {
+        return new Uebersicht(bean);
+    }
+
+    @UiFactory
+    public Spielwahl buildSpiel() {
+        return spielFactory.create(bean.getGames());
     }
 }

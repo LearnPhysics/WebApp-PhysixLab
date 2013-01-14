@@ -12,7 +12,8 @@ import com.google.gwt.user.client.ui.*;
 import de.hofuniversity.iws.client.PhysixLab;
 import de.hofuniversity.iws.client.widgets.SubWidgets.UserHomeFriend;
 import de.hofuniversity.iws.shared.dto.User;
-import de.hofuniversity.iws.shared.services.*;
+import de.hofuniversity.iws.shared.services.UserServiceAsync;
+import javax.inject.Inject;
 
 /**
  *
@@ -20,27 +21,30 @@ import de.hofuniversity.iws.shared.services.*;
  */
 public class HomeFreunde extends Composite {
 
-    private static HomeFreundeUiBinder uiBinder = GWT.create(HomeFreundeUiBinder.class);
-    private final static UserServiceAsync userService = GWT.create(UserService.class);
-    @UiField
-    VerticalPanel friends;
-
     interface HomeFreundeUiBinder extends UiBinder<Widget, HomeFreunde> {
     }
+    private static HomeFreundeUiBinder uiBinder = GWT.create(HomeFreundeUiBinder.class);
+    private final UserServiceAsync userService;
+    private final PhysixLab lab;
+    @UiField
+    private VerticalPanel friends;
 
-    public HomeFreunde() {
+    @Inject
+    public HomeFreunde(UserServiceAsync userService, PhysixLab lab) {
+        this.userService = userService;
+        this.lab = lab;
         initWidget(uiBinder.createAndBindUi(this));
         // setup();
         setTestFriends();
     }
 
     private void setup() {
-        User user = PhysixLab.getSessionUser();
+        User user = lab.getSessionUser();
 //        for(User friend : user.getBilateralFriends()) {
 //            addFriend(friend);
 //        }
     }
-    
+
     private void setTestFriends() {
 
         User user0 = new User();
@@ -59,8 +63,8 @@ public class HomeFreunde extends Composite {
         user1.setBirthDate(new Timestamp(133876800));
         user2.setBirthDate(new Timestamp(1038768000));
 
-        
-        
+
+
         user0.setUserPic("https://si0.twimg.com/profile_images/2641434457/369709d0d9861e4a7298c8606023e42b.png");
         user1.setUserPic("images/ReplacementImages/Profile01.png");
         user2.setUserPic("images/ReplacementImages/Profile02.png");

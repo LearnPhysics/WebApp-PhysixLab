@@ -4,7 +4,7 @@
  */
 package de.hofuniversity.iws.client;
 
-import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.*;
 
 /**
  *
@@ -12,8 +12,9 @@ import com.google.gwt.core.client.EntryPoint;
  */
 public class Main implements EntryPoint {
 
+  private final PhysixLabInjector injector = GWT.create(PhysixLabInjector.class);
     @Override
     public void onModuleLoad() {
-        new PhysixLab().init();
+        injector.createLab().init();
     }
 }

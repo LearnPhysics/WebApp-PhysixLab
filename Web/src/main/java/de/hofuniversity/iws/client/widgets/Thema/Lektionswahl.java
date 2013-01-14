@@ -11,11 +11,12 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
+import com.google.inject.assistedinject.*;
 import de.hofuniversity.iws.client.jsonbeans.SubjectJson;
-import de.hofuniversity.iws.client.widgets.SubWidgets.LektionSelector;
+import de.hofuniversity.iws.client.widgets.SubWidgets.LektionSelector.LektionSelectorFactory;
 import de.hofuniversity.iws.shared.CollectionUtils.Selector;
 import de.hofuniversity.iws.shared.dto.LessonPreview;
-import de.hofuniversity.iws.shared.services.*;
+import de.hofuniversity.iws.shared.services.LessonServiceAsync;
 
 import static de.hofuniversity.iws.shared.CollectionUtils.groupBy;
 import static de.hofuniversity.iws.shared.CollectionUtils.select;
@@ -26,23 +27,28 @@ import static de.hofuniversity.iws.shared.CollectionUtils.select;
  */
 public class Lektionswahl extends Composite {
 
+    interface LektionswahlUiBinder extends UiBinder<Widget, Lektionswahl> {
+    }
     private static LektionswahlUiBinder uiBinder = GWT.create(LektionswahlUiBinder.class);
     private static final int TOTAL_TREE_WIDTH = 880;
     private static final int TREE_Y_STRIDE = 160;
     private static final int TREE_X_OFFSET = -40;
-    private final LessonServiceAsync lessonService = (LessonServiceAsync) GWT.create(LessonService.class);
-    @UiField
-    HTMLPanel lektionTree;
+    private final LektionSelectorFactory factory;
     private final SubjectJson subject;
+    @UiField HTMLPanel lektionTree;
 
-    interface LektionswahlUiBinder extends UiBinder<Widget, Lektionswahl> {
+    public interface LektionswahlFactory {
+
+        public Lektionswahl create(SubjectJson thema);
     }
 
-    public Lektionswahl(SubjectJson thema) {
+    @AssistedInject
+    public Lektionswahl(LektionSelectorFactory factory, LessonServiceAsync lessonService,
+                        @Assisted SubjectJson thema) {
         subject = thema;
+        this.factory = factory;
         initWidget(uiBinder.createAndBindUi(this));
         lessonService.getLessonPreviews(thema.getName(), new AsyncCallback<LessonPreview[]>() {
-
             @Override
             public void onFailure(Throwable caught) {
                 throw new UnsupportedOperationException("Not supported yet.");
@@ -111,7 +117,7 @@ public class Lektionswahl extends Composite {
         for (int i = 0; i < lek.size(); i++) {
             int x = unit * (i + offset) + unit / 2 + TREE_X_OFFSET;
             int y = depth * TREE_Y_STRIDE;
-            lektionTree.add(new LektionSelector(lek.get(i), subject, x, y));
+            lektionTree.add(factory.create(lek.get(i), subject, x, y));
             List<LessonPreview> children = idToChildren.get(lek.get(i).getName());
             if (children != null) {
                 addToTree(children, depth + 1, childs, widths, idToChildren);

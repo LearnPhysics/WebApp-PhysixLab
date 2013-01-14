@@ -7,55 +7,49 @@ package de.hofuniversity.iws.client.widgets.Game;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.*;
 import com.google.gwt.uibinder.client.*;
-import com.google.gwt.user.client.*;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
+import com.google.inject.assistedinject.*;
 import de.hofuniversity.iws.client.jsonbeans.GameJson;
 import de.hofuniversity.iws.client.playn.*;
-import de.hofuniversity.iws.client.util.*;
-import de.hofuniversity.iws.client.widgets.SubWidgets.*;
-import de.hofuniversity.iws.shared.services.*;
+import de.hofuniversity.iws.client.util.VoidCallback;
+import de.hofuniversity.iws.client.widgets.CrumbPage;
+import de.hofuniversity.iws.client.widgets.SubWidgets.BackButton.BackButtonFactory;
+import de.hofuniversity.iws.client.widgets.SubWidgets.Breadcrumb.BreadcrumbFactory;
+import de.hofuniversity.iws.shared.services.UserServiceAsync;
 
 /**
  *
  * @author Oliver
  */
-public class Game extends Composite implements GameEventListener {
-
-    public final static String NAME = "game";
-    private static GameUiBinder uiBinder = GWT.create(GameUiBinder.class);
-    private static GameInstantiator instantiator = GWT.create(GameInstantiator.class);
-    private UserServiceAsync userService = (UserServiceAsync)GWT.create(UserService.class);
-            
-    private GameJson game;
-    @UiField
-    ScrollPanel sWrap;
-    @UiField
-    HeadingElement title;
-    @UiField
-    VerticalPanel outerGame;
-    @UiField
-    PlayNWidget gamePanel;
-    @UiField
-    ParagraphElement beschreibung;
-    @UiField HTMLPanel page;
+public class Game extends CrumbPage implements GameEventListener {
 
     interface GameUiBinder extends UiBinder<Widget, Game> {
     }
+    private static GameUiBinder uiBinder = GWT.create(GameUiBinder.class);
+    private static GameInstantiator instantiator = GWT.create(GameInstantiator.class);
+    public final static String NAME = "game";
+    private final UserServiceAsync userService;
+    private GameJson game;
+    @UiField ScrollPanel sWrap;
+    @UiField HeadingElement title;
+    @UiField VerticalPanel outerGame;
+    @UiField PlayNWidget gamePanel;
+    @UiField ParagraphElement beschreibung;
 
-    public Game(GameJson bean) {
+    public interface GameFactory {
+
+        public Game create(GameJson bean);
+    }
+
+    @AssistedInject
+    public Game(BackButtonFactory backFactory, BreadcrumbFactory breadFactory, UserServiceAsync userService, @Assisted GameJson bean) {
+        super(backFactory, breadFactory, 3, NAME + "?" + bean.getName());
         game = bean;
+        this.userService = userService;
         initWidget(uiBinder.createAndBindUi(this));
-
-        sWrap.getElement().getStyle().setOverflow(Style.Overflow.HIDDEN);
-        sWrap.setVerticalScrollPosition(0);
         title.setInnerText(game.getTitle());
         beschreibung.setInnerText(game.getDescription());
-
-        History.newItem(NAME + "?" + bean.getName(), false);
-        
-        AddressStack.getInstance().addAddress(new CrumbTuple(this, bean.getTitle(), 3));
-        page.add(new Breadcrumb(3));
-        page.add(new BackButton(3));
     }
 
     @Override
@@ -71,7 +65,7 @@ public class Game extends Composite implements GameEventListener {
 
     @Override
     public void gameEnded(GameEvent ev) {
-        userService.addGameResult(game.getName(), ev.points, new VoidCallback());        
+        userService.addGameResult(game.getName(), ev.points, new VoidCallback());
         Window.alert("You scored " + ev.points + " points!");
         gamePanel.restartGame();
     }

@@ -76,9 +76,10 @@ Uncomment this for XHTML entities
         
         .scrollWrap {
         min-height: 1280px;
+        overflow: hidden;
         }
     </ui:style>
-    <g:ScrollPanel ui:field='sWrap' styleName="{style.scrollWrap}">
+    <g:ScrollPanel ui:field='sWrap' styleName="{style.scrollWrap}" VerticalScrollPosition="0">
         <g:HTMLPanel ui:field="page">
             <header:Header></header:Header>
             <g:FocusPanel ui:field='tab1' styleName="{style.tab} {style.tab1} {style.selected}">
@@ -94,6 +95,8 @@ Uncomment this for XHTML entities
             <span ui:field='rail' class="{style.posLektion}">
                 <g:HorizontalPanel ui:field='railContent'/>
             </span>
+            <bread:BackButton/>
+            <bread:Breadcrumb/>
         </g:HTMLPanel>
     </g:ScrollPanel>
 </ui:UiBinder>
