@@ -20,8 +20,8 @@ import static org.mockito.Mockito.*;
  *
  * @author Daniel Heinrich <dannynullzwo@gmail.com>
  */
-@GwtModule("de.hofuniversity.iws.PhysixLabTest")
-public class TestSandbox extends GwtTestWithMockito {
+/* @GwtModule("de.hofuniversity.iws.PhysixLabTest") */
+public class TestSandbox /* extends GwtTestWithMockito */ {
 
 //    private LoginPage page;
 //

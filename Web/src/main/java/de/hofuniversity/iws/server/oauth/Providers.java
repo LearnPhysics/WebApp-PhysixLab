@@ -18,6 +18,7 @@ import static de.hofuniversity.iws.server.oauth.OAuthProperties.APP;
  *
  * @author Daniel Heinrich <dannynullzwo@gmail.com>
  */
+
 public enum Providers {
 
     GOOGLE {

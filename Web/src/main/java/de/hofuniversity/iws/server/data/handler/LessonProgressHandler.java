@@ -69,7 +69,7 @@ public class LessonProgressHandler {
     }
 
     // Get lesson progress by Id
-    public static LessonProgressDBO getGameEntity(long id, boolean detach) {
+    public static LessonProgressDBO getLessonProgressEntity(long id, boolean detach) {
         return (LessonProgressDBO) GenericHandler.getEntity(LessonProgressDBO.class, id, detach);
     }
 }

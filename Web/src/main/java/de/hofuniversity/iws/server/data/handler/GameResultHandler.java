@@ -69,7 +69,7 @@ public class GameResultHandler {
     }
 
     // Get game result by Id
-    public static GameResultDBO getGameEntity(long id, boolean detach) {
+    public static GameResultDBO getGameResultEntity(long id, boolean detach) {
         return (GameResultDBO) GenericHandler.getEntity(GameResultDBO.class, id, detach);
     }
 }
