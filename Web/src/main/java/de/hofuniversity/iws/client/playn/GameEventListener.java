@@ -6,7 +6,7 @@ package de.hofuniversity.iws.client.playn;
 
 /**
  *
- * @author some
+ * @author Daniel Heinrich <DannyNullZwo@gmail.com>
  */
 public interface GameEventListener {
     public void gameEnded(GameEvent ev);

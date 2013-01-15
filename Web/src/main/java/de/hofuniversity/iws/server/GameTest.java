@@ -15,7 +15,7 @@ import playn.java.JavaPlatform.Config;
  */
 /**
  *
- * @author some
+ * @author Daniel Heinrich <DannyNullZwo@gmail.com>
  */
 public class GameTest {
 

@@ -19,9 +19,5 @@ Uncomment this for XHTML entities
         font-size: 14px;
         }
     </ui:style>
-    <g:HTMLPanel>
-        <g:HorizontalPanel ui:field="crumbs" styleName="{style.bread}">
-            
-        </g:HorizontalPanel>
-    </g:HTMLPanel>
+    <g:HorizontalPanel ui:field="crumbs" styleName="{style.bread}"/>
 </ui:UiBinder>

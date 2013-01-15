@@ -4,34 +4,35 @@
  */
 package de.hofuniversity.iws.client.widgets.Game;
 
+import com.chrisgammage.ginjitsu.client.AfterInject;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.*;
 import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
-import com.google.inject.assistedinject.*;
+import com.google.inject.assistedinject.Assisted;
 import de.hofuniversity.iws.client.jsonbeans.GameJson;
+import de.hofuniversity.iws.client.jsonbeans.SubjectJson;
 import de.hofuniversity.iws.client.playn.*;
 import de.hofuniversity.iws.client.util.VoidCallback;
-import de.hofuniversity.iws.client.widgets.CrumbPage;
-import de.hofuniversity.iws.client.widgets.SubWidgets.BackButton.BackButtonFactory;
-import de.hofuniversity.iws.client.widgets.SubWidgets.Breadcrumb.BreadcrumbFactory;
+import de.hofuniversity.iws.client.widgets.Game.Game.GameUiBinder;
+import de.hofuniversity.iws.client.widgets.base.CrumbPage;
+import de.hofuniversity.iws.client.widgets.history.GameElement.GameElementFactory;
 import de.hofuniversity.iws.shared.services.UserServiceAsync;
+import javax.inject.Inject;
 
 /**
  *
  * @author Oliver
  */
-public class Game extends CrumbPage implements GameEventListener {
+public class Game extends CrumbPage<GameUiBinder> implements GameEventListener {
 
-    interface GameUiBinder extends UiBinder<Widget, Game> {
+    public interface GameUiBinder extends UiBinder<Widget, Game> {
     }
-    private static GameUiBinder uiBinder = GWT.create(GameUiBinder.class);
     private static GameInstantiator instantiator = GWT.create(GameInstantiator.class);
     public final static String NAME = "game";
     private final UserServiceAsync userService;
     private GameJson game;
-    @UiField ScrollPanel sWrap;
     @UiField HeadingElement title;
     @UiField VerticalPanel outerGame;
     @UiField PlayNWidget gamePanel;
@@ -39,22 +40,25 @@ public class Game extends CrumbPage implements GameEventListener {
 
     public interface GameFactory {
 
-        public Game create(GameJson bean);
+        public Game create(SubjectJson subjectBean, GameJson bean);
     }
 
-    @AssistedInject
-    public Game(BackButtonFactory backFactory, BreadcrumbFactory breadFactory, UserServiceAsync userService, @Assisted GameJson bean) {
-        super(backFactory, breadFactory, 3, NAME + "?" + bean.getName());
+    @Inject
+    public Game(GameElementFactory element, UserServiceAsync userService,
+                @Assisted SubjectJson subjectBean, @Assisted GameJson bean) {
+        super(element.create(subjectBean, bean), NAME + "?" + bean.getName());
         game = bean;
         this.userService = userService;
-        initWidget(uiBinder.createAndBindUi(this));
+    }
+
+    @Override
+    public void initWidget() {
         title.setInnerText(game.getTitle());
         beschreibung.setInnerText(game.getDescription());
     }
 
     @Override
-    protected void onAttach() {
-        super.onAttach();
+    protected void onLoad() {
         outerGame.getElement().getStyle().setWidth(gamePanel.getOffsetWidth() + 20, Style.Unit.PX);
     }
 

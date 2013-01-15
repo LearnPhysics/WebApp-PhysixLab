@@ -10,13 +10,9 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  *
  * @author Daniel Heinrich <DannyNullZwo@gmail.com>
  */
-public class VoidCallback implements AsyncCallback<Void> {
+public abstract class SuccessCallback<T> implements AsyncCallback<T> {
 
     @Override
     public void onFailure(Throwable caught) {
-    }
-
-    @Override
-    public void onSuccess(Void result) {
     }
 }

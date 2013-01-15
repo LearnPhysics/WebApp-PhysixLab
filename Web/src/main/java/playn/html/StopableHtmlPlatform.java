@@ -9,7 +9,7 @@ import playn.core.*;
 
 /**
  *
- * @author some
+ * @author Daniel Heinrich <DannyNullZwo@gmail.com>
  */
 public class StopableHtmlPlatform extends HtmlPlatform {
 

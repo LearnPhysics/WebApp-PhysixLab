@@ -21,8 +21,7 @@ public class HomeProfile extends Composite {
     interface HomeProfileUiBinder extends UiBinder<Widget, HomeProfile> {
     }
     private static HomeProfileUiBinder uiBinder = GWT.create(HomeProfileUiBinder.class);
-    @UiField
-    VerticalPanel uData;
+    @UiField VerticalPanel uData;
 
     @Inject
     public HomeProfile(PhysixLab lab) {

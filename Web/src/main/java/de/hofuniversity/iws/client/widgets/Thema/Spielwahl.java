@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.*;
 import com.google.inject.assistedinject.*;
 import de.hofuniversity.iws.client.jsonbeans.GameJson;
 import de.hofuniversity.iws.client.widgets.SubWidgets.GameSelector.GameSelectorFactory;
+import javax.inject.Inject;
 
 /**
  *
@@ -27,7 +28,7 @@ public class Spielwahl extends Composite {
         public Spielwahl create(JsArray<GameJson> games);
     }
 
-    @AssistedInject
+    @Inject
     public Spielwahl(GameSelectorFactory factory, @Assisted JsArray<GameJson> games) {
         initWidget(uiBinder.createAndBindUi(this));
         for (int i = 0; i < games.length(); i++) {

@@ -4,14 +4,13 @@
  */
 package de.hofuniversity.iws.client.widgets.SubWidgets;
 
-import java.util.List;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.ui.*;
-import com.google.inject.assistedinject.*;
-import de.hofuniversity.iws.client.util.*;
+import com.google.inject.assistedinject.Assisted;
 import de.hofuniversity.iws.client.widgets.SubWidgets.Crumb.CrumbFactory;
+import de.hofuniversity.iws.client.widgets.history.HistoryElement;
+import javax.inject.Inject;
 
 /**
  *
@@ -26,25 +25,21 @@ public class Breadcrumb extends Composite {
 
     public interface BreadcrumbFactory {
 
-        public Breadcrumb create(int layer);
+        public Breadcrumb create(HistoryElement element);
     }
 
-    @AssistedInject
-    public Breadcrumb(AddressStack stack, CrumbFactory factory, @Assisted int layer) {
+    @Inject
+    public Breadcrumb(CrumbFactory factory, @Assisted HistoryElement element) {
         initWidget(uiBinder.createAndBindUi(this));
 
         try {
-            List<CrumbTuple> ctList = stack.getListTillLayer(layer);
-            System.err.println("Breadcrumb Length: " + ctList.size());
-            for (int i = 0; i < ctList.size(); i++) {
-                if (ctList.get(i).getLayer() > 0) {
-                    crumbs.add(factory.create(ctList.get(i)));
-                    System.err.println(ctList.get(i).getLabel());
-                    if (i < ctList.size() - 1) {
-                        crumbs.add(new SplitterParagraph());
-                    }
-                }
+            HistoryElement acc = element;
+            while (acc.hasParent()) {
+                crumbs.insert(acc.createWidget(), 0);
+                crumbs.insert(new SplitterParagraph(), 0);
+                acc = acc.getParent();
             }
+            crumbs.insert(acc.createWidget(), 0);
         } catch (IndexOutOfBoundsException e) {
             System.err.println("Couldn't build breadcrumbs after reload!");
         }

@@ -6,7 +6,7 @@ package de.hofuniversity.iws.shared.services.login;
 
 /**
  *
- * @author some
+ * @author Daniel Heinrich <DannyNullZwo@gmail.com>
  */
 public enum LoginProvider {
     FACEBOOK, GOOGLE, TWITTER;

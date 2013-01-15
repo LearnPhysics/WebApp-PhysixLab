@@ -18,7 +18,6 @@ import de.hofuniversity.iws.client.widgets.LoginPage;
 import de.hofuniversity.iws.client.widgets.Thema.Thema;
 import de.hofuniversity.iws.client.widgets.Thema.Thema.ThemaFactory;
 import de.hofuniversity.iws.client.widgets.UserHome.UserHome;
-import de.hofuniversity.iws.client.widgets.UserHome.UserHome.UserHomeFactory;
 import de.hofuniversity.iws.shared.services.LessonServiceAsync;
 import javax.inject.*;
 
@@ -51,26 +50,12 @@ public class HistoryPageController implements ValueChangeHandler<String> {
             return Game.NAME;
         }
     }
-    private final LessonServiceAsync lessonService;
-    private final LoginPage loginFactory;
-    private final UserHomeFactory homeFactory;
-    private final Builder lektionBuilder;
-    private final GameFactory gameFactory;
-    private final AddressStack crumbStack;
-    private final ThemaFactory themaFactory;
-
-    @Inject
-    public HistoryPageController(LessonServiceAsync lessonService, LoginPage loginFactory,
-                                 UserHomeFactory homeFactory, Builder lektionBuilder,
-                                 GameFactory gameFactory, AddressStack crumbStack, ThemaFactory themaFactory) {
-        this.lessonService = lessonService;
-        this.loginFactory = loginFactory;
-        this.homeFactory = homeFactory;
-        this.lektionBuilder = lektionBuilder;
-        this.gameFactory = gameFactory;
-        this.crumbStack = crumbStack;
-        this.themaFactory = themaFactory;
-    }
+    @Inject private LessonServiceAsync lessonService;
+    @Inject private Provider<LoginPage> loginFactory;
+    @Inject private Provider<UserHome> homeFactory;
+    @Inject private Provider<Builder> lektionBuilder;
+    @Inject private GameFactory gameFactory;
+    @Inject private ThemaFactory themaFactory;
 
     @Override
     public void onValueChange(ValueChangeEvent<String> event) {
@@ -81,9 +66,9 @@ public class HistoryPageController implements ValueChangeHandler<String> {
         String[] split = token.split("\\?");
         String pageName = split[0];
         if (LoginPage.NAME.equals(pageName)) {
-            changePage(loginFactory, "Startseite", 0);
+            changePage(loginFactory.get());
         } else if (UserHome.NAME.equals(pageName)) {
-            changePage(homeFactory.create(), "Home", 1);
+            changePage(homeFactory.get());
         } else if (split.length > 1) {
             if (Thema.NAME.equals(pageName)) {
                 tryOpenThema(split[1]);
@@ -105,14 +90,13 @@ public class HistoryPageController implements ValueChangeHandler<String> {
 
             @Override
             public void onSuccess(String result) {
-                SubjectJson sj = SubjectJson.create(result);
-
+                changeToThema(SubjectJson.create(result));
             }
         });
     }
 
     public void changeToThema(SubjectJson thema) {
-        changePage(themaFactory.create(thema), thema.getTitle(), 2);
+        changePage(themaFactory.create(thema));
     }
 
     private void tryOpenGame(String options) {
@@ -129,21 +113,16 @@ public class HistoryPageController implements ValueChangeHandler<String> {
     }
 
     public void changeToGame(GameJson bean) {
-        changePage(gameFactory.create(bean), bean.getTitle(), 3);
+        changePage(gameFactory.create(null, bean));
     }
 
     private void tryOpenLektion(String options) {
-        Lektion l = lektionBuilder.withLesson(options).withSubject((String) null).create();
-        changeToLektion(l);
-    }
-
-    public void changeToLektion(Lektion lektion) {
-        changePage(lektion, lektion.getTitle(), 3);
-    }
-
-    private void changePage(Composite c, String titel, int layer) {
-        crumbStack.addAddress(new CrumbTuple(c, titel, layer));
-        changePage(c);
+        lektionBuilder.get().withLesson(options).create(new SuccessCallback<Lektion>() {
+            @Override
+            public void onSuccess(Lektion result) {
+                changePage(result);
+            }
+        });
     }
 
     public void changePage(Composite c) {

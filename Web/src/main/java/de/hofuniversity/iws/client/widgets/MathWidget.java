@@ -10,7 +10,7 @@ import com.google.gwt.user.client.ui.*;
 
 /**
  *
- * @author some
+ * @author Daniel Heinrich <DannyNullZwo@gmail.com>
  */
 public class MathWidget extends Composite {
 
@@ -45,8 +45,7 @@ public class MathWidget extends Composite {
     }
 
     @Override
-    protected void onAttach() {
-        super.onAttach();
+    protected void onLoad() {
         renderLatexResult(div);
         updater = ini(div.getId());
         setMathText(text);

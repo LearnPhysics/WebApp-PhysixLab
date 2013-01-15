@@ -12,7 +12,7 @@ import playn.core.*;
 
 /**
  *
- * @author some
+ * @author Daniel Heinrich <DannyNullZwo@gmail.com>
  */
 public class Rampe extends PhysicEntity {
 

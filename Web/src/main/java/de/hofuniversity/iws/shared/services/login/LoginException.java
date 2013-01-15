@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author some
+ * @author Daniel Heinrich <DannyNullZwo@gmail.com>
  */
 public class LoginException extends Exception implements Serializable{
 

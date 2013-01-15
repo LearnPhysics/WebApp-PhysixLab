@@ -4,13 +4,15 @@
  */
 package de.hofuniversity.iws.client.widgets;
 
-import com.google.gwt.core.client.GWT;
+import com.chrisgammage.ginjitsu.client.AfterInject;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import de.hofuniversity.iws.client.*;
+import de.hofuniversity.iws.client.widgets.LoginPage.LoginPageUiBinder;
 import de.hofuniversity.iws.client.widgets.UserHome.UserHome;
+import de.hofuniversity.iws.client.widgets.base.HistoryPage;
 import de.hofuniversity.iws.shared.dto.LoginDTO;
 import de.hofuniversity.iws.shared.services.LoginServiceAsync;
 import javax.inject.Inject;
@@ -19,34 +21,36 @@ import javax.inject.Inject;
  *
  * @author Daniel Heinrich <dannynullzwo@gmail.com>
  */
-public class LoginPage extends HistoryPage {
+public class LoginPage extends HistoryPage<LoginPageUiBinder> {
 
-    interface LoginPageUiBinder extends UiBinder<Widget, LoginPage> {
+    public interface LoginPageUiBinder extends UiBinder<Widget, LoginPage> {
     }
-    private LoginPageUiBinder uiBinder = GWT.create(LoginPageUiBinder.class);
     public static final String NAME = "login";
     private final LoginServiceAsync loginService;
     private final PhysixLab lab;
     private final HistoryPageController pageController;
     @UiField//so gwt-test-util is happy
-    private Image facebookLogin;
+    Image facebookLogin;
     @UiField//so gwt-test-util is happy
-    private Image googleLogin;
+    Image googleLogin;
     @UiField//so gwt-test-util is happy
-    private Image twitterLogin;
-
-    public interface LoginPageFactory extends GenericFactory<LoginPage> {
-    }
+    Image twitterLogin;
+    @Inject @UiField(provided = true)
+    Header header;
 
     @Inject
-    public LoginPage(LoginServiceAsync loginService, PhysixLab lab, HistoryPageController pageController) {
+    public LoginPage(LoginServiceAsync loginService, PhysixLab lab,
+                     HistoryPageController pageController) {
         super(NAME);
         this.loginService = loginService;
         this.lab = lab;
         this.pageController = pageController;
-
-        initWidget(uiBinder.createAndBindUi(this));
     }
+
+//    @AfterInject @Override
+//    public void bind() {
+//        super.bind();
+//    }
 
     @UiHandler("googleLogin")
     public void loginWithGoogle(ClickEvent ev) {

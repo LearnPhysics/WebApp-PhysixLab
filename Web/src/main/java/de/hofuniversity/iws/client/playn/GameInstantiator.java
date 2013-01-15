@@ -6,7 +6,7 @@ package de.hofuniversity.iws.client.playn;
 
 /**
  *
- * @author some
+ * @author Daniel Heinrich <DannyNullZwo@gmail.com>
  */
 //don't change anything, because this interface is used in a gwt generator with hardcoded names
 public interface GameInstantiator {

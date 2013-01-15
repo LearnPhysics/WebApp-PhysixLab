@@ -8,13 +8,17 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.*;
 import com.google.gwt.uibinder.client.*;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import com.google.inject.assistedinject.*;
 import de.hofuniversity.iws.client.HistoryPageController;
 import de.hofuniversity.iws.client.jsonbeans.SubjectJson;
+import de.hofuniversity.iws.client.util.IgnoreCallback;
+import de.hofuniversity.iws.client.util.SuccessCallback;
 import de.hofuniversity.iws.client.widgets.Lektion.Lektion;
 import de.hofuniversity.iws.client.widgets.Lektion.Lektion.Builder;
 import de.hofuniversity.iws.shared.dto.LessonPreview;
+import javax.inject.*;
 
 /**
  *
@@ -29,7 +33,7 @@ public class LektionSelector extends Composite {
     private final SubjectJson subject;
     private final LektionPreview preview;
     private final HistoryPageController pageController;
-    private final Builder lektionsBuilder;
+    private final Provider<Builder> lektionsBuilder;
     @UiField HTMLPanel wrap;
     @UiField FocusPanel oImg;
     @UiField Image iImg;
@@ -39,8 +43,8 @@ public class LektionSelector extends Composite {
         public LektionSelector create(LessonPreview lektion, SubjectJson subject, int x, int y);
     }
 
-    @AssistedInject
-    public LektionSelector(Builder lektionsBuilder, HistoryPageController pc, @Assisted LessonPreview lektion,
+    @Inject
+    public LektionSelector(Provider<Builder> lektionsBuilder, HistoryPageController pc, @Assisted LessonPreview lektion,
                            @Assisted SubjectJson subject, @Assisted int x, @Assisted int y) {
         initWidget(uiBinder.createAndBindUi(this));
         this.pageController = pc;
@@ -62,10 +66,14 @@ public class LektionSelector extends Composite {
 
     @UiHandler("oImg")
     public void openLektion(ClickEvent ev) {
-        Lektion l = lektionsBuilder
+        lektionsBuilder.get()
                 .withLesson(lektion.getName())
-                .withSubject(subject).create();
-        pageController.changeToLektion(l);
+                .withSubject(subject).create(new SuccessCallback<Lektion>() {
+            @Override
+            public void onSuccess(Lektion result) {
+                pageController.changePage(result);
+            }
+        });
     }
 
     private class VisibleHandler implements MouseOverHandler {

@@ -121,7 +121,7 @@
     
     <g:HTMLPanel>
         <div id="root">
-            <header:Header></header:Header>
+            <header:Header ui:field='header'/>
             <div id="contentArea">
                 <div id="content">
                     <div class="{style.element}" id="hello">

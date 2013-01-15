@@ -20,16 +20,11 @@ public class Lesson extends Composite {
 
     private static GameInstantiator instantiator = GWT.create(GameInstantiator.class);
     private static LessonUiBinder uiBinder = GWT.create(LessonUiBinder.class);
-    @UiField
-    HeadingElement theme;
-    @UiField
-    HeadingElement title;
-    @UiField
-    ParagraphElement text;
-    @UiField
-    PlayNWidget experiment;
-    @UiField
-    MathWidget formular;
+    @UiField HeadingElement theme;
+    @UiField HeadingElement title;
+    @UiField ParagraphElement text;
+    @UiField PlayNWidget experiment;
+    @UiField MathWidget formular;
     private final LessonJson lesson;
 
     interface LessonUiBinder extends UiBinder<Widget, Lesson> {
@@ -39,13 +34,13 @@ public class Lesson extends Composite {
         this.lesson = lesson;
         initWidget(uiBinder.createAndBindUi(this));
         title.setInnerText(lesson.getTitle());
-        text.setInnerText(lesson.getText());        
-        
+        text.setInnerText(lesson.getText());
+
         theme.setInnerText(subject.getTitle());
 
         formular.setMathText(lesson.getMath());
     }
-    
+
     @UiFactory
     public PlayNWidget createGameWidget() {
         return new PlayNWidget(instantiator.createGame(lesson.getWidget()));

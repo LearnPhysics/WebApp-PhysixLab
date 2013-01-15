@@ -24,17 +24,12 @@ public class Test extends Composite {
     private TestJson test;
     private LessonJson lesson;
     private SubjectJson subject;
-    private UserServiceAsync userService = (UserServiceAsync)GWT.create(UserService.class);
-    @UiField
-    HeadingElement title;
-    @UiField
-    ParagraphElement text;
-    @UiField
-    VerticalPanel illustration;
-    @UiField
-    TextBox solution;
-    @UiField
-    Button submit;
+    private UserServiceAsync userService = (UserServiceAsync) GWT.create(UserService.class);
+    @UiField HeadingElement title;
+    @UiField ParagraphElement text;
+    @UiField VerticalPanel illustration;
+    @UiField TextBox solution;
+    @UiField Button submit;
 
     interface TestUiBinder extends UiBinder<Widget, Test> {
     }
@@ -54,16 +49,15 @@ public class Test extends Composite {
     public void checkSolution(ClickEvent ev) {
         try {
             double sol = Double.parseDouble(solution.getText());
-            if(Utilities.isSimilar(test.getSolution(), sol, 10)) {
-                userService.addTestResult(lesson.getName(),subject.getName(), 0,new TestAsyncCallback());
+            if (Utilities.isSimilar(test.getSolution(), sol, 10)) {
+                userService.addTestResult(lesson.getName(), subject.getName(), 0, new TestAsyncCallback());
             }
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             System.err.println("Input not parsable!");
         }
     }
-    
-        private class TestAsyncCallback implements AsyncCallback<Void> {
+
+    private class TestAsyncCallback implements AsyncCallback<Void> {
 
         @Override
         public void onFailure(Throwable caught) {
@@ -73,8 +67,7 @@ public class Test extends Composite {
         @Override
         public void onSuccess(Void result) {
             Window.alert("Congratulation, you passed the test.");
-                // Spiele Lösungsanimation
+            // Spiele Lösungsanimation
         }
-
     }
 }

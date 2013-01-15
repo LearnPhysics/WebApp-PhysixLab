@@ -8,7 +8,7 @@ import com.google.gwt.core.client.JavaScriptObject;
 
 /**
  *
- * @author some
+ * @author Daniel Heinrich <DannyNullZwo@gmail.com>
  */
 public class GameJson   extends JavaScriptObject {
 

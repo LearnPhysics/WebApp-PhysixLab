@@ -12,7 +12,7 @@ import static playn.core.PlayN.graphics;
 
 /**
  *
- * @author some
+ * @author Daniel Heinrich <DannyNullZwo@gmail.com>
  */
 public class PendelWidget extends StandardPhysicGame {
 
