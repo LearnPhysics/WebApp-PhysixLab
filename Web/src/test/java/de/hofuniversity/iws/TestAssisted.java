@@ -5,7 +5,6 @@
 package de.hofuniversity.iws;
 
 import com.google.inject.assistedinject.Assisted;
-import com.google.inject.assistedinject.AssistedInject;
 import javax.inject.*;
 
 /**
