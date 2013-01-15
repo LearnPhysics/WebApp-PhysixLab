@@ -10,9 +10,10 @@ import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.ui.*;
-import com.google.inject.assistedinject.*;
+import com.google.inject.assistedinject.Assisted;
 import de.hofuniversity.iws.client.HistoryPageController;
 import de.hofuniversity.iws.client.jsonbeans.GameJson;
+import javax.inject.Inject;
 
 /**
  *
@@ -35,7 +36,7 @@ public class GameSelector extends Composite {
         public GameSelector create(GameJson game);
     }
 
-    @AssistedInject
+    @Inject
     public GameSelector(HistoryPageController pc, @Assisted GameJson game) {
         initWidget(uiBinder.createAndBindUi(this));
         pageController = pc;

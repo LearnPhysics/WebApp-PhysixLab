@@ -88,7 +88,7 @@ Uncomment this for XHTML entities
         overflow: hidden;
         }
     </ui:style>
-    <g:ScrollPanel ui:field='sWrap' styleName="{style.scrollWrap}" VerticalScrollPosition="0">
+    <g:ScrollPanel styleName="{style.scrollWrap}" verticalScrollPosition='0'>
         <g:HTMLPanel ui:field="page">
             <header:Header/>
             <g:FocusPanel ui:field='tab1' styleName="{style.tab} {style.tab1}">

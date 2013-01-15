@@ -70,9 +70,9 @@ Uncomment this for XHTML entities
         width:800px;
         }
     </ui:style>
-    <g:ScrollPanel ui:field='sWrap' styleName="{style.scrollWrap}" VerticalScrollPosition="0">
+    <g:ScrollPanel styleName="{style.scrollWrap}" verticalScrollPosition='0'>
         <g:HTMLPanel>
-            <header:Header></header:Header>
+            <header:Header/>
             <div id="contentAreaGame">
                 <div id="content">
                     <h1 ui:field="title"></h1>

@@ -26,8 +26,7 @@ public class HomeFreunde extends Composite {
     private static HomeFreundeUiBinder uiBinder = GWT.create(HomeFreundeUiBinder.class);
     private final UserServiceAsync userService;
     private final PhysixLab lab;
-    @UiField
-    private VerticalPanel friends;
+    @UiField VerticalPanel friends;
 
     @Inject
     public HomeFreunde(UserServiceAsync userService, PhysixLab lab) {

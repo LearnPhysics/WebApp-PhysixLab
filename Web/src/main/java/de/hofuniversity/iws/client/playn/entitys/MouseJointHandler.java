@@ -12,7 +12,7 @@ import playn.core.Pointer;
 
 /**
  *
- * @author some
+ * @author Daniel Heinrich <DannyNullZwo@gmail.com>
  */
 public class MouseJointHandler implements InteractionListener {
 

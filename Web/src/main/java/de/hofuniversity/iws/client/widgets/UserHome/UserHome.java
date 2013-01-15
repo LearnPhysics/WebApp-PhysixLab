@@ -4,38 +4,39 @@
  */
 package de.hofuniversity.iws.client.widgets.UserHome;
 
-import com.google.gwt.core.client.GWT;
+import com.chrisgammage.ginjitsu.client.AfterInject;
 import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.ui.*;
-import de.hofuniversity.iws.client.GenericFactory;
-import de.hofuniversity.iws.client.widgets.CrumbPage;
-import de.hofuniversity.iws.client.widgets.SubWidgets.Breadcrumb.BreadcrumbFactory;
+import de.hofuniversity.iws.client.widgets.SubWidgets.OnlyLogout;
+import de.hofuniversity.iws.client.widgets.UserHome.UserHome.UserHomeUiBinder;
+import de.hofuniversity.iws.client.widgets.base.CrumbPage;
+import de.hofuniversity.iws.client.widgets.history.HistoryElement;
+import de.hofuniversity.iws.client.widgets.history.UserHomeElement;
 import javax.inject.Inject;
 
 /**
  *
  * @author Oliver
  */
-public class UserHome extends CrumbPage {
+public class UserHome extends CrumbPage<UserHomeUiBinder> {
 
-    interface UserHomeUiBinder extends UiBinder<Widget, UserHome> {
+    public interface UserHomeUiBinder extends UiBinder<Widget, UserHome> {
     }
-    private final static UserHomeUiBinder uiBinder = GWT.create(UserHomeUiBinder.class);
     public final static String NAME = "userHome";
     @UiField UserHomeStyle style;
     @UiField HTMLPanel page;
     @UiField SpanElement rail;
-    @UiField ScrollPanel sWrap;
     @UiField FocusPanel tab1;
     @UiField FocusPanel tab2;
     @UiField FocusPanel tab3;
     @UiField FocusPanel tab4;
-
-    public interface UserHomeFactory extends GenericFactory<UserHome> {
-    }
+    @Inject @UiField(provided = true) HomeProfile profile;
+    @Inject @UiField(provided = true) HomeThemenwahl themenwahl;
+    @Inject @UiField(provided = true) HomeFreunde freunde;
+    @Inject @UiField(provided = true) OnlyLogout logout;
 
     interface UserHomeStyle extends CssResource {
 
@@ -61,9 +62,8 @@ public class UserHome extends CrumbPage {
     }
 
     @Inject
-    public UserHome(BreadcrumbFactory factory) {
-        super(null, factory, 1, NAME);
-        initWidget(uiBinder.createAndBindUi(this));
+    public UserHome(UserHomeElement element) {
+        super(element, NAME);
     }
 
     @UiHandler("tab1")

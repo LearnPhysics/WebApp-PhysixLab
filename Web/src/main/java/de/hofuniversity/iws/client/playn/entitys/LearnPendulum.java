@@ -15,7 +15,7 @@ import playn.core.ImmediateLayer.Renderer;
 
 /**
  *
- * @author some
+ * @author Daniel Heinrich <DannyNullZwo@gmail.com>
  */
 public class LearnPendulum extends PhysicEntity implements HasInteractionListener {
 

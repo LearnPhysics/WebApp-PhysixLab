@@ -6,7 +6,7 @@ package de.hofuniversity.iws.shared.services;
 
 /**
  *
- * @author some
+ * @author Daniel Heinrich <DannyNullZwo@gmail.com>
  */
 public class LoginException extends Exception{
 

@@ -13,7 +13,7 @@ import playn.core.*;
 
 /**
  *
- * @author some
+ * @author Daniel Heinrich <DannyNullZwo@gmail.com>
  */
 public class Box extends PhysicEntity implements HasContactListener {
 

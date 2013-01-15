@@ -13,6 +13,7 @@ import com.google.inject.assistedinject.*;
 import de.hofuniversity.iws.client.HistoryPageController;
 import de.hofuniversity.iws.client.jsonbeans.SubjectJson;
 import de.hofuniversity.iws.shared.services.Utilities;
+import javax.inject.Inject;
 
 /**
  *
@@ -37,7 +38,7 @@ public class ThemaSelector extends Composite {
         public ThemaSelector create(SubjectJson thema);
     }
 
-    @AssistedInject
+    @Inject
     public ThemaSelector(HistoryPageController pc, @Assisted SubjectJson thema) {
         initWidget(uiBinder.createAndBindUi(this));
         this.thema = thema;

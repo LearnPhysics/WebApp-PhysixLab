@@ -24,7 +24,7 @@ public class Header extends Composite {
     }
     private final HistoryPageController pageController;
     @UiField//so gwt-test-util is happy
-    private FocusPanel logo;
+    FocusPanel logo;
 
     @Inject
     public Header(HistoryPageController pageController) {

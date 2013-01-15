@@ -23,10 +23,8 @@ public class HomeThemenwahl extends Composite {
     interface HomeThemenwahlUiBinder extends UiBinder<Widget, HomeThemenwahl> {
     }
     private static HomeThemenwahlUiBinder uiBinder = GWT.create(HomeThemenwahlUiBinder.class);
-    @UiField
-    VerticalPanel themaPanel;
-    @UiField
-    ParagraphElement text;
+    @UiField VerticalPanel themaPanel;
+    @UiField ParagraphElement text;
 
     @Inject
     public HomeThemenwahl(LessonServiceAsync lessonService, final ThemaSelectorFactory factory) {

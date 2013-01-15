@@ -4,29 +4,29 @@
  */
 package de.hofuniversity.iws.client.widgets.Thema;
 
-import com.google.gwt.core.client.GWT;
+import com.chrisgammage.ginjitsu.client.AfterInject;
 import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.ui.*;
-import com.google.inject.assistedinject.*;
+import com.google.inject.assistedinject.Assisted;
 import de.hofuniversity.iws.client.jsonbeans.SubjectJson;
-import de.hofuniversity.iws.client.widgets.CrumbPage;
-import de.hofuniversity.iws.client.widgets.SubWidgets.BackButton.BackButtonFactory;
-import de.hofuniversity.iws.client.widgets.SubWidgets.Breadcrumb.BreadcrumbFactory;
 import de.hofuniversity.iws.client.widgets.Thema.Lektionswahl.LektionswahlFactory;
 import de.hofuniversity.iws.client.widgets.Thema.Spielwahl.SpielwahlFactory;
+import de.hofuniversity.iws.client.widgets.Thema.Thema.ThemaUiBinder;
+import de.hofuniversity.iws.client.widgets.base.CrumbPage;
+import de.hofuniversity.iws.client.widgets.history.ThemaElement.ThemaElementFactory;
+import javax.inject.Inject;
 
 /**
  *
  * @author Oliver
  */
-public class Thema extends CrumbPage {
+public class Thema extends CrumbPage<ThemaUiBinder> {
 
-    interface ThemaUiBinder extends UiBinder<Widget, Thema> {
+    public interface ThemaUiBinder extends UiBinder<Widget, Thema> {
     }
-    private static ThemaUiBinder uiBinder = GWT.create(ThemaUiBinder.class);
     public final static String NAME = "thema";
     private final LektionswahlFactory lektionFactory;
     private final SpielwahlFactory spielFactory;
@@ -34,7 +34,6 @@ public class Thema extends CrumbPage {
     @UiField Thema.ThemaStyle style;
     @UiField SpanElement rail;
     @UiField HorizontalPanel railContent;
-    @UiField ScrollPanel sWrap;
     @UiField FocusPanel tab1;
     @UiField FocusPanel tab2;
     @UiField FocusPanel tab3;
@@ -64,15 +63,13 @@ public class Thema extends CrumbPage {
         public Thema create(SubjectJson bean);
     }
 
-    @AssistedInject
-    public Thema(BackButtonFactory backFactory, BreadcrumbFactory breadFactory,
-                 LektionswahlFactory lektionFactory, SpielwahlFactory spielFactory, @Assisted SubjectJson bean) {
-        super(backFactory, breadFactory, 2, NAME + "?" + bean.getName());
+    @Inject
+    public Thema(LektionswahlFactory lektionFactory, SpielwahlFactory spielFactory,
+                 ThemaElementFactory element, @Assisted SubjectJson bean) {
+        super(element.create(bean), NAME + "?" + bean.getName());
         this.lektionFactory = lektionFactory;
         this.spielFactory = spielFactory;
         this.bean = bean;
-        
-        initWidget(uiBinder.createAndBindUi(this));
     }
 
     @UiHandler("tab1")

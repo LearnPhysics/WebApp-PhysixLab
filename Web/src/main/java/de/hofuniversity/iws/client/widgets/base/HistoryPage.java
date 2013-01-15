@@ -2,16 +2,16 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.hofuniversity.iws.client.widgets;
+package de.hofuniversity.iws.client.widgets.base;
 
+import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.ui.Composite;
 
 /**
  *
  * @author Daniel Heinrich <dannynullzwo@gmail.com>
  */
-public abstract class HistoryPage extends Composite {
+public class HistoryPage<E extends UiBinder> extends InjectedBinderWidget<E> {
 
     private String name;
 
@@ -24,8 +24,7 @@ public abstract class HistoryPage extends Composite {
     }
 
     @Override
-    protected void onAttach() {
-        super.onAttach();
+    protected void onLoad() {
         History.newItem(name, false);
     }
 }

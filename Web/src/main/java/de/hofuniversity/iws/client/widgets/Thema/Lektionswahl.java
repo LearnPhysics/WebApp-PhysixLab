@@ -11,12 +11,13 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
-import com.google.inject.assistedinject.*;
+import com.google.inject.assistedinject.Assisted;
 import de.hofuniversity.iws.client.jsonbeans.SubjectJson;
 import de.hofuniversity.iws.client.widgets.SubWidgets.LektionSelector.LektionSelectorFactory;
 import de.hofuniversity.iws.shared.CollectionUtils.Selector;
 import de.hofuniversity.iws.shared.dto.LessonPreview;
 import de.hofuniversity.iws.shared.services.LessonServiceAsync;
+import javax.inject.Inject;
 
 import static de.hofuniversity.iws.shared.CollectionUtils.groupBy;
 import static de.hofuniversity.iws.shared.CollectionUtils.select;
@@ -42,7 +43,7 @@ public class Lektionswahl extends Composite {
         public Lektionswahl create(SubjectJson thema);
     }
 
-    @AssistedInject
+    @Inject
     public Lektionswahl(LektionSelectorFactory factory, LessonServiceAsync lessonService,
                         @Assisted SubjectJson thema) {
         subject = thema;

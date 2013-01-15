@@ -99,9 +99,9 @@ Uncomment this for XHTML entities
         }
     </ui:style>
     
-    <g:ScrollPanel ui:field='sWrap' styleName="{style.scrollWrap}" VerticalScrollPosition="0">
+    <g:ScrollPanel styleName="{style.scrollWrap}" verticalScrollPosition='0'>
         <g:HTMLPanel ui:field="page">
-            <header:Header></header:Header>
+            <header:Header/>
             <g:FocusPanel ui:field='tab1' styleName="{style.tab} {style.tab1}">
                 <g:HTMLPanel>
                     <p>Statistik</p>
@@ -124,14 +124,14 @@ Uncomment this for XHTML entities
             </g:FocusPanel> 
             <span ui:field='rail' class="{style.posThemenwahl}">
                 <g:HorizontalPanel>
-                    <my:HomeStatistik></my:HomeStatistik>
-                    <my:HomeThemenwahl></my:HomeThemenwahl>
-                    <my:HomeFreunde></my:HomeFreunde>
-                    <my:HomeProfile></my:HomeProfile>
+                    <my:HomeStatistik/>
+                    <my:HomeThemenwahl ui:field='themenwahl'/>
+                    <my:HomeFreunde ui:field='freunde'/>
+                    <my:HomeProfile ui:field='profile'/>
                 </g:HorizontalPanel>
             </span>
             <bread:Breadcrumb/>
-            <bread:OnlyLogout/>
+            <bread:OnlyLogout ui:field='logout'/>
         </g:HTMLPanel>
     </g:ScrollPanel>
 </ui:UiBinder>

@@ -4,7 +4,6 @@ import com.google.gwt.core.client.*;
 import de.hofuniversity.iws.client.widgets.LoginPage;
 
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.inject.Inject;
 
 /*
  * To change this template, choose Tools | Templates
@@ -16,20 +15,18 @@ import com.google.inject.Inject;
  */
 public class LoginModul implements EntryPoint {
 
-  private final TestInjector injector = GWT.create(TestInjector.class);
-    private LoginPage login;
+//    private LoginPage login;
 
-    @Inject
     public LoginModul() {
-        login = injector.getLoginPage().create();
+        TestInjector.INSTANCE.get().create("asd");
     }
 
     @Override
     public void onModuleLoad() {
-        RootPanel.get().add(login);
+//        RootPanel.get().add(login);
     }
 
-    public LoginPage getLogin() {
-        return login;
-    }
+//    public LoginPage getLogin() {
+//        return login;
+//    }
 }

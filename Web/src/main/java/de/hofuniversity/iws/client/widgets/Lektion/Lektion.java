@@ -4,7 +4,7 @@
  */
 package de.hofuniversity.iws.client.widgets.Lektion;
 
-import com.google.gwt.core.client.GWT;
+import com.chrisgammage.ginjitsu.client.AfterInject;
 import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.resources.client.CssResource;
@@ -13,36 +13,27 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import com.google.inject.assistedinject.*;
 import de.hofuniversity.iws.client.jsonbeans.*;
-import de.hofuniversity.iws.client.widgets.CrumbPage;
-import de.hofuniversity.iws.client.widgets.SubWidgets.BackButton.BackButtonFactory;
-import de.hofuniversity.iws.client.widgets.SubWidgets.Breadcrumb.BreadcrumbFactory;
+import de.hofuniversity.iws.client.widgets.Lektion.Lektion.LektionUiBinder;
+import de.hofuniversity.iws.client.widgets.base.CrumbPage;
+import de.hofuniversity.iws.client.widgets.history.LektionsElement.LektionsElementFactory;
 import de.hofuniversity.iws.shared.services.LessonServiceAsync;
-import javax.inject.Inject;
+import javax.inject.*;
 
 /**
  *
  * @author Oliver
  */
-public class Lektion extends CrumbPage {
+public class Lektion extends CrumbPage<LektionUiBinder> {
 
     //<editor-fold defaultstate="collapsed" desc="ui-stuff">
-    private static LektionUiBinder uiBinder = GWT.create(LektionUiBinder.class);
-    @UiField
-    Lektion.LektionStyle style;
-    @UiField
-    SpanElement rail;
-    @UiField
-    HorizontalPanel railContent;
-    @UiField
-    ScrollPanel sWrap;
-    @UiField
-    FocusPanel tab1;
-    @UiField
-    FocusPanel tab2;
-    @UiField HTMLPanel page;
-
-    interface LektionUiBinder extends UiBinder<Widget, Lektion> {
+    public interface LektionUiBinder extends UiBinder<Widget, Lektion> {
     }
+    @UiField Lektion.LektionStyle style;
+    @UiField SpanElement rail;
+    @UiField HorizontalPanel railContent;
+    @UiField FocusPanel tab1;
+    @UiField FocusPanel tab2;
+    @UiField HTMLPanel page;
 
     interface LektionStyle extends CssResource {
 
@@ -64,106 +55,95 @@ public class Lektion extends CrumbPage {
     public static class Builder {
 
         private final LessonServiceAsync lessonService;
-        private final BackButtonFactory backFactory;
-        private final BreadcrumbFactory breadFactory;
-        private LessonJson lesson;
-        private SubjectJson subject;
+        private final LektionFactory factory;
+        private LessonJson lessonBean;
+        private SubjectJson subjectBean;
         private String lessonName, subjectName;
 
         @Inject
-        public Builder(LessonServiceAsync lessonService, BackButtonFactory backFactory, BreadcrumbFactory breadFactory) {
+        public Builder(LessonServiceAsync lessonService, LektionFactory factory) {
             this.lessonService = lessonService;
-            this.backFactory = backFactory;
-            this.breadFactory = breadFactory;
+            this.factory = factory;
         }
 
         public Builder withLesson(String name) {
             lessonName = name;
-            if (lesson != null) {
-                if (!lesson.getName().equals(name)) {
-                    lesson = null;
+            if (lessonBean != null) {
+                if (!lessonBean.getName().equals(name)) {
+                    lessonBean = null;
                 }
             }
             return this;
         }
 
         public Builder withLesson(LessonJson bean) {
-            lesson = bean;
+            lessonBean = bean;
             return this;
         }
 
         public Builder withSubject(String name) {
             subjectName = name;
-            if (subject != null) {
-                if (!subject.getName().equals(name)) {
-                    subject = null;
+            if (subjectBean != null) {
+                if (!subjectBean.getName().equals(name)) {
+                    subjectBean = null;
                 }
             }
             return this;
         }
 
         public Builder withSubject(SubjectJson bean) {
-            subject = bean;
+            subjectBean = bean;
             return this;
         }
 
-        private static class SubAsync implements AsyncCallback<String> {
+        private class SubAsync implements AsyncCallback<String> {
 
-            private final Lektion l;
+            private final AsyncCallback<Lektion> callback;
+            private final boolean wasSubject;
 
-            public SubAsync(Lektion l) {
-                this.l = l;
+            public SubAsync(AsyncCallback<Lektion> callback, boolean wasSubject) {
+                this.callback = callback;
+                this.wasSubject = wasSubject;
             }
 
             @Override
             public void onFailure(Throwable caught) {
-                throw new UnsupportedOperationException("Not supported yet.");
+                callback.onFailure(caught);
             }
 
             @Override
             public void onSuccess(String result) {
-                l.ini(SubjectJson.create(result));
+                if (wasSubject) {
+                    subjectBean = SubjectJson.create(result);
+                } else {
+                    lessonBean = LessonJson.create(result);
+                }
+                nextRound();
+            }
+
+            public void nextRound() {
+                if (subjectBean != null && lessonBean != null) {
+                    callback.onSuccess(factory.create(lessonBean, subjectBean));
+                } else if (lessonBean == null) {
+                    lessonService.getLesson(lessonName, new SubAsync(callback, false));
+                } else if (subjectBean == null) {
+                    if (subjectName == null) {
+                        lessonService.getSubject(lessonBean.getThema(), new SubAsync(callback, true));
+                    } else {
+                        lessonService.getSubject(subjectName, new SubAsync(callback, true));
+                    }
+                }
             }
         }
 
-        public Lektion create() {
-            final Lektion l = new Lektion(backFactory, breadFactory);
-            if (subject != null) {
-                l.ini(subject);
-            } else if (subjectName != null) {
-                lessonService.getSubject(subjectName, new SubAsync(l));
-            }
-            if (lesson != null) {
-                l.ini(lesson);
-            } else if (lessonName != null) {
-                lessonService.getLesson(lessonName, new AsyncCallback<String>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        throw new UnsupportedOperationException("Not supported yet.");
-                    }
-
-                    @Override
-                    public void onSuccess(String result) {
-                        LessonJson les = LessonJson.create(result);
-                        l.ini(les);
-                        if (subjectName == null) {
-                            lessonService.getSubject(les.getThema(), new SubAsync(l));
-                        }
-                    }
-                });
-            }
-            return l;
+        public void create(AsyncCallback<Lektion> callback) {
+            new SubAsync(callback, true).nextRound();
         }
     }
     //</editor-fold>
     public final static String NAME = "lektion";
-    private LessonJson lesson;
-    private SubjectJson subject;
-
-    private Lektion(BackButtonFactory backFactory, BreadcrumbFactory breadFactory) {
-        super(backFactory, breadFactory, 3, NAME);
-        initWidget(uiBinder.createAndBindUi(this));
-    }
+    private final LessonJson lesson;
+    private final SubjectJson subject;
 
     public interface LektionFactory {
 
@@ -171,34 +151,19 @@ public class Lektion extends CrumbPage {
     }
 
     @AssistedInject
-    public Lektion(BackButtonFactory backFactory, BreadcrumbFactory breadFactory, @Assisted LessonJson lektion, @Assisted SubjectJson subject) {
-        this(backFactory, breadFactory);
-        setName(NAME + "?" + lektion.getName());
-        railContent.add(new Lesson(lektion, subject));
-        railContent.add(new Test(lektion.getTest(), lesson, subject));
+    public Lektion(LektionsElementFactory element, @Assisted LessonJson lesson, @Assisted SubjectJson subject) {
+        super(element.create(subject, lesson), NAME + "?" + lesson.getName());
+        this.lesson = lesson;
+        this.subject = subject;
     }
 
-    private void ini(LessonJson l) {
-        lesson = l;
-        setName(NAME + "?" + l.getName());
-        ini();
+    @Override
+    public void initWidget() {
+        railContent.add(new Lesson(lesson, subject));
+        railContent.add(new Test(lesson.getTest(), lesson, subject));
     }
 
-    private void ini(SubjectJson s) {
-        subject = s;
-        ini();
-    }
-
-    private void ini() {
-        if (lesson != null && subject != null) {
-            railContent.add(new Lesson(lesson, subject));
-            railContent.add(new Test(lesson.getTest(), lesson, subject));
-            lesson = null;
-            subject = null;
-        }
-    }
-
-    public String getTitle() {
+    public String getLessonTitle() {
         return lesson.getTitle();
     }
 
