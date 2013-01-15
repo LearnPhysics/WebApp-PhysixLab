@@ -72,11 +72,11 @@ public class LessonHandler {
     }
 
     // Get lesson by Id
-    public static LessonDBO getGameEntity(long id, boolean detach) {
+    public static LessonDBO getLessonEntity(long id, boolean detach) {
         return (LessonDBO) GenericHandler.getEntity(LessonDBO.class, id, detach);
     }
     
-    public static LessonDBO getGameEntityOrCreateTemplate(String name, boolean detach) {
+    public static LessonDBO getLessonEntityOrCreateTemplate(String name, boolean detach) {
         LessonDBO retval = null;
 
         try {
