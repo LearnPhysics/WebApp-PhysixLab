@@ -1,23 +1,12 @@
 /*
- * Copyright (C) 2012 Daniel Heinrich
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
  */
-package de.hofuniversity.iws.client;
+package de.hofuniversity.iws.gwttests;
 
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.gwt.inject.client.assistedinject.GinFactoryModuleBuilder;
+import de.hofuniversity.iws.client.PhysixLabModul;
 import de.hofuniversity.iws.client.widgets.Game.Game.GameFactory;
 import de.hofuniversity.iws.client.widgets.Lektion.Lektion.LektionFactory;
 import de.hofuniversity.iws.client.widgets.SubWidgets.BackButton.BackButtonFactory;
@@ -35,30 +24,31 @@ import de.hofuniversity.iws.client.widgets.history.ThemaElement.ThemaElementFact
 
 /**
  *
- * @author Daniel Heinrich <dannynullzwo@gmail.com>
+ * @author Daniel Heinrich <DannyNullZwo@gmail.com>
  */
-public class PhysixLabModul extends AbstractGinModule {
-
-    public static Class[] FACTORY_CLASSES = new Class[]{
-        ThemaSelectorFactory.class,
-        LektionswahlFactory.class,
-        ThemaFactory.class,
-        LektionSelectorFactory.class,
-        GameSelectorFactory.class,
-        SpielwahlFactory.class,
-        BreadcrumbFactory.class,
-        BackButtonFactory.class,
-        CrumbFactory.class,
-        LektionFactory.class,
-        GameFactory.class,
-        LektionsElementFactory.class,
-        ThemaElementFactory.class,
-        GameElementFactory.class,};
+public class TestGinModule extends AbstractGinModule {
 
     @Override
     protected void configure() {
+        Class[] factoryClasses = new Class[]
+        {
+            ThemaSelectorFactory.class,
+            LektionswahlFactory.class,
+            ThemaFactory.class,
+            LektionSelectorFactory.class,
+            GameSelectorFactory.class,
+            SpielwahlFactory.class,
+            BreadcrumbFactory.class,
+            BackButtonFactory.class,
+            CrumbFactory.class,
+            LektionFactory.class,
+            GameFactory.class,
+            LektionsElementFactory.class,
+            ThemaElementFactory.class,
+            GameElementFactory.class,
+        };
 
-        for (Class factory : FACTORY_CLASSES) {
+        for (Class factory : factoryClasses) {
             install(new GinFactoryModuleBuilder().build(factory));
         }
     }

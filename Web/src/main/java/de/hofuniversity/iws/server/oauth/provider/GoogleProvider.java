@@ -16,6 +16,7 @@
  */
 package de.hofuniversity.iws.server.oauth.provider;
 
+import de.hofuniversity.iws.server.oauth.*;
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.builder.api.GoogleApi;
 
@@ -24,13 +25,13 @@ import org.scribe.builder.api.GoogleApi;
  * @author Andreas Arndt <andreas.arndt@hof-university.de>
  */
 public class GoogleProvider extends OAuthProvider {
-
-    private static final String Google_SCOPE = "https://www.googleapis.com/auth/plus.me";
-
+    
+    private static final String Google_SCOPE = OAuthProperties.APP.getPropertie(Providers.GOOGLE.name() + ".Scope");
+    
     public GoogleProvider(String apiKey, String apiSecret) {
         super(apiKey, apiSecret, GoogleApi.class);
     }
-
+    
     @Override
     protected ServiceBuilder custom(ServiceBuilder builder) {
         return builder.scope(Google_SCOPE);

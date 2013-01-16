@@ -39,8 +39,8 @@ import static de.hofuniversity.iws.shared.CollectionUtils.select;
 public class LessonServiceImpl extends RemoteServiceServlet implements LessonService {
 
     private static final Map<String, String> lessons = new HashMap<String, String>();
-    private static final String SUBJECTS_PATH = "/Subjects/";
-    private static final String LESSONS_PATH = "/Lessons/";
+    public static final String SUBJECTS_PATH = "/Subjects/";
+    public static final String LESSONS_PATH = "/Lessons/";
 
     private String getResourcePath() {
         return getServletContext().getRealPath(".");
@@ -48,6 +48,7 @@ public class LessonServiceImpl extends RemoteServiceServlet implements LessonSer
 
     @Override
     public String[] getSubjects() {
+        
         File[] subjects = new File(getResourcePath() + SUBJECTS_PATH).listFiles();
         return select(asIterable(subjects), new Selector<File, String>() {
             @Override

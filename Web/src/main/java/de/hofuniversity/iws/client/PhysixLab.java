@@ -34,14 +34,8 @@ import javax.inject.*;
 public class PhysixLab {
 
     private LoginDTO loginData;
-    private final HistoryPageController pageControler;
-    private final LoginServiceAsync loginService;
-
-    @Inject
-    public PhysixLab(HistoryPageController pageControler, LoginServiceAsync loginService) {
-        this.pageControler = pageControler;
-        this.loginService = loginService;
-    }
+    @Inject private HistoryPageController pageControler;
+    @Inject private LoginServiceAsync loginService;
 
     public void init() {
         History.addValueChangeHandler(pageControler);
