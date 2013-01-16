@@ -103,7 +103,7 @@ public class NetworkAccountDBO implements Serializable, GenericEntity {
     public void setOauthAccessSecret(String oauthAccessSecret) {
         this.oauthAccessSecret = oauthAccessSecret;
     }
-
+/*
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof NetworkAccountDBO)) {
@@ -121,4 +121,5 @@ public class NetworkAccountDBO implements Serializable, GenericEntity {
         hash = 89 * hash + (this.accountIdentificationString != null ? this.accountIdentificationString.hashCode() : 0);
         return hash;
     }
+*/
 }

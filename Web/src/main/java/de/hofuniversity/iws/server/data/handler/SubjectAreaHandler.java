@@ -87,7 +87,7 @@ public class SubjectAreaHandler {
     }
 
     // Get subject area by Id
-    public static SubjectAreaDBO getGameEntity(long id, boolean detach) {
+    public static SubjectAreaDBO getSubjectAreaEntity(long id, boolean detach) {
         return (SubjectAreaDBO) GenericHandler.getEntity(SubjectAreaDBO.class, id, detach);
     }
 }

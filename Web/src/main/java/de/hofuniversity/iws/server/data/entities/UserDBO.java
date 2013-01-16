@@ -198,7 +198,7 @@ public class UserDBO implements Serializable, GenericEntity {
     public User getDTO() {
         return new User(getUserName(), getLastName(), getFirstName(), getCity(), getUserPic(), getBirthDate());
     }
-
+/*
     @Override
     public boolean equals(Object other) {
         if (this == other) {
@@ -226,4 +226,5 @@ public class UserDBO implements Serializable, GenericEntity {
         result = 29 * result + getBirthDate().getNanos();
         return result;
     }
+*/
 }
