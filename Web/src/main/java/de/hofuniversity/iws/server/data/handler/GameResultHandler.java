@@ -1,8 +1,28 @@
+/*
+ * Copyright (C) 2012 Oliver Schütz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package de.hofuniversity.iws.server.data.handler;
 
 import de.hofuniversity.iws.server.data.entities.GameResultDBO;
 import javax.persistence.EntityManager;
 
+/**
+ *
+ * @author Oliver Schütz
+ */
 public class GameResultHandler {
 
     private static EntityManager entityManager = HibernateUtil
@@ -69,7 +89,7 @@ public class GameResultHandler {
     }
 
     // Get game result by Id
-    public static GameResultDBO getGameEntity(long id, boolean detach) {
+    public static GameResultDBO getGameResultEntity(long id, boolean detach) {
         return (GameResultDBO) GenericHandler.getEntity(GameResultDBO.class, id, detach);
     }
 }

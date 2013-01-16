@@ -4,7 +4,7 @@
 
     <!-- We need the JUnit module in the main module,               -->
     <!-- otherwise eclipse complains (Google plugin bug?)           -->
-    <!--<inherits name='com.google.gwt.junit.JUnit' />-->
+    <inherits name='com.google.gwt.junit.JUnit' />
 
     <!-- Inherit the default GWT style sheet.  You can change       -->
     <!-- the theme of your GWT application by uncommenting          -->
@@ -20,13 +20,14 @@
     <inherits name='playn.PlayN'/>
     <inherits name="org.jbox2d.GwtBox2D" />
     <!--for the menu UI--> 
-    <inherits name='tripleplay.TriplePlay'/>
-    <!--for enhanced logging--> 
-    <!--<inherits name='com.google.gwt.inject.Inject'/>-->
+    <inherits name='tripleplay.TriplePlay'/>    
+    <!--dependency injection stuff-->
+    <inherits name='com.google.gwt.inject.Inject'/>
+    <inherits name="com.chrisgammage.ginjitsu.GinJitsu"/>
     
-    <inherits name='com.google.common.base.Base'/>
-    
+    <inherits name='com.google.common.base.Base'/>    
     <inherits name="com.reveregroup.gwt.imagepreloader.ImagePreloader" />
+    
   
     <!-- Specify the path to any remote services.                   -->
     <servlet path="/login" class="de.hofuniversity.iws.server.services.LoginServiceImpl" />

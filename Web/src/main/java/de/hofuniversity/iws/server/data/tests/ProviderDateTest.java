@@ -10,15 +10,15 @@ import java.net.*;
 import java.util.Scanner;
 
 import com.google.common.base.Optional;
+import de.hofuniversity.iws.server.data.entities.UserDBO;
 import de.hofuniversity.iws.server.oauth.*;
 import de.hofuniversity.iws.server.oauth.accessors.*;
 import de.hofuniversity.iws.server.oauth.provider.OAuthProvider;
-import de.hofuniversity.iws.server.data.entities.UserDBO;
 import org.scribe.model.*;
 
 /**
  *
- * @author UserDBO
+ * @author Andreas Arndt <andreas.arndt@hof-university.de>
  */
 public class ProviderDateTest {
 

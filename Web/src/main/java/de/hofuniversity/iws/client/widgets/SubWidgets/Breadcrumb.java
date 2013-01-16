@@ -1,51 +1,58 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+  * Copyright (C) 2012 Oliver Schütz
+  *
+  * This program is free software: you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation, either version 3 of the License, or
+  * (at your option) any later version.
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  *
+  * You should have received a copy of the GNU General Public License
+  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  */
 package de.hofuniversity.iws.client.widgets.SubWidgets;
-
-import java.util.List;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.ui.*;
-import de.hofuniversity.iws.client.util.*;
+import com.google.inject.assistedinject.Assisted;
+import de.hofuniversity.iws.client.widgets.SubWidgets.Crumb.CrumbFactory;
+import de.hofuniversity.iws.client.widgets.history.HistoryElement;
+import javax.inject.Inject;
 
 /**
  *
- * @author Oliver
+ * @author Oliver Schütz
  */
 public class Breadcrumb extends Composite {
-    
-    private static BreadcrumbUiBinder uiBinder = GWT.create(BreadcrumbUiBinder.class);
-    private int layer;
-    
-    @UiField HorizontalPanel crumbs;
-    
+
     interface BreadcrumbUiBinder extends UiBinder<Widget, Breadcrumb> {
     }
-    
-    public Breadcrumb(int layer) {
-        initWidget(uiBinder.createAndBindUi(this));
-        this.layer = layer;
-        setup();
+    private static BreadcrumbUiBinder uiBinder = GWT.create(BreadcrumbUiBinder.class);
+    @UiField HorizontalPanel crumbs;
+
+    public interface BreadcrumbFactory {
+
+        public Breadcrumb create(HistoryElement element);
     }
-    
-    private void setup() {
+
+    @Inject
+    public Breadcrumb(CrumbFactory factory, @Assisted HistoryElement element) {
+        initWidget(uiBinder.createAndBindUi(this));
+
         try {
-            List<CrumbTuple> ctList = AddressStack.getInstance().getListTillLayer(layer);
-            System.err.println("Breadcrumb Length: " + ctList.size());
-            for(int i = 0; i < ctList.size(); i++) {
-                if(ctList.get(i).getLayer() > 0) {
-                    crumbs.add(new Crumb(ctList.get(i)));
-                    System.err.println(ctList.get(i).getLabel());
-                    if(i < ctList.size() - 1) {
-                        crumbs.add(new SplitterParagraph());
-                    }
-                }
+            HistoryElement acc = element;
+            while (acc.hasParent()) {
+                crumbs.insert(acc.createWidget(), 0);
+                crumbs.insert(new SplitterParagraph(), 0);
+                acc = acc.getParent();
             }
-        }
-        catch(IndexOutOfBoundsException e) {
+            crumbs.insert(acc.createWidget(), 0);
+        } catch (IndexOutOfBoundsException e) {
             System.err.println("Couldn't build breadcrumbs after reload!");
         }
     }

@@ -1,7 +1,19 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+  * Copyright (C) 2012 Oliver Schütz
+  *
+  * This program is free software: you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation, either version 3 of the License, or
+  * (at your option) any later version.
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  *
+  * You should have received a copy of the GNU General Public License
+  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  */
 package de.hofuniversity.iws.client.widgets.UserHome;
 
 import java.sql.Timestamp;
@@ -12,35 +24,38 @@ import com.google.gwt.user.client.ui.*;
 import de.hofuniversity.iws.client.PhysixLab;
 import de.hofuniversity.iws.client.widgets.SubWidgets.UserHomeFriend;
 import de.hofuniversity.iws.shared.dto.User;
-import de.hofuniversity.iws.shared.services.*;
+import de.hofuniversity.iws.shared.services.UserServiceAsync;
+import javax.inject.Inject;
 
 /**
  *
- * @author Oliver
+ * @author Oliver Schütz
  */
 public class HomeFreunde extends Composite {
 
-    private static HomeFreundeUiBinder uiBinder = GWT.create(HomeFreundeUiBinder.class);
-    private final static UserServiceAsync userService = GWT.create(UserService.class);
-    @UiField
-    VerticalPanel friends;
-
     interface HomeFreundeUiBinder extends UiBinder<Widget, HomeFreunde> {
     }
+    private static HomeFreundeUiBinder uiBinder = GWT.create(HomeFreundeUiBinder.class);
+    private final UserServiceAsync userService;
+    private final PhysixLab lab;
+    @UiField VerticalPanel friends;
 
-    public HomeFreunde() {
+    @Inject
+    public HomeFreunde(UserServiceAsync userService, PhysixLab lab) {
+        this.userService = userService;
+        this.lab = lab;
         initWidget(uiBinder.createAndBindUi(this));
         // setup();
         setTestFriends();
     }
 
     private void setup() {
-        User user = PhysixLab.getSessionUser();
+        User user = lab.getSessionUser();
 //        for(User friend : user.getBilateralFriends()) {
 //            addFriend(friend);
 //        }
     }
-    
+
     private void setTestFriends() {
 
         User user0 = new User();
@@ -59,8 +74,8 @@ public class HomeFreunde extends Composite {
         user1.setBirthDate(new Timestamp(133876800));
         user2.setBirthDate(new Timestamp(1038768000));
 
-        
-        
+
+
         user0.setUserPic("https://si0.twimg.com/profile_images/2641434457/369709d0d9861e4a7298c8606023e42b.png");
         user1.setUserPic("images/ReplacementImages/Profile01.png");
         user2.setUserPic("images/ReplacementImages/Profile02.png");

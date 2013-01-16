@@ -18,7 +18,7 @@ import playn.core.Pointer.Listener;
 
 /**
  *
- * @author some
+ * @author Daniel Heinrich <DannyNullZwo@gmail.com>
  */
 public class InputListener implements Listener {
 

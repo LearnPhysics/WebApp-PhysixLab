@@ -20,26 +20,26 @@
     <properties>
         <!-- Convenience property to set the GWT version -->
         <playNVersion>1.5.1</playNVersion>
-        <gwtVersion>2.5.0</gwtVersion>
+        <gwt.version>2.5.0</gwt.version>
         <!-- GWT needs at least java 1.5 -->
         <runTarget>PhysixLab.html</runTarget>
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>
         <eclipselink.version>2.4.0</eclipselink.version>
+        <gwt.testpatter>**/*GwtTest.java</gwt.testpatter>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-servlet</artifactId>
-            <version>${gwtVersion}</version>
+            <version>${gwt.version}</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-user</artifactId>
-            <version>${gwtVersion}</version>
+            <version>${gwt.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -166,13 +166,29 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>1.9.5</version>
+            <version>1.8.5</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-jdk14</artifactId>
             <version>1.6.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt.inject</groupId>
+            <artifactId>gin</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.chrisgammage</groupId>
+            <artifactId>GinJitsu</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jukito</groupId>
+            <artifactId>jukito</artifactId>
+            <version>1.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -219,6 +235,7 @@
                         <physixlab>de.hofuniversity.iws.server</physixlab>
                     </packageNamePerModule>
                     <scanRemoteServiceRelativePathAnnotation>true</scanRemoteServiceRelativePathAnnotation>
+                    <includes>**/Gwt*Suite.java</includes>
                 </configuration>
             </plugin>
 
@@ -265,6 +282,16 @@
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.13</version>
+                <configuration>
+                    <excludes>
+                        <exclude>${gwt.testpatter}</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
         </plugins>

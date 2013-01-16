@@ -1,7 +1,19 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+  * Copyright (C) 2012 Andreas Arndt
+  *
+  * This program is free software: you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation, either version 3 of the License, or
+  * (at your option) any later version.
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  *
+  * You should have received a copy of the GNU General Public License
+  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  */
 package de.hofuniversity.iws.server.services;
 
 import java.util.UUID;
@@ -9,16 +21,16 @@ import java.util.UUID;
 import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import de.hofuniversity.iws.server.data.entities.UserDBO;
 import de.hofuniversity.iws.server.oauth.*;
 import de.hofuniversity.iws.server.oauth.provider.OAuthProvider;
 import de.hofuniversity.iws.shared.dto.LoginDTO;
-import de.hofuniversity.iws.server.data.entities.UserDBO;
 import de.hofuniversity.iws.shared.services.*;
 import javax.servlet.http.*;
 
 /**
  *
- * @author UserDBO
+ * @author Andreas Arndt <andreas.arndt@hof-university.de>
  */
 @RemoteServiceRelativePath("login")
 public class LoginServiceImpl extends RemoteServiceServlet implements LoginService {

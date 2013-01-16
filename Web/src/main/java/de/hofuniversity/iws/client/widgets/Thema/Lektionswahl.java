@@ -1,7 +1,19 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+  * Copyright (C) 2012 Oliver Schütz
+  *
+  * This program is free software: you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation, either version 3 of the License, or
+  * (at your option) any later version.
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  *
+  * You should have received a copy of the GNU General Public License
+  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  */
 package de.hofuniversity.iws.client.widgets.Thema;
 
 import java.util.*;
@@ -11,38 +23,45 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
+import com.google.inject.assistedinject.Assisted;
 import de.hofuniversity.iws.client.jsonbeans.SubjectJson;
-import de.hofuniversity.iws.client.widgets.SubWidgets.LektionSelector;
+import de.hofuniversity.iws.client.widgets.SubWidgets.LektionSelector.LektionSelectorFactory;
 import de.hofuniversity.iws.shared.CollectionUtils.Selector;
 import de.hofuniversity.iws.shared.dto.LessonPreview;
-import de.hofuniversity.iws.shared.services.*;
+import de.hofuniversity.iws.shared.services.LessonServiceAsync;
+import javax.inject.Inject;
 
 import static de.hofuniversity.iws.shared.CollectionUtils.groupBy;
 import static de.hofuniversity.iws.shared.CollectionUtils.select;
 
 /**
  *
- * @author Oliver
+ * @author Oliver Schütz
  */
 public class Lektionswahl extends Composite {
 
+    interface LektionswahlUiBinder extends UiBinder<Widget, Lektionswahl> {
+    }
     private static LektionswahlUiBinder uiBinder = GWT.create(LektionswahlUiBinder.class);
     private static final int TOTAL_TREE_WIDTH = 880;
     private static final int TREE_Y_STRIDE = 160;
     private static final int TREE_X_OFFSET = -40;
-    private final LessonServiceAsync lessonService = (LessonServiceAsync) GWT.create(LessonService.class);
-    @UiField
-    HTMLPanel lektionTree;
+    private final LektionSelectorFactory factory;
     private final SubjectJson subject;
+    @UiField HTMLPanel lektionTree;
 
-    interface LektionswahlUiBinder extends UiBinder<Widget, Lektionswahl> {
+    public interface LektionswahlFactory {
+
+        public Lektionswahl create(SubjectJson thema);
     }
 
-    public Lektionswahl(SubjectJson thema) {
+    @Inject
+    public Lektionswahl(LektionSelectorFactory factory, LessonServiceAsync lessonService,
+                        @Assisted SubjectJson thema) {
         subject = thema;
+        this.factory = factory;
         initWidget(uiBinder.createAndBindUi(this));
         lessonService.getLessonPreviews(thema.getName(), new AsyncCallback<LessonPreview[]>() {
-
             @Override
             public void onFailure(Throwable caught) {
                 throw new UnsupportedOperationException("Not supported yet.");
@@ -111,7 +130,7 @@ public class Lektionswahl extends Composite {
         for (int i = 0; i < lek.size(); i++) {
             int x = unit * (i + offset) + unit / 2 + TREE_X_OFFSET;
             int y = depth * TREE_Y_STRIDE;
-            lektionTree.add(new LektionSelector(lek.get(i), subject, x, y));
+            lektionTree.add(factory.create(lek.get(i), subject, x, y));
             List<LessonPreview> children = idToChildren.get(lek.get(i).getName());
             if (children != null) {
                 addToTree(children, depth + 1, childs, widths, idToChildren);

@@ -12,9 +12,49 @@
     <version>1.0-SNAPSHOT</version>
     
     <name>WebApp</name>
+    <url>https://github.com/LearnPhysics/WebApp-PhysixLab</url>
     
     <modules>
         <module>Web</module>
         <module>GameGenerator</module>
+        <module>GinJitsu</module>
     </modules>
+    
+    <issueManagement>
+        <url>${project.url}/issues</url>
+        <system>GitHub Issues</system>
+    </issueManagement>
+    
+    <licenses>
+        <license>
+            <name>GPL 3.0 License</name>
+            <url>http://www.gnu.org/licenses/gpl-3.0.html</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:git://github.com/LearnPhysics/WebApp-PhysixLab.git</connection>
+        <developerConnection>scm:git:git@github.com/LearnPhysics/WebApp-PhysixLab.git</developerConnection>
+        <url>http://github.com/LearnPhysics/WebApp-PhysixLab</url>
+    </scm>
+    
+    <developers>
+        <developer>
+            <name>Andreas Arndt</name>
+            <email>andreas.arndt@hof-university.de</email>
+        </developer>
+        <developer>
+            <name>Daniel Heinrich</name>
+            <email>dannynullzwo@gmail.com</email>
+            <id>Danny02</id>
+            <url>https://github.com/Danny02</url>
+        </developer>
+        <developer>
+            <name>Oliver Schütz</name>
+        </developer>
+    </developers>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 </project>

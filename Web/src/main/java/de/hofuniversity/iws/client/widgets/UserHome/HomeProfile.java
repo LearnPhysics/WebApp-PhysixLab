@@ -1,7 +1,19 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+  * Copyright (C) 2012 Oliver Schütz
+  *
+  * This program is free software: you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation, either version 3 of the License, or
+  * (at your option) any later version.
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  *
+  * You should have received a copy of the GNU General Public License
+  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  */
 package de.hofuniversity.iws.client.widgets.UserHome;
 
 import com.google.gwt.core.client.GWT;
@@ -10,25 +22,23 @@ import com.google.gwt.uibinder.client.*;
 import com.google.gwt.user.client.ui.*;
 import de.hofuniversity.iws.client.PhysixLab;
 import de.hofuniversity.iws.client.widgets.SubWidgets.ProfileBig;
-import de.hofuniversity.iws.shared.dto.User;
+import javax.inject.Inject;
 
 /**
  *
- * @author Oliver
+ * @author Oliver Schütz
  */
 public class HomeProfile extends Composite {
-    
-    private static HomeProfileUiBinder uiBinder = GWT.create(HomeProfileUiBinder.class);
-    
-    @UiField VerticalPanel uData;
-    
+
     interface HomeProfileUiBinder extends UiBinder<Widget, HomeProfile> {
     }
-    
-    public HomeProfile() {
+    private static HomeProfileUiBinder uiBinder = GWT.create(HomeProfileUiBinder.class);
+    @UiField VerticalPanel uData;
+
+    @Inject
+    public HomeProfile(PhysixLab lab) {
         initWidget(uiBinder.createAndBindUi(this));
-        User user = PhysixLab.getSessionUser();  
-        uData.add(new ProfileBig(user));
+        uData.add(new ProfileBig(lab.getSessionUser()));
         Image img = new Image("images/ReplacementImages/EditProfile.png");
         img.getElement().getStyle().setMarginLeft(195, Style.Unit.PX);
         uData.add(img);

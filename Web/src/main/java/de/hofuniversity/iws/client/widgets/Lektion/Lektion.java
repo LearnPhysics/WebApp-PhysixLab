@@ -1,189 +1,181 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+  * Copyright (C) 2012 Oliver Schütz
+  *
+  * This program is free software: you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation, either version 3 of the License, or
+  * (at your option) any later version.
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  *
+  * You should have received a copy of the GNU General Public License
+  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  */
 package de.hofuniversity.iws.client.widgets.Lektion;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.*;
+import com.google.gwt.dom.client.SpanElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.*;
-import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
+import com.google.inject.assistedinject.*;
 import de.hofuniversity.iws.client.jsonbeans.*;
-import de.hofuniversity.iws.client.util.AddressStack;
-import de.hofuniversity.iws.client.util.CrumbTuple;
-import de.hofuniversity.iws.client.widgets.SubWidgets.BackButton;
-import de.hofuniversity.iws.client.widgets.SubWidgets.Breadcrumb;
-import de.hofuniversity.iws.shared.services.*;
+import de.hofuniversity.iws.client.widgets.Lektion.Lektion.LektionUiBinder;
+import de.hofuniversity.iws.client.widgets.base.CrumbPage;
+import de.hofuniversity.iws.client.widgets.history.LektionsElement.LektionsElementFactory;
+import de.hofuniversity.iws.shared.services.LessonServiceAsync;
+import javax.inject.Inject;
 
 /**
  *
- * @author Oliver
+ * @author Oliver Schütz
  */
-public class Lektion extends Composite {
+public class Lektion extends CrumbPage<LektionUiBinder> {
 
     //<editor-fold defaultstate="collapsed" desc="ui-stuff">
-    private static LektionUiBinder uiBinder = GWT.create(LektionUiBinder.class);
-    @UiField
-    Lektion.LektionStyle style;
-    @UiField
-    SpanElement rail;
-    @UiField
-    HorizontalPanel railContent;
-    @UiField
-    ScrollPanel sWrap;
-    @UiField
-    FocusPanel tab1;
-    @UiField
-    FocusPanel tab2;
+    public interface LektionUiBinder extends UiBinder<Widget, Lektion> {
+    }
+    @UiField Lektion.LektionStyle style;
+    @UiField SpanElement rail;
+    @UiField HorizontalPanel railContent;
+    @UiField FocusPanel tab1;
+    @UiField FocusPanel tab2;
     @UiField HTMLPanel page;
 
-    interface LektionUiBinder extends UiBinder<Widget, Lektion> {
-    }
-    
     interface LektionStyle extends CssResource {
-        
+
         String posLektion();
-        
+
         String posTest();
-        
+
         String selected();
-        
+
         String tab();
-        
+
         String tab1();
-        
+
         String tab2();
     }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Builder">
     public static class Builder {
-        
-        private final LessonServiceAsync lessonService = (LessonServiceAsync) GWT.create(LessonService.class);
-        private LessonJson lesson;
-        private SubjectJson subject;
+
+        private final LessonServiceAsync lessonService;
+        private final LektionFactory factory;
+        private LessonJson lessonBean;
+        private SubjectJson subjectBean;
         private String lessonName, subjectName;
-        
+
+        @Inject
+        public Builder(LessonServiceAsync lessonService, LektionFactory factory) {
+            this.lessonService = lessonService;
+            this.factory = factory;
+        }
+
         public Builder withLesson(String name) {
             lessonName = name;
+            if (lessonBean != null) {
+                if (!lessonBean.getName().equals(name)) {
+                    lessonBean = null;
+                }
+            }
             return this;
         }
-        
+
         public Builder withLesson(LessonJson bean) {
-            lesson = bean;
+            lessonBean = bean;
             return this;
         }
-        
+
         public Builder withSubject(String name) {
             subjectName = name;
-            return this;
-        }
-        
-        public Builder withSubject(SubjectJson bean) {
-            subject = bean;
-            return this;
-        }
-        
-        private static class SubAsync implements AsyncCallback<String> {
-            
-            private final Lektion l;
-            
-            public SubAsync(Lektion l) {
-                this.l = l;
+            if (subjectBean != null) {
+                if (!subjectBean.getName().equals(name)) {
+                    subjectBean = null;
+                }
             }
-            
+            return this;
+        }
+
+        public Builder withSubject(SubjectJson bean) {
+            subjectBean = bean;
+            return this;
+        }
+
+        private class SubAsync implements AsyncCallback<String> {
+
+            private final AsyncCallback<Lektion> callback;
+            private final boolean wasSubject;
+
+            public SubAsync(AsyncCallback<Lektion> callback, boolean wasSubject) {
+                this.callback = callback;
+                this.wasSubject = wasSubject;
+            }
+
             @Override
             public void onFailure(Throwable caught) {
-                throw new UnsupportedOperationException("Not supported yet.");
+                callback.onFailure(caught);
             }
-            
+
             @Override
             public void onSuccess(String result) {
-                l.ini(SubjectJson.create(result));
+                if (wasSubject) {
+                    subjectBean = SubjectJson.create(result);
+                } else {
+                    lessonBean = LessonJson.create(result);
+                }
+                nextRound();
+            }
+
+            public void nextRound() {
+                if (subjectBean != null && lessonBean != null) {
+                    callback.onSuccess(factory.create(lessonBean, subjectBean));
+                } else if (lessonBean == null) {
+                    lessonService.getLesson(lessonName, new SubAsync(callback, false));
+                } else if (subjectBean == null) {
+                    if (subjectName == null) {
+                        lessonService.getSubject(lessonBean.getThema(), new SubAsync(callback, true));
+                    } else {
+                        lessonService.getSubject(subjectName, new SubAsync(callback, true));
+                    }
+                }
             }
         }
-        
-        public Lektion create() {
-            final Lektion l = new Lektion();
-            if (subject != null) {
-                l.ini(subject);
-            } else if (subjectName != null) {
-                lessonService.getSubject(subjectName, new SubAsync(l));
-            }
-            if (lesson != null) {
-                l.ini(lesson);
-            } else if (lessonName != null) {
-                lessonService.getLesson(lessonName, new AsyncCallback<String>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        throw new UnsupportedOperationException("Not supported yet.");
-                    }
-                    
-                    @Override
-                    public void onSuccess(String result) {
-                        LessonJson les = LessonJson.create(result);
-                        l.ini(les);
-                        if (subjectName == null) {
-                            lessonService.getSubject(les.getThema(), new SubAsync(l));
-                        }
-                    }
-                });
-            }
-            return l;
+
+        public void create(AsyncCallback<Lektion> callback) {
+            new SubAsync(callback, true).nextRound();
         }
-    }
-    
-    public static Builder build() {
-        return new Builder();
     }
     //</editor-fold>
-    
     public final static String NAME = "lektion";
-    private LessonJson lesson;
-    private SubjectJson subject;
+    private final LessonJson lesson;
+    private final SubjectJson subject;
 
-    private Lektion() {
-        initWidget(uiBinder.createAndBindUi(this));
-        sWrap.getElement().getStyle().setOverflow(Style.Overflow.HIDDEN);
-        sWrap.setVerticalScrollPosition(0);
+    public interface LektionFactory {
+
+        public Lektion create(LessonJson lektion, SubjectJson subject);
     }
 
-    public Lektion(LessonJson lektion, SubjectJson subject) {
-        this();
-
-        History.newItem(NAME + "?" + lektion.getName(), false);
-        railContent.add(new Lesson(lektion, subject));
-        railContent.add(new Test(lektion.getTest(),lesson,subject));
-        AddressStack.getInstance().addAddress(new CrumbTuple(this, lektion.getTitle(), 3));
-        page.add(new Breadcrumb(3));
-        page.add(new BackButton(3));
+    @AssistedInject
+    public Lektion(LektionsElementFactory element, @Assisted LessonJson lesson, @Assisted SubjectJson subject) {
+        super(element.create(subject, lesson), NAME + "?" + lesson.getName());
+        this.lesson = lesson;
+        this.subject = subject;
     }
 
-    private void ini(LessonJson l) {
-        lesson = l;
-        History.newItem(NAME + "?" + l.getName(), false);
-        ini();
+    @Override
+    public void initWidget() {
+        railContent.add(new Lesson(lesson, subject));
+        railContent.add(new Test(lesson.getTest(), lesson, subject));
     }
 
-    private void ini(SubjectJson s) {
-        subject = s;
-        ini();
-    }
-
-    private void ini() {
-        if (lesson != null && subject != null) {
-            railContent.add(new Lesson(lesson, subject));
-            railContent.add(new Test(lesson.getTest(),lesson,subject));
-            AddressStack.getInstance().addAddress(new CrumbTuple(this, lesson.getTitle(), 3));
-            page.add(new Breadcrumb(3));
-            page.add(new BackButton(3));
-            lesson = null;
-            subject = null;
-        }
+    public String getLessonTitle() {
+        return lesson.getTitle();
     }
 
     @UiHandler("tab1")
@@ -200,7 +192,7 @@ public class Lektion extends Composite {
         rail.removeClassName(rail.getClassName());
         tab1.removeStyleName(style.selected());
         tab2.removeStyleName(style.selected());
-        
+
         switch (pos) {
             case 1:
                 rail.setClassName(style.posLektion());
