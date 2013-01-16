@@ -16,7 +16,7 @@
  */
 package de.hofuniversity.iws.server.data.handler;
 
-import de.hofuniversity.iws.server.data.entities.NetworkAccountDBO;
+import de.hofuniversity.iws.server.data.entities.*;
 import de.hofuniversity.iws.server.oauth.Providers;
 import javax.persistence.*;
 import javax.persistence.criteria.*;

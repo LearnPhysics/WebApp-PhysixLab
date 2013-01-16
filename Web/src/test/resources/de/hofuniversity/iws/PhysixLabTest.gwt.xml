@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module>
-  <!-- Inherit our applications main module.                      -->
-  <inherits name='de.hofuniversity.iws.PhysixLab' />
+    <!-- Inherit our applications main module.                      -->
+    <inherits name='de.hofuniversity.iws.PhysixLab' />
+    <!--<source path='gwttests' />-->
 </module>

@@ -18,6 +18,7 @@ package de.hofuniversity.iws.client.widgets.history;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.inject.assistedinject.Assisted;
+import com.google.inject.assistedinject.AssistedInject;
 import de.hofuniversity.iws.client.jsonbeans.*;
 import de.hofuniversity.iws.client.widgets.Game.Game.GameFactory;
 import de.hofuniversity.iws.client.widgets.history.ThemaElement.ThemaElementFactory;
@@ -41,7 +42,7 @@ public class GameElement implements HistoryElement {
         public GameElement create(SubjectJson subject, GameJson game);
     }
 
-    @Inject
+    @AssistedInject
     public GameElement(Provider<UserHomeElement> home, ThemaElementFactory parentFactory, GameFactory factory,
                        @Assisted SubjectJson subject, @Assisted GameJson game) {
         this.parent = subject == null ? home.get() : parentFactory.create(subject);
@@ -50,7 +51,7 @@ public class GameElement implements HistoryElement {
         this.subject = subject;
     }
     
-    @Inject
+    @AssistedInject
     public GameElement(Provider<UserHomeElement> home, ThemaElementFactory parentFactory, GameFactory factory,
                        @Assisted GameJson game) {
         this.parent = home.get();
