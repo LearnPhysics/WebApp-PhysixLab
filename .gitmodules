@@ -1,6 +1,3 @@
-[submodule "DarwinsBox"]
-	path = DarwinsBox
-	url = git@github.com:Danny02/DarwinsBox.git
 [submodule "GinJitsu"]
 	path = GinJitsu
 	url = git@github.com:LearnPhysics/GinJitsu.git
