@@ -112,12 +112,13 @@ public class NetworkAccountHandlerTest {
     @Test
     public void testGetNetworkAccountEntityByAccessToken() {
         Providers network = Providers.TWITTER;
-        Token oauthToken = OAuthConstants.EMPTY_TOKEN;
+        Token oauthToken = new Token("sdasdad", "afgdfhdfh");
         System.out.println(oauthToken.getToken());
         NetworkAccountDBO na = new NetworkAccountDBO();
         na.setOauthAccessToken(oauthToken.getToken());
         na.setOauthAccessSecret(oauthToken.getSecret());
         na.setNetworkName(network.name());
+        NetworkAccountHandler.store(na);
         NetworkAccountDBO result01 = NetworkAccountHandler.getNetworkAccountEntityByAccessToken(network, oauthToken, true);
         NetworkAccountDBO result02 = NetworkAccountHandler.getNetworkAccountEntityByAccessToken(network, oauthToken, false);
         
