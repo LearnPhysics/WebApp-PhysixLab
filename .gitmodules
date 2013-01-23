@@ -3,4 +3,4 @@
 	url = git@github.com:Danny02/DarwinsBox.git
 [submodule "GinJitsu"]
 	path = GinJitsu
-	url = https://github.com/gammagec/GinJitsu.git
+	url = git@github.com:LearnPhysics/GinJitsu.git
