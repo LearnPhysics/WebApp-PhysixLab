@@ -21,7 +21,8 @@ import javax.persistence.*;
 import javax.persistence.criteria.*;
 
 /**
- *
+ * Handler class encapsulating the database access to lesson entities
+ * Queries are coded with the JPA Criteria API
  * @author Oliver Schütz
  */
 public class LessonHandler {

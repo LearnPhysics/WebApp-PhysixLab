@@ -19,7 +19,7 @@ package de.hofuniversity.iws.server.data.handler;
 import javax.persistence.*;
 
 /**
- *
+ * Encapsulates the EntityManagerFactory
  * @author Oliver Schütz
  */
 // entityManager.detach(entity);

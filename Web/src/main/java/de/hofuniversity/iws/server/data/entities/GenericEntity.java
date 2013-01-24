@@ -17,7 +17,7 @@
 package de.hofuniversity.iws.server.data.entities;
 
 /**
- *
+ * Base interface for all database entities
  * @author Oliver Schütz
  */
 public interface GenericEntity {

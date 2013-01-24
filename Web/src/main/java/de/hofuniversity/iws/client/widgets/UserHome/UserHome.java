@@ -48,6 +48,9 @@ public class UserHome extends CrumbPage<UserHomeUiBinder> {
     @Inject @UiField(provided = true) HomeFreunde freunde;
     @Inject @UiField(provided = true) OnlyLogout logout;
 
+    /**
+     * Required to use CSS classes in the controller class
+     */
     interface UserHomeStyle extends CssResource {
 
         String posStatistik();
@@ -76,6 +79,10 @@ public class UserHome extends CrumbPage<UserHomeUiBinder> {
         super(element, NAME);
     }
 
+    /**
+     * EventListener is called when tab is clicked
+     * @param ev 
+     */
     @UiHandler("tab1")
     public void changeToTab1(ClickEvent ev) {
         setPosition(1);
@@ -96,6 +103,10 @@ public class UserHome extends CrumbPage<UserHomeUiBinder> {
         setPosition(4);
     }
 
+    /**
+     * Sets the content rail to the correct position by changing its CSS properties
+     * @param pos 
+     */
     public void setPosition(int pos) {
         unselectAllTabs();
         rail.removeClassName(rail.getClassName());

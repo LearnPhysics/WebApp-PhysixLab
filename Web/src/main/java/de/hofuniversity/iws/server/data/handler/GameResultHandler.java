@@ -20,7 +20,7 @@ import de.hofuniversity.iws.server.data.entities.GameResultDBO;
 import javax.persistence.EntityManager;
 
 /**
- *
+ * Handler class encapsulating the database access to GameResult entities
  * @author Oliver Schütz
  */
 public class GameResultHandler {

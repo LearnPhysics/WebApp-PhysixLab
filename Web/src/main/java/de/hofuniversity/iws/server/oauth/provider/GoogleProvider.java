@@ -26,7 +26,7 @@ import org.scribe.builder.api.GoogleApi;
  */
 public class GoogleProvider extends OAuthProvider {
     
-    private static final String Google_SCOPE = OAuthProperties.APP.getPropertie(Providers.GOOGLE.name() + ".Scope");
+    private static final String Google_SCOPE = OAuthProperties.APP.getPropertie("GOOGLE.Scope");
     
     public GoogleProvider(String apiKey, String apiSecret) {
         super(apiKey, apiSecret, GoogleApi.class);

@@ -292,6 +292,7 @@
                     <excludes>
                         <exclude>${gwt.testpatter}</exclude>
                     </excludes>
+                    <skip>true</skip>
                 </configuration>
             </plugin>
         </plugins>

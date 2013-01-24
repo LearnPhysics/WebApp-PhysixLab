@@ -20,7 +20,7 @@ import de.hofuniversity.iws.server.data.entities.GenericEntity;
 import javax.persistence.EntityManager;
 
 /**
- *
+ * Handels database access that is not entity specific
  * @author Oliver Schütz
  */
 public class GenericHandler {

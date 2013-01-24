@@ -35,17 +35,18 @@ import static org.mockito.Mockito.*;
  *
  * @author Daniel Heinrich <dannynullzwo@gmail.com>
  */
-@RunWith(Theories.class)
-public class OAuthTest extends TestCase{
-    @DataPoints Providers[] provider = Providers.values();
-    
-    @Theory
-    public void testFriendListAccessor(Providers provider)
-    {
-        Optional<FriendListAccessor> optional = provider.getAccessor(FriendListAccessor.class);
-        Assume.assumeTrue(optional.isPresent());
-        
-        FriendListAccessor accessor = optional.get();
-        assertEquals(accessor.supportedProvider(), provider);
-    }
-}
+//@RunWith(Theories.class)
+//public class OAuthTest extends TestCase {
+//
+//    @DataPoints
+//    Providers[] provider = Providers.values();
+//
+//    @Theory
+//    public void testFriendListAccessor(Providers provider) {
+//        Optional<FriendListAccessor> optional = provider.getAccessor(FriendListAccessor.class);
+//        if (optional.isPresent()) {
+//            FriendListAccessor accessor = optional.get();
+//            assertEquals(accessor.supportedProvider(), provider);
+//        }
+//    }
+//}
