@@ -57,6 +57,12 @@ public class Test extends Composite {
         illustration.add(new Image(test.getImage()));
     }
 
+    /**
+     * Check the given solution by a user
+     * Grants margin of 10 percent for the correctness,
+     * as is common in physics classes
+     * @param ev 
+     */
     @UiHandler("submit")
     public void checkSolution(ClickEvent ev) {
         try {

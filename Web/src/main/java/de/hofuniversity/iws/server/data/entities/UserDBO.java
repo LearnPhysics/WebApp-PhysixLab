@@ -25,7 +25,7 @@ import de.hofuniversity.iws.shared.dto.User;
 import javax.persistence.*;
 
 /**
- *
+ * Contains a Self Referantial Many-To-Many Relationship
  * @author Oliver Schütz
  */
 @Entity

@@ -20,7 +20,7 @@ import de.hofuniversity.iws.server.data.entities.SubjectAreaDBO;
 import javax.persistence.EntityManager;
 
 /**
- *
+ * Handler class encapsulating the database access to SubjectArea entities
  * @author Oliver Schütz
  */
 public class SubjectAreaHandler {

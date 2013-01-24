@@ -20,7 +20,7 @@ import de.hofuniversity.iws.server.data.entities.LessonProgressDBO;
 import javax.persistence.EntityManager;
 
 /**
- *
+ * Handler class encapsulating the database access to LessonProgress entities
  * @author Oliver Schütz
  */
 public class LessonProgressHandler {

@@ -26,7 +26,8 @@ import javax.persistence.criteria.*;
 import org.scribe.model.Token;
 
 /**
- *
+ * Handler class encapsulating the database access to User entities
+ * Queries are coded with the JPA Criteria API
  * @author Oliver Schütz
  */
 public class UserHandler {

@@ -51,10 +51,10 @@ public class LessonProgressHandlerTest {
     }
 
     /**
-     * Test of getGameEntity method, of class LessonProgressHandler.
+     * Test of getLessonProgressEntity method, of class LessonProgressHandler.
      */
     @Test
-    public void testGetGameEntity() {
+    public void testGetLessonProgressEntity() {
         LessonProgressDBO lp = new LessonProgressDBO();
         lp.setPoints((int)(Math.random()*100000));
         LessonProgressHandler.store(lp);

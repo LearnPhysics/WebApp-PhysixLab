@@ -47,7 +47,10 @@ public class HomeThemenwahl extends Composite {
             public void onFailure(Throwable caught) {
                 throw new UnsupportedOperationException(caught.getLocalizedMessage());
             }
-
+            
+            /**
+             * Add all subject to the selctiion list
+             */
             @Override
             public void onSuccess(String[] result) {
                 for (String thema : result) {

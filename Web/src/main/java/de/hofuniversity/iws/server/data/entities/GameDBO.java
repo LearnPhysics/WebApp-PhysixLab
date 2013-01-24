@@ -22,7 +22,7 @@ import java.util.List;
 import javax.persistence.*;
 
 /**
- *
+ * 
  * @author Oliver Schütz
  */
 @Entity

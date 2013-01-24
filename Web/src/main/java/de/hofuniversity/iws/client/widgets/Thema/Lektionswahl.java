@@ -74,6 +74,11 @@ public class Lektionswahl extends Composite {
         });
     }
 
+    /**
+     * Building the selection tree from given lessons
+     * The correct position for every lesson preview is calculated and the preview is placed
+     * @param l 
+     */
     private void setup(LessonPreview[] l) {
         //set parents
         final Map<String, LessonPreview> idToBean = new HashMap<String, LessonPreview>();

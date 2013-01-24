@@ -23,7 +23,8 @@ import javax.persistence.criteria.*;
 import org.scribe.model.Token;
 
 /**
- *
+ * Handler class encapsulating the database access to NetworkAccount entities
+ * Queries are coded with the JPA Criteria API
  * @author Oliver Schütz
  */
 public class NetworkAccountHandler {
