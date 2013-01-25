@@ -20,7 +20,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.user.client.History;
 
 /**
- *
+ * Composit which handles the setting of the History item
  * @author Daniel Heinrich <dannynullzwo@gmail.com>
  */
 public class HistoryPage<E extends UiBinder> extends InjectedBinderWidget<E> {

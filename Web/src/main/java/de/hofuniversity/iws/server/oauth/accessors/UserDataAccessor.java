@@ -16,7 +16,6 @@
  */
 package de.hofuniversity.iws.server.oauth.accessors;
 
-
 import de.hofuniversity.iws.server.data.entities.UserDBO;
 import org.scribe.model.Token;
 
@@ -24,7 +23,14 @@ import org.scribe.model.Token;
  *
  * @author Andreas Arndt <andreas.arndt@hof-university.de>
  */
-public interface UserDataAccessor extends Accessor{
+public interface UserDataAccessor extends Accessor {
 
+    /**
+     * get the user of an oauth access
+     *
+     * @param accessToken
+     * @return
+     * @throws AccessException
+     */
     public UserDBO getUserData(Token accessToken) throws AccessException;
 }

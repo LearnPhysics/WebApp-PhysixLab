@@ -77,10 +77,20 @@ public enum Providers {
         this.provider = createProvider(key, secret);
     }
 
+    /**
+     * 
+     * @return 
+     */
     public OAuthProvider getProvider() {
         return provider;
     }
 
+    /**
+     * Checks if an accessor implementation of the specified type exists for the provider
+     * @param c
+     * accessor type i.e. UserDataAccessor
+     * @return 
+     */
     public <T extends Accessor> Optional<T> getAccessor(Class<T> c) {
         if (!initialized.contains(c)) {
             for (Accessor a : ServiceLoader.load(c)) {
@@ -93,8 +103,22 @@ public enum Providers {
 
     protected abstract OAuthProvider createProvider(String key, String secret);
 
+    /**
+     * Every Provider gurantees with this method that they provide an accessor for user data.
+     * Returns the same as getAccessor(UserDataAccessor.class).get()
+     * @return 
+     */
     public abstract UserDataAccessor getUserDataAccessor();
 
+    /**
+     * used to quickly excecute a data request on a provider
+     * @param accessToken
+     * oauth access token
+     * @param url
+     * the provider specific request url
+     * @return 
+     * the response body
+     */
     public String invokeGetRequest(Token accessToken, String url) {
         OAuthRequest request = new OAuthRequest(Verb.GET, url);
 

@@ -25,7 +25,7 @@ import de.hofuniversity.iws.client.widgets.history.HistoryElement;
 import javax.inject.*;
 
 /**
- *
+ * provides uifactories for header, breadcrumb and backbutton
  * @author Daniel Heinrich <DannyNullZwo@gmail.com>
  */
 public abstract class CrumbPage<E extends UiBinder> extends HistoryPage<E> {

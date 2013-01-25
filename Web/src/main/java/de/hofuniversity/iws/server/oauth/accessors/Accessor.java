@@ -19,7 +19,7 @@ package de.hofuniversity.iws.server.oauth.accessors;
 import de.hofuniversity.iws.server.oauth.Providers;
 
 /**
- *
+ * The base interface for provider interfaces which enable access to a specific domain of data
  * @author Andreas Arndt <andreas.arndt@hof-university.de>
  */
 public interface Accessor {

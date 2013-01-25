@@ -20,10 +20,18 @@ import de.hofuniversity.iws.server.data.entities.UserDBO;
 import org.scribe.model.Token;
 
 /**
- *
+ * Accessor type for data related to friends of users
  * @author Andreas Arndt <andreas.arndt@hof-university.de>
  */
 public interface FriendListAccessor extends Accessor{
 
+    /**
+     * Search for friends of a specified user.
+     * @param accessToken
+     * @param currentUser
+     * user for which friends should be searched
+     * @return
+     * @throws AccessException 
+     */
     public Iterable<UserDBO> getFriends(Token accessToken, UserDBO currentUser) throws AccessException;
 }

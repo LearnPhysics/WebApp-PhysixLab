@@ -27,6 +27,7 @@ import org.scribe.oauth.OAuthService;
  * @author Andreas Arndt <andreas.arndt@hof-university.de>
  */
 public class OAuthProvider {
+
     private static final String CALLBACK_URL = OAuthProperties.APP.getPropertie("CALLBACK_URL");
     private final OAuthService service;
 
@@ -39,6 +40,10 @@ public class OAuthProvider {
                 .build();
     }
 
+    /**
+     *
+     * @return
+     */
     public OAuthAccessRequest createRequest() {
         Token request = createRequestToken(service);
         String url = createAuthorizationUrl(service, request);
@@ -46,6 +51,10 @@ public class OAuthProvider {
         return new OAuthAccessRequest(request, service, url);
     }
 
+    /**
+     *
+     * @return
+     */
     public OAuthService getService() {
         return service;
     }

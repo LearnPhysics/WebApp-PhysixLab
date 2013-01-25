@@ -39,6 +39,7 @@ public interface LoginService extends RemoteService {
      * @return
      * A valid session ID
      * @throws OAuthException 
+     * after a timeout or a problem with the oauth login
      */
     public LoginDTO waitForOAuthVerification() throws LoginException;
     

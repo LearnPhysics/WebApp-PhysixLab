@@ -19,7 +19,7 @@ package de.hofuniversity.iws.client.util;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
- *
+ * A Callback which ignores the outcome of an rpc call and does the same action anyway
  * @author Daniel Heinrich <dannynullzwo@gmail.com>
  */
 public abstract class IgnoreCallback implements AsyncCallback<Void> {

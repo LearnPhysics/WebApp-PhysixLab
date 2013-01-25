@@ -1,19 +1,19 @@
 /*
-  * Copyright (C) 2012 Andreas Arndt
-  *
-  * This program is free software: you can redistribute it and/or modify
-  * it under the terms of the GNU General Public License as published by
-  * the Free Software Foundation, either version 3 of the License, or
-  * (at your option) any later version.
-  *
-  * This program is distributed in the hope that it will be useful,
-  * but WITHOUT ANY WARRANTY; without even the implied warranty of
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  * GNU General Public License for more details.
-  *
-  * You should have received a copy of the GNU General Public License
-  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  */
+ * Copyright (C) 2012 Andreas Arndt
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package de.hofuniversity.iws.server.services;
 
 import java.sql.Timestamp;
@@ -41,7 +41,6 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
     @Override
     public Iterable<? extends User> getFriends() {
         return CollectionUtils.select(getSessionUser().getFriends(), new Selector<UserDBO, User>() {
-
             @Override
             public User select(UserDBO e) throws Exception {
                 return e.getDTO();
@@ -56,19 +55,19 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
         result.setUser(getSessionUser());
         result.setPoints(points);
         result.setGame(GameHandler.getGameEntity(game, false));
-        
+
         GameResultHandler.store(result);
     }
-    
+
     @Override
-    public void addTestResult(String name,String subject, int points) {
+    public void addTestResult(String name, int points) {
         LessonProgressDBO result = new LessonProgressDBO();
         result.setDate(new Timestamp(System.currentTimeMillis()));
         result.setUser(getSessionUser());
-        result.setPoints(1);        
-        LessonDBO lesson = LessonHandler.getLessonEntityOrCreateTemplate(name, false);  
-      //  result.setLesson(lesson);
-        LessonProgressHandler.store(result);        
+        result.setPoints(1);
+        LessonDBO lesson = LessonHandler.getLessonEntityOrCreateTemplate(name, false);
+        //  result.setLesson(lesson);
+        LessonProgressHandler.store(result);
     }
 
     private UserDBO getSessionUser() {
