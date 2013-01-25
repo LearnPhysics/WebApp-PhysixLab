@@ -19,22 +19,19 @@
 package de.hofuniversity.iws.shared.services;
 
 import java.io.IOException;
-import java.lang.reflect.*;
-import java.util.*;
+import java.lang.reflect.Method;
 
-import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.*;
 import com.google.gwt.user.server.rpc.AbstractRemoteServiceServlet;
 import com.googlecode.gwt.test.*;
 import com.googlecode.gwt.test.rpc.ServletMockProviderAdapter;
 import com.googlecode.gwt.test.web.*;
 import de.hofuniversity.iws.client.jsonbeans.*;
-import de.hofuniversity.iws.gwtheadless.SequentialAsyncCallback;
 import de.hofuniversity.iws.server.services.LessonServiceImpl;
 import de.hofuniversity.iws.shared.dto.LessonPreview;
 import javax.servlet.ServletConfig;
-import javax.servlet.http.HttpServletRequest;
 import org.json.*;
-import org.junit.Before;
+import org.junit.*;
 import org.junit.Test;
 
 import static junit.framework.Assert.*;
@@ -141,26 +138,31 @@ public class LessonServiceTest extends GwtTest {
     }
 
     private void checkJsonBean(JSONObject bean, Class beanClass) throws JSONException {
-        for (String a : retrieveBeanAttributs(beanClass)) {
-            assertTrue("Can't find bean propertie: ", bean.has(a));
-        }
-    }
-    private Map<Class, List<String>> attr = new HashMap<Class, List<String>>();
-
-    private List<String> retrieveBeanAttributs(Class beanClass) throws SecurityException {
-        List<String> attributs = attr.get(beanClass);
-        if (attributs == null) {
-            attributs = new ArrayList<String>();
-            for (Method method : beanClass.getMethods()) {
-                String name = method.getName();
-                if (name.startsWith("get")
-                    && method.getParameterTypes().length == 0
-                    && !method.getName().equals("getClass")) {
-                    attributs.add(name.substring(3));
+        for (Method method : beanClass.getMethods()) {
+            String name = method.getName();
+            if (name.startsWith("get")
+                && method.getParameterTypes().length == 0
+                && !method.getName().equals("getClass")) {
+                String attr = name.substring(3);
+                Class r = method.getReturnType();
+                if (r.isPrimitive()) {
+                    if (r == Boolean.TYPE) {
+                        assertNotNull(bean.optBoolean(attr));
+                    } else if (r == Float.TYPE || r == Double.TYPE) {
+                        assertNotNull(bean.optDouble(attr));
+                    } else if (r == Long.TYPE) {
+                        assertNotNull(bean.optLong(attr));
+                    } else if (r == Integer.TYPE) {
+                        assertNotNull(bean.optInt(attr));
+                    }
+                } else if (r == String.class) {
+                    assertNotNull(bean.optString(attr));
+                } else if (r == JsArray.class) {
+                    assertNotNull(bean.optJSONArray(attr));
+                } else if (JavaScriptObject.class.isAssignableFrom(r)) {
+                    assertNotNull(bean.optJSONObject(attr));
                 }
             }
-            attr.put(beanClass, attributs);
         }
-        return attributs;
     }
 }

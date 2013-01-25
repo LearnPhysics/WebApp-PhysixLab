@@ -30,8 +30,9 @@ import de.hofuniversity.iws.server.oauth.Providers;
 import de.hofuniversity.iws.shared.services.*;
 import org.junit.*;
 
-//import static de.hofuniversity.iws.gwttests.TestInjector.INSTANCE;
-import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.verify;
 
 /**
  *
